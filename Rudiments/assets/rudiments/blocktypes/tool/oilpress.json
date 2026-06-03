@@ -1,0 +1,51 @@
+{
+  "code": "oilpress",
+  "class": "rudiments:BlockOilPress",
+  "behaviors": [
+    { "name": "UnstableFalling" }
+  ],
+  "attributes": {
+    "pressDuration": 0.8,
+    "seedsPerPress": 3,
+    "cakeChance": 0.35,
+    "handbook": { "groupBy": [ "oilpress" ] }
+  },
+  "creativeinventory": {
+    "general": [ "*" ],
+    "decorative": [ "*" ]
+  },
+  "shape": { "base": "block/tool/oilpress/oilpress" },
+  "textures": {
+    "wood": { "base": "game:block/wood/debarked/oak" },
+    "metal": { "base": "game:block/metal/ingot/copper" }
+  },
+  "blockmaterial": "Wood",
+  "materialDensity": 600,
+  "replaceable": 600,
+  "resistance": 1.5,
+  "maxStackSize": 1,
+  "lightAbsorption": 1,
+  "sidesolid": { "all": false },
+  "sideopaque": { "all": false },
+  "sideao": { "all": false },
+  "emitsideao": { "all": false },
+  "collisionSelectionBoxes": [ { "x1": 0.0625, "y1": 0, "z1": 0.375, "x2": 0.9375, "y2": 1, "z2": 0.625 } ],
+  "sounds": {
+    "place": "game:block/planks",
+    "walk": "game:walk/wood",
+    "hit": "game:block/planks",
+    "break": "game:block/planks"
+  },
+  "combustibleProps": {
+    "burnTemperature": 600,
+    "burnDuration": 20
+  },
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldRightReadyAnimation": "heldblockready",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "tpHandTransform": {
+    "translation": { "x": -1.7, "y": -0.95, "z": -0.69 },
+    "rotation": { "x": 12, "y": 14, "z": -81 },
+    "scale": 0.36
+  }
+}

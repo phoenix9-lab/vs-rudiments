@@ -1,0 +1,97 @@
+{
+  "code": "scutchboard",
+  "class": "rudiments:BlockScutchBoard",
+  "behaviors": [
+    { "name": "UnstableFalling" },
+    { "name": "HorizontalOrientable",
+      "propertiesByType": {
+        "scutchboard-primitive-*": { "dropBlockFace": "east", "drop": { "type": "block", "code": "scutchboard-primitive-east" } },
+        "scutchboard-simple-*":   { "dropBlockFace": "east", "drop": { "type": "block", "code": "scutchboard-simple-east" } },
+        "scutchboard-advanced-*": { "dropBlockFace": "east", "drop": { "type": "block", "code": "scutchboard-advanced-east" } }
+      }
+    }
+  ],
+  "variantgroups": [
+    { "code": "type", "states": [ "primitive", "simple", "advanced" ] },
+    { "code": "side", "loadFromProperties": "abstract/horizontalorientation" }
+  ],
+  "attributesByType": {
+    "scutchboard-primitive-*": {
+      "scutchDuration": 0.5,
+      "scutchAmount": 1,
+      "handbook": { "groupBy": ["scutchboard-*"] }
+    },
+    "scutchboard-simple-*": {
+      "scutchDuration": 0.5,
+      "scutchAmount": 2,
+      "handbook": { "groupBy": ["scutchboard-*"] }
+    },
+    "scutchboard-advanced-*": {
+      "scutchDuration": 0.5,
+      "scutchAmount": 4,
+      "handbook": { "groupBy": ["scutchboard-*"] }
+    }
+  },
+  "creativeinventory": {
+    "general":   [ "*-east" ],
+    "decorative": [ "*-east" ],
+    "mechanics": [ "*-east" ]
+  },
+  "shapebytype": {
+    "*-north": { "base": "block/tool/scutchboard/scutchboard", "rotateY": 0   },
+    "*-east":  { "base": "block/tool/scutchboard/scutchboard", "rotateY": 270 },
+    "*-south": { "base": "block/tool/scutchboard/scutchboard", "rotateY": 180 },
+    "*-west":  { "base": "block/tool/scutchboard/scutchboard", "rotateY": 90  }
+  },
+  "texturesByType": {
+    "scutchboard-primitive-*": {
+      "side":  { "base": "rudiments:block/tool/scutchboard/side" },
+      "top":   { "base": "rudiments:block/tool/scutchboard/top" },
+      "blade": { "base": "rudiments:block/tool/scutchboard/blade-wood" }
+    },
+    "scutchboard-simple-*": {
+      "side":  { "base": "rudiments:block/tool/scutchboard/side" },
+      "top":   { "base": "rudiments:block/tool/scutchboard/top" },
+      "blade": { "base": "rudiments:block/tool/scutchboard/blade-copper" }
+    },
+    "scutchboard-advanced-*": {
+      "side":  { "base": "rudiments:block/tool/scutchboard/side" },
+      "top":   { "base": "rudiments:block/tool/scutchboard/top" },
+      "blade": { "base": "rudiments:block/tool/scutchboard/blade-iron" }
+    }
+  },
+  "blockmaterial": "Wood",
+  "materialDensity": 600,
+  "replaceable": 600,
+  "resistance": 1.5,
+  "maxStackSize": 1,
+  "lightAbsorption": 1,
+  "sidesolid":  { "all": false, "down": true },
+  "sideopaque": { "all": false, "down": true },
+  "sideao":     { "all": false, "down": true },
+  "emitsideao": { "all": false, "down": true },
+  "collisionSelectionBoxesByType": {
+    "*-north": [ { "x1": 0.1875, "y1": 0.6875, "z1": 0.375, "x2": 0.8125, "y2": 1.125, "z2": 0.625, "rotateY": 0   }, { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 } ],
+    "*-east":  [ { "x1": 0.1875, "y1": 0.6875, "z1": 0.375, "x2": 0.8125, "y2": 1.125, "z2": 0.625, "rotateY": 270 }, { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 } ],
+    "*-south": [ { "x1": 0.1875, "y1": 0.6875, "z1": 0.375, "x2": 0.8125, "y2": 1.125, "z2": 0.625, "rotateY": 180 }, { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 } ],
+    "*-west":  [ { "x1": 0.1875, "y1": 0.6875, "z1": 0.375, "x2": 0.8125, "y2": 1.125, "z2": 0.625, "rotateY": 90  }, { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 } ]
+  },
+  "sounds": {
+    "place": "game:block/planks",
+    "walk":  "game:walk/wood",
+    "hit":   "game:block/planks",
+    "break": "game:block/planks"
+  },
+  "combustibleProps": {
+    "burnTemperature": 800,
+    "burnDuration": 60
+  },
+  "heldTpIdleAnimation":    "holdbothhandslarge",
+  "heldRightReadyAnimation": "heldblockready",
+  "heldTpUseAnimation":     "twohandplaceblock",
+  "tpHandTransform": {
+    "translation": { "x": -1.7, "y": -0.95, "z": -0.69 },
+    "rotation":    { "x": 12,   "y": 14,    "z": -81   },
+    "scale": 0.36
+  }
+}

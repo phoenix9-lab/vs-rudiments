@@ -1,0 +1,26 @@
+{
+  "code": "linseedcake",
+  "textures": {
+    "linseedcake": { "base": "item/resource/linseedcake" }
+  },
+  "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
+  "attributes": {
+    "handbook": {
+      "extraSections": [
+        { "title": "rudiments:item-handbooktitle-linseedcake", "text": "rudiments:item-handbooktext-linseedcake" }
+      ]
+    }
+  },
+  "maxstacksize": 64,
+  "materialDensity": 400,
+  "combustibleProps": {
+    "burnTemperature": 600,
+    "burnDuration": 8
+  },
+  "guiTransform": {
+    "translation": { "x": 0, "y": 0, "z": 0 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+    "scale": 2.8
+  }
+}

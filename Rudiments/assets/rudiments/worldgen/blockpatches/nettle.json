@@ -1,0 +1,19 @@
+[
+	{
+		"comment": "Wild stinging nettle - prefers damp, partly-forested temperate ground",
+		"blockCodes": [
+			"rudiments:crop-nettle-4",
+			"rudiments:crop-nettle-6",
+			"rudiments:crop-nettle-8",
+			"rudiments:crop-nettle-9"
+		],
+		"minTemp": 2,
+		"maxTemp": 28,
+		"minRain": 0.45,
+		"maxRain": 0.95,
+		"minForest": 0.1,
+		"maxForest": 0.85,
+		"quantity": { "avg": 10, "var": 8 },
+		"chance": 0.07
+	}
+]

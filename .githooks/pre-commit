@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export PATH="/home/dwhite/.dotnet:$PATH"
+export VINTAGE_STORY="/mnt/c/Users/danie/AppData/Roaming/Vintagestory"
+
+echo "[pre-commit] Building Rudiments.dll..."
+dotnet build Rudiments/Rudiments.csproj -c Release --nologo -v minimal
+
+cp Rudiments/bin/Release/Rudiments.dll Rudiments/Rudiments.dll
+git add -f Rudiments/Rudiments.dll
+
+echo "[pre-commit] Rudiments.dll built and staged."

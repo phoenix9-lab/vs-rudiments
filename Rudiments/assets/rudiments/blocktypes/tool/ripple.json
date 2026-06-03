@@ -1,0 +1,131 @@
+{
+  "code": "ripple",
+  "class": "rudiments:BlockRipple",
+  "behaviors": [
+    { "name": "UnstableFalling" },
+    { "name": "HorizontalOrientable",
+      "propertiesByType": {
+        "ripple-primitive-*": { "dropBlockFace": "east", "drop": { "type": "block", "code": "ripple-primitive-east" } },
+        "ripple-simple-*": { "dropBlockFace": "east", "drop": { "type": "block", "code": "ripple-simple-east" } },
+        "ripple-advanced-*": { "dropBlockFace": "east", "drop": { "type": "block", "code": "ripple-advanced-east" } }
+      }
+    }
+  ],
+  "variantgroups": [
+	{ "code": "type", "states": [ "primitive", "simple", "advanced" ] },
+	{ "code": "side", "loadFromProperties": "abstract/horizontalorientation" }
+  ],
+  "attributesByType": {
+    "ripple-primitive-*": { 
+      "rippleDuration": 0.5,
+      "rippleAmount": 1,
+      "flaxSeedDropAvg": 1.2,
+      "flaxGrainDropAvg": 6,
+      "flaxGrainDropVar": 1
+    },
+    "ripple-simple-*": { 
+      "rippleDuration": 0.5,
+      "rippleAmount": 2,
+      "flaxSeedDropAvg": 2.1,
+      "flaxGrainDropAvg": 8,
+      "flaxGrainDropVar": 2
+    },
+    "ripple-advanced-*": { 
+      "rippleDuration": 0.5,
+      "rippleAmount": 4,
+      "flaxSeedDropAvg": 2.5,
+      "flaxGrainDropAvg": 12,
+      "flaxGrainDropVar": 2
+    },
+    "ripple-*": {
+      "handbook": {
+        "groupBy": ["ripple-*"]
+      }
+    }
+  },
+  "creativeinventory": {
+    "general": [ "*-east" ],
+    "decorative": [ "*-east" ],
+    "mechanics": [ "*-east" ]
+  },
+  "shapebytype": {
+    "*-north": { "base": "block/tool/ripple/ripple", "rotateY": 0 },
+    "*-east": { "base": "block/tool/ripple/ripple", "rotateY": 270 },
+	"*-south": { "base": "block/tool/ripple/ripple", "rotateY": 180 },
+	"*-west": { "base": "block/tool/ripple/ripple", "rotateY": 90 }
+  },
+  "texturesByType": {
+    "ripple-primitive-*": {
+      "side":      { "base": "rudiments:block/tool/ripple/side" },
+      "top":       { "base": "rudiments:block/tool/ripple/top" },
+      "bladeside": { "base": "rudiments:block/tool/ripple/bladeside" },
+      "blade":     { "base": "rudiments:block/tool/ripple/blade-wood" }
+    },
+    "ripple-simple-*": {
+      "side":      { "base": "rudiments:block/tool/ripple/side" },
+      "top":       { "base": "rudiments:block/tool/ripple/top" },
+      "bladeside": { "base": "rudiments:block/tool/ripple/bladeside" },
+      "blade":     { "base": "rudiments:block/tool/ripple/blade-copper" }
+    },
+    "ripple-advanced-*": {
+      "side":      { "base": "rudiments:block/tool/ripple/side" },
+      "top":       { "base": "rudiments:block/tool/ripple/top" },
+      "bladeside": { "base": "rudiments:block/tool/ripple/bladeside" },
+      "blade":     { "base": "rudiments:block/tool/ripple/blade-iron" }
+    }
+  },
+  "blockmaterial": "Wood",
+  "materialDensity": 600,
+  "replaceable": 600,
+  "resistance": 1.5,
+  "maxStackSize": 1,
+  "lightAbsorption": 1,
+  "sidesolid": {
+    "all": false,
+    "down": true
+  },
+  "sideopaque": {
+    "all": false,
+    "down": true
+  },
+  "sideao": {
+    "all": false,
+    "down": true
+  },
+  "emitsideao": {
+    "all": false,
+    "down": true
+  },
+  "collisionSelectionBoxesByType": {
+    "*-north": [ { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875, "rotateY": 0}, { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 } ],
+    "*-east": [ { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875, "rotateY": 270 }, { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 } ],
+    "*-south": [ { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875, "rotateY": 180 }, { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 } ],
+    "*-west": [ { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875, "rotateY": 90 }, { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 } ]
+  },
+  "sounds": {
+    "place": "game:block/planks",
+    "walk": "game:walk/wood",
+    "hit": "game:block/planks",
+    "break": "game:block/planks"
+  },
+  "combustibleProps": {
+    "burnTemperature": 800,
+    "burnDuration": 60
+  },
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldRightReadyAnimation": "heldblockready",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "tpHandTransform": {
+    "translation": {
+      "x": -1.7,
+      "y": -0.95,
+      "z": -0.69
+    },
+    "rotation": {
+      "x": 12,
+      "y": 14,
+      "z": -81
+    },
+    "scale": 0.36
+  }
+}

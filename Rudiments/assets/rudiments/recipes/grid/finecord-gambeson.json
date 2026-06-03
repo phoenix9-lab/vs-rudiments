@@ -1,0 +1,36 @@
+[
+  {
+    "code": "finecord-gambeson-head",
+    "ingredientPattern": "TLT,L_L",
+    "recipeGroup": 10,
+    "ingredients": {
+      "L": { "type": "block", "code": "game:linen-*", "quantity": 1 },
+      "T": { "type": "item", "code": "rudiments:finecord", "quantity": 1 }
+    },
+    "width": 3,
+    "height": 2,
+    "output": {
+      "type": "item",
+      "code": "game:armor-head-sewn-linen",
+      "quantity": 1,
+      "attributes": { "durabilityBonus": 200 }
+    }
+  },
+  {
+    "code": "finecord-gambeson-legs",
+    "ingredientPattern": "LLL,L_L,T_T",
+    "recipeGroup": 10,
+    "ingredients": {
+      "L": { "type": "block", "code": "game:linen-*", "quantity": 1 },
+      "T": { "type": "item", "code": "rudiments:finecord", "quantity": 1 }
+    },
+    "width": 3,
+    "height": 3,
+    "output": {
+      "type": "item",
+      "code": "game:armor-legs-sewn-linen",
+      "quantity": 1,
+      "attributes": { "durabilityBonus": 200 }
+    }
+  }
+]

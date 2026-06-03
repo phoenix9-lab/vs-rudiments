@@ -1,0 +1,30 @@
+[
+  {
+    "comment": "FiberQuality behavior on vanilla flax fibers — quality tooltip on all fiber types",
+    "file": "game:itemtypes/resource/flaxfibers",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:FiberQuality" }]
+  },
+  {
+    "comment": "DurabilityBonus behavior on linen armor — fine cord recipes grant durability upgrades",
+    "file": "game:itemtypes/wearable/seraph/armor",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:DurabilityBonus" }]
+  },
+  {
+    "comment": "Switch reedpapyrus to BlockReedsWithSpread so the spread behavior gets ticked",
+    "file": "game:blocktypes/plant/reedpapyrus",
+    "op": "replace",
+    "path": "/class",
+    "value": "rudiments:BlockReedsWithSpread"
+  },
+  {
+    "comment": "All reedpapyrus variants (coopersreed, papyrus, tule, brownsedge) spread via rhizome. The behavior auto-detects water vs soil from each variant's 'habitat' key and spreads as the same block variant.",
+    "file": "game:blocktypes/plant/reedpapyrus",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:RhizomeSpread", "properties": { "spreadChance": 0.03 } }]
+  }
+]

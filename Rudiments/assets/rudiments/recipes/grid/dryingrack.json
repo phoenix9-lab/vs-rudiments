@@ -1,0 +1,24 @@
+[
+  {
+	"ingredientPattern": "SRS,SSS",
+	"ingredients": {
+	  "S": {
+		"type": "item",
+		"code": "game:stick",
+		"quantity": 2
+	  },
+	  "R": {
+		"type": "item",
+		"code": "game:rope",
+		"quantity": 2
+	  }
+	},
+	"width": 3,
+	"height": 2,
+	"output": {
+	"type": "block",
+	"code": "dryingrack-east",
+	"quantity": 1
+	}
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "ingredientPattern": "SLS,NBN",
+    "ingredients": {
+      "S": { "type": "item", "code": "game:stick", "quantity": 2 },
+      "L": { "type": "item", "code": "game:plank-*", "quantity": 1 },
+      "N": { "type": "item", "code": "game:metalnailsandstrips-copper", "quantity": 1 },
+      "B": { "type": "item", "code": "game:rod-copper", "quantity": 1 }
+    },
+    "width": 3,
+    "height": 2,
+    "output": { "type": "block", "code": "oilpress", "quantity": 1 }
+  }
+]

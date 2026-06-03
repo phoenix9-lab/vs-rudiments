@@ -1,0 +1,31 @@
+{
+  "code": "linseedoil",
+  "textures": {
+    "linseedoil": { "base": "item/resource/linseedoil" }
+  },
+  "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
+  "nutritionProps": {
+    "foodcategory": "Dairy",
+    "saturation": 60,
+    "health": 0
+  },
+  "attributes": {
+    "handbook": {
+      "extraSections": [
+        { "title": "rudiments:item-handbooktitle-linseedoil", "text": "rudiments:item-handbooktext-linseedoil" }
+      ]
+    }
+  },
+  "maxstacksize": 64,
+  "materialDensity": 600,
+  "combustibleProps": {
+    "burnTemperature": 800,
+    "burnDuration": 12
+  },
+  "guiTransform": {
+    "translation": { "x": 0, "y": 0, "z": 0 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+    "scale": 2.6
+  }
+}

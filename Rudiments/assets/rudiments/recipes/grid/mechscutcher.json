@@ -1,0 +1,14 @@
+[
+  {
+    "ingredientPattern": "IBI,PHP,P_P",
+    "ingredients": {
+      "I": { "type": "item", "code": "game:metalnailsandstrips-iron", "quantity": 1 },
+      "B": { "type": "item", "code": "game:rod-iron", "quantity": 1 },
+      "P": { "type": "item", "code": "game:plank-*", "quantity": 1 },
+      "H": { "type": "item", "code": "game:hammer-*", "isTool": true }
+    },
+    "width": 3,
+    "height": 3,
+    "output": { "type": "block", "code": "mechscutcher", "quantity": 1 }
+  }
+]

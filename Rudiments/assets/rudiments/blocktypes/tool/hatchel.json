@@ -1,0 +1,125 @@
+{
+  "code": "hatchel",
+  "class": "rudiments:BlockHatchel",
+  "behaviors": [
+    { "name": "UnstableFalling" },
+    { "name": "HorizontalOrientable",
+      "propertiesByType": {
+        "hatchel-primitive-*": { "dropBlockFace": "east", "drop": { "type": "block", "code": "hatchel-primitive-east" } },
+        "hatchel-simple-*": { "dropBlockFace": "east", "drop": { "type": "block", "code": "hatchel-simple-east" } },
+        "hatchel-advanced-*": { "dropBlockFace": "east", "drop": { "type": "block", "code": "hatchel-advanced-east" } }
+      }
+    }
+  ],
+  "variantgroups": [
+	{ "code": "type", "states": [ "primitive", "simple", "advanced" ] },
+	{ "code": "side", "loadFromProperties": "abstract/horizontalorientation" }
+  ],
+  "attributesByType": {
+    "hatchel-primitive-*": { 
+      "hatchelDuration": 0.5,
+      "hatchelAmount": 1,
+      "flaxDropAvg": 5,
+      "flaxDropVar": 2
+    },
+    "hatchel-simple-*": { 
+      "hatchelDuration": 0.5,
+      "hatchelAmount": 2,
+      "flaxDropAvg": 6,
+      "flaxDropVar": 1
+    },
+    "hatchel-advanced-*": { 
+      "hatchelDuration": 0.5,
+      "hatchelAmount": 4,
+      "flaxDropAvg": 8,
+      "flaxDropVar": 1
+    },
+    "hatchel-*": {
+      "handbook": {
+        "groupBy": ["hatchel-*"]
+      }
+    }
+  },
+  "creativeinventory": {
+    "general": [ "*-east" ],
+    "decorative": [ "*-east" ],
+    "mechanics": [ "*-east" ]
+  },
+  "shapebytype": {
+    "*-north": { "base": "block/tool/hatchel/hatchel", "rotateY": 0 },
+    "*-east": { "base": "block/tool/hatchel/hatchel", "rotateY": 270 },
+	"*-south": { "base": "block/tool/hatchel/hatchel", "rotateY": 180 },
+	"*-west": { "base": "block/tool/hatchel/hatchel", "rotateY": 90 }
+  },
+  "texturesByType": {
+    "hatchel-primitive-*": {
+      "side": { "base": "game:block/wood/bark/oak" },
+	  "top": { "base": "game:block/wood/treetrunk/oak" },
+	  "blade": { "base": "game:block/wood/oak" }
+    },
+    "hatchel-simple-*": {
+      "side": { "base": "game:block/wood/bark/oak" },
+	  "top": { "base": "game:block/wood/treetrunk/oak" },
+	  "blade": { "base": "game:block/metal/ingot/copper" }
+    },
+    "hatchel-advanced-*": {
+      "side": { "base": "game:block/wood/bark/oak" },
+	  "top": { "base": "game:block/wood/treetrunk/oak" },
+	  "blade": { "base": "game:block/metal/ingot/iron" }
+    }
+  },
+  "blockmaterial": "Wood",
+  "materialDensity": 600,
+  "replaceable": 600,
+  "resistance": 1.5,
+  "maxStackSize": 1,
+  "lightAbsorption": 1,
+  "sidesolid": {
+    "all": false,
+    "down": true
+  },
+  "sideopaque": {
+    "all": false,
+    "down": true
+  },
+  "sideao": {
+    "all": false,
+    "down": true
+  },
+  "emitsideao": {
+    "all": false,
+    "down": true
+  },
+  "collisionSelectionBoxesByType": {
+    "*-north": [ { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875, "rotateY": 0}, { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 } ],
+    "*-east": [ { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875, "rotateY": 270 }, { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 } ],
+    "*-south": [ { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875, "rotateY": 180 }, { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 } ],
+    "*-west": [ { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875, "rotateY": 90 }, { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 } ]
+  },
+  "sounds": {
+    "place": "game:block/planks",
+    "walk": "game:walk/wood",
+    "hit": "game:block/planks",
+    "break": "game:block/planks"
+  },
+  "combustibleProps": {
+    "burnTemperature": 800,
+    "burnDuration": 60
+  },
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldRightReadyAnimation": "heldblockready",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "tpHandTransform": {
+    "translation": {
+      "x": -1.7,
+      "y": -0.95,
+      "z": -0.69
+    },
+    "rotation": {
+      "x": 12,
+      "y": 14,
+      "z": -81
+    },
+    "scale": 0.36
+  }
+}

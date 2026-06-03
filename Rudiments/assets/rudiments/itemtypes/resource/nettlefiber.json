@@ -1,0 +1,27 @@
+{
+  "code": "nettlefiber",
+  "behaviors": [
+    { "name": "rudiments:FiberQuality" }
+  ],
+  "shape": { "base": "item/resource/flax/rippled" },
+  "textures": {
+    "flaxbundle": { "base": "item/resource/nettlefiber" },
+    "string": { "base": "game:item/tool/material/string" }
+  },
+  "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
+  "attributes": {
+    "handbook": {
+      "extraSections": [
+        { "title": "rudiments:item-handbooktitle-nettlefiber", "text": "rudiments:item-handbooktext-nettlefiber" }
+      ]
+    }
+  },
+  "maxstacksize": 128,
+  "materialDensity": 100,
+  "guiTransform": {
+    "translation": { "x": 2, "y": 2, "z": 0 },
+    "rotation": { "x": -56, "y": -41, "z": -180 },
+    "origin": { "x": 0.5, "y": 0, "z": 0.5 },
+    "scale": 2.4
+  }
+}

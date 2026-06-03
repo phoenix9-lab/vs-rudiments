@@ -1,0 +1,143 @@
+{
+  "code": "break",
+  "class": "rudiments:BlockBreak",
+  "entityClass": "rudiments:BlockEntityBreak",
+  "behaviors": [
+    { "name": "UnstableFalling" },
+    { "name": "HorizontalOrientable",
+      "propertiesByType": {
+        "break-primitive-*": { "dropBlockFace": "east", "drop": { "type": "block", "code": "break-primitive-east" } },
+        "break-simple-*": { "dropBlockFace": "east", "drop": { "type": "block", "code": "break-simple-east" } },
+        "break-advanced-*": { "dropBlockFace": "east", "drop": { "type": "block", "code": "break-advanced-east" } }
+      }
+    }
+  ],
+  "entityBehaviors": [
+    { 
+      "name": "Animatable"
+    }
+  ],
+  "variantgroups": [
+	{ "code":"type", "states": [ "primitive", "simple", "advanced" ] },
+	{ "code":"side", "loadFromProperties": "abstract/horizontalorientation" }
+  ],
+  "attributesByType": {
+    "break-primitive-*": { 
+      "breakDuration": 0.5,
+      "breakAmount": 1
+    },
+    "break-simple-*": {
+      "breakDuration": 0.5,
+      "breakAmount": 2
+    },
+    "break-advanced-*": {
+      "breakDuration": 0.5,
+      "breakAmount": 4
+    },
+    "break-*": {
+      "handbook": {
+        "groupBy": ["break-*"]
+      }
+    }
+  },
+  "creativeinventory": {
+    "general": [ "*-east" ],
+    "decorative": [ "*-east" ],
+    "mechanics": [ "*-east" ]
+  },
+  "shapebytype": {
+    "break-primitive-*": {
+      "base": "block/tool/break/primitive",
+      "rotateYByType": {
+        "*-north": 0,
+        "*-east": 270,
+	    "*-south": 180,
+	    "*-west": 90
+      }
+    },
+    "break-simple-*": {
+      "base": "block/tool/break/metal",
+      "rotateYByType": {
+        "*-north": 0,
+        "*-east": 270,
+	    "*-south": 180,
+	    "*-west": 90
+      }
+    },
+    "break-advanced-*": {
+      "base": "block/tool/break/metal",
+      "rotateYByType": {
+        "*-north": 0,
+        "*-east": 270,
+	    "*-south": 180,
+	    "*-west": 90
+      }
+    }
+  },
+  "texturesByType": {
+	"break-primitive-*": {
+	  "aged": { "base": "game:block/wood/debarked/aged" },
+	  "oak": { "base": "game:block/wood/debarked/oak" }
+	},
+	"break-simple-*": {
+	  "aged": { "base": "game:block/wood/debarked/aged" },
+	  "oak": { "base": "game:block/wood/debarked/oak" },
+	  "metal": { "base": "game:block/metal/ingot/copper" }
+	},
+	"break-advanced-*": {
+	  "aged": { "base": "game:block/wood/debarked/aged" },
+	  "oak": { "base": "game:block/wood/debarked/oak" },
+      "metal": { "base": "game:block/metal/ingot/iron" }
+	}
+  },
+  "blockmaterial": "Wood",
+  "materialDensity": 600,
+  "replaceable": 600,
+  "resistance": 1.5,
+  "maxStackSize": 1,
+  "lightAbsorption": 1,
+  "sidesolid": {
+    "all": false
+  },
+  "sideopaque": {
+    "all": false
+  },
+  "sideao": {
+    "all": false
+  },
+  "emitsideao": {
+    "all": false
+  },
+  "collisionSelectionBoxesByType": {
+    "*-north": [ { "x1": 0.0625, "y1": 0, "z1": 0.375, "x2": 0.9375, "y2": 1, "z2": 0.625, "rotateY": 0} ],
+    "*-east": [ { "x1": 0.0625, "y1": 0, "z1": 0.375, "x2": 0.9375, "y2": 1, "z2": 0.625, "rotateY": 270 } ],
+    "*-south": [ { "x1": 0.0625, "y1": 0, "z1": 0.375, "x2": 0.9375, "y2": 1, "z2": 0.625, "rotateY": 180 } ],
+    "*-west": [ { "x1": 0.0625, "y1": 0, "z1": 0.375, "x2": 0.9375, "y2": 1, "z2": 0.625, "rotateY": 90 } ]
+  },
+  "sounds": {
+    "place": "game:block/planks",
+    "walk": "game:walk/wood",
+    "hit": "game:block/planks",
+    "break": "game:block/planks"
+  },
+  "combustibleProps": {
+    "burnTemperature": 600,
+    "burnDuration": 20
+  },
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldRightReadyAnimation": "heldblockready",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "tpHandTransform": {
+    "translation": {
+      "x": -1.7,
+      "y": -0.95,
+      "z": -0.69
+    },
+    "rotation": {
+      "x": 12,
+      "y": 14,
+      "z": -81
+    },
+    "scale": 0.36
+  }
+}

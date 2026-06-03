@@ -1,0 +1,84 @@
+{
+  "code": "nettlebundle",
+  "class": "rudiments:ItemFieldRettableBundle",
+  "variantgroups": [
+    {
+      "code": "type",
+      "states": [ "unprocessed", "cured", "retted", "dried", "broken", "scutched" ]
+    }
+  ],
+  "shapeByType": {
+    "nettlebundle-unprocessed": { "base": "item/resource/flax/unprocessed" },
+    "nettlebundle-cured":       { "base": "item/resource/flax/rippled" },
+    "nettlebundle-retted":      { "base": "item/resource/flax/rippled" },
+    "nettlebundle-dried":       { "base": "item/resource/flax/rippled" },
+    "nettlebundle-broken":      { "base": "item/resource/flax/broken" },
+    "nettlebundle-scutched":    { "base": "item/resource/flax/broken" }
+  },
+  "texturesByType": {
+    "nettlebundle-scutched": {
+      "flaxbundle": { "base": "item/resource/nettle/broken" },
+      "string": { "base": "game:item/tool/material/string" }
+    },
+    "nettlebundle-*": {
+      "flaxbundle": { "base": "item/resource/nettle/{type}" },
+      "string": { "base": "game:item/tool/material/string" }
+    }
+  },
+  "creativeinventory": {
+    "general": [ "*" ],
+    "items": [ "*" ]
+  },
+  "behaviors": [
+    { "name": "rudiments:FiberQuality" },
+    {
+      "name": "GroundStorable",
+      "properties": {
+        "layout": "Quadrants",
+        "collisionBox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.125, "z2": 1 }
+      }
+    }
+  ],
+  "attributes": {
+    "handbook": {
+      "groupBy": [ "nettlebundle-*" ],
+      "extraSections": [
+        {
+          "title": "rudiments:item-handbooktitle-nettlebundle-{type}",
+          "text": "rudiments:item-handbooktext-nettlebundle-{type}"
+        }
+      ]
+    },
+    "displaycaseable": true,
+    "shelvable": true,
+    "onDisplayTransform": {
+      "rotation": { "x": 0, "y": -90, "z": 0 },
+      "origin": { "x": 0.5, "y": 0, "z": 0.5 },
+      "scale": 0.55
+    },
+    "groundStorageTransform": {
+      "rotation": { "x": 0, "y": 60, "z": 0 },
+      "origin": { "x": 0.5, "y": 0, "z": 0.5 }
+    }
+  },
+  "maxstacksize": 64,
+  "materialDensity": 160,
+  "guiTransform": {
+    "translation": { "x": 2, "y": 2, "z": 0 },
+    "rotation": { "x": -56, "y": -41, "z": -180 },
+    "origin": { "x": 0.5, "y": 0, "z": 0.5 },
+    "scale": 2
+  },
+  "tpHandTransform": {
+    "translation": { "x": -1, "y": -0, "z": -0.8 },
+    "rotation": { "x": -8, "y": -117, "z": 3 },
+    "origin": { "x": 0.5, "y": 0, "z": 0.5 },
+    "scale": 0.68
+  },
+  "groundTransform": {
+    "translation": { "x": 0, "y": 0, "z": 0 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "origin": { "x": 0.5, "y": 0, "z": 0.5 },
+    "scale": 4.5
+  }
+}

@@ -1,0 +1,51 @@
+[
+  {
+    "comment": "Add nettleleaves to vanilla soup (vegetable-base slot)",
+    "file": "game:recipes/cooking/soup",
+    "op": "addmerge",
+    "path": "/ingredients/1/validStacks",
+    "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable base 1/*" }]
+  },
+  {
+    "comment": "Add nettleleaves to vanilla soup (vegetable-extra slot)",
+    "file": "game:recipes/cooking/soup",
+    "op": "addmerge",
+    "path": "/ingredients/2/validStacks",
+    "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable base 2/*" }]
+  },
+  {
+    "comment": "Add nettleleaves to vanilla soup (vegetable-extra2 slot)",
+    "file": "game:recipes/cooking/soup",
+    "op": "addmerge",
+    "path": "/ingredients/3/validStacks",
+    "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable base 3/*" }]
+  },
+  {
+    "comment": "Add nettleleaves to vanilla vegetablestew (vegetable-base slot)",
+    "file": "game:recipes/cooking/vegetablestew",
+    "op": "addmerge",
+    "path": "/ingredients/0/validStacks",
+    "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable 1/*" }]
+  },
+  {
+    "comment": "Add nettleleaves to vanilla vegetablestew (vegetable-base2 slot)",
+    "file": "game:recipes/cooking/vegetablestew",
+    "op": "addmerge",
+    "path": "/ingredients/1/validStacks",
+    "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable 2/*" }]
+  },
+  {
+    "comment": "Add nettleleaves to vanilla vegetablestew (vegetable-base3 slot)",
+    "file": "game:recipes/cooking/vegetablestew",
+    "op": "addmerge",
+    "path": "/ingredients/2/validStacks",
+    "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable 3/*" }]
+  },
+  {
+    "comment": "Add nettleleaves to vanilla vegetablestew (vegetable-base4 slot)",
+    "file": "game:recipes/cooking/vegetablestew",
+    "op": "addmerge",
+    "path": "/ingredients/3/validStacks",
+    "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable 4/*" }]
+  }
+]

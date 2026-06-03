@@ -1,0 +1,63 @@
+[
+  {
+	"file": "game:blocktypes/plant/crop/flax",
+	"op": "replace",
+	"path": "/class",
+	"value": "rudiments:BlockCropFlax"
+  },
+  {
+	"file": "game:blocktypes/plant/crop/flax",
+	"op": "replace",
+	"path": "/dropsByType",
+	"value": {
+	  "*-1": [
+		{ "type": "item", "code": "game:seeds-flax", "quantity": { "avg": 0.5 } }
+	  ],
+	  "*-2": [
+		{ "type": "item", "code": "game:seeds-flax", "quantity": { "avg": 0.7 } }
+	  ],
+	  "*-3": [
+		{ "type": "item", "code": "rudiments:flaxbundle-unprocessed", "quantity": { "avg": 0.7 } },
+		{ "type": "item", "code": "game:seeds-flax", "quantity": { "avg": 0.3 } }
+	  ],
+	  "*-4": [
+		{ "type": "item", "code": "rudiments:flaxbundle-unprocessed", "quantity": { "avg": 0.9 } },
+		{ "type": "item", "code": "game:seeds-flax", "quantity": { "avg": 0.3 } }
+	  ],
+	  "*-5": [
+		{ "type": "item", "code": "rudiments:flaxbundle-unprocessed", "quantity": { "avg": 1.1 } },
+		{ "type": "item", "code": "game:seeds-flax", "quantity": { "avg": 0.4 } }
+	  ],
+	  "*-6": [
+		{ "type": "item", "code": "rudiments:flaxbundle-unprocessed", "quantity": { "avg": 1.0 } },
+		{ "type": "item", "code": "game:seeds-flax", "quantity": { "avg": 0.6 } }
+	  ],
+	  "*-7": [
+		{ "type": "item", "code": "rudiments:flaxbundle-unprocessed", "quantity": { "avg": 0.8 } },
+		{ "type": "item", "code": "game:seeds-flax", "quantity": { "avg": 0.9 } }
+	  ],
+	  "*-8": [
+		{ "type": "item", "code": "rudiments:flaxbundle-unprocessed", "quantity": { "avg": 0.4 } },
+		{ "type": "item", "code": "game:seeds-flax", "quantity": { "avg": 1.2 } },
+		{ "type": "item", "code": "game:grain-flax", "quantity": { "avg": 2.0, "var": 1.0 } }
+	  ],
+	  "*-9": [
+		{ "type": "item", "code": "game:seeds-flax", "quantity": { "avg": 1.2 } },
+		{ "type": "item", "code": "game:grain-flax", "quantity": { "avg": 3.0, "var": 1.0 } }
+	  ],
+	  "*": [
+		{ "type": "item", "code": "game:seeds-flax", "quantity": { "avg": 0.7 } }
+	  ]
+	},
+	"side": "server"
+  },
+  {
+    "file": "game:blocktypes/plant/crop/flax",
+    "op": "addmerge",
+    "path": "/cropProps",
+    "value": {
+      "coldDamageRipeMul": 0.5,
+      "damageGrowthStuntMul": 0.0
+	}
+  }
+]

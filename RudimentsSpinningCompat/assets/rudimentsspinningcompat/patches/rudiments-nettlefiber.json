@@ -1,0 +1,19 @@
+[
+  {
+    "comment": "Add spinningProps to rudiments:nettlefiber so it can be spun on the Immersive Fibercraft Spinning Wheel. 2 nettle fiber → 1 flax twine in 4 seconds (same ratio as vanilla flax fibers). Only applies when both rudiments and spinningwheel are loaded.",
+    "op": "add",
+    "path": "/attributes/spinningProps",
+    "value": {
+      "outputType": "game:flaxtwine",
+      "outputQuantity": 1,
+      "inputQuantity": 2,
+      "spinTime": 4
+    },
+    "file": "rudiments:itemtypes/resource/nettlefiber.json",
+    "side": "Server",
+    "dependsOn": [
+      { "modid": "rudiments" },
+      { "modid": "spinningwheel" }
+    ]
+  }
+]

@@ -1,0 +1,153 @@
+[
+  {
+	"ingredientPattern": "KAV,FSR,SLS",
+	"ingredients": {
+	  "S": {
+		"type": "item",
+		"code": "game:stick",
+		"quantity": 2
+	  },
+	  "F": {
+		"type": "item",
+		"code": "game:flint",
+		"quantity": 1
+	  },
+	  "K": {
+		"type": "item",
+		"code": "game:knife-generic-*",
+		"isTool": true
+	  },
+	  "L": {
+		"type": "block",
+		"code": "game:log-*",
+		"allowedVariants": ["placed-birch-ud", "placed-oak-ud", "placed-maple-ud", "placed-pine-ud", "placed-acacia-ud", "placed-kapok-ud", "placed-redwood-ud", "placed-larch-ud", "placed-baldcypress-ud", "placed-walnut-ud", "placed-purpleheart-ud", "placed-ebony-ud"]
+	  },
+	  "A": {
+		"type": "item",
+		"code": "game:axe-*",
+		"isTool": true
+	  },
+	  "R": {
+		"type": "item",
+		"code": "game:resin",
+		"quantity": 1
+	  },
+	  "V": {
+	    "type": "item",
+		"code": "game:fat",
+		"quantity": 1
+	  }
+	},
+	"width": 3,
+	"height": 3,
+	"output": {
+	"type": "block",
+	"code": "break-primitive-east",
+	"quantity": 1
+	}
+  },
+  {
+	"ingredientPattern": "KAV,NBR,SLS",
+	"ingredients": {
+	  "S": {
+		"type": "item",
+		"code": "game:stick",
+		"quantity": 2
+	  },
+	  "N": {
+		"type": "item",
+		"code": "game:metalnailsandstrips-copper",
+		"quantity": 1
+	  },
+	  "B": {
+		"type": "item",
+		"code": "game:rod-copper",
+		"quantity": 1
+	  },
+	  "K": {
+		"type": "item",
+		"code": "game:knife-generic-*",
+		"isTool": true
+	  },
+	  "L": {
+		"type": "block",
+		"code": "game:log-*",
+		"allowedVariants": ["placed-birch-ud", "placed-oak-ud", "placed-maple-ud", "placed-pine-ud", "placed-acacia-ud", "placed-kapok-ud", "placed-redwood-ud", "placed-larch-ud", "placed-baldcypress-ud", "placed-walnut-ud", "placed-purpleheart-ud", "placed-ebony-ud"]
+	  },
+	  "A": {
+		"type": "item",
+		"code": "game:axe-*",
+		"isTool": true
+	  },
+	  "R": {
+		"type": "item",
+		"code": "game:resin",
+		"quantity": 1
+	  },
+	  "V": {
+	    "type": "item",
+		"code": "game:fat",
+		"quantity": 1
+	  }
+	},
+	"width": 3,
+	"height": 3,
+	"output": {
+	"type": "block",
+	"code": "break-simple-east",
+	"quantity": 1
+	}
+  },
+  {
+	"ingredientPattern": "KAV,NBR,SLS",
+	"ingredients": {
+	  "S": {
+		"type": "item",
+		"code": "game:stick",
+		"quantity": 2
+	  },
+	  "N": {
+		"type": "item",
+		"code": "game:metalnailsandstrips-iron",
+		"quantity": 1
+	  },
+	  "B": {
+		"type": "item",
+		"code": "game:rod-iron",
+		"quantity": 1
+	  },
+	  "K": {
+		"type": "item",
+		"code": "game:knife-generic-*",
+		"isTool": true
+	  },
+	  "L": {
+		"type": "block",
+		"code": "game:log-*",
+		"allowedVariants": ["placed-birch-ud", "placed-oak-ud", "placed-maple-ud", "placed-pine-ud", "placed-acacia-ud", "placed-kapok-ud", "placed-redwood-ud", "placed-larch-ud", "placed-baldcypress-ud", "placed-walnut-ud", "placed-purpleheart-ud", "placed-ebony-ud"]
+	  },
+	  "A": {
+		"type": "item",
+		"code": "game:axe-*",
+		"isTool": true
+	  },
+	  "R": {
+		"type": "item",
+		"code": "game:resin",
+		"quantity": 1
+	  },
+	  "V": {
+	    "type": "item",
+		"code": "game:fat",
+		"quantity": 1
+	  }
+	},
+	"width": 3,
+	"height": 3,
+	"output": {
+	"type": "block",
+	"code": "break-advanced-east",
+	"quantity": 1
+	}
+  }
+]

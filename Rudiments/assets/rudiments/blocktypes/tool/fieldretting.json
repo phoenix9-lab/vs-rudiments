@@ -1,0 +1,58 @@
+{
+  "code": "fieldretting",
+  "class": "rudiments:BlockFieldRetting",
+  "entityClass": "rudiments:BlockEntityFieldRetting",
+  "behaviors": [
+    { "name": "HorizontalOrientable" }
+  ],
+  "variantgroups": [
+    { "code": "side", "loadFromProperties": "abstract/horizontalorientation" }
+  ],
+  "attributes": {
+    "minRetHours": 72,
+    "fineChance": 0.7,
+    "fineDelayMinHours": 24,
+    "fineDelayMaxHours": 72,
+    "fineWindowHours": 36,
+    "standardDelayHours": 96,
+    "standardHoldHours": 168,
+    "dryStallRainfall": 0.05,
+    "handbook": { "groupBy": [ "fieldretting-*" ] }
+  },
+  "creativeinventory": {
+    "general": [ "*-north" ]
+  },
+  "shape": {
+    "base": "block/tool/fieldretting/fieldretting",
+    "rotateYByType": {
+      "*-north": 0,
+      "*-east": 270,
+      "*-south": 180,
+      "*-west": 90
+    }
+  },
+  "textures": {
+    "flaxbundle": { "base": "item/resource/flax/rippled" }
+  },
+  "blockmaterial": "Plant",
+  "materialDensity": 160,
+  "replaceable": 600,
+  "resistance": 0.5,
+  "maxStackSize": 4,
+  "lightAbsorption": 0,
+  "sidesolid": { "all": false },
+  "sideopaque": { "all": false },
+  "sideao": { "all": false },
+  "emitsideao": { "all": false },
+  "collisionSelectionBoxes": [ { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.25, "z2": 1 } ],
+  "sounds": {
+    "place": "game:block/grass",
+    "walk": "game:walk/grass",
+    "hit": "game:block/grass",
+    "break": "game:block/grass"
+  },
+  "combustibleProps": {
+    "burnTemperature": 500,
+    "burnDuration": 8
+  }
+}

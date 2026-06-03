@@ -1,0 +1,21 @@
+{
+  "code": "finecord",
+  "textures": {
+    "finecord": { "base": "item/resource/finecord" }
+  },
+  "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
+  "attributes": {
+    "handbook": {
+      "extraSections": [
+        { "title": "rudiments:item-handbooktitle-finecord", "text": "rudiments:item-handbooktext-finecord" }
+      ]
+    }
+  },
+  "maxstacksize": 64,
+  "materialDensity": 200,
+  "guiTransform": {
+    "rotation": { "x": -56, "y": -41, "z": -180 },
+    "origin": { "x": 0.5, "y": 0, "z": 0.5 },
+    "scale": 2.4
+  }
+}

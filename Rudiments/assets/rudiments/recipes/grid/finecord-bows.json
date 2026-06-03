@@ -1,0 +1,56 @@
+[
+  {
+    "code": "finecord-bow-crude",
+    "ingredientPattern": "_ST,S_T,_ST",
+    "ingredients": {
+      "S": { "type": "item", "code": "game:stick" },
+      "T": { "type": "item", "code": "rudiments:finecord" }
+    },
+    "width": 3,
+    "height": 3,
+    "output": {
+      "type": "item",
+      "code": "game:bow-crude",
+      "quantity": 1,
+      "attributes": { "durabilityBonus": 50 }
+    }
+  },
+  {
+    "code": "finecord-bow-simple",
+    "ingredientPattern": "_ST,S_T,_ST",
+    "ingredients": {
+      "S": { "type": "item", "code": "game:stick" },
+      "T": { "type": "item", "code": "rudiments:finecord" }
+    },
+    "width": 3,
+    "height": 3,
+    "output": {
+      "type": "item",
+      "code": "game:bow-simple",
+      "quantity": 1,
+      "attributes": { "durabilityBonus": 100 }
+    }
+  },
+  {
+    "code": "finecord-bow-long",
+    "ingredientPattern": "_FT,BLT,_FT",
+    "recipeGroup": 3,
+    "ingredients": {
+      "B": { "type": "item", "code": "game:bowstave-long-dry" },
+      "T": { "type": "item", "code": "rudiments:finecord" },
+      "L": { "type": "item", "code": "game:leather-normal-plain" },
+      "F": { "type": "item", "code": "{coating}" }
+    },
+    "allowedVariants": {
+      "coating": [ "game:fat-rendered", "game:resin", "game:beeswax" ]
+    },
+    "width": 3,
+    "height": 3,
+    "output": {
+      "type": "item",
+      "code": "game:bow-long",
+      "quantity": 1,
+      "attributes": { "durabilityBonus": 150 }
+    }
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "code": "finefibers",
+  "textures": {
+    "finefibers": { "base": "item/resource/finefibers" }
+  },
+  "behaviors": [ { "name": "rudiments:FiberQuality" } ],
+  "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
+  "attributes": {
+    "handbook": {
+      "extraSections": [
+        { "title": "rudiments:item-handbooktitle-finefibers", "text": "rudiments:item-handbooktext-finefibers" }
+      ]
+    }
+  },
+  "maxstacksize": 128,
+  "materialDensity": 80,
+  "guiTransform": {
+    "rotation": { "x": -56, "y": -41, "z": -180 },
+    "origin": { "x": 0.5, "y": 0, "z": 0.5 },
+    "scale": 2.4
+  }
+}

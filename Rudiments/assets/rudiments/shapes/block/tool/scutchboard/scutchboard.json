@@ -1,0 +1,74 @@
+{
+	"editor": {
+		"collapsedPaths": "",
+		"allAngles": false,
+		"entityTextureMode": false
+	},
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textures": {
+		"side": "rudiments:block/tool/scutchboard/side",
+		"top": "rudiments:block/tool/scutchboard/top",
+		"blade": "rudiments:block/tool/scutchboard/blade-wood"
+	},
+	"elements": [
+		{
+			"name": "Origin",
+			"from": [ 8.0, 0.0, 8.0 ],
+			"to": [ 8.0, 0.0, 8.0 ],
+			"rotationOrigin": [ 8.0, 0.0, 8.0 ],
+			"faces": {
+				"north": { "texture": "#null", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+				"east": { "texture": "#null", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+				"south": { "texture": "#null", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+				"west": { "texture": "#null", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+				"up": { "texture": "#null", "uv": [ 0.0, 0.0, 0.5, 0.5 ] },
+				"down": { "texture": "#null", "uv": [ 0.0, 0.0, 0.5, 0.5 ] }
+			},
+			"children": [
+				{
+					"name": "Log",
+					"from": [ -8.0, 0.0, -8.0 ],
+					"to": [ 8.0, 11.0, 8.0 ],
+					"rotationOrigin": [ -8.0, 0.0, -8.0 ],
+					"faces": {
+						"north": { "texture": "#side", "uv": [ 0.0, 4.0, 16.0, 15.0 ] },
+						"east": { "texture": "#side", "uv": [ 0.0, 4.0, 16.0, 15.0 ] },
+						"south": { "texture": "#side", "uv": [ 0.0, 4.0, 16.0, 15.0 ] },
+						"west": { "texture": "#side", "uv": [ 0.0, 4.0, 16.0, 15.0 ] },
+						"up": { "texture": "#top", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+						"down": { "texture": "#top", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
+					}
+				},
+				{
+					"name": "MountBar",
+					"from": [ -4.0, 11.0, -2.0 ],
+					"to": [ 4.0, 12.0, 2.0 ],
+					"rotationOrigin": [ -4.0, 11.0, -2.0 ],
+					"faces": {
+						"north": { "texture": "#side", "uv": [ 0.0, 0.0, 8.0, 1.0 ] },
+						"east": { "texture": "#side", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+						"south": { "texture": "#side", "uv": [ 0.0, 0.0, 8.0, 1.0 ] },
+						"west": { "texture": "#side", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+						"up": { "texture": "#top", "uv": [ 0.0, 0.0, 8.0, 4.0 ] },
+						"down": { "texture": "#top", "uv": [ 0.0, 0.0, 8.0, 4.0 ] }
+					}
+				},
+				{
+					"name": "Board",
+					"from": [ -4.0, 12.0, -1.0 ],
+					"to": [ 4.0, 18.0, 1.0 ],
+					"rotationOrigin": [ -4.0, 12.0, -1.0 ],
+					"faces": {
+						"north": { "texture": "#blade", "uv": [ 0.0, 0.0, 8.0, 6.0 ] },
+						"east": { "texture": "#side", "uv": [ 0.0, 0.0, 2.0, 6.0 ] },
+						"south": { "texture": "#blade", "uv": [ 0.0, 0.0, 8.0, 6.0 ] },
+						"west": { "texture": "#side", "uv": [ 0.0, 0.0, 2.0, 6.0 ] },
+						"up": { "texture": "#top", "uv": [ 0.0, 0.0, 8.0, 2.0 ] },
+						"down": { "texture": "#top", "uv": [ 0.0, 0.0, 8.0, 2.0 ] }
+					}
+				}
+			]
+		}
+	]
+}

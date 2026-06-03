@@ -1,0 +1,53 @@
+name: Package
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  workflow_dispatch:
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read version
+        id: ver
+        run: |
+          VERSION=$(python3 -c "import json; print(json.load(open('Rudiments/modinfo.json'))['version'])")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Package rudiments
+        run: |
+          V="${{ steps.ver.outputs.version }}"
+          mkdir -p dist staging/rudiments
+          cp Rudiments/modinfo.json    staging/rudiments/
+          cp Rudiments/modicon.png     staging/rudiments/
+          cp Rudiments/Rudiments.dll   staging/rudiments/
+          cp -r Rudiments/assets       staging/rudiments/
+          cd staging/rudiments && zip -r "../../dist/rudiments_${V}.zip" .
+
+      - name: Package compat addon
+        run: |
+          V="${{ steps.ver.outputs.version }}"
+          mkdir -p staging/compat
+          cp RudimentsSpinningCompat/modinfo.json staging/compat/
+          cd staging/compat && zip -r "../../dist/rudimentsspinningcompat_${V}.zip" .
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: rudiments-${{ steps.ver.outputs.version }}
+          path: dist/*.zip
+          if-no-files-found: error
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.ver.outputs.version }}
+          files: dist/*.zip
+          generate_release_notes: true

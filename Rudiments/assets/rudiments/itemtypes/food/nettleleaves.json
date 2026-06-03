@@ -1,0 +1,32 @@
+{
+  "code": "nettleleaves",
+  "textures": {
+    "nettleleaves": { "base": "item/food/nettleleaves" }
+  },
+  "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
+  "nutritionProps": {
+    "foodcategory": "Vegetable",
+    "saturation": 45,
+    "health": -0.5
+  },
+  "attributes": {
+    "foodTags": ["nettle"],
+    "nutritionPropsWhenInMeal": {
+      "satiety": 200,
+      "foodcategory": "Vegetable"
+    },
+    "handbook": {
+      "extraSections": [
+        { "title": "rudiments:item-handbooktitle-nettleleaves", "text": "rudiments:item-handbooktext-nettleleaves" }
+      ]
+    }
+  },
+  "maxstacksize": 64,
+  "materialDensity": 90,
+  "guiTransform": {
+    "translation": { "x": 0, "y": 0, "z": 0 },
+    "rotation": { "x": -30, "y": -45, "z": 0 },
+    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+    "scale": 2.8
+  }
+}

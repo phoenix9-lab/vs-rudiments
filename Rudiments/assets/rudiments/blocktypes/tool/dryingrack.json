@@ -1,0 +1,92 @@
+{
+  "code": "dryingrack",
+  "class": "rudiments:BlockDryingRack",
+  "entityClass": "rudiments:BlockEntityDryingRack",
+  "behaviors": [
+    { "name": "UnstableFalling" },
+    { "name": "Container" },
+    { "name": "HorizontalOrientable",
+      "propertiesByType": {
+        "dryingrack-*": {
+          "dropBlockFace": "east",
+          "drop": { "type": "block", "code": "dryingrack-east" }
+        }
+      }
+    }
+  ],
+  "variantgroups": [
+	{ "code":"side", "loadFromProperties": "abstract/horizontalorientation" }
+  ],
+  "attributes": {
+    "handbook": {
+      "groupBy": ["dryingrack-*"]
+    }
+  },
+  "creativeinventory": {
+    "general": [ "*-east" ],
+    "decorative": [ "*-east" ],
+    "mechanics": [ "*-east" ]
+  },
+  "shape": {
+    "base": "block/tool/dryingrack/dryingrack",
+      "rotateYByType": {
+        "*-north": 0,
+        "*-east": 270,
+	    "*-south": 180,
+	    "*-west": 90
+      }
+  },
+  "textures": {
+	"rope": { "base": "game:item/resource/rope" },
+	"oak": { "base": "game:block/wood/debarked/oak" }
+  },
+  "blockmaterial": "Wood",
+  "materialDensity": 600,
+  "replaceable": 600,
+  "resistance": 1.5,
+  "maxStackSize": 4,
+  "lightAbsorption": 1,
+  "sidesolid": {
+    "all": false
+  },
+  "sideopaque": {
+    "all": false
+  },
+  "sideao": {
+    "all": false
+  },
+  "emitsideao": {
+    "all": false
+  },
+  "collisionSelectionBoxesByType": {
+    "*-north": [ { "x1": 0, "y1": 0, "z1": 0.25, "x2": 1, "y2": 1, "z2": 0.75, "rotateY": 0} ],
+    "*-east": [ { "x1": 0, "y1": 0, "z1": 0.25, "x2": 1, "y2": 1, "z2": 0.75, "rotateY": 270 } ],
+    "*-south": [ { "x1": 0, "y1": 0, "z1": 0.25, "x2": 1, "y2": 1, "z2": 0.75, "rotateY": 180 } ],
+    "*-west": [ { "x1": 0, "y1": 0, "z1": 0.25, "x2": 1, "y2": 1, "z2": 0.75, "rotateY": 90 } ]
+  },
+  "sounds": {
+    "place": "game:block/planks",
+    "hit": "game:block/planks",
+    "break": "game:block/planks"
+  },
+  "combustibleProps": {
+    "burnTemperature": 600,
+    "burnDuration": 16
+  },
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldRightReadyAnimation": "heldblockready",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "tpHandTransform": {
+    "translation": {
+      "x": -1.7,
+      "y": -0.95,
+      "z": -0.69
+    },
+    "rotation": {
+      "x": 12,
+      "y": 14,
+      "z": -81
+    },
+    "scale": 0.36
+  }
+}

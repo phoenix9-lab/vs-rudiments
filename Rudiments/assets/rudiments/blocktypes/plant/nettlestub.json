@@ -1,0 +1,27 @@
+{
+  "code": "nettlestub",
+  "class": "rudiments:BlockNettleStub",
+  "shape": { "base": "game:block/plant/crop/default1" },
+  "textures": {
+    "crop": { "base": "block/plant/nettlestub" }
+  },
+  "blockmaterial": "Plant",
+  "renderpass": "OpaqueNoCull",
+  "sideopaque": { "all": false },
+  "sidesolid": { "all": false },
+  "replaceable": 3000,
+  "lightAbsorption": 0,
+  "resistance": 0.5,
+  "collisionbox": null,
+  "selectionbox": { "x1": 0.0625, "y1": 0, "z1": 0.0625, "x2": 0.9375, "y2": 0.25, "z2": 0.9375 },
+  "materialDensity": 100,
+  "sounds": {
+    "place": "game:block/plant",
+    "break": "game:block/plant",
+    "hit": "game:block/plant"
+  },
+  "combustibleProps": { "burnTemperature": 500, "burnDuration": 5 },
+  "drops": [
+    { "type": "item", "code": "rudiments:nettlerhizome", "quantity": { "avg": 1 } }
+  ]
+}

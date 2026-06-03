@@ -1,0 +1,12 @@
+[
+  {
+    "code": "finecord-from-finefibers",
+    "ingredientPattern": "FF,FF",
+    "ingredients": {
+      "F": { "type": "item", "code": "rudiments:finefibers", "quantity": 1 }
+    },
+    "width": 2,
+    "height": 2,
+    "output": { "type": "item", "code": "rudiments:finecord", "quantity": 1 }
+  }
+]

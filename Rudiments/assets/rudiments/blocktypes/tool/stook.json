@@ -1,0 +1,43 @@
+{
+  "code": "stook",
+  "class": "rudiments:BlockStook",
+  "entityClass": "rudiments:BlockEntityStook",
+  "attributes": {
+    "cureHours": 24,
+    "dryHours": 18,
+    "rainTierHours": 12,
+    "dryStallRainfall": 0.05,
+    "handbook": { "groupBy": [ "stook" ] }
+  },
+  "creativeinventory": {
+    "general": [ "*" ]
+  },
+  "shape": {
+    "base": "block/tool/stook/stook"
+  },
+  "textures": {
+    "flaxbundle": { "base": "item/resource/flax/unprocessed" }
+  },
+  "blockmaterial": "Plant",
+  "materialDensity": 160,
+  "replaceable": 600,
+  "resistance": 0.5,
+  "maxStackSize": 1,
+  "lightAbsorption": 0,
+  "sidesolid": { "all": false },
+  "sideopaque": { "all": false },
+  "sideao": { "all": false },
+  "emitsideao": { "all": false },
+  "collisionSelectionBoxes": [ { "x1": 0.2, "y1": 0, "z1": 0.2, "x2": 0.8, "y2": 1.0, "z2": 0.8 } ],
+  "sounds": {
+    "place": "game:block/grass",
+    "walk": "game:walk/grass",
+    "hit": "game:block/grass",
+    "break": "game:block/grass"
+  },
+  "drops": [],
+  "combustibleProps": {
+    "burnTemperature": 500,
+    "burnDuration": 10
+  }
+}

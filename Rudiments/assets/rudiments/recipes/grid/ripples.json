@@ -1,0 +1,113 @@
+[
+  {
+	"ingredientPattern": "SFS,KLA",
+	"ingredients": {
+	  "S": {
+		"type": "item",
+		"code": "game:stick",
+		"quantity": 2
+	  },
+	  "F": {
+		"type": "item",
+		"code": "game:flint",
+		"quantity": 1
+	  },
+	  "K": {
+		"type": "item",
+		"code": "game:knife-generic-*",
+		"isTool": true
+	  },
+	  "L": {
+		"type": "block",
+		"code": "game:log-*",
+		"allowedVariants": ["placed-birch-ud", "placed-oak-ud", "placed-maple-ud", "placed-pine-ud", "placed-acacia-ud", "placed-kapok-ud", "placed-redwood-ud", "placed-larch-ud", "placed-baldcypress-ud", "placed-walnut-ud", "placed-purpleheart-ud", "placed-ebony-ud"]
+	  },
+	  "A": {
+		"type": "item",
+		"code": "game:axe-*",
+		"isTool": true
+	  }
+	},
+	"width": 3,
+	"height": 2,
+	"output": {
+	"type": "block",
+	"code": "ripple-primitive-east",
+	"quantity": 1
+	}
+  },
+  {
+	"ingredientPattern": "PNP,HLA",
+	"ingredients": {
+	"P": {
+		"type": "item",
+		"code": "game:plank-*",
+		"quantity": 1
+	},
+	"N": {
+		"type": "item",
+		"code": "game:metalnailsandstrips-copper",
+		"quantity": 1
+	},
+	"H": {
+		"type": "item",
+		"code": "game:hammer-*",
+		"isTool": true
+	},
+	"L": {
+		"type": "block",
+		"code": "game:log-*",
+		"allowedVariants": ["placed-birch-ud", "placed-oak-ud", "placed-maple-ud", "placed-pine-ud", "placed-acacia-ud", "placed-kapok-ud", "placed-redwood-ud", "placed-larch-ud", "placed-baldcypress-ud", "placed-walnut-ud", "placed-purpleheart-ud", "placed-ebony-ud"]
+	},
+	"A": {
+		"type": "item",
+		"code": "game:axe-*",
+		"isTool": true
+	}
+	},
+	"width": 3,
+	"height": 2,
+	"output": {
+	"type": "block",
+	"code": "ripple-simple-east",
+	"quantity": 1
+	}
+  },
+  {
+	"ingredientPattern": "PNP,HLA",
+	"ingredients": {
+	"P": {
+		"type": "item",
+		"code": "game:plank-*",
+		"quantity": 1
+	},
+	"N": {
+		"type": "item",
+		"code": "game:metalnailsandstrips-iron",
+		"quantity": 1
+	},
+	"H": {
+		"type": "item",
+		"code": "game:hammer-*",
+		"isTool": true
+	},
+	"L": {
+		"type": "block",
+		"code": "game:log-*",
+		"allowedVariants": ["placed-birch-ud", "placed-oak-ud", "placed-maple-ud", "placed-pine-ud", "placed-acacia-ud", "placed-kapok-ud", "placed-redwood-ud", "placed-larch-ud", "placed-baldcypress-ud", "placed-walnut-ud", "placed-purpleheart-ud", "placed-ebony-ud"]
+	},
+	"A": {
+		"type": "item",
+		"code": "game:axe-*",
+		"isTool": true
+	}
+	},
+	"width": 3,
+	"height": 2,
+	"output": {
+	"type": "block",
+	"code": "ripple-advanced-east",
+	"quantity": 1
+	}
+  }
+]
