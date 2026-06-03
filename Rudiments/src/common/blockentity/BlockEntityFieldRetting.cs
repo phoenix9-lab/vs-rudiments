@@ -33,6 +33,24 @@ namespace Rudiments.SRC.Common.BlockEntities
                 DryStallRainfall = attrs["dryStallRainfall"].AsDouble(DryStallRainfall);
         }
 
+        public override bool OnInteract(IPlayer player)
+        {
+            var heldItem = player.InventoryManager.ActiveHotbarSlot?.Itemstack;
+
+            if (heldItem == null && !FiberSlot.Empty)
+            {
+                if (player.InventoryManager.TryGiveItemstack(FiberSlot.Itemstack.Clone()))
+                {
+                    Api.World.PlaySoundAt(interactSound, player, null, false, 8f, 0.6f);
+                    Api.World.BlockAccessor.SetBlock(0, Pos);
+                    return true;
+                }
+                return false;
+            }
+
+            return base.OnInteract(player);
+        }
+
         protected override double GetProgressRate()
         {
             var climate = Api.World.BlockAccessor.GetClimateAt(Pos, EnumGetClimateMode.NowValues);

@@ -51,6 +51,7 @@
     "hit": "game:block/grass",
     "break": "game:block/grass"
   },
+  "drops": [],
   "combustibleProps": {
     "burnTemperature": 500,
     "burnDuration": 8
