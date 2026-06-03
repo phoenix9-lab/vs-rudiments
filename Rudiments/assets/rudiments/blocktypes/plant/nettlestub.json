@@ -1,7 +1,7 @@
 {
   "code": "nettlestub",
   "class": "rudiments:BlockNettleStub",
-  "shape": { "base": "game:block/plant/crop/default1" },
+  "shape": { "base": "block/plant/nettlestub" },
   "textures": {
     "crop": { "base": "block/plant/nettlestub" }
   },

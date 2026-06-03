@@ -15,7 +15,10 @@ namespace Rudiments.SRC.Common.Items
         public override void OnHeldInteractStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel,
             EntitySelection entitySel, bool firstEvent, ref EnumHandHandling handling)
         {
-            if (blockSel == null || byEntity.World.Side != EnumAppSide.Server) return;
+            if (blockSel == null) return;
+
+            handling = EnumHandHandling.PreventDefault;
+            if (byEntity.World.Side != EnumAppSide.Server) return;
 
             // We place ON TOP of the clicked block face.
             BlockPos placePos = blockSel.Position.AddCopy(blockSel.Face);

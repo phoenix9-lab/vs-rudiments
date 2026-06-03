@@ -12,6 +12,15 @@
       ]
     }
   },
+  "combustibleProps": {
+    "meltingPoint": 150,
+    "maxTemperature": 300,
+    "meltingDuration": 30,
+    "smeltingType": "cook",
+    "smeltedRatio": 1,
+    "smeltedStack": { "type": "item", "code": "rudiments:cookednettlerhizome" },
+    "requiresContainer": false
+  },
   "maxstacksize": 32,
   "materialDensity": 300,
   "guiTransform": {
