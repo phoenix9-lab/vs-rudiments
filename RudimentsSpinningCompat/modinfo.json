@@ -5,7 +5,7 @@
   "name": "Rudiments — Spinning Wheel Compat",
   "authors": [ "phoenix9" ],
   "description": "Optional addon that bridges Rudiments and Immersive Fibercraft (spinningwheel). Adds spinningProps to nettle fiber so it can be spun on the Spinning Wheel into flax twine. Has no effect if either parent mod is absent.",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "side": "Universal",
   "requiredOnClient": true,
   "requiredOnServer": true,

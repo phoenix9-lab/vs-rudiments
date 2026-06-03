@@ -16,7 +16,6 @@
     "fineWindowHours": 36,
     "standardDelayHours": 96,
     "standardHoldHours": 168,
-    "dryStallRainfall": 0.05,
     "handbook": { "groupBy": [ "fieldretting-*" ] }
   },
   "creativeinventory": {
