@@ -4,10 +4,31 @@ set -euo pipefail
 export PATH="/home/dwhite/.dotnet:$PATH"
 export VINTAGE_STORY="/mnt/c/Users/danie/AppData/Roaming/Vintagestory"
 
+# ── 1. Validate staged JSON files ─────────────────────────────────────────────
+echo "[pre-commit] Validating JSON..."
+BAD_JSON=0
+while IFS= read -r f; do
+  if ! python3 -c "import json,sys; json.load(open('$f'))" 2>/dev/null; then
+    echo "  INVALID JSON: $f"
+    BAD_JSON=1
+  fi
+done < <(git diff --cached --name-only --diff-filter=ACM | grep '\.json$')
+if [ "$BAD_JSON" -ne 0 ]; then exit 1; fi
+
+# ── 2. Version sync between Rudiments and SpinningCompat ─────────────────────
+V_MAIN=$(python3 -c "import json; print(json.load(open('Rudiments/modinfo.json'))['version'])")
+V_COMPAT=$(python3 -c "import json; print(json.load(open('RudimentsSpinningCompat/modinfo.json'))['version'])")
+if [ "$V_MAIN" != "$V_COMPAT" ]; then
+  echo "[pre-commit] ERROR: version mismatch — Rudiments=$V_MAIN SpinningCompat=$V_COMPAT"
+  exit 1
+fi
+echo "[pre-commit] Version: $V_MAIN ✓"
+
+# ── 3. Build DLL ──────────────────────────────────────────────────────────────
 echo "[pre-commit] Building Rudiments.dll..."
 dotnet build Rudiments/Rudiments.csproj -c Release --nologo -v minimal
 
 cp Rudiments/bin/Release/Rudiments.dll Rudiments/Rudiments.dll
 git add -f Rudiments/Rudiments.dll
 
-echo "[pre-commit] Rudiments.dll built and staged."
+echo "[pre-commit] Done."
