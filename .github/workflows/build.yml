@@ -4,6 +4,9 @@ on:
   push:
     branches: [ main ]
     tags: [ 'v*' ]
+    paths:
+      - 'Rudiments/**'
+      - '.github/workflows/build.yml'
   workflow_dispatch:
 
 jobs:
@@ -30,13 +33,6 @@ jobs:
           cp Rudiments/Rudiments.dll   staging/rudiments/
           cp -r Rudiments/assets       staging/rudiments/
           cd staging/rudiments && zip -r "../../dist/rudiments_${V}.zip" .
-
-      - name: Package compat addon
-        run: |
-          V="${{ steps.ver.outputs.version }}"
-          mkdir -p staging/compat
-          cp RudimentsSpinningCompat/modinfo.json staging/compat/
-          cd staging/compat && zip -r "../../dist/rudimentsspinningcompat_${V}.zip" .
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
