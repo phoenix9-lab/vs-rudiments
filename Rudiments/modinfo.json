@@ -4,7 +4,7 @@
   "name": "Rudiments",
   "authors": [ "phoenix9" ],
   "description": "A fiber production overhaul for Vintage Story. Covers flax and stinging nettle through the full production chain: stage-based harvesting, water and field retting with quality tiers, weather-aware drying racks, linseed oil pressing, and a mechanical scutch mill driven by the game's axle network. Pre-release — work in progress.",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "side": "Universal",
   "requiredOnClient": true,
   "requiredOnServer": true,

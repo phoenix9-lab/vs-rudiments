@@ -22,9 +22,19 @@ if [ "$V_MAIN" != "$V_COMPAT" ]; then
   echo "[pre-commit] ERROR: version mismatch — Rudiments=$V_MAIN SpinningCompat=$V_COMPAT"
   exit 1
 fi
+
+# ── 3. Version must be bumped from HEAD ───────────────────────────────────────
+if git rev-parse --verify HEAD >/dev/null 2>&1; then
+  V_HEAD=$(git show HEAD:Rudiments/modinfo.json 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin)['version'])" 2>/dev/null || echo "0.0.0")
+  if [ "$V_MAIN" = "$V_HEAD" ]; then
+    echo "[pre-commit] ERROR: version not bumped — still $V_MAIN (same as HEAD)"
+    echo "[pre-commit] Bump version in both Rudiments/modinfo.json and RudimentsSpinningCompat/modinfo.json"
+    exit 1
+  fi
+fi
 echo "[pre-commit] Version: $V_MAIN ✓"
 
-# ── 3. Build DLL ──────────────────────────────────────────────────────────────
+# ── 4. Build DLL ──────────────────────────────────────────────────────────────
 echo "[pre-commit] Building Rudiments.dll..."
 dotnet build Rudiments/Rudiments.csproj -c Release --nologo -v minimal
 
