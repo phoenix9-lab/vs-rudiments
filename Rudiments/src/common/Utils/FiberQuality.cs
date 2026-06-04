@@ -29,7 +29,10 @@ namespace Rudiments.Utils
         public static void Set(ItemStack stack, int quality)
         {
             if (stack?.Attributes == null) return;
-            stack.Attributes.SetInt(AttrKey, GameMath_Clamp(quality, Coarse, Fine));
+            if (quality == Standard)
+                stack.Attributes.RemoveAttribute(AttrKey);
+            else
+                stack.Attributes.SetInt(AttrKey, GameMath_Clamp(quality, Coarse, Fine));
         }
 
         /// <summary>Copy quality from a source stack onto a freshly produced stack.</summary>
