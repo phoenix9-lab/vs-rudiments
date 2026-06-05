@@ -162,5 +162,12 @@
   "game:item-handbooktext-flaxfibers": "Read the <a href=\"handbook://craftinginfo-flaxfiberextraction\">Plant Fibre Production Guide</a> for a detailed explanation of turning flax and nettle into fibre.",
 
   "rudiments:meal-nettle-desc": "Nettle soup",
-  "rudiments:meal-nettle-note": "Cooking removes the sting — nettle is nutritious and wholesome once heated."
+  "rudiments:meal-nettle-note": "Cooking removes the sting — nettle is nutritious and wholesome once heated.",
+
+  "rudiments:binding-curing": "The glue is still curing — it cannot be used yet.",
+  "rudiments:binding-frictionfail": "The friction-fit joint came apart!",
+  "rudiments:binding-info-frictionfit": "Friction-fitted (mortise & tenon): no binding needed, but far lower durability and a chance to come apart during use.",
+  "rudiments:binding-info-glue": "Pitch-glued: +10% durability once cured.",
+  "rudiments:binding-info-nail": "Nail-bound: +25% durability.",
+  "rudiments:binding-info-gluenail": "Pitch-glued and nailed: +50% durability once cured."
 }
