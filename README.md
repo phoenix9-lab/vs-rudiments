@@ -6,7 +6,7 @@ Rudiments adds realistic, multi-step production chains for the materials that de
 
 ---
 
-## Current Content — Fibre (v0.4.0)
+## Current Content — Fibre (v0.4.3)
 
 Flax and stinging nettle processed through authentic production chains. Quality is earned, not given — retting timing determines fibre grade, and fine fibre carries real mechanical bonuses.
 
@@ -36,7 +36,7 @@ Bundles pass through **Coarse → Fine → Standard → Rot** as retting progres
 Fine fibre twisted into **fine cord** gives a significant durability bonus on bows and is used in gambeson armour crafting.
 
 ### Nettle — a living weed
-Young plants (stages 3–6) yield edible leaves — cook them in a pot to remove the raw sting. Mature plants (stages 7–9) yield fibre bundles.
+Young plants (stages 3–7) yield edible leaves — cook them in a pot to remove the raw sting. Mature plants (stages 7–9) yield fibre bundles.
 
 Nettle no longer drops seeds — it propagates the way real nettle does, by **rhizome**:
 
