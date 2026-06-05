@@ -42,7 +42,7 @@ Nettle no longer drops seeds — it propagates the way real nettle does, by **rh
 
 - **Root crowns.** Cutting a plant at *any* stage leaves a small root crown (stub) that regrows on its own, or can be dug up with a shovel for a transplantable rhizome.
 - **It spreads.** Wild nettle creeps into nearby fertile ground, strongly preferring **tilled farmland** — it thrives on disturbed earth. A built-in density cap stops patches from running away.
-- **Heavy feeder.** Nettle exhausts its own soil faster than ordinary crops *and* drains nitrogen from **adjacent farmland** as it grows. Keep it clear of your fields — or use it deliberately as a fallow-ground pest.
+- **Networked feeder.** Nettle is one connected organism: it's efficient on its own soil (uses ~50% less nitrogen than an ordinary crop) but **leaches nitrogen from adjacent farmland** as it grows — and never drains its own kind. Keep it clear of your fields, or use it deliberately as a fallow-ground pest.
 - **Invasive mode (optional, off by default).** When enabled, nettle spreads by *hidden* underground rhizomes that surface without warning. Tilling the soil clears buried rhizomes before they emerge.
 
 Every part of this is tunable — see [Configuration](#configuration).
@@ -91,9 +91,9 @@ All settings live in `VintagestoryData/ModConfig/rudiments.json` (created on fir
 
 | Setting | Default | Effect |
 |---|---|---|
-| `NettleHeavyFeederEnabled` | `true` | Nettle drains nitrogen from adjacent farmland as it grows. |
-| `NettleNutrientConsumption` | `45` | Nitrogen the crop takes from its own soil (ordinary crops use ~30). |
-| `NettleNeighborNitrogenDepletion` | `4` | Nitrogen drained from each neighbouring farmland tile per growth. |
+| `NettleHeavyFeederEnabled` | `true` | Nettle leaches nitrogen from adjacent farmland as it grows. |
+| `NettleNutrientConsumption` | `15` | Nitrogen the crop takes from its own soil. Nettle is efficient — 50% less than an ordinary crop (~30). |
+| `NettleNeighborNitrogenDepletion` | `3` | Nitrogen leached from each adjacent farmland per growth (~10% of a normal crop's use). Farmland with nettle on it is exempt — nettle never drains its own kind. |
 | `NettleAlwaysLeaveStub` | `true` | Cutting nettle at any stage leaves a regrowable root crown. |
 
 ### Reed spread (coopersreed, papyrus, tule, brownsedge)

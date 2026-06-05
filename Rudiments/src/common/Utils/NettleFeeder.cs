@@ -16,6 +16,11 @@ namespace Rudiments.Utils
         /// <summary>
         /// Drains <paramref name="amount"/> units of nitrogen from every horizontally adjacent
         /// <see cref="BlockEntityFarmland"/> found at the given soil-level position.
+        ///
+        /// Nettle is immune to itself: a neighbouring farmland tile that already has a nettle
+        /// growing on it (crop-nettle*, nettlestub or nettlecreep) is skipped — connected nettle
+        /// is one organism sharing resources, so it never drains its own kind.
+        ///
         /// Must be called server-side; does nothing on the client.
         /// </summary>
         /// <param name="world">The world accessor.</param>
@@ -30,8 +35,22 @@ namespace Rudiments.Utils
             {
                 BlockPos neighborPos = soilPos.AddCopy(face);
                 BlockEntityFarmland bef = world.BlockAccessor.GetBlockEntity(neighborPos) as BlockEntityFarmland;
-                bef?.ConsumeNutrients(EnumSoilNutrient.N, amount);
+                if (bef == null) continue;
+
+                // Immune to itself: skip farmland that has nettle growing on it.
+                Block onTop = world.BlockAccessor.GetBlock(neighborPos.UpCopy());
+                if (IsNettle(onTop)) continue;
+
+                bef.ConsumeNutrients(EnumSoilNutrient.N, amount);
             }
+        }
+
+        /// <summary>True if the block is part of the nettle family (crop, stub or buried rhizome).</summary>
+        private static bool IsNettle(Block block)
+        {
+            if (block?.Code == null || block.Code.Domain != "rudiments") return false;
+            string path = block.Code.Path;
+            return path.StartsWith("crop-nettle") || path == "nettlestub" || path == "nettlecreep";
         }
     }
 }

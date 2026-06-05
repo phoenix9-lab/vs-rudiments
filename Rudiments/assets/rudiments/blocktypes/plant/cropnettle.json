@@ -77,7 +77,7 @@
 	},
 	"cropProps": {
 		"requiredNutrient": "N",
-		"nutrientConsumption": 45,
+		"nutrientConsumption": 15,
 		"growthStages": 9,
 		"totalGrowthMonths": 0.9,
 		"coldDamageBelow": -5,

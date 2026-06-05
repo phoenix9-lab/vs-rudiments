@@ -45,11 +45,13 @@ namespace Rudiments
         /// <summary>Whether nettle drains neighbour-farmland nitrogen. Default: true.</summary>
         public bool NettleHeavyFeederEnabled { get; set; } = true;
 
-        /// <summary>Own-soil N consumption applied to CropProps in OnLoaded. Default: 45.</summary>
-        public int NettleNutrientConsumption { get; set; } = 45;
+        /// <summary>Own-soil N consumption applied to CropProps in OnLoaded. Nettle is efficient —
+        /// 50% less than an ordinary crop (~30). Default: 15.</summary>
+        public int NettleNutrientConsumption { get; set; } = 15;
 
-        /// <summary>N drained from each neighbour farmland per growth event. Default: 4.</summary>
-        public float NettleNeighborNitrogenDepletion { get; set; } = 4f;
+        /// <summary>N leached from each adjacent (non-nettle) farmland per growth event — ~10% of a
+        /// normal crop's use. Nettle never drains its own kind. Default: 3.</summary>
+        public float NettleNeighborNitrogenDepletion { get; set; } = 3f;
 
         // ── Reed spread ──────────────────────────────────────────────────────────────
 
