@@ -51,7 +51,7 @@ Fine fibre twisted into **fine cord** gives a significant durability bonus on bo
 
 ---
 
-## Nettle — a living weed
+## Nettle — an ~~invasive weed~~ resilient crop
 
 Nettle no longer drops seeds. It propagates the way real nettle does: by **rhizome**.
 
