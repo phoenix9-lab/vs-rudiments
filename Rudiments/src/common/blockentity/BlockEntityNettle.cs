@@ -7,13 +7,13 @@ using Vintagestory.GameContent;
 namespace Rudiments.SRC.Common.BlockEntities
 {
     /// <summary>
-    /// Calendar-driven lifecycle for WILD nettle (crop-nettle on non-farmland soil):
-    ///   - advances growth stages over in-game time,
-    ///   - drains nitrogen from neighbouring farmland each time it grows (heavy feeder),
-    ///   - attempts rhizome spread once mature.
+    /// Calendar-driven nettle lifecycle:
+    ///   - WILD nettle (on non-farmland soil): advances growth stages over in-game time and drains
+    ///     nitrogen from neighbouring farmland each time it grows (heavy feeder).
+    ///   - rhizome spread once mature — for BOTH wild and cultivated nettle (it's invasive everywhere).
     ///
-    /// Cultivated nettle (on farmland) is left entirely to BlockEntityFarmland (growth) and
-    /// CropBehaviorHeavyFeeder (neighbour depletion); this BE no-ops there.
+    /// Cultivated nettle growth is driven by BlockEntityFarmland and its neighbour depletion by
+    /// CropBehaviorHeavyFeeder, so this BE only handles spread there (not growth/depletion).
     ///
     /// Driving this off Calendar.TotalHours (instead of real-time random block ticks) makes the
     /// whole lifecycle deterministic and responsive to time speed.
@@ -36,27 +36,22 @@ namespace Rudiments.SRC.Common.BlockEntities
             listenerId = RegisterGameTickListener(OnGameTick, 3000);
         }
 
-        private bool OnFarmland()
-            => Api.World.BlockAccessor.GetBlock(Pos.DownCopy()) is BlockFarmland;
-
         private static int StageOf(Block block)
             => int.TryParse(block?.Variant?["stage"], out int s) ? s : 0;
 
         private void OnGameTick(float dt)
         {
-            // Cultivated nettle is handled by the farmland system; nothing to do here.
-            if (OnFarmland()) return;
-
             var cfg = RudimentsModSystem.Config;
             double now = Api.World.Calendar.TotalHours;
             double hpd = Api.World.Calendar.HoursPerDay;
 
             Block self = Api.World.BlockAccessor.GetBlock(Pos);
             Block below = Api.World.BlockAccessor.GetBlock(Pos.DownCopy());
+            bool onFarmland = below is BlockFarmland;
 
-            // ── Growth ────────────────────────────────────────────────────────────────
+            // ── Growth (wild only; cultivated growth is driven by BlockEntityFarmland) ──
             int stage = StageOf(self);
-            if (stage > 0 && stage < 9 && below.Fertility > 0 &&
+            if (!onFarmland && stage > 0 && stage < 9 && below.Fertility > 0 &&
                 now - lastGrowthHours >= cfg.NettleWildGrowthDaysPerStage * hpd)
             {
                 Block next = Api.World.GetBlock(self.CodeWithVariant("stage", (stage + 1).ToString()));
@@ -74,7 +69,7 @@ namespace Rudiments.SRC.Common.BlockEntities
                 lastGrowthHours += cfg.NettleWildGrowthDaysPerStage * hpd;
             }
 
-            // ── Spread ──────────────────────────────────────────────────────────────────
+            // ── Spread (wild AND cultivated — nettle is invasive everywhere) ─────────────
             if (stage >= cfg.NettleSpreadMatureStage &&
                 now - lastSpreadHours >= cfg.NettleSpreadIntervalDays * hpd)
             {
