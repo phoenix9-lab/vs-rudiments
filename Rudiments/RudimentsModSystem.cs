@@ -48,10 +48,10 @@ namespace Rudiments
 
             api.RegisterBlockBehaviorClass($"{Mod.Info.ModID}:RhizomeSpread", typeof(BlockBehaviorRhizomeSpread));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockNettleStub", typeof(BlockNettleStub));
-            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockReedsWithSpread", typeof(BlockReedsWithSpread));
             api.RegisterCropBehavior("HeavyFeeder", typeof(CropBehaviorHeavyFeeder));
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityNettle", typeof(BlockEntityNettle));
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityNettleConvert", typeof(BlockEntityNettleConvert));
+            api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityReedSpread", typeof(BlockEntityReedSpread));
 
             base.Start(api);
 

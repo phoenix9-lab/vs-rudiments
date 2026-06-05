@@ -71,8 +71,11 @@ namespace Rudiments
         /// <summary>Whether reedpapyrus spreads. Default: true.</summary>
         public bool ReedSpreadEnabled { get; set; } = true;
 
-        /// <summary>Reed per-tick spread chance (relaxed; no tilled bonus). Default: 0.03.</summary>
+        /// <summary>Reed per-attempt spread chance (relaxed; no tilled bonus). Default: 0.03.</summary>
         public double ReedSpreadChance { get; set; } = 0.03;
+
+        /// <summary>In-game days between spread attempts for a reed. Calendar-driven. Default: 2.</summary>
+        public double ReedSpreadIntervalDays { get; set; } = 2.0;
 
         /// <summary>Reed density cap. Default: 6.</summary>
         public int ReedSpreadMaxDensity { get; set; } = 6;

@@ -14,17 +14,17 @@
     "value": [{ "name": "rudiments:DurabilityBonus" }]
   },
   {
-    "comment": "Switch reedpapyrus to BlockReedsWithSpread so the spread behavior gets ticked",
-    "file": "game:blocktypes/plant/reedpapyrus",
-    "op": "replace",
-    "path": "/class",
-    "value": "rudiments:BlockReedsWithSpread"
-  },
-  {
     "comment": "All reedpapyrus variants (coopersreed, papyrus, tule, brownsedge) spread via rhizome. The behavior auto-detects water vs soil from each variant's 'habitat' key and spreads as the same block variant.",
     "file": "game:blocktypes/plant/reedpapyrus",
     "op": "addmerge",
     "path": "/behaviors",
     "value": [{ "name": "rudiments:RhizomeSpread", "properties": { "configGroup": "reed", "densityMatch": ["reedpapyrus"] } }]
+  },
+  {
+    "comment": "Calendar-driven spread block entity on normal (non-harvested) reeds so spreading responds to in-game time. Harvested variants keep their vanilla Transient regrow BE.",
+    "file": "game:blocktypes/plant/reedpapyrus",
+    "op": "addmerge",
+    "path": "/entityClassByType",
+    "value": { "*-normal-*": "rudiments:BlockEntityReedSpread" }
   }
 ]
