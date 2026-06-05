@@ -33,8 +33,12 @@ namespace Rudiments
         /// <summary>Radius (blocks) for the density-cap scan. Default: 2.</summary>
         public int NettleSpreadDensityRadius { get; set; } = 2;
 
-        /// <summary>Minimum growth stage before a wild nettle attempts to spread. Default: 6.</summary>
+        /// <summary>Minimum growth stage before a nettle attempts to spread. Default: 6.</summary>
         public int NettleSpreadMatureStage { get; set; } = 6;
+
+        /// <summary>If true, nettle growing ON farmland will not spread (cultivated plots stay put).
+        /// Wild nettle can still spread onto farmland. Default: false (nettle is invasive everywhere).</summary>
+        public bool NettleFarmlandContainment { get; set; } = false;
 
         /// <summary>In-game days between spread attempts for a mature wild nettle. Calendar-driven,
         /// so it responds to time speed. Default: 1.</summary>

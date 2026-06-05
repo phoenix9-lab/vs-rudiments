@@ -69,8 +69,9 @@ namespace Rudiments.SRC.Common.BlockEntities
                 lastGrowthHours += cfg.NettleWildGrowthDaysPerStage * hpd;
             }
 
-            // ── Spread (wild AND cultivated — nettle is invasive everywhere) ─────────────
-            if (stage >= cfg.NettleSpreadMatureStage &&
+            // ── Spread (wild AND cultivated — invasive; optional farmland containment) ────
+            bool contained = onFarmland && cfg.NettleFarmlandContainment;
+            if (!contained && stage >= cfg.NettleSpreadMatureStage &&
                 now - lastSpreadHours >= cfg.NettleSpreadIntervalDays * hpd)
             {
                 self.GetBehavior<BlockBehaviorRhizomeSpread>()?.TrySpreadTick(Api.World, Pos);

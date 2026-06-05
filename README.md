@@ -78,11 +78,12 @@ All settings live in `VintagestoryData/ModConfig/rudiments.json` (created on fir
 
 | Setting | Default | Effect |
 |---|---|---|
-| `NettleSpreadEnabled` | `true` | Wild nettle spreads to neighbouring fertile ground. |
+| `NettleSpreadEnabled` | `true` | Whether nettle spreads at all. Nettle spreads both to and from soil *and* farmland — plant it and it won't stay put. |
 | `NettleSpreadChance` | `0.20` | Spread chance onto plain fertile soil (rolled each spread attempt, once mature). |
 | `NettleTilledSpreadChance` | `0.45` | Higher spread chance onto tilled farmland. |
-| `NettleSpreadIntervalDays` | `1` | In-game days between spread attempts for a mature wild nettle. |
+| `NettleSpreadIntervalDays` | `1` | In-game days between spread attempts for a mature nettle. |
 | `NettleSpreadMatureStage` | `6` | Minimum growth stage before a plant starts spreading. |
+| `NettleFarmlandContainment` | `false` | If `true`, nettle grown *on* farmland won't spread (cultivated plots stay put); wild nettle can still creep onto farmland. Off by default — nettle is invasive everywhere. |
 | `NettleSpreadMaxDensity` | `5` | Spread halts once this many nettle blocks are nearby (anti-runaway cap). |
 | `NettleSpreadDensityRadius` | `2` | Radius checked for the density cap. |
 | `NettleWildGrowthDaysPerStage` | `3` | In-game days a wild nettle takes to advance one growth stage. |
