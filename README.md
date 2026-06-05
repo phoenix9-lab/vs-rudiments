@@ -66,7 +66,7 @@ These are directions, not promises. Each will be its own coherent addition when 
 2. Drop it into your `VintagestoryData/Mods/` folder
 3. No dependencies required
 
-**Optional:** Rudiments — Spinning Wheel Compat adds nettle fibre spinning if you also have [Immersive Fibercraft](https://mods.vintagestory.at) installed.
+**Spinning wheel support is built in.** If you also run [Immersive Fibercraft](https://mods.vintagestory.at) (the spinning wheel mod), nettle fibre can be spun on the wheel — the integration activates automatically and is a no-op when that mod is absent. No separate compat download needed.
 
 ---
 
