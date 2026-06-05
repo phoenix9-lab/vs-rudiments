@@ -1,0 +1,23 @@
+{
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textures": {
+		"crop": "block/plant/nettlestub"
+	},
+	"elements": [
+		{
+			"name": "origin",
+			"from": [ 8.0, 0.0, 8.0 ],
+			"to": [ 8.0, 0.0, 8.0 ],
+			"rotationOrigin": [ 8.0, 0.0, 8.0 ],
+			"faces": {
+				"north": { "texture": "#crop", "uv": [ 0.0, 0.0, 0.5, 0.5 ], "windMode": [0,0,0,0] },
+				"east":  { "texture": "#crop", "uv": [ 0.0, 0.0, 0.5, 0.5 ], "windMode": [0,0,0,0] },
+				"south": { "texture": "#crop", "uv": [ 0.0, 0.0, 0.5, 0.5 ], "windMode": [0,0,0,0] },
+				"west":  { "texture": "#crop", "uv": [ 0.0, 0.0, 0.5, 0.5 ], "windMode": [0,0,0,0] },
+				"up":    { "texture": "#crop", "uv": [ 0.0, 0.0, 0.5, 0.5 ], "windMode": [0,0,0,0] },
+				"down":  { "texture": "#crop", "uv": [ 0.0, 0.0, 0.5, 0.5 ], "windMode": [0,0,0,0] }
+			}
+		}
+	]
+}

@@ -6,7 +6,7 @@ Rudiments adds realistic, multi-step production chains for the materials that de
 
 ---
 
-## Current Content — Fibre (v0.3.0)
+## Current Content — Fibre (v0.4.0)
 
 Flax and stinging nettle processed through authentic production chains. Quality is earned, not given — retting timing determines fibre grade, and fine fibre carries real mechanical bonuses.
 
@@ -35,8 +35,17 @@ Bundles pass through **Coarse → Fine → Standard → Rot** as retting progres
 ### Fibre quality bonuses
 Fine fibre twisted into **fine cord** gives a significant durability bonus on bows and is used in gambeson armour crafting.
 
-### Nettle
-Young plants (stages 3–6) yield edible leaves — cook them in a pot to remove the raw sting. Mature plants (stages 7–9) yield fibre bundles. Transplant using a harvested rhizome.
+### Nettle — a living weed
+Young plants (stages 3–6) yield edible leaves — cook them in a pot to remove the raw sting. Mature plants (stages 7–9) yield fibre bundles.
+
+Nettle no longer drops seeds — it propagates the way real nettle does, by **rhizome**:
+
+- **Root crowns.** Cutting a plant at *any* stage leaves a small root crown (stub) that regrows on its own, or can be dug up with a shovel for a transplantable rhizome.
+- **It spreads.** Wild nettle creeps into nearby fertile ground, strongly preferring **tilled farmland** — it thrives on disturbed earth. A built-in density cap stops patches from running away.
+- **Heavy feeder.** Nettle exhausts its own soil faster than ordinary crops *and* drains nitrogen from **adjacent farmland** as it grows. Keep it clear of your fields — or use it deliberately as a fallow-ground pest.
+- **Invasive mode (optional, off by default).** When enabled, nettle spreads by *hidden* underground rhizomes that surface without warning. Tilling the soil clears buried rhizomes before they emerge.
+
+Every part of this is tunable — see [Configuration](#configuration).
 
 ---
 
@@ -59,7 +68,48 @@ These are directions, not promises. Each will be its own coherent addition when 
 
 **Optional:** Rudiments — Spinning Wheel Compat adds nettle fibre spinning if you also have [Immersive Fibercraft](https://mods.vintagestory.at) installed.
 
-**Configurable:** If [AutoConfigLib](https://mods.vintagestory.at) is installed, mod settings appear in the ConfigLib window in-game. Otherwise edit `VintagestoryData/ModConfig/rudiments.json` directly.
+---
+
+## Configuration
+
+All settings live in `VintagestoryData/ModConfig/rudiments.json` (created on first launch). If [AutoConfigLib](https://mods.vintagestory.at) is installed, the same settings can be edited in-game through its ConfigLib window — no file editing needed.
+
+### Nettle spread & invasiveness
+
+| Setting | Default | Effect |
+|---|---|---|
+| `NettleSpreadEnabled` | `true` | Wild nettle spreads to neighbouring fertile ground. |
+| `NettleSpreadChance` | `0.20` | Spread chance onto plain fertile soil (rolled per growth tick, once mature). |
+| `NettleTilledSpreadChance` | `0.45` | Higher spread chance onto tilled farmland. |
+| `NettleSpreadMatureStage` | `6` | Minimum growth stage before a plant starts spreading. |
+| `NettleSpreadMaxDensity` | `5` | Spread halts once this many nettle blocks are nearby (anti-runaway cap). |
+| `NettleSpreadDensityRadius` | `2` | Radius checked for the density cap. |
+| `NettleCreepEnabled` | `false` | **Invasive mode.** On: spreads as an *invisible* buried rhizome that emerges later (heavier on performance). Off: spread places visible young nettle. |
+| `NettleCreepEmergeChance` | `0.03` | How fast hidden rhizomes surface (lower = stays hidden longer). |
+
+### Nettle as a heavy feeder
+
+| Setting | Default | Effect |
+|---|---|---|
+| `NettleHeavyFeederEnabled` | `true` | Nettle drains nitrogen from adjacent farmland as it grows. |
+| `NettleNutrientConsumption` | `45` | Nitrogen the crop takes from its own soil (ordinary crops use ~30). |
+| `NettleNeighborNitrogenDepletion` | `4` | Nitrogen drained from each neighbouring farmland tile per growth. |
+| `NettleAlwaysLeaveStub` | `true` | Cutting nettle at any stage leaves a regrowable root crown. |
+
+### Reed spread (coopersreed, papyrus, tule, brownsedge)
+
+| Setting | Default | Effect |
+|---|---|---|
+| `ReedSpreadEnabled` | `true` | Reeds slowly spread along suitable water/soil. |
+| `ReedSpreadChance` | `0.03` | Spread chance per tick (relaxed). |
+| `ReedSpreadMaxDensity` | `6` | Anti-runaway density cap. |
+| `ReedSpreadDensityRadius` | `2` | Radius checked for the density cap. |
+
+### Other
+
+| Setting | Default | Effect |
+|---|---|---|
+| `StookMaxBundles` | `64` | Maximum bundles a single ground stook can hold. |
 
 ---
 

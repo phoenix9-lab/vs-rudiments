@@ -25,6 +25,6 @@
     "file": "game:blocktypes/plant/reedpapyrus",
     "op": "addmerge",
     "path": "/behaviors",
-    "value": [{ "name": "rudiments:RhizomeSpread", "properties": { "spreadChance": 0.03 } }]
+    "value": [{ "name": "rudiments:RhizomeSpread", "properties": { "configGroup": "reed", "densityMatch": ["reedpapyrus"] } }]
   }
 ]

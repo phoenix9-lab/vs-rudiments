@@ -1,6 +1,8 @@
+using System;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
+using Vintagestory.GameContent;
 
 namespace Rudiments.SRC.Common.Blocks
 {
@@ -9,22 +11,23 @@ namespace Rudiments.SRC.Common.Blocks
     ///
     /// Design: the hosting block calls TrySpreadTick() from its own OnServerGameTick override.
     ///
+    /// Config properties (all optional):
+    ///   configGroup         - "nettle" or "reed"; selects which RudimentsConfig fields to read
+    ///   densityMatch        - string array of code-path prefixes to count for the density cap
+    ///   requireFertileSoil  - override auto-detect: force soil check
+    ///   requireWater        - override auto-detect: force water check
+    ///
     /// Auto-detection rules (when not explicitly configured):
     ///   - If block has variant "habitat" == "water" or "ice" → requires water below the target
     ///   - Otherwise → requires fertile soil below the target (Fertility > 0)
-    ///   - If no "spreadBlock" is set → spreads as the current block (same variant)
+    ///   - If no spread block is configured for reed → spreads as the current block (same variant)
     ///   - Never spreads when block variant "state" == "harvested"
-    ///
-    /// Config properties (all optional):
-    ///   spreadBlock         - AssetLocation to place on spread; default = current block
-    ///   spreadChance        - probability per eligible tick (default 0.05)
-    ///   requireFertileSoil  - override auto-detect: force soil check
-    ///   requireWater        - override auto-detect: force water check
     /// </summary>
     public class BlockBehaviorRhizomeSpread : BlockBehavior
     {
-        private AssetLocation spreadBlockCode;
-        private double spreadChance = 0.05;
+        private string configGroup = "";
+        private string[] densityMatch = Array.Empty<string>();
+
         private bool? requireFertileSoil = null; // null = auto-detect
         private bool? requireWater       = null; // null = auto-detect
 
@@ -33,9 +36,11 @@ namespace Rudiments.SRC.Common.Blocks
         public override void Initialize(JsonObject properties)
         {
             base.Initialize(properties);
-            string code = properties["spreadBlock"].AsString(null);
-            if (code != null) spreadBlockCode = new AssetLocation(code);
-            spreadChance = properties["spreadChance"].AsDouble(0.05);
+
+            configGroup = properties["configGroup"].AsString("");
+
+            if (properties["densityMatch"].Exists)
+                densityMatch = properties["densityMatch"].AsArray<string>(Array.Empty<string>());
 
             if (properties["requireFertileSoil"].Exists) requireFertileSoil = properties["requireFertileSoil"].AsBool();
             if (properties["requireWater"].Exists)       requireWater       = properties["requireWater"].AsBool();
@@ -47,35 +52,61 @@ namespace Rudiments.SRC.Common.Blocks
             // Never spread from a harvested state (e.g. coopersreed-harvested)
             if (block.Variant?["state"] == "harvested") return false;
 
-            if (world.Rand.NextDouble() >= spreadChance) return false;
+            var cfg = RudimentsModSystem.Config;
 
-            // Determine spread target
-            Block spreadBlock = spreadBlockCode != null
-                ? world.GetBlock(spreadBlockCode)
-                : block; // use current block variant as default
-            if (spreadBlock == null) return false;
+            // ── Group-specific enabled check and config lookup ────────────────────────
+            bool spreadEnabled;
+            double plainChance, tilledChance;
+            int maxDensity, densityRadius;
+            bool isNettle = configGroup == "nettle";
+            bool isReed   = configGroup == "reed";
 
-            // Pick random adjacent position
-            BlockFacing face = BlockFacing.HORIZONTALS[world.Rand.Next(4)];
-            BlockPos target = pos.AddCopy(face.Normali);
-            BlockPos below  = target.DownCopy();
+            if (isNettle)
+            {
+                if (!cfg.NettleSpreadEnabled) return false;
+                spreadEnabled  = cfg.NettleSpreadEnabled;
+                plainChance    = cfg.NettleSpreadChance;
+                tilledChance   = cfg.NettleTilledSpreadChance;
+                maxDensity     = cfg.NettleSpreadMaxDensity;
+                densityRadius  = cfg.NettleSpreadDensityRadius;
+            }
+            else if (isReed)
+            {
+                if (!cfg.ReedSpreadEnabled) return false;
+                spreadEnabled  = cfg.ReedSpreadEnabled;
+                plainChance    = cfg.ReedSpreadChance;
+                tilledChance   = cfg.ReedSpreadChance; // no tilled bonus for reeds
+                maxDensity     = cfg.ReedSpreadMaxDensity;
+                densityRadius  = cfg.ReedSpreadDensityRadius;
+            }
+            else
+            {
+                // Legacy path: no configGroup set, use a single hardcoded fallback
+                plainChance   = 0.05;
+                tilledChance  = 0.05;
+                maxDensity    = 0;
+                densityRadius = 2;
+            }
+
+            // ── Pick random adjacent target ────────────────────────────────────────────
+            BlockFacing face   = BlockFacing.HORIZONTALS[world.Rand.Next(4)];
+            BlockPos target    = pos.AddCopy(face.Normali);
+            BlockPos belowPos  = target.DownCopy();
 
             Block atTarget   = world.BlockAccessor.GetBlock(target);
-            Block belowBlock = world.BlockAccessor.GetBlock(below);
+            Block belowBlock = world.BlockAccessor.GetBlock(belowPos);
 
             if (atTarget.Replaceable < 6000) return false;
 
-            // Resolve water vs soil requirement
+            // ── Resolve water vs soil requirement ─────────────────────────────────────
             bool needsWater, needsSoil;
             if (requireWater.HasValue || requireFertileSoil.HasValue)
             {
-                // Explicit config overrides
                 needsWater = requireWater ?? false;
                 needsSoil  = requireFertileSoil ?? false;
             }
             else
             {
-                // Auto-detect from block's habitat variant
                 string habitat = block.Variant?["habitat"];
                 needsWater = habitat == "water" || habitat == "ice";
                 needsSoil  = !needsWater;
@@ -83,6 +114,52 @@ namespace Rudiments.SRC.Common.Blocks
 
             if (needsWater && !belowBlock.IsLiquid())    return false;
             if (needsSoil  && belowBlock.Fertility <= 0) return false;
+
+            // ── Chance roll (after target selection so tilled bonus is accurate) ──────
+            double effChance = (belowBlock is BlockFarmland) ? tilledChance : plainChance;
+            if (world.Rand.NextDouble() >= effChance) return false;
+
+            // ── Density cap ────────────────────────────────────────────────────────────
+            if (maxDensity > 0 && densityMatch.Length > 0)
+            {
+                int count = 0;
+                BlockPos scanMin = target.AddCopy(-densityRadius, -densityRadius, -densityRadius);
+                BlockPos scanMax = target.AddCopy( densityRadius,  densityRadius,  densityRadius);
+
+                world.BlockAccessor.WalkBlocks(scanMin, scanMax, (scannedBlock, x, y, z) =>
+                {
+                    if (scannedBlock.Code?.Domain == "rudiments")
+                    {
+                        string path = scannedBlock.Code.Path;
+                        foreach (string prefix in densityMatch)
+                        {
+                            if (path.StartsWith(prefix, StringComparison.Ordinal))
+                            {
+                                count++;
+                                break;
+                            }
+                        }
+                    }
+                });
+
+                if (count >= maxDensity) return false;
+            }
+
+            // ── Resolve the spread block ───────────────────────────────────────────────
+            Block spreadBlock;
+            if (isNettle)
+            {
+                // Use hidden rhizome when creep is enabled, otherwise place visible stage-1
+                string spreadCode = cfg.NettleCreepEnabled ? "rudiments:nettlecreep" : "rudiments:crop-nettle-1";
+                spreadBlock = world.GetBlock(new AssetLocation(spreadCode));
+            }
+            else
+            {
+                // Reed (and legacy): use the current block variant (same as old behaviour)
+                spreadBlock = block;
+            }
+
+            if (spreadBlock == null) return false;
 
             world.BlockAccessor.SetBlock(spreadBlock.BlockId, target);
             return true;

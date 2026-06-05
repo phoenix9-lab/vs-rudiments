@@ -15,14 +15,17 @@ namespace Rudiments.SRC.Common.Blocks
     ///     - Bare hands / knife: stings unless gloves worn.
     ///   Right-click hold (careful harvest, stage >= 3): slow ~5s, never stings.
     ///
-    /// STUB MECHANIC (like coopersreed's harvested state):
-    ///   Cutting stage 8-9 wild nettle (any method) leaves a BlockNettleStub root crown.
-    ///   The stub regrows to stage-1 automatically, or can be dug with a shovel for the rhizome.
-    ///   On farmland the stub is not placed — the player controls that planting.
+    /// STUB MECHANIC:
+    ///   When Config.NettleAlwaysLeaveStub is true, every cut at any stage on any soil
+    ///   leaves a BlockNettleStub root crown. The stub regrows to stage-1 automatically,
+    ///   or can be dug with a shovel for the rhizome (the only way to permanently remove nettle).
     ///
-    /// SPREADING via BlockBehaviorRhizomeSpread, called from OnServerGameTick.
+    /// SPREADING via BlockBehaviorRhizomeSpread, called from OnServerGameTick once mature.
     ///
     /// WALK-THROUGH STING via OnEntityInside. Any armor (protectionModifiers) blocks it.
+    ///
+    /// HEAVY FEEDER: drains nitrogen from adjacent farmland on growth ticks (wild path).
+    /// Cultivated path is handled by CropBehaviorHeavyFeeder registered in CropProps.
     /// </summary>
     public class BlockCropNettle : BlockCrop
     {
@@ -43,39 +46,44 @@ namespace Rudiments.SRC.Common.Blocks
             leafParticle.AddPos.Set(0.5f, 0.25f, 0.5f);
             leafParticle.SizeEvolve = new EvolvingNatFloat(EnumTransformFunction.LINEAR, -0.08f);
             leafParticle.OpacityEvolve = new EvolvingNatFloat(EnumTransformFunction.LINEAR, -200);
+
+            // Override own-soil nutrient consumption with config value (default 45).
+            if (CropProps != null)
+            {
+                CropProps.NutrientConsumption = RudimentsModSystem.Config.NettleNutrientConsumption;
+            }
         }
 
-        // ── Fast break (left-click) ────────────────────────────────────────────────────
+        // ── Fast break (left-click) ────────────────────────────────────────────────
         public override void OnBlockBroken(IWorldAccessor world, BlockPos pos, IPlayer byPlayer, float dropQuantityMultiplier = 1)
         {
-            bool stage89 = CurrentCropStage >= 8;
-
             if (byPlayer != null)
             {
                 bool holdingScythe = byPlayer.InventoryManager.ActiveHotbarSlot?.Itemstack?.Collectible?.Code?.Path?.Contains("scythe") == true;
                 if (holdingScythe)
                 {
                     base.OnBlockBroken(world, pos, byPlayer, dropQuantityMultiplier * 0.75f);
-                    if (stage89) TryPlaceStub(world, pos);
+                    TryPlaceStub(world, pos);
                     return;
                 }
                 NettleSting.TrySting(world, byPlayer, pos);
             }
 
             base.OnBlockBroken(world, pos, byPlayer, dropQuantityMultiplier);
-            if (stage89) TryPlaceStub(world, pos);
+            TryPlaceStub(world, pos);
         }
 
         private void TryPlaceStub(IWorldAccessor world, BlockPos pos)
         {
             if (world.Side != EnumAppSide.Server) return;
-            if (world.BlockAccessor.GetBlock(pos.DownCopy()) is BlockFarmland) return;
+            if (!RudimentsModSystem.Config.NettleAlwaysLeaveStub) return;
+
             Block stub = world.GetBlock(new AssetLocation("rudiments:nettlestub"));
             if (stub != null)
                 world.BlockAccessor.SetBlock(stub.BlockId, pos);
         }
 
-        // ── Right-click (careful harvest) ─────────────────────────────────────────────
+        // ── Right-click (careful harvest) ─────────────────────────────────────────
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
             => CurrentCropStage >= 3;
 
@@ -89,7 +97,6 @@ namespace Rudiments.SRC.Common.Blocks
 
             if (world.Side == EnumAppSide.Server && secondsUsed >= carefulHarvestTime)
             {
-                bool stage89 = CurrentCropStage >= 8;
                 ItemStack[] drops = GetDrops(world, blockSel.Position, byPlayer);
                 if (drops != null)
                     foreach (var drop in drops)
@@ -98,7 +105,7 @@ namespace Rudiments.SRC.Common.Blocks
                                 world.SpawnItemEntity(drop, blockSel.Position.ToVec3d().Add(0.5, 0.5, 0.5));
 
                 world.BlockAccessor.SetBlock(0, blockSel.Position);
-                if (stage89) TryPlaceStub(world, blockSel.Position);
+                TryPlaceStub(world, blockSel.Position);
                 world.PlaySoundAt(new AssetLocation("game:sounds/block/plant"), byPlayer, null, false, 16f, 0.9f);
             }
 
@@ -110,7 +117,7 @@ namespace Rudiments.SRC.Common.Blocks
         public override bool OnBlockInteractCancel(float secondsUsed, IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel, EnumItemUseCancelReason cancelReason)
             => true;
 
-        // ── Walk-through sting ─────────────────────────────────────────────────────────
+        // ── Walk-through sting ─────────────────────────────────────────────────────
         public override void OnEntityInside(IWorldAccessor world, Entity entity, BlockPos pos)
         {
             base.OnEntityInside(world, entity, pos);
@@ -121,7 +128,16 @@ namespace Rudiments.SRC.Common.Blocks
             NettleSting.TryStingWalkthrough(world, player, pos);
         }
 
-        // ── Wild stage-9 tick: suppress reset to stage-1; spread via behavior instead ──
+        // ── Wild growth tick ──────────────────────────────────────────────────────
+        //
+        // Farmland-driven growth is handled by BEFarmland (calls base.OnServerGameTick via
+        // BlockCrop and invokes CropBehaviorHeavyFeeder for neighbour depletion).
+        //
+        // Wild path: engine calls ShouldReceiveServerGameTicks which rolls for growth and
+        // returns the next-stage block as extra. We intercept here to:
+        //   1. Suppress the stage-9 → stage-1 wrap reset (mature wild plant persists).
+        //   2. Drive spread on every tick once mature (>= NettleSpreadMatureStage).
+        //   3. Drain neighbour nitrogen on every growth tick (heavy feeder, wild case).
         public override void OnServerGameTick(IWorldAccessor world, BlockPos pos, object extra = null)
         {
             if (extra is Block newBlock)
@@ -130,12 +146,33 @@ namespace Rudiments.SRC.Common.Blocks
                 bool onFarmland = below is BlockFarmland;
                 bool isWrapReset = !onFarmland && CurrentCropStage == 9 &&
                                    newBlock.Code?.Path?.EndsWith("-1") == true;
+
                 if (isWrapReset)
                 {
-                    GetBehavior<BlockBehaviorRhizomeSpread>()?.TrySpreadTick(world, pos);
-                    return;
+                    // Suppress reset; treat as a mature-plant tick instead
+                    // (spread + neighbour depletion handled below by the mature-stage path)
                 }
+                else
+                {
+                    // Normal growth: apply base logic (advances the stage)
+                    base.OnServerGameTick(world, pos, extra);
+
+                    // Wild heavy feeder: drain neighbour nitrogen on every growth event
+                    if (!onFarmland && RudimentsModSystem.Config.NettleHeavyFeederEnabled)
+                    {
+                        NettleFeeder.DepleteNeighborNitrogen(world, pos.DownCopy(), RudimentsModSystem.Config.NettleNeighborNitrogenDepletion);
+                    }
+                }
+
+                // Spread once mature (applies to both normal mature ticks and suppressed wraps)
+                if (CurrentCropStage >= RudimentsModSystem.Config.NettleSpreadMatureStage && !onFarmland)
+                {
+                    GetBehavior<BlockBehaviorRhizomeSpread>()?.TrySpreadTick(world, pos);
+                }
+
+                return;
             }
+
             base.OnServerGameTick(world, pos, extra);
         }
     }

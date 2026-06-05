@@ -1,0 +1,20 @@
+{
+	"code": "nettlecreep",
+	"class": "rudiments:BlockHiddenRhizome",
+	"drawtype": "JSON",
+	"shape": { "base": "block/plant/nettlecreep" },
+	"blockmaterial": "Plant",
+	"sideopaque": { "all": false },
+	"sidesolid": { "all": false },
+	"collisionbox": null,
+	"selectionbox": null,
+	"replaceable": 9000,
+	"lightAbsorption": 0,
+	"rainPermeable": true,
+	"renderpass": "OpaqueNoCull",
+	"creativeinventory": {},
+	"attributes": {
+		"emergeProbability": 0.03
+	},
+	"drops": []
+}
