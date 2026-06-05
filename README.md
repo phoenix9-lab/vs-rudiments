@@ -84,8 +84,9 @@ All settings live in `VintagestoryData/ModConfig/rudiments.json` (created on fir
 | `NettleSpreadIntervalDays` | `1` | In-game days between spread attempts for a mature nettle. |
 | `NettleSpreadMatureStage` | `6` | Minimum growth stage before a plant starts spreading. |
 | `NettleFarmlandContainment` | `false` | If `true`, nettle grown *on* farmland won't spread (cultivated plots stay put); wild nettle can still creep onto farmland. Off by default — nettle is invasive everywhere. |
-| `NettleSpreadMaxDensity` | `5` | Spread halts once this many nettle blocks are nearby (anti-runaway cap). |
+| `NettleSpreadMaxDensity` | `5` | Local density cap — keeps a patch from packing denser than this within the radius (anti-lag; does *not* limit outward reach). |
 | `NettleSpreadDensityRadius` | `2` | Radius checked for the density cap. |
+| `NettleSpreadMaxRadius` | `16` | Hard outward cap — a patch won't spread further than this many blocks from where it started. **Set to `0` for unlimited spread (nettle grows without bound).** |
 | `NettleWildGrowthDaysPerStage` | `3` | In-game days a wild nettle takes to advance one growth stage. |
 | `NettleStubRegrowDays` | `3` | In-game days a cut stub takes to regrow into stage-1 nettle. |
 | `NettleCreepEnabled` | `false` | **Invasive mode.** On: spreads as an *invisible* buried rhizome that emerges later. Off: spread places visible young nettle. |

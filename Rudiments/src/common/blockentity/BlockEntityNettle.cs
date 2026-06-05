@@ -2,6 +2,7 @@ using Rudiments.SRC.Common.Blocks;
 using Rudiments.Utils;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
+using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
 namespace Rudiments.SRC.Common.BlockEntities
@@ -22,6 +23,10 @@ namespace Rudiments.SRC.Common.BlockEntities
     {
         private double lastGrowthHours = -1;
         private double lastSpreadHours = -1;
+        // Origin of this plant's patch (horizontal). Children inherit it so the outward radius cap
+        // bounds the whole patch, not each plant individually. Unset for a fresh/standalone plant.
+        private int originX = int.MinValue;
+        private int originZ = int.MinValue;
         private long listenerId;
 
         public override void Initialize(ICoreAPI api)
@@ -32,8 +37,17 @@ namespace Rudiments.SRC.Common.BlockEntities
             double now = api.World.Calendar.TotalHours;
             if (lastGrowthHours < 0) lastGrowthHours = now;
             if (lastSpreadHours < 0) lastSpreadHours = now;
+            if (originX == int.MinValue) { originX = Pos.X; originZ = Pos.Z; }
 
             listenerId = RegisterGameTickListener(OnGameTick, 3000);
+        }
+
+        /// <summary>Inherit a parent plant's patch origin (called right after this plant is spread).</summary>
+        public void SetPatchOrigin(int ox, int oz)
+        {
+            originX = ox;
+            originZ = oz;
+            MarkDirty();
         }
 
         private static int StageOf(Block block)
@@ -74,7 +88,14 @@ namespace Rudiments.SRC.Common.BlockEntities
             if (!contained && stage >= cfg.NettleSpreadMatureStage &&
                 now - lastSpreadHours >= cfg.NettleSpreadIntervalDays * hpd)
             {
-                self.GetBehavior<BlockBehaviorRhizomeSpread>()?.TrySpreadTick(Api.World, Pos);
+                var behavior = self.GetBehavior<BlockBehaviorRhizomeSpread>();
+                if (behavior != null)
+                {
+                    BlockPos spreadAt = behavior.TrySpreadTick(Api.World, Pos, originX, originZ, cfg.NettleSpreadMaxRadius);
+                    // Propagate the patch origin to the child so the radius cap bounds the whole patch.
+                    if (spreadAt != null && Api.World.BlockAccessor.GetBlockEntity(spreadAt) is BlockEntityNettle child)
+                        child.SetPatchOrigin(originX, originZ);
+                }
                 lastSpreadHours = now;
             }
         }
@@ -90,6 +111,8 @@ namespace Rudiments.SRC.Common.BlockEntities
             base.FromTreeAttributes(tree, worldForResolving);
             lastGrowthHours = tree.GetDouble("lastGrowthHours", -1);
             lastSpreadHours = tree.GetDouble("lastSpreadHours", -1);
+            originX = tree.GetInt("patchOriginX", int.MinValue);
+            originZ = tree.GetInt("patchOriginZ", int.MinValue);
         }
 
         public override void ToTreeAttributes(ITreeAttribute tree)
@@ -97,6 +120,8 @@ namespace Rudiments.SRC.Common.BlockEntities
             base.ToTreeAttributes(tree);
             tree.SetDouble("lastGrowthHours", lastGrowthHours);
             tree.SetDouble("lastSpreadHours", lastSpreadHours);
+            tree.SetInt("patchOriginX", originX);
+            tree.SetInt("patchOriginZ", originZ);
         }
     }
 }

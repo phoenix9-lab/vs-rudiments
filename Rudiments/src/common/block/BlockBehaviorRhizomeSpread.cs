@@ -46,16 +46,22 @@ namespace Rudiments.SRC.Common.Blocks
             if (properties["requireWater"].Exists)       requireWater       = properties["requireWater"].AsBool();
         }
 
-        /// <summary>Call from the hosting block's OnServerGameTick.</summary>
-        public bool TrySpreadTick(IWorldAccessor world, BlockPos pos)
+        /// <summary>
+        /// Call from the hosting block's tick. Returns the position a new plant was placed at, or null
+        /// if nothing spread this attempt.
+        ///
+        /// <paramref name="originX"/>/<paramref name="originZ"/> + <paramref name="maxRadius"/> enforce a
+        /// hard outward cap: targets further than maxRadius (horizontal) from the patch origin are
+        /// rejected. Pass maxRadius &lt;= 0 (or no origin) for unbounded spread.
+        /// </summary>
+        public BlockPos TrySpreadTick(IWorldAccessor world, BlockPos pos, int originX = int.MinValue, int originZ = int.MinValue, int maxRadius = 0)
         {
             // Never spread from a harvested state (e.g. coopersreed-harvested)
-            if (block.Variant?["state"] == "harvested") return false;
+            if (block.Variant?["state"] == "harvested") return null;
 
             var cfg = RudimentsModSystem.Config;
 
             // ── Group-specific enabled check and config lookup ────────────────────────
-            bool spreadEnabled;
             double plainChance, tilledChance;
             int maxDensity, densityRadius;
             bool isNettle = configGroup == "nettle";
@@ -63,8 +69,7 @@ namespace Rudiments.SRC.Common.Blocks
 
             if (isNettle)
             {
-                if (!cfg.NettleSpreadEnabled) return false;
-                spreadEnabled  = cfg.NettleSpreadEnabled;
+                if (!cfg.NettleSpreadEnabled) return null;
                 plainChance    = cfg.NettleSpreadChance;
                 tilledChance   = cfg.NettleTilledSpreadChance;
                 maxDensity     = cfg.NettleSpreadMaxDensity;
@@ -72,8 +77,7 @@ namespace Rudiments.SRC.Common.Blocks
             }
             else if (isReed)
             {
-                if (!cfg.ReedSpreadEnabled) return false;
-                spreadEnabled  = cfg.ReedSpreadEnabled;
+                if (!cfg.ReedSpreadEnabled) return null;
                 plainChance    = cfg.ReedSpreadChance;
                 tilledChance   = cfg.ReedSpreadChance; // no tilled bonus for reeds
                 maxDensity     = cfg.ReedSpreadMaxDensity;
@@ -93,10 +97,18 @@ namespace Rudiments.SRC.Common.Blocks
             BlockPos target    = pos.AddCopy(face.Normali);
             BlockPos belowPos  = target.DownCopy();
 
+            // ── Outward radius cap (hard bound on patch size from its origin) ─────────────
+            if (maxRadius > 0 && originX != int.MinValue)
+            {
+                long dx = target.X - originX;
+                long dz = target.Z - originZ;
+                if (dx * dx + dz * dz > (long)maxRadius * maxRadius) return null;
+            }
+
             Block atTarget   = world.BlockAccessor.GetBlock(target);
             Block belowBlock = world.BlockAccessor.GetBlock(belowPos);
 
-            if (atTarget.Replaceable < 6000) return false;
+            if (atTarget.Replaceable < 6000) return null;
 
             // ── Resolve water vs soil requirement ─────────────────────────────────────
             bool needsWater, needsSoil;
@@ -112,12 +124,12 @@ namespace Rudiments.SRC.Common.Blocks
                 needsSoil  = !needsWater;
             }
 
-            if (needsWater && !belowBlock.IsLiquid())    return false;
-            if (needsSoil  && belowBlock.Fertility <= 0) return false;
+            if (needsWater && !belowBlock.IsLiquid())    return null;
+            if (needsSoil  && belowBlock.Fertility <= 0) return null;
 
             // ── Chance roll (after target selection so tilled bonus is accurate) ──────
             double effChance = (belowBlock is BlockFarmland) ? tilledChance : plainChance;
-            if (world.Rand.NextDouble() >= effChance) return false;
+            if (world.Rand.NextDouble() >= effChance) return null;
 
             // ── Density cap ────────────────────────────────────────────────────────────
             if (maxDensity > 0 && densityMatch.Length > 0)
@@ -142,7 +154,7 @@ namespace Rudiments.SRC.Common.Blocks
                     }
                 });
 
-                if (count >= maxDensity) return false;
+                if (count >= maxDensity) return null;
             }
 
             // ── Resolve the spread block ───────────────────────────────────────────────
@@ -159,10 +171,10 @@ namespace Rudiments.SRC.Common.Blocks
                 spreadBlock = block;
             }
 
-            if (spreadBlock == null) return false;
+            if (spreadBlock == null) return null;
 
             world.BlockAccessor.SetBlock(spreadBlock.BlockId, target);
-            return true;
+            return target;
         }
     }
 }

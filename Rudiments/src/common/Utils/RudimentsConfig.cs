@@ -33,6 +33,11 @@ namespace Rudiments
         /// <summary>Radius (blocks) for the density-cap scan. Default: 2.</summary>
         public int NettleSpreadDensityRadius { get; set; } = 2;
 
+        /// <summary>Hard outward cap: a patch will not spread further than this many blocks from where it
+        /// started. Children inherit the patch origin, so the whole patch is bounded. Set to 0 for
+        /// UNLIMITED spread (nettle will grow without bound). Default: 16.</summary>
+        public int NettleSpreadMaxRadius { get; set; } = 16;
+
         /// <summary>Minimum growth stage before a nettle attempts to spread. Default: 6.</summary>
         public int NettleSpreadMatureStage { get; set; } = 6;
 
