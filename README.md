@@ -79,13 +79,16 @@ All settings live in `VintagestoryData/ModConfig/rudiments.json` (created on fir
 | Setting | Default | Effect |
 |---|---|---|
 | `NettleSpreadEnabled` | `true` | Wild nettle spreads to neighbouring fertile ground. |
-| `NettleSpreadChance` | `0.20` | Spread chance onto plain fertile soil (rolled per growth tick, once mature). |
+| `NettleSpreadChance` | `0.20` | Spread chance onto plain fertile soil (rolled each spread attempt, once mature). |
 | `NettleTilledSpreadChance` | `0.45` | Higher spread chance onto tilled farmland. |
+| `NettleSpreadIntervalDays` | `1` | In-game days between spread attempts for a mature wild nettle. |
 | `NettleSpreadMatureStage` | `6` | Minimum growth stage before a plant starts spreading. |
 | `NettleSpreadMaxDensity` | `5` | Spread halts once this many nettle blocks are nearby (anti-runaway cap). |
 | `NettleSpreadDensityRadius` | `2` | Radius checked for the density cap. |
-| `NettleCreepEnabled` | `false` | **Invasive mode.** On: spreads as an *invisible* buried rhizome that emerges later (heavier on performance). Off: spread places visible young nettle. |
-| `NettleCreepEmergeChance` | `0.03` | How fast hidden rhizomes surface (lower = stays hidden longer). |
+| `NettleWildGrowthDaysPerStage` | `3` | In-game days a wild nettle takes to advance one growth stage. |
+| `NettleStubRegrowDays` | `3` | In-game days a cut stub takes to regrow into stage-1 nettle. |
+| `NettleCreepEnabled` | `false` | **Invasive mode.** On: spreads as an *invisible* buried rhizome that emerges later. Off: spread places visible young nettle. |
+| `NettleCreepEmergeDays` | `4` | In-game days a hidden buried rhizome takes to surface as a nettle. |
 
 ### Nettle as a heavy feeder
 

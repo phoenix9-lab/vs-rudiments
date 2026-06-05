@@ -36,8 +36,21 @@ namespace Rudiments
         /// <summary>Minimum growth stage before a wild nettle attempts to spread. Default: 6.</summary>
         public int NettleSpreadMatureStage { get; set; } = 6;
 
-        /// <summary>Per-tick chance a hidden rhizome emerges as crop-nettle-1. Default: 0.03.</summary>
-        public double NettleCreepEmergeChance { get; set; } = 0.03;
+        /// <summary>In-game days between spread attempts for a mature wild nettle. Calendar-driven,
+        /// so it responds to time speed. Default: 1.</summary>
+        public double NettleSpreadIntervalDays { get; set; } = 1.0;
+
+        /// <summary>In-game days a wild nettle takes to advance one growth stage. Calendar-driven.
+        /// Default: 3.</summary>
+        public double NettleWildGrowthDaysPerStage { get; set; } = 3.0;
+
+        /// <summary>In-game days a cut stub takes to regrow into stage-1 nettle. Calendar-driven.
+        /// Default: 3.</summary>
+        public double NettleStubRegrowDays { get; set; } = 3.0;
+
+        /// <summary>In-game days a hidden buried rhizome takes to surface as stage-1 nettle.
+        /// Calendar-driven. Default: 4.</summary>
+        public double NettleCreepEmergeDays { get; set; } = 4.0;
 
         /// <summary>Leave a stub on every break, any stage, any soil. Default: true.</summary>
         public bool NettleAlwaysLeaveStub { get; set; } = true;

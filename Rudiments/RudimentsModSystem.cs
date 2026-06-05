@@ -49,8 +49,9 @@ namespace Rudiments
             api.RegisterBlockBehaviorClass($"{Mod.Info.ModID}:RhizomeSpread", typeof(BlockBehaviorRhizomeSpread));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockNettleStub", typeof(BlockNettleStub));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockReedsWithSpread", typeof(BlockReedsWithSpread));
-            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockHiddenRhizome", typeof(BlockHiddenRhizome));
             api.RegisterCropBehavior("HeavyFeeder", typeof(CropBehaviorHeavyFeeder));
+            api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityNettle", typeof(BlockEntityNettle));
+            api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityNettleConvert", typeof(BlockEntityNettleConvert));
 
             base.Start(api);
 

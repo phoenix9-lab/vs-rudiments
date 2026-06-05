@@ -37,22 +37,8 @@ namespace Rudiments.SRC.Common.Blocks
             return base.CanPlaceBlock(world, byPlayer, blockSel, ref failureCode);
         }
 
-        // Regrow after a few in-game days (9% chance per eligible block tick, same as nettle growth).
-        public override bool ShouldReceiveServerGameTicks(IWorldAccessor world, BlockPos pos, Random offThreadRandom, out object extra)
-        {
-            extra = null;
-            Block below = world.BlockAccessor.GetBlock(pos.DownCopy());
-            if (below.Fertility <= 0) return false;
-            if (offThreadRandom.NextDouble() < 0.09) { extra = "regrow"; return true; }
-            return false;
-        }
-
-        public override void OnServerGameTick(IWorldAccessor world, BlockPos pos, object extra = null)
-        {
-            Block nettle1 = world.GetBlock(new AssetLocation("rudiments:crop-nettle-1"));
-            if (nettle1 != null)
-                world.BlockAccessor.SetBlock(nettle1.BlockId, pos);
-        }
+        // Regrow into stage-1 nettle is calendar-driven by BlockEntityNettleConvert (entityClass in
+        // nettlestub.json), so it responds to time speed and is deterministic.
 
         // Shovel right-click: dig out the rhizome, remove stub.
         public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)

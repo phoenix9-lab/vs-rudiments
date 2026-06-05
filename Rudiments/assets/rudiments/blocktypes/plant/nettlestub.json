@@ -1,9 +1,14 @@
 {
   "code": "nettlestub",
   "class": "rudiments:BlockNettleStub",
+  "entityClass": "rudiments:BlockEntityNettleConvert",
   "shape": { "base": "game:block/plant/crop/default1" },
   "textures": {
     "crop": { "base": "block/plant/nettlestub" }
+  },
+  "attributes": {
+    "convertTo": "rudiments:crop-nettle-1",
+    "convertConfigKey": "stub"
   },
   "blockmaterial": "Plant",
   "renderpass": "OpaqueNoCull",

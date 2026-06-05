@@ -1,6 +1,6 @@
 {
 	"code": "nettlecreep",
-	"class": "rudiments:BlockHiddenRhizome",
+	"entityClass": "rudiments:BlockEntityNettleConvert",
 	"drawtype": "JSON",
 	"shape": { "base": "block/plant/nettlecreep" },
 	"blockmaterial": "Plant",
@@ -14,7 +14,8 @@
 	"renderpass": "OpaqueNoCull",
 	"creativeinventory": {},
 	"attributes": {
-		"emergeProbability": 0.03
+		"convertTo": "rudiments:crop-nettle-1",
+		"convertConfigKey": "creep"
 	},
 	"drops": []
 }

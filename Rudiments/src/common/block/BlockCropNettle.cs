@@ -20,12 +20,12 @@ namespace Rudiments.SRC.Common.Blocks
     ///   leaves a BlockNettleStub root crown. The stub regrows to stage-1 automatically,
     ///   or can be dug with a shovel for the rhizome (the only way to permanently remove nettle).
     ///
-    /// SPREADING via BlockBehaviorRhizomeSpread, called from OnServerGameTick once mature.
+    /// GROWTH / SPREAD / HEAVY FEEDER (wild): all calendar-driven by BlockEntityNettle, not the
+    /// real-time random block-tick path (which is disabled here via ShouldReceiveServerGameTicks).
+    /// Cultivated growth is driven by BlockEntityFarmland; cultivated neighbour depletion by
+    /// CropBehaviorHeavyFeeder registered in CropProps.
     ///
     /// WALK-THROUGH STING via OnEntityInside. Any armor (protectionModifiers) blocks it.
-    ///
-    /// HEAVY FEEDER: drains nitrogen from adjacent farmland on growth ticks (wild path).
-    /// Cultivated path is handled by CropBehaviorHeavyFeeder registered in CropProps.
     /// </summary>
     public class BlockCropNettle : BlockCrop
     {
@@ -128,52 +128,16 @@ namespace Rudiments.SRC.Common.Blocks
             NettleSting.TryStingWalkthrough(world, player, pos);
         }
 
-        // ── Wild growth tick ──────────────────────────────────────────────────────
+        // ── Growth / spread are calendar-driven, not random-tick driven ─────────────
         //
-        // Farmland-driven growth is handled by BEFarmland (calls base.OnServerGameTick via
-        // BlockCrop and invokes CropBehaviorHeavyFeeder for neighbour depletion).
-        //
-        // Wild path: engine calls ShouldReceiveServerGameTicks which rolls for growth and
-        // returns the next-stage block as extra. We intercept here to:
-        //   1. Suppress the stage-9 → stage-1 wrap reset (mature wild plant persists).
-        //   2. Drive spread on every tick once mature (>= NettleSpreadMatureStage).
-        //   3. Drain neighbour nitrogen on every growth tick (heavy feeder, wild case).
-        public override void OnServerGameTick(IWorldAccessor world, BlockPos pos, object extra = null)
+        // Wild nettle growth, heavy-feeder neighbour depletion, and rhizome spread are all driven
+        // by BlockEntityNettle off the game calendar (so they respond to time speed and are
+        // deterministic). Cultivated growth is driven by BlockEntityFarmland. We therefore disable
+        // the inherited real-time random block-tick growth path entirely.
+        public override bool ShouldReceiveServerGameTicks(IWorldAccessor world, BlockPos pos, System.Random offThreadRandom, out object extra)
         {
-            if (extra is Block newBlock)
-            {
-                Block below = world.BlockAccessor.GetBlock(pos.DownCopy());
-                bool onFarmland = below is BlockFarmland;
-                bool isWrapReset = !onFarmland && CurrentCropStage == 9 &&
-                                   newBlock.Code?.Path?.EndsWith("-1") == true;
-
-                if (isWrapReset)
-                {
-                    // Suppress reset; treat as a mature-plant tick instead
-                    // (spread + neighbour depletion handled below by the mature-stage path)
-                }
-                else
-                {
-                    // Normal growth: apply base logic (advances the stage)
-                    base.OnServerGameTick(world, pos, extra);
-
-                    // Wild heavy feeder: drain neighbour nitrogen on every growth event
-                    if (!onFarmland && RudimentsModSystem.Config.NettleHeavyFeederEnabled)
-                    {
-                        NettleFeeder.DepleteNeighborNitrogen(world, pos.DownCopy(), RudimentsModSystem.Config.NettleNeighborNitrogenDepletion);
-                    }
-                }
-
-                // Spread once mature (applies to both normal mature ticks and suppressed wraps)
-                if (CurrentCropStage >= RudimentsModSystem.Config.NettleSpreadMatureStage && !onFarmland)
-                {
-                    GetBehavior<BlockBehaviorRhizomeSpread>()?.TrySpreadTick(world, pos);
-                }
-
-                return;
-            }
-
-            base.OnServerGameTick(world, pos, extra);
+            extra = null;
+            return false;
         }
     }
 }

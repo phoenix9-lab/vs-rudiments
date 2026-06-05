@@ -1,6 +1,7 @@
 {
 	"code": "crop",
 	"class": "rudiments:BlockCropNettle",
+	"entityClass": "rudiments:BlockEntityNettle",
 	"behaviors": [
 		{ "name": "Unstable" },
 		{
