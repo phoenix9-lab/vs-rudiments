@@ -61,6 +61,19 @@ namespace Rudiments
         public override void StartServerSide(ICoreServerAPI api)
         {
             base.StartServerSide(api);
+
+            // Re-read ModConfig/rudiments.json into the live Config object so edits (manual or via
+            // AutoConfigLib) take effect without a restart. All mod code reads RudimentsModSystem.Config
+            // live, so reloading the object is enough.
+            api.ChatCommands.Create("rudimentsreload")
+                .WithDescription("Reload the Rudiments config from ModConfig/rudiments.json")
+                .RequiresPrivilege(Vintagestory.API.Server.Privilege.controlserver)
+                .HandleWith(_ =>
+                {
+                    Config = api.LoadModConfig<RudimentsConfig>("rudiments.json") ?? new RudimentsConfig();
+                    api.StoreModConfig(Config, "rudiments.json");
+                    return TextCommandResult.Success("Rudiments config reloaded.");
+                });
         }
 
         public override void StartClientSide(ICoreClientAPI api)
