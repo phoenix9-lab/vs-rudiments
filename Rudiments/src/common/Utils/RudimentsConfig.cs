@@ -91,5 +91,9 @@ namespace Rudiments
 
         /// <summary>Reed density-cap scan radius. Default: 2.</summary>
         public int ReedSpreadDensityRadius { get; set; } = 2;
+
+        /// <summary>Hard outward cap for reeds: a patch won't spread further than this many blocks from
+        /// where it started. Set to 0 for UNLIMITED spread (reeds grow without bound). Default: 16.</summary>
+        public int ReedSpreadMaxRadius { get; set; } = 16;
     }
 }

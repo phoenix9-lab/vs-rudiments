@@ -108,7 +108,8 @@ All settings live in `VintagestoryData/ModConfig/rudiments.json` (created on fir
 | `ReedSpreadEnabled` | `true` | Reeds slowly spread along suitable water/soil. |
 | `ReedSpreadChance` | `0.03` | Spread chance per attempt (relaxed). |
 | `ReedSpreadIntervalDays` | `2` | In-game days between spread attempts for a reed. |
-| `ReedSpreadMaxDensity` | `6` | Anti-runaway density cap. |
+| `ReedSpreadMaxDensity` | `6` | Local density cap. |
+| `ReedSpreadMaxRadius` | `16` | Hard outward cap — reeds won't spread further than this from where the patch started. `0` = unlimited. |
 | `ReedSpreadDensityRadius` | `2` | Radius checked for the density cap. |
 
 ### Other

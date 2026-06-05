@@ -19,7 +19,7 @@ namespace Rudiments.SRC.Common.BlockEntities
     /// Driving this off Calendar.TotalHours (instead of real-time random block ticks) makes the
     /// whole lifecycle deterministic and responsive to time speed.
     /// </summary>
-    public class BlockEntityNettle : BlockEntity
+    public class BlockEntityNettle : BlockEntity, IPatchOrigin
     {
         private double lastGrowthHours = -1;
         private double lastSpreadHours = -1;
@@ -92,9 +92,10 @@ namespace Rudiments.SRC.Common.BlockEntities
                 if (behavior != null)
                 {
                     BlockPos spreadAt = behavior.TrySpreadTick(Api.World, Pos, originX, originZ, cfg.NettleSpreadMaxRadius);
-                    // Propagate the patch origin to the child so the radius cap bounds the whole patch.
-                    if (spreadAt != null && Api.World.BlockAccessor.GetBlockEntity(spreadAt) is BlockEntityNettle child)
-                        child.SetPatchOrigin(originX, originZ);
+                    // Propagate the patch origin to the child (nettle OR buried rhizome) so the radius
+                    // cap bounds the whole patch — including creep mode.
+                    if (spreadAt != null && Api.World.BlockAccessor.GetBlockEntity(spreadAt) is IPatchOrigin po)
+                        po.SetPatchOrigin(originX, originZ);
                 }
                 lastSpreadHours = now;
             }
