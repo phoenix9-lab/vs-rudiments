@@ -4,6 +4,8 @@ set -euo pipefail
 export PATH="/home/dwhite/.dotnet:$PATH"
 export VINTAGE_STORY="/mnt/c/Users/danie/AppData/Roaming/Vintagestory"
 
+STAGED=$(git diff --cached --name-only --diff-filter=ACM)
+
 # ── 1. Validate staged JSON files ─────────────────────────────────────────────
 echo "[pre-commit] Validating JSON..."
 BAD_JSON=0
@@ -12,26 +14,29 @@ while IFS= read -r f; do
     echo "  INVALID JSON: $f"
     BAD_JSON=1
   fi
-done < <(git diff --cached --name-only --diff-filter=ACM | grep '\.json$')
+done < <(echo "$STAGED" | grep '\.json$' || true)
 if [ "$BAD_JSON" -ne 0 ]; then exit 1; fi
 
-# ── 2. Version must be bumped from HEAD ───────────────────────────────────────
-V_MAIN=$(python3 -c "import json; print(json.load(open('Rudiments/modinfo.json'))['version'])")
-if git rev-parse --verify HEAD >/dev/null 2>&1; then
-  V_HEAD=$(git show HEAD:Rudiments/modinfo.json 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin)['version'])" 2>/dev/null || echo "0.0.0")
-  if [ "$V_MAIN" = "$V_HEAD" ]; then
-    echo "[pre-commit] ERROR: version not bumped — still $V_MAIN (same as HEAD)"
-    echo "[pre-commit] Bump version in Rudiments/modinfo.json"
-    exit 1
+# ── 2. Version bump + build — only when Rudiments/ files are staged ───────────
+if echo "$STAGED" | grep -q '^Rudiments/'; then
+  V_MAIN=$(python3 -c "import json; print(json.load(open('Rudiments/modinfo.json'))['version'])")
+  if git rev-parse --verify HEAD >/dev/null 2>&1; then
+    V_HEAD=$(git show HEAD:Rudiments/modinfo.json 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin)['version'])" 2>/dev/null || echo "0.0.0")
+    if [ "$V_MAIN" = "$V_HEAD" ]; then
+      echo "[pre-commit] ERROR: version not bumped — still $V_MAIN (same as HEAD)"
+      echo "[pre-commit] Bump version in Rudiments/modinfo.json"
+      exit 1
+    fi
   fi
+  echo "[pre-commit] Version: $V_MAIN ✓"
+
+  echo "[pre-commit] Building Rudiments.dll..."
+  dotnet build Rudiments/Rudiments.csproj -c Release --nologo -v minimal
+
+  cp Rudiments/bin/Release/Rudiments.dll Rudiments/Rudiments.dll
+  git add -f Rudiments/Rudiments.dll
+else
+  echo "[pre-commit] No Rudiments/ files staged — skipping version check and build."
 fi
-echo "[pre-commit] Version: $V_MAIN ✓"
-
-# ── 4. Build DLL ──────────────────────────────────────────────────────────────
-echo "[pre-commit] Building Rudiments.dll..."
-dotnet build Rudiments/Rudiments.csproj -c Release --nologo -v minimal
-
-cp Rudiments/bin/Release/Rudiments.dll Rudiments/Rudiments.dll
-git add -f Rudiments/Rudiments.dll
 
 echo "[pre-commit] Done."
