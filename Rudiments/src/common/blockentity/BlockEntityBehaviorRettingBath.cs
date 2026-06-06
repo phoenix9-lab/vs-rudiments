@@ -80,8 +80,11 @@ namespace Rudiments.SRC.Common.BlockEntities
             // Retting in progress. The seal only starts the timers — keep the barrel open.
             if (barrel.Sealed) barrel.Sealed = false;
 
-            // Bundle removed / emptied → end the batch.
-            if (itemSlot.Empty)
+            // Bundle or liquid removed → end the batch.
+            var liqSlot = LiquidSlot;
+            bool liquidPresent = liqSlot != null && !liqSlot.Empty
+                && liqSlot.Itemstack?.Collectible?.Code?.ToString() == BathCode;
+            if (itemSlot.Empty || !liquidPresent)
             {
                 StopRetting();
                 return;
