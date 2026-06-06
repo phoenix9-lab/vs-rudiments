@@ -125,7 +125,10 @@ namespace Rudiments.SRC.Common.BlockEntities
         private void StopRetting()
         {
             active = false;
-            RestoreLiquid();
+            if (!process.Converted)
+                RestoreLiquid(); // pulled before conversion — water is still clean, reuse it
+            else
+                DrainLiquid();   // retting happened — water is exhausted, drain the barrel
             process.Reset(api.World.Calendar.TotalHours, false);
             Blockentity.MarkDirty(true);
         }
@@ -144,6 +147,14 @@ namespace Rudiments.SRC.Common.BlockEntities
             Item restoreItem = api.World.GetItem(new AssetLocation(restoreCode));
             if (restoreItem == null) return;
             liqSlot.Itemstack = new ItemStack(restoreItem, liqSlot.Itemstack.StackSize);
+            liqSlot.MarkDirty();
+        }
+
+        private void DrainLiquid()
+        {
+            var liqSlot = LiquidSlot;
+            if (liqSlot == null) return;
+            liqSlot.Itemstack = null;
             liqSlot.MarkDirty();
         }
 
