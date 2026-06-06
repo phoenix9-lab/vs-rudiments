@@ -1,5 +1,6 @@
 {
   "code": "cookednettlerhizome",
+  "texture": { "base": "item/resource/nettlerhizome" },
   "textures": {
     "nettlerhizome": { "base": "item/resource/nettlerhizome" }
   },

@@ -11,9 +11,8 @@
     "fineWindowHours": 12,
     "standardDelayHours": 24,
     "standardHoldHours": 36,
-    "handbook": { "include": true }
+    "handbook": { "exclude": true }
   },
-  "creativeinventory": { "general": [ "*" ], "decorative": [ "*" ] },
   "shape": { "base": "game:block/wood/barrel/closed" },
   "textures": {
     "aged": { "base": "game:block/wood/debarked/oak" }

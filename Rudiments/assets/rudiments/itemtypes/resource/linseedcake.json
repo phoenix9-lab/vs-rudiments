@@ -1,5 +1,6 @@
 {
   "code": "linseedcake",
+  "texture": { "base": "item/resource/linseedcake" },
   "textures": {
     "linseedcake": { "base": "item/resource/linseedcake" }
   },
