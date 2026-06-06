@@ -25,11 +25,13 @@ namespace Rudiments.SRC.Common.BlockEntities
         private ICoreAPI api;
 
         private const string WaterCode = "game:waterportion";
-        private const string LimeCode  = "game:slakedlimeportion";
+        private const string LimeCode  = "game:limewaterportion";
         private const string BathCode  = "rudiments:rettingbathportion";
         private const string LangPrefix = "rudiments:rettingbath";
 
         public BlockEntityBehaviorRettingBath(BlockEntity blockentity) : base(blockentity) { }
+
+        public bool IsActive => active;
 
         private BlockEntityBarrel Barrel => Blockentity as BlockEntityBarrel;
         private ItemSlot ItemSlot => Barrel?.Inventory?[0];
@@ -143,16 +145,22 @@ namespace Rudiments.SRC.Common.BlockEntities
             liqSlot.MarkDirty();
         }
 
-        public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
+        /// <summary>Called by BlockBehaviorRettingBathInfo.GetPlacedBlockInfo to surface progress text.</summary>
+        public void AppendStatus(StringBuilder dsc, IWorldAccessor world)
         {
-            if (!active) return;
             var itemSlot = ItemSlot;
             if (itemSlot == null || itemSlot.Empty) return;
 
             if (process.LimeActive)
                 dsc.AppendLine(Lang.Get("rudiments:rettingvat-lime-active"));
 
-            process.AppendStatus(dsc, LangPrefix, itemSlot, api.World.Calendar.HoursPerDay);
+            process.AppendStatus(dsc, LangPrefix, itemSlot, world.Calendar.HoursPerDay);
+        }
+
+        public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
+        {
+            if (!active) return;
+            AppendStatus(dsc, api.World);
         }
 
         public override void ToTreeAttributes(ITreeAttribute tree)

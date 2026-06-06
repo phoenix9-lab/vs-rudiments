@@ -36,6 +36,7 @@
   "rudiments:rettingbath-stage-standard": "{0} bundle(s) retted — standard fibre. Collect them before they rot.",
   "rudiments:rettingbath-rotted": "{0} bundle(s) left too long — rotted and ruined.",
   "rudiments:item-rettingbathportion": "Retting bath water",
+  "rudiments:incontainer-item-rettingbathportion": "retting bath water",
 
   "rudiments:scutcher-nopower": "No mechanical power — connect an axle above or below",
   "rudiments:scutcher-running": "Powered and scutching",
