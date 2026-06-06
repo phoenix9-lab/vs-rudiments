@@ -158,7 +158,7 @@ namespace Rudiments.Utils
 
         private static CraftingRecipeIngredient MakeGlue(RudimentsConfig cfg, string container) => new()
         {
-            Type = EnumItemClass.Item,
+            Type = EnumItemClass.Block,
             Code = new AssetLocation(container),
             Quantity = 1,
             RecipeAttributes = new JsonObject(JObject.Parse(
