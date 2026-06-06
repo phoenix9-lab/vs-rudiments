@@ -1,0 +1,9 @@
+[
+  {
+    "comment": "Attach the Rudiments retting-bath behavior to the vanilla barrel so it can water-ret cured nettle / rippled flax. Sealing a barrel of bundles + water (or limewater) starts an open retting bath.",
+    "file": "game:blocktypes/wood/barrel",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [ { "name": "rudiments:RettingBath" } ]
+  }
+]
