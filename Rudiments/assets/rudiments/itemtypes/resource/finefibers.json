@@ -1,5 +1,6 @@
 {
   "code": "finefibers",
+  "texture": { "base": "item/resource/finefibers" },
   "textures": {
     "finefibers": { "base": "item/resource/finefibers" }
   },

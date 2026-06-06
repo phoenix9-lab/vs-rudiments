@@ -1,5 +1,6 @@
 {
   "code": "coarsefibers",
+  "texture": { "base": "item/resource/coarsefibers" },
   "textures": {
     "coarsefibers": { "base": "item/resource/coarsefibers" }
   },

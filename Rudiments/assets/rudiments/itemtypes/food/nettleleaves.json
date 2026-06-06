@@ -1,5 +1,6 @@
 {
   "code": "nettleleaves",
+  "texture": { "base": "item/food/nettleleaves" },
   "textures": {
     "nettleleaves": { "base": "item/food/nettleleaves" }
   },

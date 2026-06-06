@@ -1,5 +1,6 @@
 {
   "code": "linseedoil",
+  "texture": { "base": "item/resource/linseedoil" },
   "textures": {
     "linseedoil": { "base": "item/resource/linseedoil" }
   },

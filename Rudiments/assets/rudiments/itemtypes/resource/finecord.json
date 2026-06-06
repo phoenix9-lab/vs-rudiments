@@ -1,5 +1,6 @@
 {
   "code": "finecord",
+  "texture": { "base": "item/resource/finecord" },
   "textures": {
     "finecord": { "base": "item/resource/finecord" }
   },

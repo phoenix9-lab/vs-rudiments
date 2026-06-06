@@ -12,5 +12,19 @@
     "file": "rudiments:itemtypes/resource/nettlefiber.json",
     "side": "Server",
     "dependsOn": [ { "modid": "spinningwheel" } ]
+  },
+  {
+    "comment": "Add spinningProps to finefibers for Immersive Fibercraft spinning wheel. Same ratio as nettlefiber. No-op if spinningwheel mod is absent.",
+    "op": "add",
+    "path": "/attributes/spinningProps",
+    "value": {
+      "outputType": "game:flaxtwine",
+      "outputQuantity": 1,
+      "inputQuantity": 2,
+      "spinTime": 4
+    },
+    "file": "rudiments:itemtypes/resource/finefibers.json",
+    "side": "Server",
+    "dependsOn": [ { "modid": "spinningwheel" } ]
   }
 ]
