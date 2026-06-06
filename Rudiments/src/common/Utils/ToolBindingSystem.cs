@@ -124,6 +124,7 @@ namespace Rudiments.Utils
                 case "gluenail":
                     if (!SetOrAddBinding(r, bindingKey, MakeNail(cfg))) return 0;
                     if (!AddBinding(r, MakeGlue(cfg, glueContainer))) return 0;
+                    r.Shapeless = true;
                     break;
                 case "frictionfit":
                     if (bindingKey == null || !RemoveBinding(r, bindingKey)) return 0;
