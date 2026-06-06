@@ -109,6 +109,7 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         private void StartRetting(BlockEntityBarrel barrel, bool lime)
         {
+            api.World.Logger.Notification("[Rudiments] RettingBath at {0}: retting started (lime={1})", Blockentity.Pos, lime);
             barrel.Sealed = false;
             TransformLiquidToBath();
 

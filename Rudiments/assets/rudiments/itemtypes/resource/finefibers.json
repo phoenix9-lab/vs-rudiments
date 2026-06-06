@@ -1,23 +1,49 @@
 {
   "code": "finefibers",
-  "texture": { "base": "item/resource/finefibers" },
-  "textures": {
-    "finefibers": { "base": "item/resource/finefibers" }
+  "texture": {
+    "base": "item/resource/finefibers"
   },
-  "behaviors": [ { "name": "rudiments:FiberQuality" } ],
-  "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
+  "textures": {
+    "finefibers": {
+      "base": "item/resource/finefibers"
+    }
+  },
+  "behaviors": [
+    {
+      "name": "rudiments:FiberQuality"
+    }
+  ],
+  "creativeinventory": {
+    "general": [
+      "*"
+    ],
+    "items": [
+      "*"
+    ]
+  },
   "attributes": {
     "handbook": {
       "extraSections": [
-        { "title": "rudiments:item-handbooktitle-finefibers", "text": "rudiments:item-handbooktext-finefibers" }
+        {
+          "title": "rudiments:item-handbooktitle-finefibers",
+          "text": "rudiments:item-handbooktext-finefibers"
+        }
       ]
     }
   },
   "maxstacksize": 128,
   "materialDensity": 80,
   "guiTransform": {
-    "rotation": { "x": -56, "y": -41, "z": -180 },
-    "origin": { "x": 0.5, "y": 0, "z": 0.5 },
-    "scale": 2.4
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "scale": 1.0
   }
 }

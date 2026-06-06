@@ -1,10 +1,21 @@
 {
   "code": "cookednettlerhizome",
-  "texture": { "base": "item/resource/nettlerhizome" },
-  "textures": {
-    "nettlerhizome": { "base": "item/resource/nettlerhizome" }
+  "texture": {
+    "base": "item/resource/nettlerhizome"
   },
-  "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
+  "textures": {
+    "nettlerhizome": {
+      "base": "item/resource/nettlerhizome"
+    }
+  },
+  "creativeinventory": {
+    "general": [
+      "*"
+    ],
+    "items": [
+      "*"
+    ]
+  },
   "nutritionProps": {
     "foodcategory": "Vegetable",
     "saturation": 150
@@ -12,8 +23,16 @@
   "maxstacksize": 64,
   "materialDensity": 100,
   "guiTransform": {
-    "rotation": { "x": -20, "y": -45, "z": 0 },
-    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
-    "scale": 2.6
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "scale": 1.0
   }
 }

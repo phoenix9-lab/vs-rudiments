@@ -1,23 +1,49 @@
 {
   "code": "coarsefibers",
-  "texture": { "base": "item/resource/coarsefibers" },
-  "textures": {
-    "coarsefibers": { "base": "item/resource/coarsefibers" }
+  "texture": {
+    "base": "item/resource/coarsefibers"
   },
-  "behaviors": [ { "name": "rudiments:FiberQuality" } ],
-  "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
+  "textures": {
+    "coarsefibers": {
+      "base": "item/resource/coarsefibers"
+    }
+  },
+  "behaviors": [
+    {
+      "name": "rudiments:FiberQuality"
+    }
+  ],
+  "creativeinventory": {
+    "general": [
+      "*"
+    ],
+    "items": [
+      "*"
+    ]
+  },
   "attributes": {
     "handbook": {
       "extraSections": [
-        { "title": "rudiments:item-handbooktitle-coarsefibers", "text": "rudiments:item-handbooktext-coarsefibers" }
+        {
+          "title": "rudiments:item-handbooktitle-coarsefibers",
+          "text": "rudiments:item-handbooktext-coarsefibers"
+        }
       ]
     }
   },
   "maxstacksize": 128,
   "materialDensity": 120,
   "guiTransform": {
-    "rotation": { "x": -56, "y": -41, "z": -180 },
-    "origin": { "x": 0.5, "y": 0, "z": 0.5 },
-    "scale": 2.4
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "scale": 1.0
   }
 }

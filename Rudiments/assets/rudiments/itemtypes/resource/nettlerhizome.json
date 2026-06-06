@@ -1,15 +1,29 @@
 {
   "code": "nettlerhizome",
   "class": "rudiments:ItemNettleRhizome",
-  "texture": { "base": "item/resource/nettlerhizome" },
-  "textures": {
-    "nettlerhizome": { "base": "item/resource/nettlerhizome" }
+  "texture": {
+    "base": "item/resource/nettlerhizome"
   },
-  "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
+  "textures": {
+    "nettlerhizome": {
+      "base": "item/resource/nettlerhizome"
+    }
+  },
+  "creativeinventory": {
+    "general": [
+      "*"
+    ],
+    "items": [
+      "*"
+    ]
+  },
   "attributes": {
     "handbook": {
       "extraSections": [
-        { "title": "rudiments:item-handbooktitle-nettlerhizome", "text": "rudiments:item-handbooktext-nettlerhizome" }
+        {
+          "title": "rudiments:item-handbooktitle-nettlerhizome",
+          "text": "rudiments:item-handbooktext-nettlerhizome"
+        }
       ]
     }
   },
@@ -19,14 +33,25 @@
     "meltingDuration": 30,
     "smeltingType": "cook",
     "smeltedRatio": 1,
-    "smeltedStack": { "type": "item", "code": "rudiments:cookednettlerhizome" },
+    "smeltedStack": {
+      "type": "item",
+      "code": "rudiments:cookednettlerhizome"
+    },
     "requiresContainer": false
   },
   "maxstacksize": 32,
   "materialDensity": 300,
   "guiTransform": {
-    "rotation": { "x": -20, "y": -45, "z": 0 },
-    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
-    "scale": 2.6
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "scale": 1.0
   }
 }

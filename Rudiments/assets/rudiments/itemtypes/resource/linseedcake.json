@@ -1,14 +1,28 @@
 {
   "code": "linseedcake",
-  "texture": { "base": "item/resource/linseedcake" },
-  "textures": {
-    "linseedcake": { "base": "item/resource/linseedcake" }
+  "texture": {
+    "base": "item/resource/linseedcake"
   },
-  "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
+  "textures": {
+    "linseedcake": {
+      "base": "item/resource/linseedcake"
+    }
+  },
+  "creativeinventory": {
+    "general": [
+      "*"
+    ],
+    "items": [
+      "*"
+    ]
+  },
   "attributes": {
     "handbook": {
       "extraSections": [
-        { "title": "rudiments:item-handbooktitle-linseedcake", "text": "rudiments:item-handbooktext-linseedcake" }
+        {
+          "title": "rudiments:item-handbooktitle-linseedcake",
+          "text": "rudiments:item-handbooktext-linseedcake"
+        }
       ]
     }
   },
@@ -19,9 +33,16 @@
     "burnDuration": 8
   },
   "guiTransform": {
-    "translation": { "x": 0, "y": 0, "z": 0 },
-    "rotation": { "x": 0, "y": 0, "z": 0 },
-    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
-    "scale": 2.8
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.5,
+      "z": 0.5
+    },
+    "scale": 1.0
   }
 }
