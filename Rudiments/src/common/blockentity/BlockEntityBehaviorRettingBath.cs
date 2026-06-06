@@ -125,8 +125,26 @@ namespace Rudiments.SRC.Common.BlockEntities
         private void StopRetting()
         {
             active = false;
+            RestoreLiquid();
             process.Reset(api.World.Calendar.TotalHours, false);
             Blockentity.MarkDirty(true);
+        }
+
+        /// <summary>
+        /// Convert rettingbathportion back to water (or limewater if lime was active) so the barrel
+        /// recipe can re-match and the player can reseal a new batch.
+        /// </summary>
+        private void RestoreLiquid()
+        {
+            var liqSlot = LiquidSlot;
+            if (liqSlot == null || liqSlot.Empty) return;
+            if (liqSlot.Itemstack?.Collectible?.Code?.ToString() != BathCode) return;
+
+            string restoreCode = process.LimeActive ? LimeCode : WaterCode;
+            Item restoreItem = api.World.GetItem(new AssetLocation(restoreCode));
+            if (restoreItem == null) return;
+            liqSlot.Itemstack = new ItemStack(restoreItem, liqSlot.Itemstack.StackSize);
+            liqSlot.MarkDirty();
         }
 
         /// <summary>

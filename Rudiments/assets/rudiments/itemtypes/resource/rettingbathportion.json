@@ -7,8 +7,8 @@
 		"waterTightContainerProps": {
 			"containable": true,
 			"itemsPerLitre": 100,
-			"texture": { "base": "game:block/liquid/waterportion" },
-			"tintIndex": 1,
+			"texture": { "base": "game:block/liquid/vinegarportion" },
+			"tintIndex": 0,
 			"allowSpill": true,
 			"whenSpilled": {
 				"action": "DropContents",
@@ -17,8 +17,8 @@
 		}
 	},
 	"shape": { "base": "game:item/liquid" },
-	"texture": { "base": "game:block/liquid/waterportion" },
-	"tintIndex": 1,
+	"texture": { "base": "game:block/liquid/vinegarportion" },
+	"tintIndex": 0,
 	"maxstacksize": 5000,
 	"materialDensity": 200,
 	"guiTransform": {
