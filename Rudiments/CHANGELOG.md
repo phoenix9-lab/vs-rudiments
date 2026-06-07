@@ -26,6 +26,27 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.7.0] — 2026-06-07 — Toolsmith compatibility replaces homegrown tool binding
+
+### Removed
+- **Tool Binding Methods** — the homegrown alternative tool-binding system (friction-fit /
+  glue / nail / glue+nail, with durability multipliers, curing, and friction-fit failure
+  mechanics; shipped in v0.5.0 and patched through v0.6.11) has been removed entirely. It
+  conflicted both conceptually and technically with [Toolsmith](https://mods.vintagestory.at/toolsmith):
+  both mods inject `CollectibleBehavior`s onto the same vanilla tools and override
+  `GetMaxDurability`/`OnDamageItem`, which would collide if both were loaded. Existing
+  bound tools simply lose the custom behaviour (durability multiplier, lashing texture)
+  on load and continue functioning as plain tools — no save corruption.
+
+### Added
+- **Toolsmith binding interop** — `rudiments:finecord` is now registered as a premium
+  binding material (`baseHPfactor` 1.6, between `leather` and `sturdy`) in Toolsmith's
+  data-driven tool-tinkering system when that mod is present. Pure JSON data, no code, no
+  hard dependency — a complete no-op without Toolsmith. Nettle-spun twine needs no
+  separate registration since it produces vanilla `flaxtwine`, already supported natively.
+
+---
+
 ## [0.3.0] — 2026-06-02 — Unique tool graphics, build pipeline
 
 ### Added

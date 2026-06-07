@@ -180,10 +180,5 @@
   "game:meal-ingredient-stew-primary-nettleleaves": "Nettle",
   "game:meal-ingredient-stew-secondary-nettleleaves": "nettle",
 
-  "rudiments:binding-curing": "The glue is still curing — it cannot be used yet.",
-  "rudiments:binding-frictionfail": "The friction-fit joint came apart!",
-  "rudiments:binding-info-frictionfit": "Friction-fitted (mortise & tenon): no binding needed, but far lower durability and a chance to come apart during use.",
-  "rudiments:binding-info-glue": "Pitch-glued: +10% durability once cured.",
-  "rudiments:binding-info-nail": "Nail-bound: +25% durability.",
-  "rudiments:binding-info-gluenail": "Pitch-glued and nailed: +50% durability once cured."
+  "rudiments:binding-finecord": "Fine cord"
 }
