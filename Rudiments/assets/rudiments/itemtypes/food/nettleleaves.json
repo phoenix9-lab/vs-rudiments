@@ -52,5 +52,16 @@
       "z": 0.5
     },
     "scale": 1.0
+  },
+  "transitionablePropsByType": {
+    "*": [
+      {
+        "type": "Perish",
+        "freshHours": { "avg": 504 },
+        "transitionHours": { "avg": 96 },
+        "transitionedStack": { "type": "item", "code": "rot" },
+        "transitionRatio": 0.5
+      }
+    ]
   }
 }
