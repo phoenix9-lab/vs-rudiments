@@ -1,0 +1,13 @@
+[
+  {
+    "id": "finecord",
+    "texturePath": "game:block/cloth/basic/brown",
+    "langTag": "binding-finecord",
+    "baseHPfactor": 1.6,
+    "selfHPBonus": 0.3,
+    "handleHPBonus": 0.15,
+    "recoveryPercent": 0.65,
+    "isMetal": false,
+    "metalType": null
+  }
+]

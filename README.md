@@ -64,24 +64,6 @@ All of this is tunable — see [Configuration](#configuration).
 
 ---
 
-## Tool Binding Methods
-
-Stone tools can be assembled in four ways, each with a different durability profile and material cost. Rope-bound is the standard vanilla path; the others are additions.
-
-| Method | Durability | Requirement | Notes |
-|---|---|---|---|
-| Rope | 1.0x (baseline) | rope or cordage | Standard path; required when Tools Require Rope is present |
-| Friction-fit | 0.35x | none | Mortise and tenon — no binding needed, but far lower durability and a chance to come apart during use. The stone head may be lost when it fails. Stone-age tools only. |
-| Pitch glue | 1.1x | hot pitch glue (from a bucket or bowl) | Must cure before use. All tools. |
-| Nailed | 1.25x | metal nails and strips | Requires metal access. All tools. |
-| Glued and nailed | 1.5x | pitch glue + metal nails | Highest durability; must cure. All tools. |
-
-All durability multipliers are configurable. Each binding method has a distinct lashing texture on the rendered tool — pitch and nail variants show their own look; friction-fit shows no wrapping.
-
-**Compatibility.** If [Tools Require Rope](https://mods.vintagestory.at/show/mod/18490) is installed (fork or original), the alternative binding recipes are derived to sit alongside its rope requirement — they share the same output item so all variants appear on the same handbook page. The mod works without Tools Require Rope as well; in that case friction-fit is not registered (it has no benefit over the free vanilla path).
-
----
-
 ## Planned
 
 These are directions, not promises. Each will be its own coherent addition when the time is right.
@@ -97,27 +79,6 @@ These are directions, not promises. Each will be its own coherent addition when 
 All settings live in `VintagestoryData/ModConfig/rudiments.json` (created on first launch). If [AutoConfigLib](https://mods.vintagestory.at) is installed, settings can be edited in-game — no file editing needed.
 
 Apply changes without restarting: `/rudimentsreload` (requires `controlserver` privilege).
-
-Note: binding durability and glue cure times are baked onto the item at craft time. Reloading config changes future crafts and live failure or cure rolls; it does not update already-crafted tools.
-
-### Tool binding
-
-| Setting | Default | Effect |
-|---|---|---|
-| `FrictionDurabilityMul` | `0.35` | Durability multiplier for friction-fit tools |
-| `GlueDurabilityMul` | `1.1` | Durability multiplier for pitch-glued tools |
-| `NailDurabilityMul` | `1.25` | Durability multiplier for nailed tools |
-| `GlueNailDurabilityMul` | `1.5` | Durability multiplier for glued and nailed tools |
-| `FrictionFailChance` | `0.04` | Per-use chance a friction-fit tool comes apart |
-| `HeadSurvivesChance` | `0.6` | Chance the stone head drops when a friction-fit tool fails |
-| `GlueCureHours` | `12` | In-game hours pitch glue must cure before the tool can be used |
-| `GlueLitres` | `0.25` | Litres of hot pitch glue consumed per tool |
-| `NailQuantity` | `1` | Nails consumed per tool |
-| `FrictionRequiresRopeMod` | `true` | Only register friction-fit recipes when Tools Require Rope is present |
-| `FrictionStoneMaterials` | flint, chert, granite, andesite, basalt, obsidian, peridotite | Stone types eligible for friction-fit binding |
-| `GlueLiquidContent` | `game:glueportion-pitch-hot` | Pitch glue liquid required |
-| `GlueContainers` | woodbucket, bowl-fired | Containers the glue may be supplied from |
-| `NailIngredient` | `game:metalnailsandstrips-*` | Nail item consumed |
 
 ### Nettle spread and invasiveness
 
@@ -173,7 +134,7 @@ Note: binding durability and glue cure times are baked onto the item at craft ti
 
 **Spinning wheel.** If [Immersive Fibercraft](https://mods.vintagestory.at) (the spinning wheel mod) is installed, nettle fibre can be spun on the wheel. The integration activates automatically; it is a no-op if the mod is absent.
 
-**Tools Require Rope.** See the Tool Binding section above. Both the original mod and the community fork are detected automatically.
+**Toolsmith.** If [Toolsmith](https://mods.vintagestory.at/toolsmith) is installed, Rudiments' fine cord (`rudiments:finecord`) is registered as a premium binding material in its tool-tinkering system — a step above leather-tier cordage, matching its established "uniform, strong, and resistant to repeated stress" character. Nettle-spun twine needs no separate registration since it produces vanilla flax twine, which Toolsmith already supports natively. The integration is pure data — no code, no hard dependency — and a complete no-op if Toolsmith is absent. (This replaces Rudiments' earlier homegrown tool-binding system, which conflicted with Toolsmith's more comprehensive approach to the same idea.)
 
 **AutoConfigLib / ConfigLib.** Supported for in-game config editing.
 
