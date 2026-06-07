@@ -124,6 +124,7 @@ namespace Rudiments.Utils
                 case "gluenail":
                     if (!SetOrAddBinding(r, bindingKey, MakeNail(cfg))) return 0;
                     if (!AddBinding(r, MakeGlue(cfg, glueContainer))) return 0;
+                    r.Shapeless = true;
                     break;
                 case "frictionfit":
                     if (bindingKey == null || !RemoveBinding(r, bindingKey)) return 0;
@@ -206,6 +207,16 @@ namespace Rudiments.Utils
             // on take, because ConsumeInput strictly position-matches the rebuilt ResolvedIngredients.
             var keys = r.Ingredients.Keys.ToList();
             if (keys.Count == 0) return false;
+
+            // Count occurrences of each remaining letter in the old pattern so the shapeless recipe
+            // still requires the correct total quantity (e.g. two sticks that each appeared once).
+            string flat = r.IngredientPattern.Replace(",", "").Replace("_", "");
+            foreach (string k in keys)
+            {
+                int count = flat.Count(c => c == k[0]);
+                if (count > 0) r.Ingredients[k].Quantity *= count;
+            }
+
             r.IngredientPattern = string.Concat(keys);
             r.Width = keys.Count;
             r.Height = 1;

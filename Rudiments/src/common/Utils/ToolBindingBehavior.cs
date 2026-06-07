@@ -96,26 +96,18 @@ namespace Rudiments.Utils
 
         public override void OnHeldAttackStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, ref EnumHandHandling handHandling, ref EnumHandling handling)
         {
-            if (IsUncured(slot?.Itemstack))
-            {
-                WarnCuring(byEntity);
-                handHandling = EnumHandHandling.PreventDefault;
-                handling = EnumHandling.PreventSubsequent;
-                return;
-            }
-            base.OnHeldAttackStart(slot, byEntity, blockSel, entitySel, ref handHandling, ref handling);
+            if (!IsUncured(slot?.Itemstack)) return;
+            WarnCuring(byEntity);
+            handHandling = EnumHandHandling.PreventDefault;
+            handling = EnumHandling.PreventSubsequent;
         }
 
         public override void OnHeldInteractStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, bool firstEvent, ref EnumHandHandling handHandling, ref EnumHandling handling)
         {
-            if (IsUncured(slot?.Itemstack))
-            {
-                WarnCuring(byEntity);
-                handHandling = EnumHandHandling.PreventDefault;
-                handling = EnumHandling.PreventSubsequent;
-                return;
-            }
-            base.OnHeldInteractStart(slot, byEntity, blockSel, entitySel, firstEvent, ref handHandling, ref handling);
+            if (!IsUncured(slot?.Itemstack)) return;
+            WarnCuring(byEntity);
+            handHandling = EnumHandHandling.PreventDefault;
+            handling = EnumHandling.PreventSubsequent;
         }
 
         private void WarnCuring(EntityAgent byEntity)
@@ -132,17 +124,21 @@ namespace Rudiments.Utils
         {
             ItemStack stack = itemslot?.Itemstack;
             string method = stack?.Attributes?.GetString("bindingMethod");
-            // Only trigger failure for a player holding the item; projectile entities (thrown spears,
-            // arrows) carry the item in an entity-internal slot — destroying that slot makes the
-            // projectile vanish rather than failing gracefully.
-            if (method == "frictionfit" && world.Side == EnumAppSide.Server && byEntity is EntityPlayer)
+            // Only trigger failure for a player actively holding the item. Thrown projectile entities
+            // pass FiredBy (the player) as byEntity but the slot is the projectile's internal slot —
+            // not the player's hand — so we check that the slot is actually the player's held slot.
+            if (method == "frictionfit" && world.Side == EnumAppSide.Server && byEntity is EntityPlayer ep)
             {
-                var cfg = RudimentsModSystem.Config;
-                if (world.Rand.NextDouble() < cfg.FrictionFailChance)
+                bool isHeld = itemslot == ep.RightHandItemSlot || itemslot == ep.LeftHandItemSlot;
+                if (isHeld)
                 {
-                    FrictionBreak(world, byEntity, itemslot, stack, cfg);
-                    bhHandling = EnumHandling.PreventDefault;
-                    return;
+                    var cfg = RudimentsModSystem.Config;
+                    if (world.Rand.NextDouble() < cfg.FrictionFailChance)
+                    {
+                        FrictionBreak(world, byEntity, itemslot, stack, cfg);
+                        bhHandling = EnumHandling.PreventDefault;
+                        return;
+                    }
                 }
             }
             base.OnDamageItem(world, byEntity, itemslot, ref amount, ref bhHandling);
