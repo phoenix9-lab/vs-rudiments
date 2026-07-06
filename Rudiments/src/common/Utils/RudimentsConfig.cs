@@ -5,6 +5,18 @@ namespace Rudiments
         /// <summary>Maximum number of bundles that fit in one stook. Default: 64.</summary>
         public int StookMaxBundles { get; set; } = 64;
 
+        // ── Rippling ─────────────────────────────────────────────────────────────────
+
+        /// <summary>Global multiplier on flax grain yielded per bundle at the ripple. Per-tier base
+        /// values (avg/var) live in blocktypes/tool/ripple.json. Set to 0 to disable grain from
+        /// rippling entirely. Default: 1.0.</summary>
+        public float RippleGrainYieldMultiplier { get; set; } = 1.0f;
+
+        /// <summary>Global multiplier on flax seeds yielded per bundle at the ripple. Per-tier base
+        /// values live in blocktypes/tool/ripple.json. Set to 0 to disable seeds from rippling
+        /// entirely. Default: 1.0.</summary>
+        public float RippleSeedYieldMultiplier { get; set; } = 1.0f;
+
         // ── Nettle spread ────────────────────────────────────────────────────────────
 
         /// <summary>

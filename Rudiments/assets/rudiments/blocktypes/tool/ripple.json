@@ -16,26 +16,26 @@
 	{ "code": "side", "loadFromProperties": "abstract/horizontalorientation" }
   ],
   "attributesByType": {
-    "ripple-primitive-*": { 
+    "ripple-primitive-*": {
       "rippleDuration": 0.5,
       "rippleAmount": 1,
-      "flaxSeedDropAvg": 1.2,
-      "flaxGrainDropAvg": 6,
-      "flaxGrainDropVar": 1
+      "flaxSeedDropAvg": 0.6,
+      "flaxGrainDropAvg": 1.5,
+      "flaxGrainDropVar": 0.5
     },
-    "ripple-simple-*": { 
+    "ripple-simple-*": {
       "rippleDuration": 0.5,
       "rippleAmount": 2,
-      "flaxSeedDropAvg": 2.1,
-      "flaxGrainDropAvg": 8,
-      "flaxGrainDropVar": 2
+      "flaxSeedDropAvg": 0.7,
+      "flaxGrainDropAvg": 1.75,
+      "flaxGrainDropVar": 0.5
     },
-    "ripple-advanced-*": { 
+    "ripple-advanced-*": {
       "rippleDuration": 0.5,
       "rippleAmount": 4,
-      "flaxSeedDropAvg": 2.5,
-      "flaxGrainDropAvg": 12,
-      "flaxGrainDropVar": 2
+      "flaxSeedDropAvg": 0.8,
+      "flaxGrainDropAvg": 2.0,
+      "flaxGrainDropVar": 0.5
     },
     "ripple-*": {
       "handbook": {
