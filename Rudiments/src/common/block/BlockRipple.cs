@@ -11,9 +11,9 @@ namespace Rudiments.SRC.Common.Blocks
     {
         private float defaultDuration = 0.5f;
         private int defaultAmount = 1;
-        private float defaultFlaxSeedDropAvg = 1.2f;
-        private float defaultFlaxGrainDropAvg = 6;
-        private float defaultFlaxGrainDropVar = 1;
+        private float defaultFlaxSeedDropAvg = 0.6f;
+        private float defaultFlaxGrainDropAvg = 1.5f;
+        private float defaultFlaxGrainDropVar = 0.5f;
 
         static SimpleParticleProperties flaxSeedParticle = new();
 
@@ -23,9 +23,9 @@ namespace Rudiments.SRC.Common.Blocks
 
             defaultDuration = Attributes?["rippleDuration"]?.AsFloat(0.5f) ?? 0.5f;
             defaultAmount = Attributes?["rippleAmount"]?.AsInt(1) ?? 1;
-            defaultFlaxSeedDropAvg = Attributes?["flaxSeedDropAvg"]?.AsFloat(1.2f) ?? 1.2f;
-            defaultFlaxGrainDropAvg = Attributes?["flaxGrainDropAvg"]?.AsFloat(6f) ?? 6f;
-            defaultFlaxGrainDropVar = Attributes?["flaxGrainDropVar"]?.AsFloat(1f) ?? 1f;
+            defaultFlaxSeedDropAvg = Attributes?["flaxSeedDropAvg"]?.AsFloat(0.6f) ?? 0.6f;
+            defaultFlaxGrainDropAvg = Attributes?["flaxGrainDropAvg"]?.AsFloat(1.5f) ?? 1.5f;
+            defaultFlaxGrainDropVar = Attributes?["flaxGrainDropVar"]?.AsFloat(0.5f) ?? 0.5f;
             
             flaxSeedParticle = new SimpleParticleProperties(0, 1, ColorUtil.ToRgba(255, 73, 58, 9), new Vec3d(), new Vec3d(), new Vec3f(0f, 0f, 0f), new Vec3f(0f, 1f, 0f), 0.4f, 1f, 0.3f, 1f, EnumParticleModel.Cube);
             flaxSeedParticle.WithTerrainCollision = true;
@@ -77,8 +77,25 @@ namespace Rudiments.SRC.Common.Blocks
                     slot.MarkDirty();
 
                     GiveOrDropItems(new ItemStack(world.GetItem(new AssetLocation("rudiments:flaxbundle-rippled")), finalAmount), world, byPlayer, blockSel);
-                    GiveOrDropItems(new ItemStack(world.GetItem(new AssetLocation("game:seeds-flax")), GameMath.RoundRandom(world.Rand,defaultFlaxSeedDropAvg)*finalAmount), world, byPlayer, blockSel);
-                    GiveOrDropItems(new ItemStack(world.GetItem(new AssetLocation("game:grain-flax")), GameMath.RoundRandom(world.Rand, (float)MathUtility.NextGaussian(api.World.Rand, defaultFlaxGrainDropAvg, defaultFlaxGrainDropVar))*finalAmount), world, byPlayer, blockSel);
+
+                    // Per-bundle yields from JSON attributes, scaled by the global config multipliers.
+                    float seedAvg = defaultFlaxSeedDropAvg * RudimentsModSystem.Config.RippleSeedYieldMultiplier;
+                    float grainAvg = defaultFlaxGrainDropAvg * RudimentsModSystem.Config.RippleGrainYieldMultiplier;
+
+                    int seedDrop = GameMath.RoundRandom(world.Rand, seedAvg * finalAmount);
+
+                    // Roll grain per bundle so higher-throughput tiers don't amplify a single roll.
+                    double grainTotal = 0;
+                    for (int i = 0; i < finalAmount; i++)
+                    {
+                        grainTotal += Math.Max(0, MathUtility.NextGaussian(api.World.Rand, grainAvg, defaultFlaxGrainDropVar));
+                    }
+                    int grainDrop = GameMath.RoundRandom(world.Rand, (float)grainTotal);
+
+                    if (seedDrop > 0)
+                        GiveOrDropItems(new ItemStack(world.GetItem(new AssetLocation("game:seeds-flax")), seedDrop), world, byPlayer, blockSel);
+                    if (grainDrop > 0)
+                        GiveOrDropItems(new ItemStack(world.GetItem(new AssetLocation("game:grain-flax")), grainDrop), world, byPlayer, blockSel);
 
                     var randomSound = api.World.Rand.Next(1,4);
                     world.PlaySoundAt(new AssetLocation($"rudiments:sounds/block/ripple{randomSound}"), byPlayer, null, true, 1f, 0.8f);

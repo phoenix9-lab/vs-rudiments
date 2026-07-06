@@ -26,6 +26,15 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.7.1] — 2026-07-06 — Ripple yield rebalance
+
+### Changed
+- **Ripple grain/seed yields drastically reduced** to sit below vanilla's mature-flax harvest (vanilla stage-9 flax: avg 3 grain + 1.2 seeds per plant). Rippling a cured bundle previously averaged 6/8/12 grain per bundle by tier — ~30 bundles yielded 3–4 stacks of grain, an effectively infinite food source. New per-bundle averages: primitive 1.5 grain + 0.6 seeds, simple 1.75 + 0.7, advanced 2.0 + 0.8 (tiers now differentiate mainly on throughput via `rippleAmount`, not yield).
+- Grain is now rolled per bundle instead of one roll multiplied by batch size, so multi-bundle tiers no longer amplify a single lucky roll; zero-quantity drops are skipped.
+
+### Added
+- Config settings `RippleGrainYieldMultiplier` and `RippleSeedYieldMultiplier` (default 1.0) in `ModConfig/rudiments.json` — global multipliers on the per-tier JSON base yields; set to 0 to disable grain or seeds from rippling. Live-reloadable via `/rudimentsreload`.
+
 ## [0.7.0] — 2026-06-07 — Toolsmith compatibility replaces homegrown tool binding
 
 ### Removed
