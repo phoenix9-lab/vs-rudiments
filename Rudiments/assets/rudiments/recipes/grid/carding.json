@@ -1,0 +1,186 @@
+[
+  {
+    "enabled": false,
+    "ingredientPattern": "CF",
+    "ingredients": {
+      "C": {
+        "type": "item",
+        "code": "rudiments:handcards",
+        "isTool": true,
+        "toolDurabilityCost": 1
+      },
+      "F": {
+        "type": "item",
+        "code": "wool:fibers-*-plain",
+        "name": "type"
+      }
+    },
+    "width": 2,
+    "height": 1,
+    "output": {
+      "type": "item",
+      "code": "rudiments:rolag-{type}-plain"
+    }
+  },
+  {
+    "enabled": false,
+    "ingredientPattern": "CF",
+    "ingredients": {
+      "C": {
+        "type": "item",
+        "code": "rudiments:handcards",
+        "isTool": true,
+        "toolDurabilityCost": 1
+      },
+      "F": {
+        "type": "item",
+        "code": "wool:fibers-*-black",
+        "name": "type"
+      }
+    },
+    "width": 2,
+    "height": 1,
+    "output": {
+      "type": "item",
+      "code": "rudiments:rolag-{type}-black"
+    }
+  },
+  {
+    "enabled": false,
+    "ingredientPattern": "CF",
+    "ingredients": {
+      "C": {
+        "type": "item",
+        "code": "rudiments:handcards",
+        "isTool": true,
+        "toolDurabilityCost": 1
+      },
+      "F": {
+        "type": "item",
+        "code": "wool:fibers-*-brown",
+        "name": "type"
+      }
+    },
+    "width": 2,
+    "height": 1,
+    "output": {
+      "type": "item",
+      "code": "rudiments:rolag-{type}-brown"
+    }
+  },
+  {
+    "enabled": false,
+    "ingredientPattern": "CF",
+    "ingredients": {
+      "C": {
+        "type": "item",
+        "code": "rudiments:handcards",
+        "isTool": true,
+        "toolDurabilityCost": 1
+      },
+      "F": {
+        "type": "item",
+        "code": "wool:fibers-*-redbrown",
+        "name": "type"
+      }
+    },
+    "width": 2,
+    "height": 1,
+    "output": {
+      "type": "item",
+      "code": "rudiments:rolag-{type}-redbrown"
+    }
+  },
+  {
+    "enabled": false,
+    "ingredientPattern": "CF",
+    "ingredients": {
+      "C": {
+        "type": "item",
+        "code": "rudiments:handcards",
+        "isTool": true,
+        "toolDurabilityCost": 1
+      },
+      "F": {
+        "type": "item",
+        "code": "wool:fibers-*-lightbrown",
+        "name": "type"
+      }
+    },
+    "width": 2,
+    "height": 1,
+    "output": {
+      "type": "item",
+      "code": "rudiments:rolag-{type}-lightbrown"
+    }
+  },
+  {
+    "enabled": false,
+    "ingredientPattern": "CF",
+    "ingredients": {
+      "C": {
+        "type": "item",
+        "code": "rudiments:handcards",
+        "isTool": true,
+        "toolDurabilityCost": 1
+      },
+      "F": {
+        "type": "item",
+        "code": "wool:fibers-*-gray",
+        "name": "type"
+      }
+    },
+    "width": 2,
+    "height": 1,
+    "output": {
+      "type": "item",
+      "code": "rudiments:rolag-{type}-gray"
+    }
+  },
+  {
+    "enabled": false,
+    "ingredientPattern": "CF",
+    "ingredients": {
+      "C": {
+        "type": "item",
+        "code": "rudiments:handcards",
+        "isTool": true,
+        "toolDurabilityCost": 1
+      },
+      "F": {
+        "type": "item",
+        "code": "wool:fibers-*-yellow",
+        "name": "type"
+      }
+    },
+    "width": 2,
+    "height": 1,
+    "output": {
+      "type": "item",
+      "code": "rudiments:rolag-{type}-yellow"
+    }
+  },
+  {
+    "enabled": false,
+    "ingredientPattern": "CF",
+    "ingredients": {
+      "C": {
+        "type": "item",
+        "code": "rudiments:handcards",
+        "isTool": true,
+        "toolDurabilityCost": 1
+      },
+      "F": {
+        "type": "item",
+        "code": "wool:fibers-*-white",
+        "name": "type"
+      }
+    },
+    "width": 2,
+    "height": 1,
+    "output": {
+      "type": "item",
+      "code": "rudiments:rolag-{type}-white"
+    }
+  }
+]

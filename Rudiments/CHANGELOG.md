@@ -26,6 +26,17 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.8.0] — 2026-07-06 — Hand carding (Wool & More compatibility)
+
+### Added
+- **Hand cards** (`rudiments:handcards`) — a wire-toothed carding tool (2 planks + 1 leather + any metal nails & strips, 128 durability). Used as a grid tool: card 1 washed wool fiber into 1 **rolag** (1 durability per fiber). All 10 fiber type/color variants map to matching rolags (Mohair, Qiviut, 8 generic colors).
+- **Wool rolags** (`rudiments:rolag-*`) — carded wool, groundstorable/shelvable, mirrors Wool & More's fiber variants.
+- Compat patch `wool-carding.json` — everything ships disabled and is only enabled when the `wool` mod is loaded (same gating pattern as spinning compat); Wool & More's twine recipes are patched to take rolags instead of raw washed fibers, inserting carding between washing and twining. Zero footprint without the wool mod.
+
+### Notes
+- Planned next tier: a drum carder bench block for throughput (mirroring scutchboard → mechanical scutcher).
+- Hand cards texture is a placeholder pending an art pass.
+
 ## [0.7.1] — 2026-07-06 — Ripple yield rebalance
 
 ### Changed

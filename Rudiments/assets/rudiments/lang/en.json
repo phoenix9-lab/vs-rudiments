@@ -180,5 +180,21 @@
   "game:meal-ingredient-stew-primary-nettleleaves": "Nettle",
   "game:meal-ingredient-stew-secondary-nettleleaves": "nettle",
 
-  "rudiments:binding-finecord": "Fine cord"
+  "rudiments:binding-finecord": "Fine cord",
+
+  "rudiments:item-handcards": "Hand cards",
+  "rudiments:itemdesc-handcards": "A pair of wire-toothed carding paddles for combing washed wool into rolags",
+  "rudiments:item-handbooktext-handcards": "Craft with a washed wool fiber in the grid to card it into a <a href=\"handbook://item-rudiments:rolag-generic-plain\">rolag</a>, ready for twisting into twine. Costs 1 durability per fiber carded.",
+  "rudiments:item-rolag-angora-white": "Mohair rolag",
+  "rudiments:item-rolag-muskox-brown": "Qiviut rolag",
+  "rudiments:item-rolag-generic-plain": "Light wool rolag",
+  "rudiments:item-rolag-generic-black": "Black wool rolag",
+  "rudiments:item-rolag-generic-brown": "Brown wool rolag",
+  "rudiments:item-rolag-generic-redbrown": "Red-brown wool rolag",
+  "rudiments:item-rolag-generic-lightbrown": "Light brown wool rolag",
+  "rudiments:item-rolag-generic-gray": "Gray wool rolag",
+  "rudiments:item-rolag-generic-yellow": "Yellow wool rolag",
+  "rudiments:item-rolag-generic-white": "White wool rolag",
+  "rudiments:itemdesc-rolag-*": "Washed wool carded into an airy roll, ready to be twisted into twine",
+  "rudiments:item-handbooktext-rolag": "Made by carding washed wool fibers with <a href=\"handbook://item-rudiments:handcards\">hand cards</a> in the crafting grid. Four rolags twist into wool twine."
 }

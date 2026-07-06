@@ -1,0 +1,109 @@
+{
+  "enabled": false,
+  "code": "rolag",
+  "behaviors": [ { "name": "GroundStorable", "properties": { "layout": "Messy12", "collisionBox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.1, "z2": 1 } } } ],
+  "attributes": {
+    "handbook": {
+      "groupBy": [ "rolag-*" ],
+      "extraSections": [ { "title": "game:handbook-item-usage", "text": "rudiments:item-handbooktext-rolag" } ]
+    },
+    "displaycaseable": true,
+    "shelvable": true,
+    "onDisplayTransform": {
+      "rotation": { "x": 0, "y": -90, "z": 0 },
+      "origin": { "x": 0.5, "y": 0, "z": 0.5 },
+      "scale": 0.4
+    },
+    "groundStorageTransform": {
+      "translation": { "x": -0.01, "y": -0.226, "z": 0 },
+      "rotation": { "x": 0, "y": -40, "z": 0 },
+      "scale": 0.4
+    },
+    "onShelfTransform": {
+      "translation": { "x": 0, "y": -0.25, "z": 0 },
+      "rotation": { "x": 0, "y": -40, "z": 0 },
+      "scale": 0.38
+    }
+  },
+  "variantgroups": [
+    { "code": "type", "states": [ "angora", "muskox", "generic" ] },
+    { "code": "color", "states": [ "plain", "black", "brown", "redbrown", "lightbrown", "gray", "yellow", "white" ] }
+  ],
+  "skipVariants": [
+    "rolag-angora-plain", "rolag-angora-black", "rolag-angora-brown", "rolag-angora-gray", "rolag-angora-yellow", "rolag-angora-lightbrown", "rolag-angora-redbrown",
+    "rolag-muskox-plain", "rolag-muskox-black", "rolag-muskox-gray", "rolag-muskox-yellow", "rolag-muskox-lightbrown", "rolag-muskox-redbrown", "rolag-muskox-white"
+  ],
+  "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
+  "shape": { "base": "wool:item/wool/fleece" },
+  "texturesByType": {
+    "rolag-angora-white": {
+      "cord": { "base": "game:block/cloth/linen/mordant" },
+      "fleece": { "base": "game:block/cloth/linen/white" },
+      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/white" }
+    },
+    "rolag-muskox-brown": {
+      "cord": { "base": "game:block/cloth/linen/mordant" },
+      "fleece": { "base": "game:block/cloth/linen/brown" },
+      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/brown" }
+    },
+    "rolag-generic-plain": {
+      "cord": { "base": "game:block/cloth/linen/mordant" },
+      "fleece": { "base": "game:block/cloth/linen/normal1", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] },
+      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/normal1", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] }
+    },
+    "rolag-generic-black": {
+      "cord": { "base": "game:block/cloth/linen/mordant" },
+      "fleece": { "base": "game:block/cloth/linen/black" },
+      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/black" }
+    },
+    "rolag-generic-brown": {
+      "cord": { "base": "game:block/cloth/linen/mordant" },
+      "fleece": { "base": "game:block/cloth/linen/brown", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] },
+      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/brown", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] }
+    },
+    "rolag-generic-redbrown": {
+      "cord": { "base": "game:block/cloth/linen/mordant" },
+      "fleece": { "base": "game:block/cloth/linen/brown", "blendedOverlays": [ { "base": "game:block/cloth/linen/gray", "blendMode": "Lighten" }, { "base": "game:block/cloth/linen/orange", "blendMode": "Overlay" } ] },
+      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/brown", "blendedOverlays": [ { "base": "game:block/cloth/linen/gray", "blendMode": "Lighten" }, { "base": "game:block/cloth/linen/orange", "blendMode": "Overlay" } ] }
+    },
+    "rolag-generic-lightbrown": {
+      "cord": { "base": "game:block/cloth/linen/mordant" },
+      "fleece": { "base": "game:block/cloth/linen/yellow", "blendedOverlays": [ { "base": "game:block/cloth/linen/gray", "blendMode": "Lighten" } ] },
+      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/yellow", "blendedOverlays": [ { "base": "game:block/cloth/linen/gray", "blendMode": "Lighten" } ] }
+    },
+    "rolag-generic-gray": {
+      "cord": { "base": "game:block/cloth/linen/mordant" },
+      "fleece": { "base": "game:block/cloth/linen/gray" },
+      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/gray" }
+    },
+    "rolag-generic-yellow": {
+      "cord": { "base": "game:block/cloth/linen/mordant" },
+      "fleece": { "base": "game:block/cloth/linen/yellow", "blendedOverlays": [ { "base": "wool:overlays/lighten", "blendMode": "Lighten" } ] },
+      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/yellow", "blendedOverlays": [ { "base": "wool:overlays/lighten", "blendMode": "Lighten" } ] }
+    },
+    "rolag-generic-white": {
+      "cord": { "base": "game:block/cloth/linen/mordant" },
+      "fleece": { "base": "game:block/cloth/linen/white", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] },
+      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/white", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] }
+    },
+    "*": {
+      "cord": { "base": "game:block/cloth/linen/mordant" },
+      "fleece": { "base": "game:block/cloth/linen/normal1" },
+      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/normal1" }
+    }
+  },
+  "maxstacksize": 64,
+  "materialDensity": 80,
+  "blockmaterial": "Cloth",
+  "doNotRenderAtLod2": true,
+  "combustibleProps": {
+    "burnTemperature": 220,
+    "burnDuration": 6
+  },
+  "guiTransform": {
+    "translation": { "x": -3, "y": -1, "z": 0 },
+    "rotation": { "x": 114, "y": -70, "z": -35 },
+    "origin": { "x": 0.3, "y": 0.3, "z": 0.4 },
+    "scaleXyz": { "x": -1.6, "y": 1.6, "z": 1.6 }
+  }
+}
