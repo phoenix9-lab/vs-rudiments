@@ -141,6 +141,8 @@ Apply changes without restarting: `/rudimentsreload` (requires `controlserver` p
 
 **Clayworks.** If [Clayworks](https://mods.vintagestory.at) is installed, its clay barrels work as first-class retting baths — sealing bundles and water pops them open into the same timed, quality-tracked retting process as wooden barrels. (Without this patch the clay barrel would complete the raw fallback recipe and ret near-instantly.)
 
+**String Sense.** [String Sense](https://mods.vintagestory.at/stringsense) adds a crude cordage tier below twine and re-points primitive recipes at it — a natural partner for Rudiments' harder-earned twine. Rudiments wires its flax chain into that tier the same way String Sense's own AgeOfFlax compat did: its vanilla-flax strand shortcuts (which Rudiments' crop changes orphan) are disabled, and **crude flax cord twists directly from rippled bundles** (3 → 1) — no retting required. The full chain remains the only route to proper twine and fine cord.
+
 **Toolsmith.** If [Toolsmith](https://mods.vintagestory.at/toolsmith) is installed, Rudiments' fine cord (`rudiments:finecord`) is registered as a premium binding material in its tool-tinkering system — a step above leather-tier cordage, matching its established "uniform, strong, and resistant to repeated stress" character. Nettle-spun twine needs no separate registration since it produces vanilla flax twine, which Toolsmith already supports natively. The integration is pure data — no code, no hard dependency — and a complete no-op if Toolsmith is absent. (This replaces Rudiments' earlier homegrown tool-binding system, which conflicted with Toolsmith's more comprehensive approach to the same idea.)
 
 **AutoConfigLib / ConfigLib.** Supported for in-game config editing.
