@@ -76,8 +76,14 @@ namespace Rudiments.SRC.Common.Items
 
                 // Brushing motion: cycle through the stroke-pose shape alternates, same
                 // technique the Immersive Fibercraft drop spindle uses for its spin.
-                // 0 = rest pose, 1..3 = stroke shapes (renderVariant N picks alternates[N-1]).
-                int variant = stroke < -0.3f ? 3 : stroke < 0.3f ? 0 : stroke < 0.8f ? 1 : 2;
+                // 0 = nested idle pair (never shown mid-stroke); 1..3 = working poses with the
+                // lower card + fleece web baked in (renderVariant N picks alternates[N-1]):
+                // 1 = mid sweep, 2 = full extension, 3 = lifted return with rolag forming.
+                // TODO(carding-anim): for correct third-person visuals, add a custom two-hands
+                // seraph animation (patch game:entities/humanoid/player like Immersive
+                // Fibercraft's "holdbothhandsspindle") and set it as heldTpUseAnimation in
+                // handcards.json, replacing the borrowed "squeezehoneycomb".
+                int variant = stroke < -0.33f ? 3 : stroke < 0.33f ? 1 : 2;
                 int prevVariant = slot.Itemstack.TempAttributes.GetInt("renderVariant", 0);
                 slot.Itemstack.TempAttributes.SetInt("renderVariant", variant);
                 if (variant != prevVariant)

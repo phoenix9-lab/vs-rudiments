@@ -183,7 +183,7 @@
   "rudiments:binding-finecord": "Fine cord",
 
   "rudiments:item-handcards": "Hand cards",
-  "rudiments:itemdesc-handcards": "A wire-toothed carding brush for combing washed wool into rolags. Hold washed wool in your off hand and brush it with the cards.",
+  "rudiments:itemdesc-handcards": "A pair of wire-toothed carding brushes for combing washed wool into rolags. Hold washed wool in your off hand and brush it between the cards.",
   "rudiments:item-handbooktext-handcards": "Hold washed wool fibers in your <strong>off hand</strong> and the cards in your active hand, then hold <hk>rightmouse</hk> to brush the wool into a <a href=\"handbook://item-rudiments:rolag-generic-plain\">rolag</a>, ready for twisting into twine. Costs 1 durability per fiber carded.",
   "rudiments:heldhelp-card": "Card wool (fibers in off hand)",
   "rudiments:handcards-need-fibers": "Hold washed wool fibers in your off hand to card them",

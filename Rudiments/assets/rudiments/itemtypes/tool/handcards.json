@@ -28,7 +28,8 @@
   },
   "textures": {
     "wood": { "base": "game:block/wood/debarked/oak" },
-    "pad": { "base": "rudiments:item/tool/handcardpad" }
+    "pad": { "base": "rudiments:item/tool/handcardpad" },
+    "fleece": { "base": "game:block/cloth/linen/normal1" }
   },
   "maxstacksize": 1,
   "durability": 128,
@@ -37,8 +38,8 @@
   "guiTransform": {
     "translation": { "x": 0, "y": 0, "z": 0 },
     "rotation": { "x": -50, "y": 155, "z": -10 },
-    "origin": { "x": 0.5, "y": 0.5, "z": 0.6 },
-    "scale": 1.7
+    "origin": { "x": 0.5, "y": 0.55, "z": 0.6 },
+    "scale": 1.45
   },
   "fpHandTransform": {
     "translation": { "x": 0.05, "y": 0.05, "z": 0 },

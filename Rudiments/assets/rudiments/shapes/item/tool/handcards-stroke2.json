@@ -3,27 +3,304 @@
 	"textureHeight": 16,
 	"textures": {
 		"wood": "game:block/wood/debarked/oak",
-		"pad": "rudiments:item/tool/handcardpad"
+		"pad": "rudiments:item/tool/handcardpad",
+		"fleece": "game:block/cloth/linen/normal1"
 	},
 	"elements": [
 		{
-			"name": "Origin",
+			"name": "lower-handle",
+			"from": [
+				7.1,
+				7.1,
+				0.5
+			],
+			"to": [
+				8.9,
+				8.5,
+				5.2
+			],
+			"faces": {
+				"north": {
+					"texture": "#wood",
+					"uv": [
+						6.0,
+						6.0,
+						8.0,
+						7.5
+					]
+				},
+				"east": {
+					"texture": "#wood",
+					"uv": [
+						0.5,
+						6.0,
+						5.0,
+						7.5
+					]
+				},
+				"south": {
+					"texture": "#wood",
+					"uv": [
+						8.0,
+						6.0,
+						10.0,
+						7.5
+					]
+				},
+				"west": {
+					"texture": "#wood",
+					"uv": [
+						0.5,
+						7.5,
+						5.0,
+						9.0
+					]
+				},
+				"up": {
+					"texture": "#wood",
+					"uv": [
+						0.5,
+						4.5,
+						5.0,
+						6.5
+					]
+				},
+				"down": {
+					"texture": "#wood",
+					"uv": [
+						0.5,
+						9.0,
+						5.0,
+						11.0
+					]
+				}
+			}
+		},
+		{
+			"name": "lower-board",
+			"from": [
+				5.0,
+				7.0,
+				5.0
+			],
+			"to": [
+				11.0,
+				8.0,
+				14.0
+			],
+			"faces": {
+				"north": {
+					"texture": "#wood",
+					"uv": [
+						5.0,
+						3.0,
+						11.0,
+						4.0
+					]
+				},
+				"east": {
+					"texture": "#wood",
+					"uv": [
+						5.0,
+						4.0,
+						14.0,
+						5.0
+					]
+				},
+				"south": {
+					"texture": "#wood",
+					"uv": [
+						5.0,
+						12.0,
+						11.0,
+						13.0
+					]
+				},
+				"west": {
+					"texture": "#wood",
+					"uv": [
+						5.0,
+						11.0,
+						14.0,
+						12.0
+					]
+				},
+				"up": {
+					"texture": "#wood",
+					"uv": [
+						5.0,
+						5.0,
+						11.0,
+						14.0
+					]
+				},
+				"down": {
+					"texture": "#wood",
+					"uv": [
+						5.0,
+						5.0,
+						11.0,
+						14.0
+					]
+				}
+			}
+		},
+		{
+			"name": "lower-pad",
+			"from": [
+				5.4,
+				8.0,
+				5.4
+			],
+			"to": [
+				10.6,
+				8.55,
+				13.6
+			],
+			"faces": {
+				"north": {
+					"texture": "#pad",
+					"uv": [
+						5.5,
+						7.5,
+						10.5,
+						8.0
+					]
+				},
+				"east": {
+					"texture": "#pad",
+					"uv": [
+						5.5,
+						5.5,
+						13.5,
+						6.0
+					]
+				},
+				"south": {
+					"texture": "#pad",
+					"uv": [
+						5.5,
+						8.0,
+						10.5,
+						8.5
+					]
+				},
+				"west": {
+					"texture": "#pad",
+					"uv": [
+						5.5,
+						10.0,
+						13.5,
+						10.5
+					]
+				},
+				"up": {
+					"texture": "#pad",
+					"uv": [
+						0.0,
+						0.0,
+						16.0,
+						16.0
+					]
+				},
+				"down": {
+					"texture": "#pad",
+					"uv": [
+						0.0,
+						0.0,
+						16.0,
+						16.0
+					]
+				}
+			}
+		},
+		{
+			"name": "fleeceweb",
+			"from": [
+				5.8,
+				8.55,
+				5.8
+			],
+			"to": [
+				10.2,
+				8.95,
+				13.2
+			],
+			"faces": {
+				"north": {
+					"texture": "#fleece",
+					"uv": [
+						4.0,
+						7.0,
+						9.0,
+						7.5
+					]
+				},
+				"east": {
+					"texture": "#fleece",
+					"uv": [
+						3.0,
+						6.0,
+						11.0,
+						6.5
+					]
+				},
+				"south": {
+					"texture": "#fleece",
+					"uv": [
+						4.0,
+						8.0,
+						9.0,
+						8.5
+					]
+				},
+				"west": {
+					"texture": "#fleece",
+					"uv": [
+						3.0,
+						9.0,
+						11.0,
+						9.5
+					]
+				},
+				"up": {
+					"texture": "#fleece",
+					"uv": [
+						3.5,
+						4.0,
+						8.0,
+						12.0
+					]
+				},
+				"down": {
+					"texture": "#fleece",
+					"uv": [
+						3.5,
+						4.0,
+						8.0,
+						12.0
+					]
+				}
+			}
+		},
+		{
+			"name": "UpperCard",
 			"from": [
 				0.0,
-				0.7,
-				-2.6
+				0.45,
+				-3.2
 			],
 			"to": [
 				0.0,
-				0.7,
-				-2.6
+				0.45,
+				-3.2
 			],
 			"rotationOrigin": [
 				8.0,
-				8.0,
-				8.0
+				9.7,
+				9.5
 			],
-			"rotationX": -18.0,
+			"rotationX": -14.0,
 			"faces": {
 				"north": {
 					"texture": "#null",
@@ -82,84 +359,84 @@
 			},
 			"children": [
 				{
-					"name": "handle",
+					"name": "upper-pad",
 					"from": [
-						7.1,
-						7.3,
-						0.5
+						5.4,
+						8.85,
+						5.4
 					],
 					"to": [
-						8.9,
-						8.7,
-						5.2
+						10.6,
+						9.4,
+						13.6
 					],
 					"faces": {
 						"north": {
-							"texture": "#wood",
+							"texture": "#pad",
 							"uv": [
-								6.0,
-								6.0,
-								8.0,
-								7.5
+								5.5,
+								7.5,
+								10.5,
+								8.0
 							]
 						},
 						"east": {
-							"texture": "#wood",
+							"texture": "#pad",
 							"uv": [
-								0.5,
-								6.0,
-								5.0,
-								7.5
+								5.5,
+								5.5,
+								13.5,
+								6.0
 							]
 						},
 						"south": {
-							"texture": "#wood",
+							"texture": "#pad",
 							"uv": [
+								5.5,
 								8.0,
-								6.0,
-								10.0,
-								7.5
+								10.5,
+								8.5
 							]
 						},
 						"west": {
-							"texture": "#wood",
+							"texture": "#pad",
 							"uv": [
-								0.5,
-								7.5,
-								5.0,
-								9.0
+								5.5,
+								10.0,
+								13.5,
+								10.5
 							]
 						},
 						"up": {
-							"texture": "#wood",
+							"texture": "#pad",
 							"uv": [
-								0.5,
-								4.5,
-								5.0,
-								6.5
+								0.0,
+								0.0,
+								16.0,
+								16.0
 							]
 						},
 						"down": {
-							"texture": "#wood",
+							"texture": "#pad",
 							"uv": [
-								0.5,
-								9.0,
-								5.0,
-								11.0
+								0.0,
+								0.0,
+								16.0,
+								16.0
 							]
 						}
 					}
 				},
 				{
-					"name": "board",
+					"name": "upper-board",
 					"from": [
 						5.0,
-						7.2,
+						9.4,
 						5.0
 					],
 					"to": [
 						11.0,
-						8.2,
+						10.4,
 						14.0
 					],
 					"faces": {
@@ -220,70 +497,70 @@
 					}
 				},
 				{
-					"name": "pad",
+					"name": "upper-handle",
 					"from": [
-						5.4,
-						8.2,
-						5.4
+						7.1,
+						8.9,
+						0.5
 					],
 					"to": [
-						10.6,
-						8.75,
-						13.6
+						8.9,
+						10.3,
+						5.2
 					],
 					"faces": {
 						"north": {
-							"texture": "#pad",
+							"texture": "#wood",
 							"uv": [
-								5.5,
-								7.5,
-								10.5,
-								8.0
+								6.0,
+								6.0,
+								8.0,
+								7.5
 							]
 						},
 						"east": {
-							"texture": "#pad",
+							"texture": "#wood",
 							"uv": [
-								5.5,
-								5.5,
-								13.5,
-								6.0
+								0.5,
+								6.0,
+								5.0,
+								7.5
 							]
 						},
 						"south": {
-							"texture": "#pad",
+							"texture": "#wood",
 							"uv": [
-								5.5,
 								8.0,
-								10.5,
-								8.5
+								6.0,
+								10.0,
+								7.5
 							]
 						},
 						"west": {
-							"texture": "#pad",
+							"texture": "#wood",
 							"uv": [
-								5.5,
-								10.0,
-								13.5,
-								10.5
+								0.5,
+								7.5,
+								5.0,
+								9.0
 							]
 						},
 						"up": {
-							"texture": "#pad",
+							"texture": "#wood",
 							"uv": [
-								0.0,
-								0.0,
-								16.0,
-								16.0
+								0.5,
+								4.5,
+								5.0,
+								6.5
 							]
 						},
 						"down": {
-							"texture": "#pad",
+							"texture": "#wood",
 							"uv": [
-								0.0,
-								0.0,
-								16.0,
-								16.0
+								0.5,
+								9.0,
+								5.0,
+								11.0
 							]
 						}
 					}

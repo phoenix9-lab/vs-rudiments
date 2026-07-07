@@ -26,6 +26,14 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.9.1] — 2026-07-07 — Two-card carding visuals
+
+### Changed
+- **Hand cards now show both cards**, matching the real process (fleece brushed between a pair of carders). The idle item is the pair nested face-to-face, pins protected. During carding, the stroke poses show the lower card held steady with a web of fleece charged on its pins while the upper card sweeps across it; the final return pose shows a small rolag forming at the near edge. The bare idle shape is no longer shown mid-stroke. All baked into the held item's `renderVariant` shape alternates — no mechanics changes.
+
+### Notes
+- **Planned (carding animation, phase 2):** the item-shape trick reads well in first person, but in third person the whole two-card assembly rides on the right hand. The fix is a custom two-hands-together seraph animation — patch `game:entities/humanoid/player` the way Immersive Fibercraft adds `holdbothhandsspindle` — then reference it as `heldTpUseAnimation` in `handcards.json`, replacing the borrowed vanilla `squeezehoneycomb`. See the TODO(carding-anim) marker in `ItemHandCards.cs`.
+
 ## [0.9.0] — 2026-07-07 — Interactive carding; carding is now mandatory before spinning
 
 ### Changed
