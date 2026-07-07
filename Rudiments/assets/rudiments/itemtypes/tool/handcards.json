@@ -43,7 +43,7 @@
   },
   "fpHandTransform": {
     "translation": { "x": 0.06, "y": 0.16, "z": 0.81 },
-    "rotation": { "x": 165, "y": 0, "z": 0 },
+    "rotation": { "x": 165, "y": 0, "z": 180 },
     "origin": { "x": 0.5, "y": 0.5, "z": 0.178 },
     "scale": 0.85
   },

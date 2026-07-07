@@ -26,6 +26,11 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.10.7] — 2026-07-07 — Hand cards first-person pitch mirrored upward
+
+### Changed
+- First-person hand cards were correctly facing forward (v0.10.5) but the paddle face pointed down toward the floor, pushing the visible geometry low in the view. Rolled the item 180° about its own forward axis (`fpHandTransform` rotation z: 0 → 180) — the board direction is unchanged (still forward, not backward), but the pad now faces up, lifting the cards higher and more visibly into frame. Confirmed as a low-priority polish tweak, not a functional issue.
+
 ## [0.10.6] — 2026-07-07 — Mod description refresh
 
 ### Changed

@@ -6,7 +6,7 @@
     "phoenix9"
   ],
   "description": "Pre-industrial craft restored one process at a time. Flax and nettle through full multi-step fibre chains with quality tiers; living nettle ecology with rhizome spread and nitrogen dynamics; reed spread; linseed oil pressing. Optional compatibility with Wool & More (hand carding), Immersive Fibercraft, Clayworks, String Sense, and Toolsmith when those mods are present. Pre-release \u2014 work in progress.",
-  "version": "0.10.6",
+  "version": "0.10.7",
   "side": "Universal",
   "requiredOnClient": true,
   "requiredOnServer": true,
