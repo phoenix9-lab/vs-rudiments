@@ -26,6 +26,11 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.10.3] — 2026-07-07 — Hand cards held transforms rebuilt from renderer math
+
+### Fixed
+- **Hand cards held transforms derived analytically instead of hand-guessed.** Playtest screenshots showed the pair hanging below the forearm in third person and rendering below the viewport in first person. Root cause found in `EntityShapeRenderer.RenderItem`: held items compose as `origin + scale·(R·(v−origin) + translation)` — the translation is *inside* the scale factor, and the shape's grip point was landing voxels away from the palm (v0.10.1 had the fist gripping the far board corner). Both hand transforms now set the transform origin at the lower handle's grip point with `translation = −origin/scale`, pinning the grip exactly to the hand attachment origin, and rotations were solved numerically against the vanilla knife's known-good bone-space frame (boards point where a knife blade points; pad face up). First person got the same treatment against the fp default frame.
+
 ## [0.10.2] — 2026-07-07 — Silence String Sense flax patch load error
 
 ### Fixed
