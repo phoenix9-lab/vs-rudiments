@@ -26,6 +26,12 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.9.3] — 2026-07-07 — Close the instant-retting bypass on third-party barrels
+
+### Fixed
+- **Clayworks' clay barrel no longer retts instantly.** The clay barrel reuses the vanilla barrel block/entity classes, so it consumed our retting barrel recipes but missed the `RettingBath` interceptor (patched only onto `game:blocktypes/wood/barrel`) — sealing completed the raw fallback recipe after 1 game hour with no countdown, quality window, or rot risk. New `clayworks-retting.json` compat patch (gated on `clayworks`) attaches the same `RettingBath`/`RettingBathInfo` behaviors to the clay barrel, making it a first-class retting bath. Note the clay barrel blocktype uses `behaviorsByType`, which overrides a plain `behaviors` property, so the block behavior merges into its `*` entry.
+- **Defense-in-depth for unpatched barrel mods:** the fallback recipe `sealHours` raised from 1 → 36 (water) and 1 → 14 (lime). On patched barrels the interceptor takes over within a second so nothing changes; on any barrel mod we haven't patched, retting now at least costs a semi-realistic sealed duration instead of being a near-instant exploit (still without quality tiers — patching the behavior on is the real fix per mod).
+
 ## [0.9.2] — 2026-07-07 — Carding sound fix; custom two-hands carding animation
 
 ### Fixed

@@ -1,0 +1,17 @@
+[
+  {
+    "comment": "Clayworks' clay barrel is the vanilla BlockBarrel/Barrel entity under its own blocktype, so it consumes our retting barrel recipes but missed the RettingBath interceptor — sealing produced instantly-retted bundles via the raw fallback recipe. Attach the same behaviors as game:blocktypes/wood/barrel. Note: this blocktype declares behaviorsByType (which overrides any plain behaviors property), so the block behavior must merge into the '*' entry.",
+    "op": "add",
+    "path": "/entityBehaviors",
+    "value": [ { "name": "rudiments:RettingBath" } ],
+    "file": "clayworks:blocktypes/clay/barrel.json",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "op": "add",
+    "path": "/behaviorsByType/*/-",
+    "value": { "name": "rudiments:RettingBathInfo" },
+    "file": "clayworks:blocktypes/clay/barrel.json",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  }
+]
