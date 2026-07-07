@@ -26,6 +26,11 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.10.2] — 2026-07-07 — Silence String Sense flax patch load error
+
+### Fixed
+- **Load error with String Sense installed**: String Sense's `cropdrops.json` replaces the vanilla flax stage-9 flaxfibers drop (array index 2) with flax strands, but Rudiments' crop-flax patch already replaced `dropsByType` with a two-entry stage-9 array, so their path missed and logged an `[Error]` every boot (harmless — strands are disabled by our compat anyway, so the end state was already correct). The patch loader deserializes all patch files before applying any, so this can't be fixed with a json patch; a new `StringSensePatchGuard` mod system (ExecuteOrder 0.04, just before the patch loader) rewrites their patch asset in memory, adding an inverted `rudiments` dependson so it skips as a clean unmet condition.
+
 ## [0.10.1] — 2026-07-07 — Hand cards third-person visual fixes
 
 ### Fixed
