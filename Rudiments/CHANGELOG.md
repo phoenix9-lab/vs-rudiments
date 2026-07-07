@@ -26,6 +26,11 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.10.4] — 2026-07-07 — Hand cards third-person facing flip
+
+### Fixed
+- **Hand cards pointed backwards in third person** — grip was correctly in the fist (v0.10.3), but the boards extended back toward the body with the handle sticking out. The tp rotation now includes a 180° pre-rotation about the item's pad-normal axis (solved numerically, grip and pad-up preserved), so the boards extend forward out of the fist.
+
 ## [0.10.3] — 2026-07-07 — Hand cards held transforms rebuilt from renderer math
 
 ### Fixed
