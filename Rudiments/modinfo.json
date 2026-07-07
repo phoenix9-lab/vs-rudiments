@@ -6,7 +6,7 @@
     "phoenix9"
   ],
   "description": "Pre-industrial craft restored one process at a time. Flax and nettle through full multi-step fibre chains with quality tiers; living nettle ecology with rhizome spread and nitrogen dynamics; reed spread; linseed oil pressing; and Toolsmith compatibility, registering fine cord as a premium tool-binding material when that mod is present. Pre-release \u2014 work in progress.",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "side": "Universal",
   "requiredOnClient": true,
   "requiredOnServer": true,

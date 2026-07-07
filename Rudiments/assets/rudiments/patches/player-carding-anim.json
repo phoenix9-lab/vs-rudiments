@@ -1,6 +1,6 @@
 [
 	{
-		"comment": "Two-hands carding animation for the hand cards (phase 2 of the carding visuals): both hands together at chest height, right hand stroking in time with the item's stroke-pose shape alternates (1.6 strokes/s = 19 frames). Same registration pattern as Immersive Fibercraft's holdbothhandsspindle. Gated on the wool mod like all carding content.",
+		"comment": "Two-hands carding animation for the hand cards (phase 2 of the carding visuals): both hands together at chest height. The right arm stays pinned — the item is attached to the right hand, so any right-arm motion would drag the whole card pair (including the lower card + fleece web that must sit still). The stroke itself is baked into the item's shape alternates; the LEFT arm tracks the upper card's alternate path (1.6 strokes/s = 19 frames) so it reads as gripping the moving upper handle. Same registration pattern as Immersive Fibercraft's holdbothhandsspindle. Gated on the wool mod like all carding content.",
 		"op": "add",
 		"path": "/client/animations/-",
 		"value": {
@@ -128,17 +128,33 @@
 							"offsetX": 0.0,
 							"offsetY": -0.4,
 							"offsetZ": 0.4,
-							"rotationX": 8.08,
+							"rotationX": 6.0,
 							"rotationY": 0.0,
-							"rotationZ": -21.2
+							"rotationZ": -16.0
 						},
 						"LowerArmR": {
 							"offsetX": 0.4,
 							"offsetY": 0.6,
 							"offsetZ": 0.0,
-							"rotationX": -45.4,
-							"rotationY": 23.12,
-							"rotationZ": -49.6
+							"rotationX": -35.0,
+							"rotationY": 20.0,
+							"rotationZ": -60.0
+						},
+						"UpperArmL": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": -0.2,
+							"rotationX": -6.7,
+							"rotationY": 0.0,
+							"rotationZ": -27.2
+						},
+						"LowerArmL": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": 40.4,
+							"rotationY": -19.1,
+							"rotationZ": -48.0
 						}
 					}
 				},
@@ -149,17 +165,33 @@
 							"offsetX": 0.0,
 							"offsetY": -0.4,
 							"offsetZ": 0.4,
-							"rotationX": 10.0,
+							"rotationX": 6.0,
 							"rotationY": 0.0,
-							"rotationZ": -26.0
+							"rotationZ": -16.0
 						},
 						"LowerArmR": {
 							"offsetX": 0.4,
 							"offsetY": 0.6,
 							"offsetZ": 0.0,
-							"rotationX": -55.0,
-							"rotationY": 26.0,
-							"rotationZ": -40.0
+							"rotationX": -35.0,
+							"rotationY": 20.0,
+							"rotationZ": -60.0
+						},
+						"UpperArmL": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": -0.2,
+							"rotationX": -9.0,
+							"rotationY": 0.0,
+							"rotationZ": -32.0
+						},
+						"LowerArmL": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": 50.0,
+							"rotationY": -22.0,
+							"rotationZ": -38.0
 						}
 					}
 				},
@@ -170,17 +202,33 @@
 							"offsetX": 0.0,
 							"offsetY": -0.4,
 							"offsetZ": 0.4,
-							"rotationX": 8.08,
+							"rotationX": 6.0,
 							"rotationY": 0.0,
-							"rotationZ": -21.2
+							"rotationZ": -16.0
 						},
 						"LowerArmR": {
 							"offsetX": 0.4,
 							"offsetY": 0.6,
 							"offsetZ": 0.0,
-							"rotationX": -45.4,
-							"rotationY": 23.12,
-							"rotationZ": -49.6
+							"rotationX": -35.0,
+							"rotationY": 20.0,
+							"rotationZ": -60.0
+						},
+						"UpperArmL": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": -0.2,
+							"rotationX": -6.7,
+							"rotationY": 0.0,
+							"rotationZ": -27.2
+						},
+						"LowerArmL": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": 40.4,
+							"rotationY": -19.1,
+							"rotationZ": -48.0
 						}
 					}
 				},
@@ -191,17 +239,33 @@
 							"offsetX": 0.0,
 							"offsetY": -0.4,
 							"offsetZ": 0.4,
-							"rotationX": 6.24,
+							"rotationX": 6.0,
 							"rotationY": 0.0,
-							"rotationZ": -16.6
+							"rotationZ": -16.0
 						},
 						"LowerArmR": {
 							"offsetX": 0.4,
 							"offsetY": 0.6,
 							"offsetZ": 0.0,
-							"rotationX": -36.2,
-							"rotationY": 20.36,
-							"rotationZ": -58.8
+							"rotationX": -35.0,
+							"rotationY": 20.0,
+							"rotationZ": -60.0
+						},
+						"UpperArmL": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": -0.2,
+							"rotationX": -4.2,
+							"rotationY": 0.0,
+							"rotationZ": -22.6
+						},
+						"LowerArmL": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": 31.2,
+							"rotationY": -16.4,
+							"rotationZ": -57.4
 						}
 					}
 				}
@@ -286,17 +350,33 @@
 							"offsetX": 0.0,
 							"offsetY": -0.4,
 							"offsetZ": 0.4,
-							"rotationX": 8.08,
+							"rotationX": 6.0,
 							"rotationY": 0.0,
-							"rotationZ": -21.2
+							"rotationZ": -16.0
 						},
 						"LowerArmR": {
 							"offsetX": 0.4,
 							"offsetY": 0.6,
 							"offsetZ": 0.0,
-							"rotationX": -45.4,
-							"rotationY": 23.12,
-							"rotationZ": -49.6
+							"rotationX": -35.0,
+							"rotationY": 20.0,
+							"rotationZ": -60.0
+						},
+						"UpperArmL": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": -0.2,
+							"rotationX": -6.7,
+							"rotationY": 0.0,
+							"rotationZ": -27.2
+						},
+						"LowerArmL": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": 40.4,
+							"rotationY": -19.1,
+							"rotationZ": -48.0
 						}
 					}
 				},
@@ -307,17 +387,33 @@
 							"offsetX": 0.0,
 							"offsetY": -0.4,
 							"offsetZ": 0.4,
-							"rotationX": 10.0,
+							"rotationX": 6.0,
 							"rotationY": 0.0,
-							"rotationZ": -26.0
+							"rotationZ": -16.0
 						},
 						"LowerArmR": {
 							"offsetX": 0.4,
 							"offsetY": 0.6,
 							"offsetZ": 0.0,
-							"rotationX": -55.0,
-							"rotationY": 26.0,
-							"rotationZ": -40.0
+							"rotationX": -35.0,
+							"rotationY": 20.0,
+							"rotationZ": -60.0
+						},
+						"UpperArmL": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": -0.2,
+							"rotationX": -9.0,
+							"rotationY": 0.0,
+							"rotationZ": -32.0
+						},
+						"LowerArmL": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": 50.0,
+							"rotationY": -22.0,
+							"rotationZ": -38.0
 						}
 					}
 				},
@@ -328,17 +424,33 @@
 							"offsetX": 0.0,
 							"offsetY": -0.4,
 							"offsetZ": 0.4,
-							"rotationX": 8.08,
+							"rotationX": 6.0,
 							"rotationY": 0.0,
-							"rotationZ": -21.2
+							"rotationZ": -16.0
 						},
 						"LowerArmR": {
 							"offsetX": 0.4,
 							"offsetY": 0.6,
 							"offsetZ": 0.0,
-							"rotationX": -45.4,
-							"rotationY": 23.12,
-							"rotationZ": -49.6
+							"rotationX": -35.0,
+							"rotationY": 20.0,
+							"rotationZ": -60.0
+						},
+						"UpperArmL": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": -0.2,
+							"rotationX": -6.7,
+							"rotationY": 0.0,
+							"rotationZ": -27.2
+						},
+						"LowerArmL": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": 40.4,
+							"rotationY": -19.1,
+							"rotationZ": -48.0
 						}
 					}
 				},
@@ -349,17 +461,33 @@
 							"offsetX": 0.0,
 							"offsetY": -0.4,
 							"offsetZ": 0.4,
-							"rotationX": 6.24,
+							"rotationX": 6.0,
 							"rotationY": 0.0,
-							"rotationZ": -16.6
+							"rotationZ": -16.0
 						},
 						"LowerArmR": {
 							"offsetX": 0.4,
 							"offsetY": 0.6,
 							"offsetZ": 0.0,
-							"rotationX": -36.2,
-							"rotationY": 20.36,
-							"rotationZ": -58.8
+							"rotationX": -35.0,
+							"rotationY": 20.0,
+							"rotationZ": -60.0
+						},
+						"UpperArmL": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": -0.2,
+							"rotationX": -4.2,
+							"rotationY": 0.0,
+							"rotationZ": -22.6
+						},
+						"LowerArmL": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": 31.2,
+							"rotationY": -16.4,
+							"rotationZ": -57.4
 						}
 					}
 				}

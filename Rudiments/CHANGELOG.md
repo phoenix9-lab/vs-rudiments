@@ -26,6 +26,12 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.10.1] — 2026-07-07 — Hand cards third-person visual fixes
+
+### Fixed
+- **Hand cards no longer clip through the head in third person** — `tpHandTransform` scale reduced 0.75 → 0.45 (the pair rendered ~0.63 m long, double a real hand card), with the grip translation recomputed so the lower handle stays in the palm.
+- **Carding animation reworked so the left hand reads as gripping the upper handle.** The item is rigidly attached to the right hand, so the old right-arm stroke swung the entire pair — including the lower card and fleece web that should sit still — away from the parked left hand. The right arm is now pinned as the anchor and the left arm strokes along the upper card's shape-alternate path (same 19-frame / 1.6 strokes-per-second cycle). Hand-to-handle registration may still need in-game fine-tuning.
+
 ## [0.10.0] — 2026-07-07 — String Sense compatibility
 
 ### Added
