@@ -34,7 +34,7 @@
   "maxstacksize": 1,
   "durability": 128,
   "materialDensity": 400,
-  "heldTpUseAnimation": "squeezehoneycomb",
+  "heldTpUseAnimation": "rudimentscarding",
   "guiTransform": {
     "translation": { "x": 0, "y": 0, "z": 0 },
     "rotation": { "x": -50, "y": 155, "z": -10 },

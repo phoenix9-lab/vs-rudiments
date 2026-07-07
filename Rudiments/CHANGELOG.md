@@ -26,6 +26,14 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.9.2] — 2026-07-07 — Carding sound fix; custom two-hands carding animation
+
+### Fixed
+- **Carding sound no longer rings after the animation stops.** The scrape sample is ~5 s long and was fired per stroke (~3×/s) as fire-and-forget instances, so several tails kept playing for seconds after the ~2 s interaction. Now a single client-side `ILoadedSound` per player starts with the interaction and is stopped/disposed on stop or cancel (the same management the IF drop spindle uses).
+
+### Added
+- **Custom two-hands carding animation** (carding visuals phase 2, replacing the borrowed vanilla `squeezehoneycomb`): `patches/player-carding-anim.json` registers `rudimentscarding` (+ `-fp` twin for immersive first person) on the player entity and adds the keyframes to the seraph shape, following Immersive Fibercraft's `holdbothhandsspindle` pattern. Both hands come together at chest height; the right hand strokes on a 19-frame cycle that matches the item's 1.6 strokes/s shape-alternate cycling. Gated on the wool mod like all carding content.
+
 ## [0.9.1] — 2026-07-07 — Two-card carding visuals
 
 ### Changed

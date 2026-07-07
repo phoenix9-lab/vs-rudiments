@@ -22,6 +22,11 @@ namespace Rudiments.SRC.Common.Items
         WorldInteraction[] interactions;
         readonly Random rand = new Random();
 
+        // One client-side sound handle per player, stopped when the interaction ends —
+        // the scrape sample is ~5s long, so fire-and-forget instances would keep ringing
+        // well after the ~2s carding action (same management as the IF drop spindle).
+        readonly Dictionary<string, ILoadedSound> cardingSounds = new Dictionary<string, ILoadedSound>();
+
         public override void OnLoaded(ICoreAPI api)
         {
             base.OnLoaded(api);
@@ -65,7 +70,33 @@ namespace Rudiments.SRC.Common.Items
                 return;
             }
 
+            if (api is ICoreClientAPI capi && byEntity is EntityPlayer plr && plr.Player != null)
+            {
+                StopSound(plr.Player.PlayerUID);
+                ILoadedSound sound = capi.World.LoadSound(new SoundParams()
+                {
+                    Location = new AssetLocation("game", "sounds/player/scrape"),
+                    ShouldLoop = true,
+                    Position = byEntity.Pos.XYZ.ToVec3f(),
+                    DisposeOnFinish = false,
+                    Volume = 0.5f,
+                    Range = 8f
+                });
+                sound?.Start();
+                if (sound != null) cardingSounds[plr.Player.PlayerUID] = sound;
+            }
+
             handling = EnumHandHandling.PreventDefaultAction;
+        }
+
+        void StopSound(string playerUid)
+        {
+            if (playerUid != null && cardingSounds.TryGetValue(playerUid, out ILoadedSound sound))
+            {
+                sound?.Stop();
+                sound?.Dispose();
+                cardingSounds.Remove(playerUid);
+            }
         }
 
         public override bool OnHeldInteractStep(float secondsUsed, ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel)
@@ -79,10 +110,9 @@ namespace Rudiments.SRC.Common.Items
                 // 0 = nested idle pair (never shown mid-stroke); 1..3 = working poses with the
                 // lower card + fleece web baked in (renderVariant N picks alternates[N-1]):
                 // 1 = mid sweep, 2 = full extension, 3 = lifted return with rolag forming.
-                // TODO(carding-anim): for correct third-person visuals, add a custom two-hands
-                // seraph animation (patch game:entities/humanoid/player like Immersive
-                // Fibercraft's "holdbothhandsspindle") and set it as heldTpUseAnimation in
-                // handcards.json, replacing the borrowed "squeezehoneycomb".
+                // Third person additionally plays the "rudimentscarding" seraph animation
+                // (patches/player-carding-anim.json), whose 19-frame cycle matches
+                // StrokesPerSecond (1.6/s at 30 fps) so arms and card poses stay in step.
                 int variant = stroke < -0.33f ? 3 : stroke < 0.33f ? 1 : 2;
                 int prevVariant = slot.Itemstack.TempAttributes.GetInt("renderVariant", 0);
                 slot.Itemstack.TempAttributes.SetInt("renderVariant", variant);
@@ -103,7 +133,6 @@ namespace Rudiments.SRC.Common.Items
                 if (strokeNo != prevStroke)
                 {
                     slot.Itemstack.TempAttributes.SetInt("cardStroke", strokeNo);
-                    byEntity.World.PlaySoundAt(new AssetLocation("game", "sounds/player/scrape"), byEntity, null, true, 8f, 0.5f);
                     SpawnFluff(byEntity);
                 }
             }
@@ -115,6 +144,7 @@ namespace Rudiments.SRC.Common.Items
         {
             slot.Itemstack?.TempAttributes.RemoveAttribute("cardStroke");
             slot.Itemstack?.TempAttributes.RemoveAttribute("renderVariant");
+            if (api.Side == EnumAppSide.Client) StopSound((byEntity as EntityPlayer)?.Player?.PlayerUID);
 
             if (secondsUsed < CardSeconds - 0.1f) return;
             if (api.Side != EnumAppSide.Server) return;
@@ -144,6 +174,7 @@ namespace Rudiments.SRC.Common.Items
         {
             slot.Itemstack?.TempAttributes.RemoveAttribute("cardStroke");
             slot.Itemstack?.TempAttributes.RemoveAttribute("renderVariant");
+            if (api.Side == EnumAppSide.Client) StopSound((byEntity as EntityPlayer)?.Player?.PlayerUID);
             return true;
         }
 

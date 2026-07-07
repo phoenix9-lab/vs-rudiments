@@ -1,0 +1,375 @@
+[
+	{
+		"comment": "Two-hands carding animation for the hand cards (phase 2 of the carding visuals): both hands together at chest height, right hand stroking in time with the item's stroke-pose shape alternates (1.6 strokes/s = 19 frames). Same registration pattern as Immersive Fibercraft's holdbothhandsspindle. Gated on the wool mod like all carding content.",
+		"op": "add",
+		"path": "/client/animations/-",
+		"value": {
+			"code": "rudimentscarding",
+			"animation": "rudimentscarding",
+			"blendMode": "Add",
+			"elementWeight": {
+				"UpperArmR": 100,
+				"LowerArmR": 100,
+				"UpperArmL": 100,
+				"LowerArmL": 100
+			},
+			"elementBlendMode": {
+				"UpperArmR": "AddAverage",
+				"LowerArmR": "AddAverage",
+				"UpperArmL": "AddAverage",
+				"LowerArmL": "AddAverage"
+			}
+		},
+		"file": "game:entities/humanoid/player.json",
+		"side": "Server",
+		"dependsOn": [
+			{
+				"modid": "wool"
+			}
+		]
+	},
+	{
+		"op": "add",
+		"path": "/client/animations/-",
+		"value": {
+			"code": "rudimentscarding-fp",
+			"animation": "rudimentscarding-fp",
+			"blendMode": "Add",
+			"elementWeight": {
+				"UpperArmR": 100,
+				"LowerArmR": 100,
+				"UpperArmL": 100,
+				"LowerArmL": 100
+			},
+			"elementBlendMode": {
+				"UpperArmR": "AddAverage",
+				"LowerArmR": "AddAverage",
+				"UpperArmL": "AddAverage",
+				"LowerArmL": "AddAverage"
+			}
+		},
+		"file": "game:entities/humanoid/player.json",
+		"side": "Server",
+		"dependsOn": [
+			{
+				"modid": "wool"
+			}
+		]
+	},
+	{
+		"op": "add",
+		"path": "/animations/-",
+		"value": {
+			"name": "Carding with hand cards",
+			"code": "rudimentscarding",
+			"quantityframes": 19,
+			"onActivityStopped": "EaseOut",
+			"onAnimationEnd": "Repeat",
+			"keyframes": [
+				{
+					"frame": 0,
+					"elements": {
+						"UpperArmR": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": 0.4,
+							"rotationX": 6.0,
+							"rotationY": 0.0,
+							"rotationZ": -16.0
+						},
+						"LowerArmR": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": -35.0,
+							"rotationY": 20.0,
+							"rotationZ": -60.0
+						},
+						"UpperArmL": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": -0.2,
+							"rotationX": -4.0,
+							"rotationY": 0.0,
+							"rotationZ": -22.0
+						},
+						"LowerArmL": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": 30.0,
+							"rotationY": -16.0,
+							"rotationZ": -58.0
+						},
+						"ItemAnchorL": {
+							"offsetX": 0.0,
+							"offsetY": 0.0,
+							"offsetZ": -1.0,
+							"rotationX": -30.0,
+							"rotationY": -10.0,
+							"rotationZ": 0.0
+						},
+						"Neck": {
+							"rotationX": 0.0,
+							"rotationY": 0.0,
+							"rotationZ": 9.0
+						},
+						"Head": {
+							"rotationX": 0.0,
+							"rotationY": 0.0,
+							"rotationZ": 12.0
+						}
+					}
+				},
+				{
+					"frame": 5,
+					"elements": {
+						"UpperArmR": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": 0.4,
+							"rotationX": 8.08,
+							"rotationY": 0.0,
+							"rotationZ": -21.2
+						},
+						"LowerArmR": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": -45.4,
+							"rotationY": 23.12,
+							"rotationZ": -49.6
+						}
+					}
+				},
+				{
+					"frame": 9,
+					"elements": {
+						"UpperArmR": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": 0.4,
+							"rotationX": 10.0,
+							"rotationY": 0.0,
+							"rotationZ": -26.0
+						},
+						"LowerArmR": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": -55.0,
+							"rotationY": 26.0,
+							"rotationZ": -40.0
+						}
+					}
+				},
+				{
+					"frame": 14,
+					"elements": {
+						"UpperArmR": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": 0.4,
+							"rotationX": 8.08,
+							"rotationY": 0.0,
+							"rotationZ": -21.2
+						},
+						"LowerArmR": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": -45.4,
+							"rotationY": 23.12,
+							"rotationZ": -49.6
+						}
+					}
+				},
+				{
+					"frame": 18,
+					"elements": {
+						"UpperArmR": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": 0.4,
+							"rotationX": 6.24,
+							"rotationY": 0.0,
+							"rotationZ": -16.6
+						},
+						"LowerArmR": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": -36.2,
+							"rotationY": 20.36,
+							"rotationZ": -58.8
+						}
+					}
+				}
+			]
+		},
+		"file": "game:shapes/entity/humanoid/seraph-faceless.json",
+		"dependsOn": [
+			{
+				"modid": "wool"
+			}
+		]
+	},
+	{
+		"op": "add",
+		"path": "/animations/-",
+		"value": {
+			"name": "Carding with hand cards (first person)",
+			"code": "rudimentscarding-fp",
+			"quantityframes": 19,
+			"onActivityStopped": "EaseOut",
+			"onAnimationEnd": "Repeat",
+			"keyframes": [
+				{
+					"frame": 0,
+					"elements": {
+						"UpperArmR": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": 0.4,
+							"rotationX": 6.0,
+							"rotationY": 0.0,
+							"rotationZ": -16.0
+						},
+						"LowerArmR": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": -35.0,
+							"rotationY": 20.0,
+							"rotationZ": -60.0
+						},
+						"UpperArmL": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": -0.2,
+							"rotationX": -4.0,
+							"rotationY": 0.0,
+							"rotationZ": -22.0
+						},
+						"LowerArmL": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": 30.0,
+							"rotationY": -16.0,
+							"rotationZ": -58.0
+						},
+						"ItemAnchorL": {
+							"offsetX": 0.0,
+							"offsetY": 0.0,
+							"offsetZ": -1.0,
+							"rotationX": -30.0,
+							"rotationY": -10.0,
+							"rotationZ": 0.0
+						},
+						"Neck": {
+							"rotationX": 0.0,
+							"rotationY": 0.0,
+							"rotationZ": 9.0
+						},
+						"Head": {
+							"rotationX": 0.0,
+							"rotationY": 0.0,
+							"rotationZ": 12.0
+						}
+					}
+				},
+				{
+					"frame": 5,
+					"elements": {
+						"UpperArmR": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": 0.4,
+							"rotationX": 8.08,
+							"rotationY": 0.0,
+							"rotationZ": -21.2
+						},
+						"LowerArmR": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": -45.4,
+							"rotationY": 23.12,
+							"rotationZ": -49.6
+						}
+					}
+				},
+				{
+					"frame": 9,
+					"elements": {
+						"UpperArmR": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": 0.4,
+							"rotationX": 10.0,
+							"rotationY": 0.0,
+							"rotationZ": -26.0
+						},
+						"LowerArmR": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": -55.0,
+							"rotationY": 26.0,
+							"rotationZ": -40.0
+						}
+					}
+				},
+				{
+					"frame": 14,
+					"elements": {
+						"UpperArmR": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": 0.4,
+							"rotationX": 8.08,
+							"rotationY": 0.0,
+							"rotationZ": -21.2
+						},
+						"LowerArmR": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": -45.4,
+							"rotationY": 23.12,
+							"rotationZ": -49.6
+						}
+					}
+				},
+				{
+					"frame": 18,
+					"elements": {
+						"UpperArmR": {
+							"offsetX": 0.0,
+							"offsetY": -0.4,
+							"offsetZ": 0.4,
+							"rotationX": 6.24,
+							"rotationY": 0.0,
+							"rotationZ": -16.6
+						},
+						"LowerArmR": {
+							"offsetX": 0.4,
+							"offsetY": 0.6,
+							"offsetZ": 0.0,
+							"rotationX": -36.2,
+							"rotationY": 20.36,
+							"rotationZ": -58.8
+						}
+					}
+				}
+			]
+		},
+		"file": "game:shapes/entity/humanoid/seraph-faceless.json",
+		"dependsOn": [
+			{
+				"modid": "wool"
+			}
+		]
+	}
+]
