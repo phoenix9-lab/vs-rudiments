@@ -26,6 +26,11 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.10.5] — 2026-07-07 — Hand cards first-person facing flip
+
+### Fixed
+- **Hand cards pointed backwards in first person too** — same inverted reference as the v0.10.4 third-person fix: handle pointed up into the view with the boards toward the camera. Applied the identical 180° pad-normal pre-rotation to `fpHandTransform` (solves to a clean `y: 180 → 0`); boards now extend away into the view with the handle at the hand.
+
 ## [0.10.4] — 2026-07-07 — Hand cards third-person facing flip
 
 ### Fixed
