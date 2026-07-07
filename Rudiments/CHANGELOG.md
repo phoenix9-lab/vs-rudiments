@@ -26,6 +26,11 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.10.6] — 2026-07-07 — Mod description refresh
+
+### Changed
+- `modinfo.json` description updated to mention the Wool & More, Immersive Fibercraft, Clayworks, and String Sense integrations alongside Toolsmith — it had only named Toolsmith since v0.7.0, underselling everything added since. README audited against the current `RudimentsConfig` and found already fully in sync (all 26 settings documented, no stale entries).
+
 ## [0.10.5] — 2026-07-07 — Hand cards first-person facing flip
 
 ### Fixed
