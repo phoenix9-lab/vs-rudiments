@@ -26,6 +26,42 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.10.7] — 2026-07-07 — Hand cards first-person pitch mirrored upward
+
+### Changed
+- First-person hand cards were correctly facing forward (v0.10.5) but the paddle face pointed down toward the floor, pushing the visible geometry low in the view. Rolled the item 180° about its own forward axis (`fpHandTransform` rotation z: 0 → 180) — the board direction is unchanged (still forward, not backward), but the pad now faces up, lifting the cards higher and more visibly into frame. Confirmed as a low-priority polish tweak, not a functional issue.
+
+## [0.10.6] — 2026-07-07 — Mod description refresh
+
+### Changed
+- `modinfo.json` description updated to mention the Wool & More, Immersive Fibercraft, Clayworks, and String Sense integrations alongside Toolsmith — it had only named Toolsmith since v0.7.0, underselling everything added since. README audited against the current `RudimentsConfig` and found already fully in sync (all 26 settings documented, no stale entries).
+
+## [0.10.5] — 2026-07-07 — Hand cards first-person facing flip
+
+### Fixed
+- **Hand cards pointed backwards in first person too** — same inverted reference as the v0.10.4 third-person fix: handle pointed up into the view with the boards toward the camera. Applied the identical 180° pad-normal pre-rotation to `fpHandTransform` (solves to a clean `y: 180 → 0`); boards now extend away into the view with the handle at the hand.
+
+## [0.10.4] — 2026-07-07 — Hand cards third-person facing flip
+
+### Fixed
+- **Hand cards pointed backwards in third person** — grip was correctly in the fist (v0.10.3), but the boards extended back toward the body with the handle sticking out. The tp rotation now includes a 180° pre-rotation about the item's pad-normal axis (solved numerically, grip and pad-up preserved), so the boards extend forward out of the fist.
+
+## [0.10.3] — 2026-07-07 — Hand cards held transforms rebuilt from renderer math
+
+### Fixed
+- **Hand cards held transforms derived analytically instead of hand-guessed.** Playtest screenshots showed the pair hanging below the forearm in third person and rendering below the viewport in first person. Root cause found in `EntityShapeRenderer.RenderItem`: held items compose as `origin + scale·(R·(v−origin) + translation)` — the translation is *inside* the scale factor, and the shape's grip point was landing voxels away from the palm (v0.10.1 had the fist gripping the far board corner). Both hand transforms now set the transform origin at the lower handle's grip point with `translation = −origin/scale`, pinning the grip exactly to the hand attachment origin, and rotations were solved numerically against the vanilla knife's known-good bone-space frame (boards point where a knife blade points; pad face up). First person got the same treatment against the fp default frame.
+
+## [0.10.2] — 2026-07-07 — Silence String Sense flax patch load error
+
+### Fixed
+- **Load error with String Sense installed**: String Sense's `cropdrops.json` replaces the vanilla flax stage-9 flaxfibers drop (array index 2) with flax strands, but Rudiments' crop-flax patch already replaced `dropsByType` with a two-entry stage-9 array, so their path missed and logged an `[Error]` every boot (harmless — strands are disabled by our compat anyway, so the end state was already correct). The patch loader deserializes all patch files before applying any, so this can't be fixed with a json patch; a new `StringSensePatchGuard` mod system (ExecuteOrder 0.04, just before the patch loader) rewrites their patch asset in memory, adding an inverted `rudiments` dependson so it skips as a clean unmet condition.
+
+## [0.10.1] — 2026-07-07 — Hand cards third-person visual fixes
+
+### Fixed
+- **Hand cards no longer clip through the head in third person** — `tpHandTransform` scale reduced 0.75 → 0.45 (the pair rendered ~0.63 m long, double a real hand card), with the grip translation recomputed so the lower handle stays in the palm.
+- **Carding animation reworked so the left hand reads as gripping the upper handle.** The item is rigidly attached to the right hand, so the old right-arm stroke swung the entire pair — including the lower card and fleece web that should sit still — away from the parked left hand. The right arm is now pinned as the anchor and the left arm strokes along the upper card's shape-alternate path (same 19-frame / 1.6 strokes-per-second cycle). Hand-to-handle registration may still need in-game fine-tuning.
+
 ## [0.10.0] — 2026-07-07 — String Sense compatibility
 
 ### Added

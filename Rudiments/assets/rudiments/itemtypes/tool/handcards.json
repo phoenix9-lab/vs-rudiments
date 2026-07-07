@@ -42,15 +42,16 @@
     "scale": 1.45
   },
   "fpHandTransform": {
-    "translation": { "x": 0.05, "y": 0.05, "z": 0 },
-    "rotation": { "x": -15, "y": 10, "z": 10 },
-    "scale": 1.5
+    "translation": { "x": 0.06, "y": 0.16, "z": 0.81 },
+    "rotation": { "x": 165, "y": 0, "z": 180 },
+    "origin": { "x": 0.5, "y": 0.5, "z": 0.178 },
+    "scale": 0.85
   },
   "tpHandTransform": {
-    "translation": { "x": -0.75, "y": -0.1, "z": -0.55 },
-    "rotation": { "x": 0, "y": 0, "z": -50 },
-    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
-    "scale": 0.75
+    "translation": { "x": -1.111, "y": -1.111, "z": -0.396 },
+    "rotation": { "x": -114.2, "y": -12.3, "z": 154.6 },
+    "origin": { "x": 0.5, "y": 0.5, "z": 0.178 },
+    "scale": 0.45
   },
   "groundTransform": {
     "translation": { "x": 0, "y": 0, "z": 0 },
