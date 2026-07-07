@@ -26,6 +26,14 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.10.0] — 2026-07-07 — String Sense compatibility
+
+### Added
+- **String Sense compat** (`stringsense-compat.json`, gated on `stringsense`). String Sense ships AgeOfFlax compat keyed to modid `ageofflax`, which never fires for Rudiments — leaving its flax strands orphaned (unobtainable once Rudiments replaces the flax crop drops) with dead recipes in the handbook, including strand→fibre shortcuts that would bypass retting if strands were obtainable. Mirroring its own AgeOfFlax pattern: the `flaxstrands` itemtype is disabled (which drops every recipe referencing it regardless of String Sense's ConfigLib toggles), its strand recipes are disabled for log hygiene, and **crude flax cord twists directly from 3 rippled bundles** — bridging Rudiments' chain into String Sense's crude cordage tier. The full chain remains the only route to twine and fine cord. The two mods are otherwise verified compatible: reed/rope/bow/wool touch points reviewed, no overlapping patch paths of consequence.
+
+### Notes
+- String Sense has no `cord-nettle` material; a nettle route into the crude cord tier would be an upstream PR to String Sense rather than a mislabeled recipe here.
+
 ## [0.9.3] — 2026-07-07 — Close the instant-retting bypass on third-party barrels
 
 ### Fixed
