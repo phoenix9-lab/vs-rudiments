@@ -1,0 +1,60 @@
+[
+  {
+    "comment": "Enable hand cards when Wool & More is present. All wool-carding content is shipped disabled and only activated by this patch file — no-op without the wool mod. Carding itself is an interactive held-item action (ItemHandCards); rolag spinnability and the washed-fiber spinning block are handled in C# AssetsFinalize.",
+    "op": "replace",
+    "path": "/enabled",
+    "value": true,
+    "file": "rudiments:itemtypes/tool/handcards.json",
+    "dependsOn": [ { "modid": "wool" } ]
+  },
+  {
+    "op": "replace",
+    "path": "/enabled",
+    "value": true,
+    "file": "rudiments:itemtypes/resource/rolag.json",
+    "dependsOn": [ { "modid": "wool" } ]
+  },
+  {
+    "op": "replace",
+    "path": "/0/enabled",
+    "value": true,
+    "file": "rudiments:recipes/grid/handcards.json",
+    "dependsOn": [ { "modid": "wool" } ]
+  },
+  {
+    "comment": "Insert carding into the wool chain: twine is now spun from rolags instead of raw washed fibers. Entry 0 = generic color wildcard, 1 = angora white, 2 = redbrown->brown, 3 = lightbrown+black->brown.",
+    "op": "replace",
+    "path": "/0/ingredients/T/code",
+    "value": "rudiments:rolag-generic-*",
+    "file": "wool:recipes/grid/twine.json",
+    "dependsOn": [ { "modid": "wool" } ]
+  },
+  {
+    "op": "replace",
+    "path": "/1/ingredients/T/code",
+    "value": "rudiments:rolag-angora-white",
+    "file": "wool:recipes/grid/twine.json",
+    "dependsOn": [ { "modid": "wool" } ]
+  },
+  {
+    "op": "replace",
+    "path": "/2/ingredients/T/code",
+    "value": "rudiments:rolag-generic-redbrown",
+    "file": "wool:recipes/grid/twine.json",
+    "dependsOn": [ { "modid": "wool" } ]
+  },
+  {
+    "op": "replace",
+    "path": "/3/ingredients/T/code",
+    "value": "rudiments:rolag-generic-lightbrown",
+    "file": "wool:recipes/grid/twine.json",
+    "dependsOn": [ { "modid": "wool" } ]
+  },
+  {
+    "op": "replace",
+    "path": "/3/ingredients/B/code",
+    "value": "rudiments:rolag-generic-black",
+    "file": "wool:recipes/grid/twine.json",
+    "dependsOn": [ { "modid": "wool" } ]
+  }
+]

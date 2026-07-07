@@ -1,0 +1,14 @@
+[
+  {
+    "enabled": false,
+    "ingredientPattern": "LN,PP",
+    "ingredients": {
+      "L": { "type": "item", "code": "game:leather-normal-plain" },
+      "N": { "type": "item", "code": "game:metalnailsandstrips-*" },
+      "P": { "type": "item", "code": "game:plank-*" }
+    },
+    "width": 2,
+    "height": 2,
+    "output": { "type": "item", "code": "rudiments:handcards" }
+  }
+]

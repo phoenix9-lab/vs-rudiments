@@ -1,7 +1,7 @@
 [
 	{
 		"code": "rettingbath-nettle-lime",
-		"sealHours": 1,
+		"sealHours": 14,
 		"ingredients": [
 			{ "type": "item", "code": "game:limewaterportion", "litres": 4, "consumeLitres": 4 },
 			{ "type": "item", "code": "rudiments:nettlebundle-cured", "quantity": 1 }
@@ -10,7 +10,7 @@
 	},
 	{
 		"code": "rettingbath-flax-lime",
-		"sealHours": 1,
+		"sealHours": 14,
 		"ingredients": [
 			{ "type": "item", "code": "game:limewaterportion", "litres": 4, "consumeLitres": 4 },
 			{ "type": "item", "code": "rudiments:flaxbundle-rippled", "quantity": 1 }

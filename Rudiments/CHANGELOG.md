@@ -26,6 +26,50 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.9.3] — 2026-07-07 — Close the instant-retting bypass on third-party barrels
+
+### Fixed
+- **Clayworks' clay barrel no longer retts instantly.** The clay barrel reuses the vanilla barrel block/entity classes, so it consumed our retting barrel recipes but missed the `RettingBath` interceptor (patched only onto `game:blocktypes/wood/barrel`) — sealing completed the raw fallback recipe after 1 game hour with no countdown, quality window, or rot risk. New `clayworks-retting.json` compat patch (gated on `clayworks`) attaches the same `RettingBath`/`RettingBathInfo` behaviors to the clay barrel, making it a first-class retting bath. Note the clay barrel blocktype uses `behaviorsByType`, which overrides a plain `behaviors` property, so the block behavior merges into its `*` entry.
+- **Defense-in-depth for unpatched barrel mods:** the fallback recipe `sealHours` raised from 1 → 36 (water) and 1 → 14 (lime). On patched barrels the interceptor takes over within a second so nothing changes; on any barrel mod we haven't patched, retting now at least costs a semi-realistic sealed duration instead of being a near-instant exploit (still without quality tiers — patching the behavior on is the real fix per mod).
+
+## [0.9.2] — 2026-07-07 — Carding sound fix; custom two-hands carding animation
+
+### Fixed
+- **Carding sound no longer rings after the animation stops.** The scrape sample is ~5 s long and was fired per stroke (~3×/s) as fire-and-forget instances, so several tails kept playing for seconds after the ~2 s interaction. Now a single client-side `ILoadedSound` per player starts with the interaction and is stopped/disposed on stop or cancel (the same management the IF drop spindle uses).
+
+### Added
+- **Custom two-hands carding animation** (carding visuals phase 2, replacing the borrowed vanilla `squeezehoneycomb`): `patches/player-carding-anim.json` registers `rudimentscarding` (+ `-fp` twin for immersive first person) on the player entity and adds the keyframes to the seraph shape, following Immersive Fibercraft's `holdbothhandsspindle` pattern. Both hands come together at chest height; the right hand strokes on a 19-frame cycle that matches the item's 1.6 strokes/s shape-alternate cycling. Gated on the wool mod like all carding content.
+
+## [0.9.1] — 2026-07-07 — Two-card carding visuals
+
+### Changed
+- **Hand cards now show both cards**, matching the real process (fleece brushed between a pair of carders). The idle item is the pair nested face-to-face, pins protected. During carding, the stroke poses show the lower card held steady with a web of fleece charged on its pins while the upper card sweeps across it; the final return pose shows a small rolag forming at the near edge. The bare idle shape is no longer shown mid-stroke. All baked into the held item's `renderVariant` shape alternates — no mechanics changes.
+
+### Notes
+- **Planned (carding animation, phase 2):** the item-shape trick reads well in first person, but in third person the whole two-card assembly rides on the right hand. The fix is a custom two-hands-together seraph animation — patch `game:entities/humanoid/player` the way Immersive Fibercraft adds `holdbothhandsspindle` — then reference it as `heldTpUseAnimation` in `handcards.json`, replacing the borrowed vanilla `squeezehoneycomb`. See the TODO(carding-anim) marker in `ItemHandCards.cs`.
+
+## [0.9.0] — 2026-07-07 — Interactive carding; carding is now mandatory before spinning
+
+### Changed
+- **Carding is now an interactive held-item action** (like the Immersive Fibercraft drop spindle) instead of a crafting-grid recipe: hold washed wool fibers in the **off hand**, the hand cards in the active hand, and hold right mouse. ~2 s of brushing (animated card strokes, wool fluff particles, scrape sound) consumes 1 fiber, costs 1 cards durability, and yields 1 rolag. New `ItemHandCards` item class; fiber→rolag mapping is derived from item codes (`wool:fibers-X` → `rudiments:rolag-X`), so all 10 variants work without per-variant recipes.
+- **Washed wool fibers can no longer be spun directly.** Immersive Fibercraft (`spinningwheel`) patches `spinningProps` onto `wool:fibers-*`, which let washed fibers bypass carding on the drop spindle and spinning wheel. Rudiments now strips that attribute in `AssetsFinalize` (runs after all JSON patching, so it is immune to mod load order) and adds `spinningProps` to rolags instead — the spindle/wheel spin 2 rolags → 1 wool twine, mirroring Immersive Fibercraft's raw-fiber ratio. Grid twine recipes already take 4 rolags (unchanged from 0.8.0).
+- **Rolags have their own shape** — a fuzzy cylinder tinted per fleece color — instead of reusing Wool & More's fleece cloud shape, which made rolags and fleece indistinguishable.
+- **Hand cards art pass** — replaced the flat placeholder texture with a 3D single carding brush (wooden paddle + handle, pinned leather pad) plus three stroke-pose alternate shapes used by the brushing animation.
+
+### Removed
+- Grid carding recipes (`recipes/grid/carding.json`) and their enable patches — superseded by the interactive action. The hand cards crafting recipe itself is unchanged.
+
+## [0.8.0] — 2026-07-06 — Hand carding (Wool & More compatibility)
+
+### Added
+- **Hand cards** (`rudiments:handcards`) — a wire-toothed carding tool (2 planks + 1 leather + any metal nails & strips, 128 durability). Used as a grid tool: card 1 washed wool fiber into 1 **rolag** (1 durability per fiber). All 10 fiber type/color variants map to matching rolags (Mohair, Qiviut, 8 generic colors).
+- **Wool rolags** (`rudiments:rolag-*`) — carded wool, groundstorable/shelvable, mirrors Wool & More's fiber variants.
+- Compat patch `wool-carding.json` — everything ships disabled and is only enabled when the `wool` mod is loaded (same gating pattern as spinning compat); Wool & More's twine recipes are patched to take rolags instead of raw washed fibers, inserting carding between washing and twining. Zero footprint without the wool mod.
+
+### Notes
+- Planned next tier: a drum carder bench block for throughput (mirroring scutchboard → mechanical scutcher).
+- Hand cards texture is a placeholder pending an art pass.
+
 ## [0.7.1] — 2026-07-06 — Ripple yield rebalance
 
 ### Changed
