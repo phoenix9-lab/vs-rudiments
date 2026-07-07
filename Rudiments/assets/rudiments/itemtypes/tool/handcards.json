@@ -1,7 +1,8 @@
 {
   "enabled": false,
   "code": "handcards",
-  "class": "Item",
+  "class": "rudiments:ItemHandCards",
+  "heldPriorityInteract": true,
   "attributes": {
     "handbook": {
       "extraSections": [
@@ -12,29 +13,42 @@
     "shelvable": true,
     "toolrackTransform": {
       "translation": { "x": 0, "y": 0.05, "z": 0 },
-      "rotation": { "x": 0, "y": 0, "z": 0 },
-      "scale": 1.2
+      "rotation": { "x": 0, "y": 0, "z": 90 },
+      "scale": 1.1
     }
   },
   "creativeinventory": { "general": [ "*" ], "items": [ "*" ], "tools": [ "*" ] },
-  "texture": { "base": "item/tool/handcards" },
+  "shape": {
+    "base": "rudiments:item/tool/handcards",
+    "alternates": [
+      { "base": "item/tool/handcards-stroke1" },
+      { "base": "item/tool/handcards-stroke2" },
+      { "base": "item/tool/handcards-stroke3" }
+    ]
+  },
+  "textures": {
+    "wood": { "base": "game:block/wood/debarked/oak" },
+    "pad": { "base": "rudiments:item/tool/handcardpad" }
+  },
   "maxstacksize": 1,
   "durability": 128,
   "materialDensity": 400,
+  "heldTpUseAnimation": "squeezehoneycomb",
   "guiTransform": {
     "translation": { "x": 0, "y": 0, "z": 0 },
-    "origin": { "x": 0.5, "y": 0.5, "z": 0 },
-    "scale": 1.4
+    "rotation": { "x": -50, "y": 155, "z": -10 },
+    "origin": { "x": 0.5, "y": 0.5, "z": 0.6 },
+    "scale": 1.7
   },
   "fpHandTransform": {
-    "translation": { "x": 0.05, "y": 0.1, "z": 0 },
-    "rotation": { "x": 0, "y": -10, "z": 20 },
-    "scale": 1.2
+    "translation": { "x": 0.05, "y": 0.05, "z": 0 },
+    "rotation": { "x": -15, "y": 10, "z": 10 },
+    "scale": 1.5
   },
   "tpHandTransform": {
-    "translation": { "x": -0.8, "y": -0.15, "z": -0.6 },
-    "rotation": { "x": 0, "y": 0, "z": -45 },
-    "origin": { "x": 0.5, "y": 0, "z": 0.5 },
+    "translation": { "x": -0.75, "y": -0.1, "z": -0.55 },
+    "rotation": { "x": 0, "y": 0, "z": -50 },
+    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
     "scale": 0.75
   },
   "groundTransform": {

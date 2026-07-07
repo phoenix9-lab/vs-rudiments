@@ -10,19 +10,19 @@
     "displaycaseable": true,
     "shelvable": true,
     "onDisplayTransform": {
-      "rotation": { "x": 0, "y": -90, "z": 0 },
-      "origin": { "x": 0.5, "y": 0, "z": 0.5 },
-      "scale": 0.4
+      "translation": { "x": 0, "y": -0.2, "z": 0 },
+      "rotation": { "x": 0, "y": -50, "z": 0 },
+      "scale": 0.8
     },
     "groundStorageTransform": {
-      "translation": { "x": -0.01, "y": -0.226, "z": 0 },
+      "translation": { "x": 0, "y": -0.36, "z": 0 },
       "rotation": { "x": 0, "y": -40, "z": 0 },
-      "scale": 0.4
+      "scale": 0.85
     },
     "onShelfTransform": {
-      "translation": { "x": 0, "y": -0.25, "z": 0 },
-      "rotation": { "x": 0, "y": -40, "z": 0 },
-      "scale": 0.38
+      "translation": { "x": 0, "y": -0.26, "z": 0 },
+      "rotation": { "x": 0, "y": -50, "z": 0 },
+      "scale": 0.75
     }
   },
   "variantgroups": [
@@ -34,62 +34,51 @@
     "rolag-muskox-plain", "rolag-muskox-black", "rolag-muskox-gray", "rolag-muskox-yellow", "rolag-muskox-lightbrown", "rolag-muskox-redbrown", "rolag-muskox-white"
   ],
   "creativeinventory": { "general": [ "*" ], "items": [ "*" ] },
-  "shape": { "base": "wool:item/wool/fleece" },
+  "shape": { "base": "rudiments:item/resource/rolag" },
   "texturesByType": {
     "rolag-angora-white": {
-      "cord": { "base": "game:block/cloth/linen/mordant" },
       "fleece": { "base": "game:block/cloth/linen/white" },
-      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/white" }
+      "fuzz": { "alpha": 160, "base": "game:block/cloth/linen/white" }
     },
     "rolag-muskox-brown": {
-      "cord": { "base": "game:block/cloth/linen/mordant" },
       "fleece": { "base": "game:block/cloth/linen/brown" },
-      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/brown" }
+      "fuzz": { "alpha": 160, "base": "game:block/cloth/linen/brown" }
     },
     "rolag-generic-plain": {
-      "cord": { "base": "game:block/cloth/linen/mordant" },
       "fleece": { "base": "game:block/cloth/linen/normal1", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] },
-      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/normal1", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] }
+      "fuzz": { "alpha": 160, "base": "game:block/cloth/linen/normal1", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] }
     },
     "rolag-generic-black": {
-      "cord": { "base": "game:block/cloth/linen/mordant" },
       "fleece": { "base": "game:block/cloth/linen/black" },
-      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/black" }
+      "fuzz": { "alpha": 160, "base": "game:block/cloth/linen/black" }
     },
     "rolag-generic-brown": {
-      "cord": { "base": "game:block/cloth/linen/mordant" },
       "fleece": { "base": "game:block/cloth/linen/brown", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] },
-      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/brown", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] }
+      "fuzz": { "alpha": 160, "base": "game:block/cloth/linen/brown", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] }
     },
     "rolag-generic-redbrown": {
-      "cord": { "base": "game:block/cloth/linen/mordant" },
       "fleece": { "base": "game:block/cloth/linen/brown", "blendedOverlays": [ { "base": "game:block/cloth/linen/gray", "blendMode": "Lighten" }, { "base": "game:block/cloth/linen/orange", "blendMode": "Overlay" } ] },
-      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/brown", "blendedOverlays": [ { "base": "game:block/cloth/linen/gray", "blendMode": "Lighten" }, { "base": "game:block/cloth/linen/orange", "blendMode": "Overlay" } ] }
+      "fuzz": { "alpha": 160, "base": "game:block/cloth/linen/brown", "blendedOverlays": [ { "base": "game:block/cloth/linen/gray", "blendMode": "Lighten" }, { "base": "game:block/cloth/linen/orange", "blendMode": "Overlay" } ] }
     },
     "rolag-generic-lightbrown": {
-      "cord": { "base": "game:block/cloth/linen/mordant" },
       "fleece": { "base": "game:block/cloth/linen/yellow", "blendedOverlays": [ { "base": "game:block/cloth/linen/gray", "blendMode": "Lighten" } ] },
-      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/yellow", "blendedOverlays": [ { "base": "game:block/cloth/linen/gray", "blendMode": "Lighten" } ] }
+      "fuzz": { "alpha": 160, "base": "game:block/cloth/linen/yellow", "blendedOverlays": [ { "base": "game:block/cloth/linen/gray", "blendMode": "Lighten" } ] }
     },
     "rolag-generic-gray": {
-      "cord": { "base": "game:block/cloth/linen/mordant" },
       "fleece": { "base": "game:block/cloth/linen/gray" },
-      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/gray" }
+      "fuzz": { "alpha": 160, "base": "game:block/cloth/linen/gray" }
     },
     "rolag-generic-yellow": {
-      "cord": { "base": "game:block/cloth/linen/mordant" },
       "fleece": { "base": "game:block/cloth/linen/yellow", "blendedOverlays": [ { "base": "wool:overlays/lighten", "blendMode": "Lighten" } ] },
-      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/yellow", "blendedOverlays": [ { "base": "wool:overlays/lighten", "blendMode": "Lighten" } ] }
+      "fuzz": { "alpha": 160, "base": "game:block/cloth/linen/yellow", "blendedOverlays": [ { "base": "wool:overlays/lighten", "blendMode": "Lighten" } ] }
     },
     "rolag-generic-white": {
-      "cord": { "base": "game:block/cloth/linen/mordant" },
       "fleece": { "base": "game:block/cloth/linen/white", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] },
-      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/white", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] }
+      "fuzz": { "alpha": 160, "base": "game:block/cloth/linen/white", "blendedOverlays": [ { "base": "wool:overlays/darken", "blendMode": "Darken" } ] }
     },
     "*": {
-      "cord": { "base": "game:block/cloth/linen/mordant" },
       "fleece": { "base": "game:block/cloth/linen/normal1" },
-      "fuzz": { "alpha": 180, "base": "game:block/cloth/linen/normal1" }
+      "fuzz": { "alpha": 160, "base": "game:block/cloth/linen/normal1" }
     }
   },
   "maxstacksize": 64,
@@ -101,9 +90,26 @@
     "burnDuration": 6
   },
   "guiTransform": {
-    "translation": { "x": -3, "y": -1, "z": 0 },
-    "rotation": { "x": 114, "y": -70, "z": -35 },
-    "origin": { "x": 0.3, "y": 0.3, "z": 0.4 },
-    "scaleXyz": { "x": -1.6, "y": 1.6, "z": 1.6 }
+    "translation": { "x": 0, "y": 0, "z": 0 },
+    "rotation": { "x": -25, "y": -45, "z": -10 },
+    "origin": { "x": 0.5, "y": 0.5, "z": 0.5 },
+    "scale": 2.6
+  },
+  "fpHandTransform": {
+    "translation": { "x": 0, "y": 0.05, "z": 0 },
+    "rotation": { "x": 10, "y": 60, "z": 0 },
+    "scale": 1.6
+  },
+  "tpHandTransform": {
+    "translation": { "x": -0.6, "y": -0.05, "z": -0.4 },
+    "rotation": { "x": 0, "y": 60, "z": 0 },
+    "origin": { "x": 0.5, "y": 0.5, "z": 0.5 },
+    "scale": 0.75
+  },
+  "groundTransform": {
+    "translation": { "x": 0, "y": 0, "z": 0 },
+    "rotation": { "x": 0, "y": 0, "z": 0 },
+    "origin": { "x": 0.5, "y": 0.25, "z": 0.5 },
+    "scale": 3
   }
 }

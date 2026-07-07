@@ -1,0 +1,294 @@
+{
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textures": {
+		"wood": "game:block/wood/debarked/oak",
+		"pad": "rudiments:item/tool/handcardpad"
+	},
+	"elements": [
+		{
+			"name": "Origin",
+			"from": [
+				0.0,
+				0.4,
+				-1.4
+			],
+			"to": [
+				0.0,
+				0.4,
+				-1.4
+			],
+			"rotationOrigin": [
+				8.0,
+				8.0,
+				8.0
+			],
+			"rotationX": -10.0,
+			"faces": {
+				"north": {
+					"texture": "#null",
+					"uv": [
+						0.0,
+						0.0,
+						0.5,
+						0.5
+					]
+				},
+				"east": {
+					"texture": "#null",
+					"uv": [
+						0.0,
+						0.0,
+						0.5,
+						0.5
+					]
+				},
+				"south": {
+					"texture": "#null",
+					"uv": [
+						0.0,
+						0.0,
+						0.5,
+						0.5
+					]
+				},
+				"west": {
+					"texture": "#null",
+					"uv": [
+						0.0,
+						0.0,
+						0.5,
+						0.5
+					]
+				},
+				"up": {
+					"texture": "#null",
+					"uv": [
+						0.0,
+						0.0,
+						0.5,
+						0.5
+					]
+				},
+				"down": {
+					"texture": "#null",
+					"uv": [
+						0.0,
+						0.0,
+						0.5,
+						0.5
+					]
+				}
+			},
+			"children": [
+				{
+					"name": "handle",
+					"from": [
+						7.1,
+						7.3,
+						0.5
+					],
+					"to": [
+						8.9,
+						8.7,
+						5.2
+					],
+					"faces": {
+						"north": {
+							"texture": "#wood",
+							"uv": [
+								6.0,
+								6.0,
+								8.0,
+								7.5
+							]
+						},
+						"east": {
+							"texture": "#wood",
+							"uv": [
+								0.5,
+								6.0,
+								5.0,
+								7.5
+							]
+						},
+						"south": {
+							"texture": "#wood",
+							"uv": [
+								8.0,
+								6.0,
+								10.0,
+								7.5
+							]
+						},
+						"west": {
+							"texture": "#wood",
+							"uv": [
+								0.5,
+								7.5,
+								5.0,
+								9.0
+							]
+						},
+						"up": {
+							"texture": "#wood",
+							"uv": [
+								0.5,
+								4.5,
+								5.0,
+								6.5
+							]
+						},
+						"down": {
+							"texture": "#wood",
+							"uv": [
+								0.5,
+								9.0,
+								5.0,
+								11.0
+							]
+						}
+					}
+				},
+				{
+					"name": "board",
+					"from": [
+						5.0,
+						7.2,
+						5.0
+					],
+					"to": [
+						11.0,
+						8.2,
+						14.0
+					],
+					"faces": {
+						"north": {
+							"texture": "#wood",
+							"uv": [
+								5.0,
+								3.0,
+								11.0,
+								4.0
+							]
+						},
+						"east": {
+							"texture": "#wood",
+							"uv": [
+								5.0,
+								4.0,
+								14.0,
+								5.0
+							]
+						},
+						"south": {
+							"texture": "#wood",
+							"uv": [
+								5.0,
+								12.0,
+								11.0,
+								13.0
+							]
+						},
+						"west": {
+							"texture": "#wood",
+							"uv": [
+								5.0,
+								11.0,
+								14.0,
+								12.0
+							]
+						},
+						"up": {
+							"texture": "#wood",
+							"uv": [
+								5.0,
+								5.0,
+								11.0,
+								14.0
+							]
+						},
+						"down": {
+							"texture": "#wood",
+							"uv": [
+								5.0,
+								5.0,
+								11.0,
+								14.0
+							]
+						}
+					}
+				},
+				{
+					"name": "pad",
+					"from": [
+						5.4,
+						8.2,
+						5.4
+					],
+					"to": [
+						10.6,
+						8.75,
+						13.6
+					],
+					"faces": {
+						"north": {
+							"texture": "#pad",
+							"uv": [
+								5.5,
+								7.5,
+								10.5,
+								8.0
+							]
+						},
+						"east": {
+							"texture": "#pad",
+							"uv": [
+								5.5,
+								5.5,
+								13.5,
+								6.0
+							]
+						},
+						"south": {
+							"texture": "#pad",
+							"uv": [
+								5.5,
+								8.0,
+								10.5,
+								8.5
+							]
+						},
+						"west": {
+							"texture": "#pad",
+							"uv": [
+								5.5,
+								10.0,
+								13.5,
+								10.5
+							]
+						},
+						"up": {
+							"texture": "#pad",
+							"uv": [
+								0.0,
+								0.0,
+								16.0,
+								16.0
+							]
+						},
+						"down": {
+							"texture": "#pad",
+							"uv": [
+								0.0,
+								0.0,
+								16.0,
+								16.0
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}

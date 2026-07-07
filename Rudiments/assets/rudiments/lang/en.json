@@ -183,8 +183,10 @@
   "rudiments:binding-finecord": "Fine cord",
 
   "rudiments:item-handcards": "Hand cards",
-  "rudiments:itemdesc-handcards": "A pair of wire-toothed carding paddles for combing washed wool into rolags",
-  "rudiments:item-handbooktext-handcards": "Craft with a washed wool fiber in the grid to card it into a <a href=\"handbook://item-rudiments:rolag-generic-plain\">rolag</a>, ready for twisting into twine. Costs 1 durability per fiber carded.",
+  "rudiments:itemdesc-handcards": "A wire-toothed carding brush for combing washed wool into rolags. Hold washed wool in your off hand and brush it with the cards.",
+  "rudiments:item-handbooktext-handcards": "Hold washed wool fibers in your <strong>off hand</strong> and the cards in your active hand, then hold <hk>rightmouse</hk> to brush the wool into a <a href=\"handbook://item-rudiments:rolag-generic-plain\">rolag</a>, ready for twisting into twine. Costs 1 durability per fiber carded.",
+  "rudiments:heldhelp-card": "Card wool (fibers in off hand)",
+  "rudiments:handcards-need-fibers": "Hold washed wool fibers in your off hand to card them",
   "rudiments:item-rolag-angora-white": "Mohair rolag",
   "rudiments:item-rolag-muskox-brown": "Qiviut rolag",
   "rudiments:item-rolag-generic-plain": "Light wool rolag",
@@ -196,5 +198,5 @@
   "rudiments:item-rolag-generic-yellow": "Yellow wool rolag",
   "rudiments:item-rolag-generic-white": "White wool rolag",
   "rudiments:itemdesc-rolag-*": "Washed wool carded into an airy roll, ready to be twisted into twine",
-  "rudiments:item-handbooktext-rolag": "Made by carding washed wool fibers with <a href=\"handbook://item-rudiments:handcards\">hand cards</a> in the crafting grid. Four rolags twist into wool twine."
+  "rudiments:item-handbooktext-rolag": "Made by carding: hold washed wool fibers in your off hand and brush them with <a href=\"handbook://item-rudiments:handcards\">hand cards</a> (hold <hk>rightmouse</hk>). Four rolags twist into wool twine in the grid; a drop spindle or spinning wheel spins two per twine."
 }

@@ -1,6 +1,6 @@
 [
   {
-    "comment": "Enable hand cards when Wool & More is present. All wool-carding content is shipped disabled and only activated by this patch file — no-op without the wool mod.",
+    "comment": "Enable hand cards when Wool & More is present. All wool-carding content is shipped disabled and only activated by this patch file — no-op without the wool mod. Carding itself is an interactive held-item action (ItemHandCards); rolag spinnability and the washed-fiber spinning block are handled in C# AssetsFinalize.",
     "op": "replace",
     "path": "/enabled",
     "value": true,
@@ -19,62 +19,6 @@
     "path": "/0/enabled",
     "value": true,
     "file": "rudiments:recipes/grid/handcards.json",
-    "dependsOn": [ { "modid": "wool" } ]
-  },
-  {
-    "op": "replace",
-    "path": "/0/enabled",
-    "value": true,
-    "file": "rudiments:recipes/grid/carding.json",
-    "dependsOn": [ { "modid": "wool" } ]
-  },
-  {
-    "op": "replace",
-    "path": "/1/enabled",
-    "value": true,
-    "file": "rudiments:recipes/grid/carding.json",
-    "dependsOn": [ { "modid": "wool" } ]
-  },
-  {
-    "op": "replace",
-    "path": "/2/enabled",
-    "value": true,
-    "file": "rudiments:recipes/grid/carding.json",
-    "dependsOn": [ { "modid": "wool" } ]
-  },
-  {
-    "op": "replace",
-    "path": "/3/enabled",
-    "value": true,
-    "file": "rudiments:recipes/grid/carding.json",
-    "dependsOn": [ { "modid": "wool" } ]
-  },
-  {
-    "op": "replace",
-    "path": "/4/enabled",
-    "value": true,
-    "file": "rudiments:recipes/grid/carding.json",
-    "dependsOn": [ { "modid": "wool" } ]
-  },
-  {
-    "op": "replace",
-    "path": "/5/enabled",
-    "value": true,
-    "file": "rudiments:recipes/grid/carding.json",
-    "dependsOn": [ { "modid": "wool" } ]
-  },
-  {
-    "op": "replace",
-    "path": "/6/enabled",
-    "value": true,
-    "file": "rudiments:recipes/grid/carding.json",
-    "dependsOn": [ { "modid": "wool" } ]
-  },
-  {
-    "op": "replace",
-    "path": "/7/enabled",
-    "value": true,
-    "file": "rudiments:recipes/grid/carding.json",
     "dependsOn": [ { "modid": "wool" } ]
   },
   {
