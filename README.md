@@ -29,8 +29,8 @@ Nettle skips rippling. Young plants (stages 3–6) yield edible leaves — hold 
 Bundles pass through **Coarse → Fine → Standard → Rot** as retting progresses. The fine window is brief. Letting it pass drops quality back to Standard; leaving bundles indefinitely rots them.
 
 - **Field retting** — free, but weather-dependent. Dry spells stall progress; rain restarts it.
-- **Vat retting** — controlled, predictable, faster.
-- **Lime retting** — add quicklime to the vat for maximum speed, but quality is permanently capped at Standard. Good for bulk, not craft work.
+- **Barrel retting** — seal bundles and water in a barrel; it immediately reopens as a retting bath with a visible progress readout. Controlled, predictable, faster.
+- **Lime retting** — seal in limewater instead for maximum speed, but quality is permanently capped at Standard. Good for bulk, not craft work.
 
 ### Fibre quality bonuses
 
@@ -41,7 +41,8 @@ Fine fibre twisted into **fine cord** gives a significant durability bonus on bo
 | Block | Function |
 |---|---|
 | Stook | Weather-aware curing and drying; bundles placed directly on the ground |
-| Retting vat | Water retting with quality control and optional lime modifier |
+| Retting bath (barrel) | Seal bundles + water or limewater in any barrel — it reopens as a timed retting bath |
+| Retting vat | Legacy block — existing vats still work but can no longer be crafted |
 | Drying rack | Safe indoor drying; quality preserved |
 | Break | Breaks dried bundles |
 | Scutch board | Removes woody shives; primitive / simple / advanced tiers |
@@ -68,7 +69,7 @@ All of this is tunable — see [Configuration](#configuration).
 
 These are directions, not promises. Each will be its own coherent addition when the time is right.
 
-- **Clayworks** — hand-formed pottery with drying and firing stages; quality influenced by clay source and technique
+- **Pottery** — hand-formed pottery with drying and firing stages; quality influenced by clay source and technique
 - **Intermediate kilns** — the gap between a pit fire and a beehive kiln is large; filling it with updraft and clamp kilns
 - **Mudwork** — wattle and daub, cob, adobe; building with what's underfoot
 
@@ -123,6 +124,8 @@ Apply changes without restarting: `/rudimentsreload` (requires `controlserver` p
 | Setting | Default | Effect |
 |---|---|---|
 | `StookMaxBundles` | `64` | Maximum bundles a single ground stook can hold |
+| `RippleGrainYieldMultiplier` | `1.0` | Global multiplier on grain yields from rippling; `0` disables grain drops |
+| `RippleSeedYieldMultiplier` | `1.0` | Global multiplier on seed yields from rippling; `0` disables seed drops |
 
 ---
 
@@ -132,7 +135,11 @@ Apply changes without restarting: `/rudimentsreload` (requires `controlserver` p
 |---|---|
 | VS 1.22.x | Supported |
 
-**Spinning wheel.** If [Immersive Fibercraft](https://mods.vintagestory.at) (the spinning wheel mod) is installed, nettle fibre can be spun on the wheel. The integration activates automatically; it is a no-op if the mod is absent.
+**Wool & More.** If [Wool & More](https://mods.vintagestory.at) is installed, Rudiments inserts a **hand carding** step into the wool chain: washed fleece must be carded into **rolags** before it can be twisted or spun into twine. Craft a pair of **hand cards** (2 planks + leather + metal nails & strips, 128 durability), hold washed wool fibres in your off hand and the cards in your active hand, then hold right-mouse — a couple of seconds of brushing yields a rolag per fibre. Rolags twist into wool twine in the grid (4 per twine). Everything ships disabled and is enabled by patches gated on the wool mod — zero footprint without it.
+
+**Immersive Fibercraft** (spinning wheel / drop spindle). Nettle fibre and fine fibre gain `spinningProps` and can be spun on the wheel — nettle into flax twine, fine fibre into fine cord. With Wool & More also present, the carding requirement is enforced on the wheel and spindle too: washed wool fibres lose their direct spinnability and **rolags** become the spinnable stage instead (2 rolags → 1 wool twine, the same ratio Immersive Fibercraft uses for raw fibre). All integrations activate automatically and are no-ops if the mod is absent.
+
+**Clayworks.** If [Clayworks](https://mods.vintagestory.at) is installed, its clay barrels work as first-class retting baths — sealing bundles and water pops them open into the same timed, quality-tracked retting process as wooden barrels. (Without this patch the clay barrel would complete the raw fallback recipe and ret near-instantly.)
 
 **Toolsmith.** If [Toolsmith](https://mods.vintagestory.at/toolsmith) is installed, Rudiments' fine cord (`rudiments:finecord`) is registered as a premium binding material in its tool-tinkering system — a step above leather-tier cordage, matching its established "uniform, strong, and resistant to repeated stress" character. Nettle-spun twine needs no separate registration since it produces vanilla flax twine, which Toolsmith already supports natively. The integration is pure data — no code, no hard dependency — and a complete no-op if Toolsmith is absent. (This replaces Rudiments' earlier homegrown tool-binding system, which conflicted with Toolsmith's more comprehensive approach to the same idea.)
 
