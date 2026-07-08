@@ -26,6 +26,12 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.10.8] — 2026-07-07 — Hand cards fp pitch fix, for real this time
+
+### Fixed
+- **The v0.10.4–0.10.7 `fpHandTransform` edits never did anything.** Traced the actual renderer: `EntityShapeRenderer.RenderHeldItem` always requests `EnumItemRenderTarget.HandTp`/`HandTpOff`, never `HandFp`, and `CollectibleType.FpHandTransform` is marked `[Obsolete("Use TpHandTransform instead")]` in the engine source — first and third person have shared a single transform (`tpHandTransform`) for a while now, just rendered through different camera FOVs. Every fp-only tweak made via the JSON field was silently ignored, which is why manually editing values (and my own "fixes") produced zero visible change.
+- Since third person already reads correctly off the shared transform and there's no separate JSON lever for fp alone, `ItemHandCards.OnBeforeRender` now clones and rolls the render transform 180° about its own forward axis (`rotation.Z += 180`, which by construction never moves the forward/board axis), applied **only** when the target is `HandTp`, the local camera is first-person, and the rendered slot is verifiably this player's own `RightHandItemSlot` — so third person and other players' views are untouched.
+
 ## [0.10.7] — 2026-07-07 — Hand cards first-person pitch mirrored upward
 
 ### Changed

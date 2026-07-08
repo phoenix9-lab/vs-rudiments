@@ -27,6 +27,30 @@ namespace Rudiments.SRC.Common.Items
         // well after the ~2s carding action (same management as the IF drop spindle).
         readonly Dictionary<string, ILoadedSound> cardingSounds = new Dictionary<string, ILoadedSound>();
 
+        // fpHandTransform is dead JSON in this engine version — EntityShapeRenderer.RenderHeldItem
+        // always requests EnumItemRenderTarget.HandTp/HandTpOff regardless of camera mode (see
+        // CollectibleType.FpHandTransform, marked [Obsolete("Use TpHandTransform instead")]), so first
+        // and third person render the exact same 3D orientation from tpHandTransform, just through a
+        // different camera FOV. Third person reads correctly at the values in handcards.json; up close
+        // in first person the same orientation reads as pointing at the floor. Since there's no
+        // separate JSON lever for fp-only, this rolls the item 180 degrees about its own forward axis
+        // (rotation.Z += 180 — a Z-rotation never moves the Z axis, so this flips the paddle face
+        // without changing which way the boards point) but only for this player's own first-person
+        // render, leaving the shared tpHandTransform — and everyone else's view of it — untouched.
+        public override void OnBeforeRender(ICoreClientAPI capi, ItemStack itemstack, EnumItemRenderTarget target, ref ItemRenderInfo renderinfo)
+        {
+            base.OnBeforeRender(capi, itemstack, target, ref renderinfo);
+
+            if (target != EnumItemRenderTarget.HandTp) return;
+            if (capi.World.Player?.CameraMode != EnumCameraMode.FirstPerson) return;
+
+            ItemSlot mySlot = capi.World.Player.Entity?.RightHandItemSlot;
+            if (mySlot == null || !ReferenceEquals(renderinfo.InSlot, mySlot)) return;
+
+            renderinfo.Transform = renderinfo.Transform.Clone();
+            renderinfo.Transform.Rotation.Z += 180;
+        }
+
         public override void OnLoaded(ICoreAPI api)
         {
             base.OnLoaded(api);
