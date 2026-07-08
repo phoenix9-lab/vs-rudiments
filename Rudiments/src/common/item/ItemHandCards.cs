@@ -37,15 +37,29 @@ namespace Rudiments.SRC.Common.Items
         // (rotation.Z += 180 — a Z-rotation never moves the Z axis, so this flips the paddle face
         // without changing which way the boards point) but only for this player's own first-person
         // render, leaving the shared tpHandTransform — and everyone else's view of it — untouched.
+        // One-shot diagnostic: this override has silently no-op'd twice before (once because
+        // fpHandTransform turned out to be dead JSON, once because the InSlot gate was probably never
+        // true). If the itemstack-identity gate below is STILL wrong, log exactly which check failed
+        // on the very first HandTp call instead of shipping a fourth blind guess.
+        static bool loggedOnce = false;
+
         public override void OnBeforeRender(ICoreClientAPI capi, ItemStack itemstack, EnumItemRenderTarget target, ref ItemRenderInfo renderinfo)
         {
             base.OnBeforeRender(capi, itemstack, target, ref renderinfo);
 
             if (target != EnumItemRenderTarget.HandTp) return;
-            if (capi.World.Player?.CameraMode != EnumCameraMode.FirstPerson) return;
 
-            ItemSlot mySlot = capi.World.Player.Entity?.RightHandItemSlot;
-            if (mySlot == null || !ReferenceEquals(renderinfo.InSlot, mySlot)) return;
+            bool isFp = capi.World.Player?.CameraMode == EnumCameraMode.FirstPerson;
+            ItemStack myStack = capi.World.Player?.Entity?.RightHandItemSlot?.Itemstack;
+            bool stackMatches = myStack != null && ReferenceEquals(itemstack, myStack);
+
+            if (isFp && !loggedOnce)
+            {
+                loggedOnce = true;
+                capi.Logger.Notification("[Rudiments] handcards fp-pitch check: cameraMode={0}, stackMatches={1}", capi.World.Player?.CameraMode, stackMatches);
+            }
+
+            if (!isFp || !stackMatches) return;
 
             renderinfo.Transform = renderinfo.Transform.Clone();
             renderinfo.Transform.Rotation.Z += 180;

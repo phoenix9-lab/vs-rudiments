@@ -26,6 +26,13 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.10.9] — 2026-07-07 — Hand cards fp pitch fix, attempt 2
+
+### Fixed
+- **v0.10.8's `OnBeforeRender` gate never actually fired.** It checked `renderinfo.InSlot == capi.World.Player.Entity.RightHandItemSlot`, but `InSlot` on `ItemRenderInfo` is only confirmed (in vanilla source) to be populated for `Ground`-target renders — it was very likely always `null` for held-item renders, so the slot comparison silently failed every frame and the fix never applied, matching the reported "no change."
+- Replaced the gate with a comparison that doesn't depend on unconfirmed engine behavior: the `itemstack` parameter passed directly into `OnBeforeRender` is guaranteed to be the exact stack being rendered, so it's now compared by reference against `capi.World.Player.Entity.RightHandItemSlot.Itemstack` instead of the slot object.
+- Added a one-shot diagnostic log (`[Rudiments] handcards fp-pitch check: ...`) on the first first-person render of the item, so if this still doesn't visually change anything, the client log will show exactly which condition failed instead of another round of guessing.
+
 ## [0.10.8] — 2026-07-07 — Hand cards fp pitch fix, for real this time
 
 ### Fixed
