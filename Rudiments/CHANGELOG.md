@@ -26,7 +26,29 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
-## [0.10.8] — 2026-07-07 — Hand cards fp pitch fix, for real this time
+## [0.11.0] — 2026-07-16 — Bloom-stage flax harvest & seeds only from mature crops
+
+Two new gameplay rules, both **config-gated and enabled by default** (`ModConfig/rudiments.json`, surfaced in-game via AutoConfigLib's ImGui menu; both flags need a server restart to fully apply since they gate JSON patches).
+
+### Added
+- **`FlaxBloomHarvest`** (default `true`): flax drops **nothing** until it blooms. Cut it **in bloom (stage 8)** for seed-free bundles stamped *"cut in bloom"* — they ret from **standard** quality with a chance at the **fine** window. Let it stand to **full maturity (stage 9)** for the normal seed rate (avg 1.2) plus grain (avg 2.0) and *"fully mature"* bundles that ret **coarse → standard**, never fine — same range as nettle. Set to `false` to restore the pre-0.11 table (bundles from stage 3, seeds at every stage, all bundles ret coarse-to-fine).
+- **`SeedsOnlyWhenMature`** (default `true`): vanilla crops only return seeds once fully grown. Three vanilla loopholes closed:
+  - the immature-stage fallback drop (~0.7 seeds on all 16 vanilla crops) is removed;
+  - farmland's `debuffUnaffectedDrops: ["seeds-*"]` exemption is removed, so damage multipliers apply to seeds too;
+  - the engine's literal *"minor hack to make dead crop always drop seeds"* is bypassed via a new `rudiments:BlockDeadCrop` class — an animal-eaten crop (multiplier 0) now returns **nothing**. This one piece honors the config live (`/rudimentsreload`); the rest needs a restart.
+- **Fiber harvest potential** (`fiberpotential` itemstack attribute): stamped on flax bundles at harvest, carried through stook-curing and rippling, consumed when retting assigns final quality. Visible in the bundle tooltip ("Cut in bloom…" / "Fully mature…").
+- New patch file `patches/crop-seeds.json`; new lang lines for the two tooltips.
+
+### Changed
+- **Nettle is now hard-capped at standard quality regardless of config** — previously the retting RNG could roll a fine window for nettle too. Fine fibres now come exclusively from bloom-cut flax.
+- **Rippling** only yields seeds/grain from bundles that carry ripe seed heads (mature or legacy bundles). Bloom-cut bundles convert to rippled with no seed, no grain, and no seed particles.
+- Retting status text: the "fine fibre possible in ~X" countdown is only shown for batches that can actually reach fine; fine-eta lines now say "standard fibre" (bloom batches convert at standard, not coarse).
+- Stook and field-retting/vat stack merges now require matching quality **and** harvest potential, so grades never average together.
+- Handbook guide, flax item descriptions, and handbook steps rewritten around the bloom-vs-mature tradeoff.
+
+### Notes
+- Old-save bundles carry no potential attribute and ret over the full legacy coarse-to-fine range; in-flight retting batches finish under their old rules. No orphaned items.
+- With `FlaxBloomHarvest: false`, flax keeps its legacy early-stage seed drops even if `SeedsOnlyWhenMature` is on (the legacy flax table is restored verbatim).
 
 ### Fixed
 - **The v0.10.4–0.10.7 `fpHandTransform` edits never did anything.** Traced the actual renderer: `EntityShapeRenderer.RenderHeldItem` always requests `EnumItemRenderTarget.HandTp`/`HandTpOff`, never `HandFp`, and `CollectibleType.FpHandTransform` is marked `[Obsolete("Use TpHandTransform instead")]` in the engine source — first and third person have shared a single transform (`tpHandTransform`) for a while now, just rendered through different camera FOVs. Every fp-only tweak made via the JSON field was silently ignored, which is why manually editing values (and my own "fixes") produced zero visible change.

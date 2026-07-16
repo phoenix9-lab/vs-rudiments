@@ -73,29 +73,39 @@ namespace Rudiments.SRC.Common.Blocks
                     if (amountInStack < defaultAmount)
                         finalAmount = amountInStack;
 
+                    // Bloom-cut bundles (Fine potential) carry no ripe seed heads — rippling them
+                    // combs out the flowers but yields no seeds or grain.
+                    int potential = FiberQuality.GetPotential(slot.Itemstack);
+                    bool hasSeedHeads = potential < FiberQuality.Fine;
+
                     slot.TakeOut(finalAmount);
                     slot.MarkDirty();
 
-                    GiveOrDropItems(new ItemStack(world.GetItem(new AssetLocation("rudiments:flaxbundle-rippled")), finalAmount), world, byPlayer, blockSel);
+                    ItemStack rippledStack = new ItemStack(world.GetItem(new AssetLocation("rudiments:flaxbundle-rippled")), finalAmount);
+                    FiberQuality.SetPotential(rippledStack, potential);
+                    GiveOrDropItems(rippledStack, world, byPlayer, blockSel);
 
-                    // Per-bundle yields from JSON attributes, scaled by the global config multipliers.
-                    float seedAvg = defaultFlaxSeedDropAvg * RudimentsModSystem.Config.RippleSeedYieldMultiplier;
-                    float grainAvg = defaultFlaxGrainDropAvg * RudimentsModSystem.Config.RippleGrainYieldMultiplier;
-
-                    int seedDrop = GameMath.RoundRandom(world.Rand, seedAvg * finalAmount);
-
-                    // Roll grain per bundle so higher-throughput tiers don't amplify a single roll.
-                    double grainTotal = 0;
-                    for (int i = 0; i < finalAmount; i++)
+                    if (hasSeedHeads)
                     {
-                        grainTotal += Math.Max(0, MathUtility.NextGaussian(api.World.Rand, grainAvg, defaultFlaxGrainDropVar));
-                    }
-                    int grainDrop = GameMath.RoundRandom(world.Rand, (float)grainTotal);
+                        // Per-bundle yields from JSON attributes, scaled by the global config multipliers.
+                        float seedAvg = defaultFlaxSeedDropAvg * RudimentsModSystem.Config.RippleSeedYieldMultiplier;
+                        float grainAvg = defaultFlaxGrainDropAvg * RudimentsModSystem.Config.RippleGrainYieldMultiplier;
 
-                    if (seedDrop > 0)
-                        GiveOrDropItems(new ItemStack(world.GetItem(new AssetLocation("game:seeds-flax")), seedDrop), world, byPlayer, blockSel);
-                    if (grainDrop > 0)
-                        GiveOrDropItems(new ItemStack(world.GetItem(new AssetLocation("game:grain-flax")), grainDrop), world, byPlayer, blockSel);
+                        int seedDrop = GameMath.RoundRandom(world.Rand, seedAvg * finalAmount);
+
+                        // Roll grain per bundle so higher-throughput tiers don't amplify a single roll.
+                        double grainTotal = 0;
+                        for (int i = 0; i < finalAmount; i++)
+                        {
+                            grainTotal += Math.Max(0, MathUtility.NextGaussian(api.World.Rand, grainAvg, defaultFlaxGrainDropVar));
+                        }
+                        int grainDrop = GameMath.RoundRandom(world.Rand, (float)grainTotal);
+
+                        if (seedDrop > 0)
+                            GiveOrDropItems(new ItemStack(world.GetItem(new AssetLocation("game:seeds-flax")), seedDrop), world, byPlayer, blockSel);
+                        if (grainDrop > 0)
+                            GiveOrDropItems(new ItemStack(world.GetItem(new AssetLocation("game:grain-flax")), grainDrop), world, byPlayer, blockSel);
+                    }
 
                     var randomSound = api.World.Rand.Next(1,4);
                     world.PlaySoundAt(new AssetLocation($"rudiments:sounds/block/ripple{randomSound}"), byPlayer, null, true, 1f, 0.8f);
@@ -104,7 +114,8 @@ namespace Rudiments.SRC.Common.Blocks
                 }
             }
 
-            if(api.World.Rand.Next(0,5) == 1)
+            if (api.World.Rand.Next(0, 5) == 1 && slot.Itemstack != null
+                && FiberQuality.GetPotential(slot.Itemstack) < FiberQuality.Fine)
             {
                 flaxSeedParticle.AddVelocity.Set(api.World.Rand.Next(-4, 4), 0, api.World.Rand.Next(-4, 4));
                 flaxSeedParticle.MinPos.Set(blockSel.Position.X + 0.5f, blockSel.Position.Y + 0.75f, blockSel.Position.Z + 0.5f);

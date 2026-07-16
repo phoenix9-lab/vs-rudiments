@@ -16,6 +16,18 @@ namespace Rudiments.Utils
     {
         public const string AttrKey = "fiberquality";
 
+        /// <summary>
+        /// Harvest-time quality ceiling carried on a pre-retted flax bundle as the integer
+        /// attribute "fiberpotential". Stamped by BlockCropFlax when FlaxBloomHarvest is enabled:
+        /// Fine = cut in bloom (stage 8) — converts at Standard, the Fine window can open, never
+        /// yields seeds. Standard = fully mature (stage 9) — converts at Coarse, capped Standard,
+        /// ripples into seeds and grain. Unset (attribute absent — legacy bundles, or the feature
+        /// disabled) rets over the full pre-0.11 coarse-to-fine range. Nettle ignores this and is
+        /// always capped at Standard. Consumed (dropped) when retting assigns the final quality.
+        /// </summary>
+        public const string PotentialAttrKey = "fiberpotential";
+
+        public const int Unset = -1;
         public const int Coarse = 0;
         public const int Standard = 1;
         public const int Fine = 2;
@@ -39,6 +51,33 @@ namespace Rudiments.Utils
         public static void Carry(ItemStack from, ItemStack to)
         {
             Set(to, Get(from));
+        }
+
+        public static int GetPotential(ItemStack stack)
+        {
+            if (stack?.Attributes == null) return Unset;
+            return stack.Attributes.GetInt(PotentialAttrKey, Unset);
+        }
+
+        public static void SetPotential(ItemStack stack, int potential)
+        {
+            if (stack?.Attributes == null) return;
+            if (potential < Standard)
+                stack.Attributes.RemoveAttribute(PotentialAttrKey);
+            else
+                stack.Attributes.SetInt(PotentialAttrKey, GameMath_Clamp(potential, Standard, Fine));
+        }
+
+        /// <summary>Copy the harvest potential from a source bundle onto a freshly produced bundle.</summary>
+        public static void CarryPotential(ItemStack from, ItemStack to)
+        {
+            SetPotential(to, GetPotential(from));
+        }
+
+        /// <summary>The quality a bundle converts at when retting completes, given its potential.</summary>
+        public static int MinQualityFor(int potential)
+        {
+            return potential >= Fine ? Standard : Coarse;
         }
 
         /// <summary>Yield multiplier applied to fibers based on quality.</summary>
@@ -76,11 +115,23 @@ namespace Rudiments.Utils
             base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
 
             ItemStack stack = inSlot?.Itemstack;
-            if (stack == null) return;
-            if (stack.Attributes == null || !stack.Attributes.HasAttribute(FiberQuality.AttrKey)) return;
+            if (stack == null || stack.Attributes == null) return;
 
-            int q = FiberQuality.Get(stack);
-            dsc.AppendLine(Lang.Get("rudiments:fiberquality-label", FiberQuality.Name(q)));
+            if (stack.Attributes.HasAttribute(FiberQuality.AttrKey))
+            {
+                int q = FiberQuality.Get(stack);
+                dsc.AppendLine(Lang.Get("rudiments:fiberquality-label", FiberQuality.Name(q)));
+            }
+
+            int potential = FiberQuality.GetPotential(stack);
+            if (potential == FiberQuality.Fine)
+            {
+                dsc.AppendLine(Lang.Get("rudiments:fiberpotential-bloom"));
+            }
+            else if (potential == FiberQuality.Standard)
+            {
+                dsc.AppendLine(Lang.Get("rudiments:fiberpotential-mature"));
+            }
         }
     }
 }

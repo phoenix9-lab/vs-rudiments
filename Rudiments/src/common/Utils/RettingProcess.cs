@@ -10,8 +10,12 @@ namespace Rudiments.Utils
     /// <summary>
     /// Reusable 4-stage retting state machine, shared by every retting method
     /// (field/dew retting and barrel retting). Operates on a single fibre ItemSlot:
-    /// the rettable input converts to retted (Coarse) at MinRetHours, an RNG roll decides
-    /// whether a brief Fine window opens, after which quality settles Standard then Rot.
+    /// the rettable input converts to retted at MinRetHours, after which quality settles
+    /// Standard then Rot. The input bundle decides the quality range:
+    ///   nettle                      → Coarse floor, capped Standard (always — never fine)
+    ///   flax, Fine potential        → Standard floor, Fine window possible (cut in bloom)
+    ///   flax, Standard potential    → Coarse floor, capped Standard (fully mature)
+    ///   flax, no potential attr     → Coarse floor, Fine possible (legacy / FlaxBloomHarvest off)
     ///
     /// The owning block entity / behavior supplies the thresholds, the per-tick progress
     /// rate (weather for field, steady for barrel), and persists this via <see cref="ToTree"/>
@@ -46,6 +50,8 @@ namespace Rudiments.Utils
         private double tStandard;
         private double tRot;
         private bool rotted;
+        private int minQuality = FiberQuality.Coarse;   // conversion floor from harvest potential
+        private int maxQuality = FiberQuality.Fine;     // quality ceiling from input type/potential
 
         /// <summary>Lime retting active for this batch (faster, no Fine, tighter rot).</summary>
         public bool LimeActive;
@@ -87,6 +93,8 @@ namespace Rudiments.Utils
             tFineEnd = 0;
             tStandard = 0;
             tRot = 0;
+            minQuality = FiberQuality.Coarse;
+            maxQuality = FiberQuality.Fine;
             LimeActive = false;
         }
 
@@ -156,12 +164,22 @@ namespace Rudiments.Utils
             Item rettedItem = world.GetItem(outCode);
             if (rettedItem == null) return;
 
+            // The input decides the quality range (see class doc). Nettle is always capped at
+            // Standard; flax follows its harvest potential, with the full legacy coarse-to-fine
+            // range when no potential is stamped (old-save bundles, or FlaxBloomHarvest disabled).
+            int potential = FiberQuality.GetPotential(input);
+            bool isNettle = input.Collectible.Code.Path.StartsWith("nettlebundle");
+
+            minQuality = FiberQuality.MinQualityFor(potential);
+            if (isNettle) maxQuality = FiberQuality.Standard;
+            else maxQuality = potential == FiberQuality.Unset ? FiberQuality.Fine : potential;
+
             ItemStack s = new ItemStack(rettedItem, input.StackSize);
-            FiberQuality.Set(s, FiberQuality.Coarse);
+            FiberQuality.Set(s, minQuality);
             slot.Itemstack = s;
 
             // Lime forces FineChance to 0 — the alkaline environment breaks fine fibre structure.
-            double effectiveFineChance = LimeActive ? 0.0 : FineChance;
+            double effectiveFineChance = (LimeActive || maxQuality < FiberQuality.Fine) ? 0.0 : FineChance;
             double effectiveStandardHold = LimeActive ? StandardHold * LimeStandardHoldMul : StandardHold;
 
             // RNG roll: decide if/when a Fine window opens.
@@ -203,6 +221,8 @@ namespace Rudiments.Utils
                 target = FiberQuality.Standard;
             else
                 target = FiberQuality.Coarse;
+
+            if (target < minQuality) target = minQuality;
 
             if (target == FiberQuality.Fine) fineObserved = true;
 
@@ -248,7 +268,9 @@ namespace Rudiments.Utils
 
             // Converted. Until a Fine window is even possible, show a countdown to that point
             // (deliberately vague: when it BECOMES possible, not exactly when/if Fine arrives).
-            if (FineEtaHours > 0)
+            // Standard-capped batches (mature flax, nettle) never see a Fine window, so skip
+            // the countdown for them — the cap is visible on the bundle, nothing to leak.
+            if (maxQuality >= FiberQuality.Fine && FineEtaHours > 0)
             {
                 dsc.AppendLine(Lang.Get(langPrefix + "-fine-eta", count, HumanizeHours(FineEtaHours, hoursPerDay)));
             }
@@ -291,6 +313,8 @@ namespace Rudiments.Utils
             tree.SetDouble("tRot",             tRot);
             tree.SetBool("rotted",             rotted);
             tree.SetBool("limeActive",         LimeActive);
+            tree.SetInt("minQuality",          minQuality);
+            tree.SetInt("maxQuality",          maxQuality);
         }
 
         public void FromTree(ITreeAttribute tree)
@@ -307,6 +331,8 @@ namespace Rudiments.Utils
             tRot             = tree.GetDouble("tRot");
             rotted           = tree.GetBool("rotted");
             LimeActive       = tree.GetBool("limeActive");
+            minQuality       = tree.GetInt("minQuality", FiberQuality.Coarse);
+            maxQuality       = tree.GetInt("maxQuality", FiberQuality.Fine);
         }
     }
 }

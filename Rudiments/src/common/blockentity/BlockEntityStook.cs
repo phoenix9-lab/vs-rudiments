@@ -125,8 +125,11 @@ namespace Rudiments.SRC.Common.BlockEntities
                 return true;
             }
 
-            // Stack-merge if same item
-            if (slot.Itemstack.Collectible.Code.Equals(heldItem.Collectible.Code))
+            // Stack-merge only identical bundles (same code, quality and harvest potential),
+            // so distinct grades never average together.
+            if (slot.Itemstack.Collectible.Code.Equals(heldItem.Collectible.Code)
+                && FiberQuality.Get(slot.Itemstack) == FiberQuality.Get(heldItem)
+                && FiberQuality.GetPotential(slot.Itemstack) == FiberQuality.GetPotential(heldItem))
             {
                 int xfer = Math.Min(heldItem.StackSize, cap - slot.Itemstack.StackSize);
                 if (xfer <= 0) return true;
@@ -242,7 +245,9 @@ namespace Rudiments.SRC.Common.BlockEntities
             Item curedItem = Api.World.GetItem(curedCode);
             if (curedItem == null) return;
 
-            FiberSlot.Itemstack = new ItemStack(curedItem, input.StackSize);
+            ItemStack curedStack = new ItemStack(curedItem, input.StackSize);
+            FiberQuality.CarryPotential(input, curedStack);
+            FiberSlot.Itemstack = curedStack;
             FiberSlot.MarkDirty();
             ResetProgress();
             MarkDirty(true);

@@ -1,0 +1,199 @@
+[
+  {
+    "comment": "Crops only return seeds once fully grown. The '*' (immature stage) entry of every vanilla crop drops seeds at avg 0.7 \u2014 remove it. Harvest-stage drops (which include seeds) are untouched. Flax is handled separately in crop-flax.json.",
+    "file": "game:blocktypes/plant/crop/amaranth",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/cabbage",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/carrot",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/cassava",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/fennel",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/licorice",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/onion",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/parsnip",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/peanut",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/pineapple",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/rice",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/rye",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/soybean",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/spelt",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/sunflower",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "file": "game:blocktypes/plant/crop/turnip",
+    "op": "replace",
+    "path": "/dropsByType/*",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "comment": "Damaged / eaten crops no longer get their seed drops exempted from the damage multiplier \u2014 an animal-eaten crop (multiplier 0) returns nothing.",
+    "file": "game:blocktypes/soil/farmland",
+    "op": "replace",
+    "path": "/attributes/debuffUnaffectedDrops",
+    "value": [],
+    "side": "server",
+    "condition": {
+      "when": "Rudiments.SeedsOnlyWhenMature",
+      "isValue": "true"
+    }
+  },
+  {
+    "comment": "Swap in the rudiments dead-crop class. Applied unconditionally; the class itself honors the SeedsOnlyWhenMature config at runtime, falling back to vanilla's guaranteed-seed behavior when disabled.",
+    "file": "game:blocktypes/plant/crop/dead",
+    "op": "replace",
+    "path": "/class",
+    "value": "rudiments:BlockDeadCrop",
+    "side": "server"
+  }
+]

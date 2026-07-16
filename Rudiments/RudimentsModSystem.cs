@@ -18,6 +18,14 @@ namespace Rudiments
             base.StartPre(api);
             Config = api.LoadModConfig<RudimentsConfig>("rudiments.json") ?? new();
             api.StoreModConfig(Config, "rudiments.json");
+
+            // Mirror the feature flags into the world config so JSON patches can condition on
+            // them (patches are server-side; the JsonPatch loader runs after every StartPre).
+            if (api.Side == EnumAppSide.Server)
+            {
+                api.World.Config.SetBool("Rudiments.FlaxBloomHarvest", Config.FlaxBloomHarvest);
+                api.World.Config.SetBool("Rudiments.SeedsOnlyWhenMature", Config.SeedsOnlyWhenMature);
+            }
         }
 
         public override void Start(ICoreAPI api)
@@ -29,6 +37,7 @@ namespace Rudiments
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockScutchBoard", typeof(BlockScutchBoard));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockCropFlax", typeof(BlockCropFlax));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockCropNettle", typeof(BlockCropNettle));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockDeadCrop", typeof(BlockDeadCropRudiments));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockDryingRack", typeof(BlockDryingRack));
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityDryingRack", typeof(BlockEntityDryingRack));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockFieldRetting", typeof(BlockFieldRetting));

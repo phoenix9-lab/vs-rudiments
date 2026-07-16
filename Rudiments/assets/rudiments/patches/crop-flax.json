@@ -6,6 +6,26 @@
 	"value": "rudiments:BlockCropFlax"
   },
   {
+	"comment": "FlaxBloomHarvest enabled (default): nothing drops before bloom. Stage 8 (in bloom) gives seed-free bundles that ret standard-to-fine; stage 9 (mature) gives seeds, grain and coarser bundles capped at standard. BlockCropFlax stamps the bundles' potential in code.",
+	"file": "game:blocktypes/plant/crop/flax",
+	"op": "replace",
+	"path": "/dropsByType",
+	"value": {
+	  "*-8": [
+		{ "type": "item", "code": "rudiments:flaxbundle-unprocessed", "quantity": { "avg": 1.2 } }
+	  ],
+	  "*-9": [
+		{ "type": "item", "code": "rudiments:flaxbundle-unprocessed", "quantity": { "avg": 1.0 } },
+		{ "type": "item", "code": "game:seeds-flax", "quantity": { "avg": 1.2 } },
+		{ "type": "item", "code": "game:grain-flax", "quantity": { "avg": 2.0, "var": 0.75 } }
+	  ],
+	  "*": []
+	},
+	"side": "server",
+	"condition": { "when": "Rudiments.FlaxBloomHarvest", "isValue": "true" }
+  },
+  {
+	"comment": "FlaxBloomHarvest disabled: the pre-0.11 table — early harvest for fiber, late for seeds and grain. Bundles carry no potential stamp and ret over the full coarse-to-fine range.",
 	"file": "game:blocktypes/plant/crop/flax",
 	"op": "replace",
 	"path": "/dropsByType",
@@ -49,7 +69,8 @@
 		{ "type": "item", "code": "game:seeds-flax", "quantity": { "avg": 0.7 } }
 	  ]
 	},
-	"side": "server"
+	"side": "server",
+	"condition": { "when": "Rudiments.FlaxBloomHarvest", "isValue": "false" }
   },
   {
     "file": "game:blocktypes/plant/crop/flax",

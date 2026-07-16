@@ -2,6 +2,28 @@ namespace Rudiments
 {
     public class RudimentsConfig
     {
+        // ── Harvest realism ──────────────────────────────────────────────────────────
+        // These two flags are copied into the world config at server start so the JSON
+        // patches can condition on them — changes need a server restart to fully apply.
+
+        /// <summary>
+        /// Staged flax harvest: flax drops nothing until it blooms. Cut in bloom (stage 8)
+        /// for seed-free bundles that ret from standard toward fine; let it fully mature
+        /// (stage 9) for seeds and grain plus coarser bundles capped at standard (like nettle).
+        /// When false, the pre-0.11 flax table is restored: bundles from stage 3 with seeds
+        /// at every stage, and every bundle rets coarse-to-fine. Nettle is capped at standard
+        /// regardless of this setting. Default: true. Requires restart.
+        /// </summary>
+        public bool FlaxBloomHarvest { get; set; } = true;
+
+        /// <summary>
+        /// Vanilla crops only return seeds once fully grown: immature crops drop nothing when
+        /// broken, and damaged or animal-eaten crops lose their guaranteed seed return.
+        /// When false, vanilla behavior is restored (immature crops drop ~0.7 seeds, dead
+        /// crops always return a seed). Default: true. Requires restart.
+        /// </summary>
+        public bool SeedsOnlyWhenMature { get; set; } = true;
+
         /// <summary>Maximum number of bundles that fit in one stook. Default: 64.</summary>
         public int StookMaxBundles { get; set; } = 64;
 

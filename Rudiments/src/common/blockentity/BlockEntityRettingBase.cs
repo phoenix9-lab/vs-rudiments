@@ -125,8 +125,11 @@ namespace Rudiments.SRC.Common.BlockEntities
                 return true;
             }
 
-            // Stack-merge if same item
-            if (slot.Itemstack.Collectible.Code.Equals(heldItem.Collectible.Code))
+            // Stack-merge only identical bundles (same code, quality and harvest potential),
+            // so a batch never mixes grades that would ret differently.
+            if (slot.Itemstack.Collectible.Code.Equals(heldItem.Collectible.Code)
+                && FiberQuality.Get(slot.Itemstack) == FiberQuality.Get(heldItem)
+                && FiberQuality.GetPotential(slot.Itemstack) == FiberQuality.GetPotential(heldItem))
             {
                 int transferable = Math.Min(heldItem.StackSize, slot.Itemstack.Collectible.MaxStackSize - slot.Itemstack.StackSize);
                 if (transferable <= 0) return true;
