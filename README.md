@@ -10,13 +10,18 @@ Pre-release — work in progress. New systems are added incrementally; existing 
 
 ## Fibre Production
 
-Flax and stinging nettle processed through authentic multi-step chains. Quality is earned, not given — retting timing determines fibre grade, and fine fibre carries real mechanical bonuses downstream.
+Flax and stinging nettle processed through authentic multi-step chains. Quality is earned, not given — harvest timing sets the fibre's potential, retting timing determines the grade within it, and fine fibre carries real mechanical bonuses downstream.
 
 ### Flax — 7 steps
 
-`Harvest early` → `Stook-cure` → `Ripple` → `Ret` → `Dry` → `Break` → `Scutch` → `Hatchel`
+`Harvest after bloom` → `Stook-cure` → `Ripple` → `Ret` → `Dry` → `Break` → `Scutch` → `Hatchel`
 
-Harvest at stages 3–7 for bundles. Waiting to stage 8–9 gives mature seeds for linseed oil — you choose which yield to prioritise.
+Flax drops nothing until it has bloomed — then the timing decision is real:
+
+- **Cut in bloom (stage 8):** the best fibre. Bundles ret from *standard* quality with a chance at the brief *fine* window — but they carry **no seed at all**, not from the crop and not at the ripple.
+- **Fully mature (stage 9):** the plant drops seeds and grain, and rippling its bundles recovers more of both — but the stems have coarsened. Mature bundles ret from *coarse* and top out at *standard*, like nettle.
+
+Fine fibre comes exclusively from bloom-cut flax; seeds and linseed oil come exclusively from mature flax. You can't have both from one plant.
 
 ### Nettle — 6 steps
 
@@ -26,7 +31,10 @@ Nettle skips rippling. Young plants (stages 3–6) yield edible leaves — hold 
 
 ### Retting quality
 
-Bundles pass through **Coarse → Fine → Standard → Rot** as retting progresses. The fine window is brief. Letting it pass drops quality back to Standard; leaving bundles indefinitely rots them.
+Harvest timing sets the quality range; retting timing decides where you land in it.
+
+- **Bloom-cut flax** rets **Standard → Fine → Standard → Rot**. The fine window is brief — catch it or settle for standard.
+- **Mature flax and nettle** ret **Coarse → Standard → Rot**. Patience improves them; fine is out of reach.
 
 - **Field retting** — free, but weather-dependent. Dry spells stall progress; rain restarts it.
 - **Barrel retting** — seal bundles and water in a barrel; it immediately reopens as a retting bath with a visible progress readout. Controlled, predictable, faster.
@@ -41,6 +49,7 @@ Fine fibre twisted into **fine cord** gives a significant durability bonus on bo
 | Block | Function |
 |---|---|
 | Stook | Weather-aware curing and drying; bundles placed directly on the ground |
+| Ripple | Combs seed heads from cured bundles — mature bundles yield seeds and grain, bloom-cut bundles none |
 | Retting bath (barrel) | Seal bundles + water or limewater in any barrel — it reopens as a timed retting bath |
 | Retting vat | Legacy block — existing vats still work but can no longer be crafted |
 | Drying rack | Safe indoor drying; quality preserved |
@@ -65,6 +74,20 @@ All of this is tunable — see [Configuration](#configuration).
 
 ---
 
+## Seeds only from mature crops
+
+Vanilla hands seeds back almost no matter what happens to a crop. Rudiments closes those loopholes — for **every** vanilla crop, not just flax:
+
+- **Breaking an immature crop returns nothing.** No more pulling half-grown plants for a guaranteed seed refund.
+- **Damaged crops lose their seed exemption.** Vanilla quietly excluded seeds from frost/heat damage multipliers; now seeds take the same hit as the rest of the harvest.
+- **A crop eaten by an animal returns nothing.** Vanilla's dead-crop code literally contains a "minor hack to make dead crop always drop seeds" — that hack is gone. If the deer got your turnips, it got your seeds too. Fence your fields.
+
+Nettle is unaffected — it never dropped seeds; it regrows from rhizomes.
+
+Both this and the bloom-stage flax harvest can be disabled in the [config](#configuration) for a gentler game.
+
+---
+
 ## Planned
 
 These are directions, not promises. Each will be its own coherent addition when the time is right.
@@ -79,7 +102,14 @@ These are directions, not promises. Each will be its own coherent addition when 
 
 All settings live in `VintagestoryData/ModConfig/rudiments.json` (created on first launch). If [AutoConfigLib](https://mods.vintagestory.at) is installed, settings can be edited in-game — no file editing needed.
 
-Apply changes without restarting: `/rudimentsreload` (requires `controlserver` privilege).
+Apply changes without restarting: `/rudimentsreload` (requires `controlserver` privilege). Exception: the two harvest-realism flags below gate JSON patches and need a **server restart** to fully apply.
+
+### Harvest realism
+
+| Setting | Default | Effect |
+|---|---|---|
+| `FlaxBloomHarvest` | `true` | Staged flax harvest: nothing before bloom, fine-capable seed-free bundles at stage 8, seeds/grain plus standard-capped bundles at stage 9. `false` restores the pre-0.11 table (bundles from stage 3, seeds at every stage, all bundles ret coarse-to-fine). Nettle stays capped at standard either way. Restart required. |
+| `SeedsOnlyWhenMature` | `true` | Vanilla crops only return seeds once fully grown — immature breaks, damaged crops, and animal-eaten crops return nothing. `false` restores vanilla behavior. Restart required. |
 
 ### Nettle spread and invasiveness
 
