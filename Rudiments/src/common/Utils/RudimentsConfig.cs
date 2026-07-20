@@ -27,6 +27,15 @@ namespace Rudiments
         /// <summary>Maximum number of bundles that fit in one stook. Default: 64.</summary>
         public int StookMaxBundles { get; set; } = 64;
 
+        // ── Barrel retting ───────────────────────────────────────────────────────────
+
+        /// <summary>Litres of water/limewater required (and consumed) per bundle in the barrel
+        /// retting-bath recipes. A 50-litre barrel fits 50/this many bundles, e.g. 1.0 → 50
+        /// bundles, 4.0 → 12 bundles. Applied by editing the loaded BarrelRecipe ingredients in
+        /// AssetsFinalize (assets/rudiments/recipes/barrel/retting-*.json ship with 1.0).
+        /// Default: 1.0. Requires restart.</summary>
+        public float BarrelRettingLitresPerBundle { get; set; } = 1.0f;
+
         // ── Rippling ─────────────────────────────────────────────────────────────────
 
         /// <summary>Global multiplier on flax grain yielded per bundle at the ripple. Per-tier base

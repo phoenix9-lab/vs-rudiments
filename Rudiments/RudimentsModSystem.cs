@@ -2,6 +2,7 @@
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Server;
+using Vintagestory.GameContent;
 using Rudiments.SRC.Common.Blocks;
 using Rudiments.SRC.Common.BlockEntities;
 using Rudiments.SRC.Common.Items;
@@ -98,6 +99,10 @@ namespace Rudiments
         {
             base.AssetsFinalize(api);
 
+            // Barrel recipes are parsed independently on both client and server from the same
+            // assets, so apply the config override on both sides to keep them in sync.
+            ApplyBarrelRettingRatio(api);
+
             // Itemtypes are server-authoritative and synced to clients, so attribute edits here
             // reach both sides.
             if (api.Side != EnumAppSide.Server) return;
@@ -153,6 +158,40 @@ namespace Rudiments
             if (strippedCount > 0 || spinnableCount > 0)
             {
                 api.Logger.Notification("[{0}] Carding compat: washed wool must now be carded first — removed direct spinnability from {1} fiber items, made {2} rolags spinnable.", Mod.Info.Name, strippedCount, spinnableCount);
+            }
+        }
+
+        /// <summary>
+        /// Overwrites the water/limewater litres on the retting-bath barrel recipes with the
+        /// configured ratio, so server owners can tune bundle-per-barrel capacity without
+        /// hand-editing assets/rudiments/recipes/barrel/retting-*.json.
+        /// </summary>
+        private void ApplyBarrelRettingRatio(ICoreAPI api)
+        {
+            float litresPerBundle = System.Math.Max(0.1f, Config.BarrelRettingLitresPerBundle);
+
+            var recipeSys = api.ModLoader.GetModSystem<RecipeRegistrySystem>();
+            if (recipeSys?.BarrelRecipes == null) return;
+
+            int changed = 0;
+            foreach (BarrelRecipe recipe in recipeSys.BarrelRecipes)
+            {
+                if (recipe.Code == null || !recipe.Code.StartsWith("rettingbath-")) continue;
+
+                foreach (BarrelRecipeIngredient ingred in recipe.Ingredients)
+                {
+                    string path = ingred.Code?.Path;
+                    if (path != "waterportion" && path != "limewaterportion") continue;
+
+                    ingred.Litres = litresPerBundle;
+                    ingred.ConsumeLitres = litresPerBundle;
+                    changed++;
+                }
+            }
+
+            if (changed > 0)
+            {
+                api.Logger.Notification("[{0}] Barrel retting: {1} litre(s) of water/limewater per bundle ({2} ingredient(s) adjusted).", Mod.Info.Name, litresPerBundle, changed);
             }
         }
     }
