@@ -1,5 +1,7 @@
 # Rudiments
 
+**AI Disclosure:** This mod builds on the original source code of [AgeOfFlax](https://mods.vintagestory.at/show/mod/33768) by @Oppo. Ongoing modifications and maintenance are done primarily with the assistance of Anthropic's Claude models (Opus/Sonnet). If you'd prefer to avoid AI-assisted content, please take this into account.
+
 **A Vintage Story mod restoring the depth of pre-industrial craft.**
 
 Rudiments adds realistic, multi-step production chains for the materials and tools that defined life before iron — worked one process at a time, with each step mattering. Inspired by [Primitive Technology](https://www.youtube.com/channel/UCAL3JXZSzSm8AlZyD3nQdBA) and [RHSWorks](https://www.rhsworks.org).
@@ -181,7 +183,7 @@ Apply changes without restarting: `/rudimentsreload` (requires `controlserver` p
 
 ## Credits
 
-Expanded from [AgeOfFlax](https://mods.vintagestory.at/show/mod/33768) by OppoOtis.  
+Expanded from [AgeOfFlax](https://mods.vintagestory.at/show/mod/33768) by @Oppo.  
 Inspired by [Primitive Technology](https://www.youtube.com/channel/UCAL3JXZSzSm8AlZyD3nQdBA) and [RHSWorks](https://www.rhsworks.org).
 
 ---
