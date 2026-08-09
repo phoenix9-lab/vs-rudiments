@@ -36,6 +36,7 @@ namespace Rudiments
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityBreak", typeof(BlockEntityBreak));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockHatchel", typeof(BlockHatchel));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockScutchBoard", typeof(BlockScutchBoard));
+            api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityScutchBoard", typeof(BlockEntityScutchBoard));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockCropFlax", typeof(BlockCropFlax));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockCropNettle", typeof(BlockCropNettle));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockDeadCrop", typeof(BlockDeadCropRudiments));
@@ -59,6 +60,7 @@ namespace Rudiments
             api.RegisterItemClass($"{Mod.Info.ModID}:ItemFieldRettableBundle", typeof(ItemFieldRettableBundle));
             api.RegisterItemClass($"{Mod.Info.ModID}:ItemNettleRhizome", typeof(ItemNettleRhizome));
             api.RegisterItemClass($"{Mod.Info.ModID}:ItemHandCards", typeof(ItemHandCards));
+            api.RegisterItemClass($"{Mod.Info.ModID}:ItemScutchSword", typeof(ItemScutchSword));
 
             api.RegisterBlockBehaviorClass($"{Mod.Info.ModID}:RhizomeSpread", typeof(BlockBehaviorRhizomeSpread));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockNettleStub", typeof(BlockNettleStub));

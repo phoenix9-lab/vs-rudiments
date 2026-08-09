@@ -126,6 +126,17 @@ namespace Rudiments.SRC.Common.BlockEntities
             Item scutchedItem = Api.World.GetItem(scutchedCode);
             if (scutchedItem == null) return;
 
+            // Mill scutching wasted more fibre than hand work — the beating arms shred a share of
+            // the long line into short tow, and the millers took their pay in exactly that. Quality
+            // is untouched; this is a throughput-for-yield trade, not a throughput-for-quality one.
+            if (Api.World.Rand.NextDouble() < RudimentsModSystem.Config.MechScutcherTowShare)
+            {
+                InputSlot.TakeOut(1);
+                InputSlot.MarkDirty();
+                EjectTow();
+                return;
+            }
+
             InputSlot.TakeOut(1);
             InputSlot.MarkDirty();
 
@@ -147,6 +158,22 @@ namespace Rudiments.SRC.Common.BlockEntities
                 Api.World.SpawnItemEntity(outStack, Pos.ToVec3d().Add(0.5, 0.9, 0.5));
             }
             OutputSlot.MarkDirty();
+        }
+
+        /// <summary>
+        /// Drops the wasted bundle's worth of tow at the mill as an item entity rather than into a
+        /// third slot — a slot-count change would break InventoryGeneric.FromTreeAttributes on
+        /// existing saves, and tow spilling out of the machine is exactly what happened.
+        /// </summary>
+        private void EjectTow()
+        {
+            Item tow = Api.World.GetItem(new AssetLocation("rudiments", "coarsefibers"));
+            int perBundle = System.Math.Max(0, RudimentsModSystem.Config.ScutchTowFibersPerBundle);
+            if (tow == null || perBundle <= 0) return;
+
+            ItemStack towStack = new ItemStack(tow, perBundle);
+            FiberQuality.Set(towStack, FiberQuality.Coarse);
+            Api.World.SpawnItemEntity(towStack, Pos.ToVec3d().Add(0.5, 0.9, 0.5));
         }
 
         // BEBehaviorMPBase.OnTesselation returns true unconditionally, claiming the render
@@ -188,6 +215,10 @@ namespace Rudiments.SRC.Common.BlockEntities
             }
             if (!OutputSlot.Empty)
                 dsc.AppendLine(Lang.Get("rudiments:scutcher-output", OutputSlot.Itemstack.StackSize, OutputSlot.Itemstack.GetName()));
+
+            float towShare = RudimentsModSystem.Config.MechScutcherTowShare;
+            if (towShare > 0f)
+                dsc.AppendLine(Lang.Get("rudiments:scutcher-towwaste", (int)System.Math.Round(towShare * 100f)));
         }
 
         public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldForResolving)

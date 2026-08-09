@@ -26,6 +26,85 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.13.0] — 2026-08-09 — Interactive scutching: board + scutching sword
+
+Scutching was the most inert step in the fibre chain — a hold-right-click conversion loop identical
+to rippling, breaking, hatcheling and oil pressing. It is now a physical, skill-bearing step, and
+the second lever the player has on fibre quality (retting was the only one).
+
+### Added
+- **`rudiments:scutchsword`** — a wooden swingle with a deliberately dulled edge, the historically
+  attested tool (Swedish *skäkta*). Crafted from a plank, a stick and a knife. 150 durability, 1 per
+  stroke. Plays the vanilla `axechop` animation; no custom animation patch was needed.
+- **`BlockEntityScutchBoard`** — the scutch board now holds a batch of broken bundles and tracks two
+  per-side boon meters, fibre integrity, which end is being worked, and the stroke count. The loaded
+  bundle's own item shape is draped into the board's notch, so flax and nettle both render with no
+  new art.
+- **The loop.** Right-click the board with broken bundles to load → hold <kbd>leftmouse</kbd> with the
+  sword to strike → <kbd>sneak</kbd> + right-click to turn the bundle → right-click empty-handed to
+  collect. `GetPlacedBlockInteractionHelp` now documents all four (no fibre block had it before).
+- **The trap, and it is emergent.** Boon decays asymptotically, which gives the documented diminishing
+  returns for free. Damage is keyed to the *worked side's* local cleanliness: while there is boon left
+  the blade rides on it and costs nothing, and once the side is clean it starts cutting long **line**
+  into short **tow**. There is no arbitrary timer anywhere in it.
+- **The tell doubles as the flip cue.** Crossing `ScutchSafeCleanliness` changes the strike from a dull
+  low-pitched thud throwing brown shives to a sharper high note throwing pale fibre fluff — the same
+  signal says "this end is done" and "damage starts now". Block info adds cleanliness, fibre-intact,
+  a grade preview, and an explicit prompt to turn the bundle the moment the tell fires with the far
+  half still untouched.
+- **Nine new config fields** under `── Scutching ──`, all live-reloadable via `/rudimentsreload`:
+  `ScutchStrokesPerSecond`, `ScutchBoonPerStrokeMultiplier`, `ScutchDamagePerStroke`,
+  `ScutchSafeCleanliness`, `ScutchCrossSideBleed`, `ScutchNettleBoonMultiplier`,
+  `ScutchTowFibersPerBundle`, `ScutchShowMeters`, `MechScutcherTowShare`.
+  `ScutchShowMeters: false` swaps the percentages for qualitative words.
+
+### Changed
+- **Board tiers now scale capacity and boon-per-stroke, not throughput.** `scutchDuration` /
+  `scutchAmount` are replaced by `scutchCapacity` (2 / 4 / 8) and `boonPerStroke` (0.12 / 0.16 / 0.20).
+  A better-cut notch holds the bundle steadier, so workmanship buys both.
+- **The board is wood at every tier, and the shape gained its notch.** Historically the scutch board
+  was always an upright wooden plank with a notch sawn near the top and the upper piece split off,
+  leaving a guard that stops the knife reaching your holding hand — metal appears only on some hand
+  knives and inside industrial mills. Tier display names now describe workmanship
+  (split-log / planed / joiner's) rather than material.
+- **Outcome at collect time.** Total cleanliness sets the grade (<0.50 coarse, <0.775 standard, else
+  fine) and is capped by the input's retted quality, so retting remains the ceiling and scutching can
+  only lose what it granted. Fibre integrity decides how much of the batch survives as scutched
+  bundles; the remainder is *reclassified*, not deleted, and comes off as `rudiments:coarsefibers`.
+- **Nettle needs about half again as many strokes per end** (`ScutchNettleBoonMultiplier`), which is
+  the documented difference in how much boon it carries.
+- **The mechanical scutch mill now wastes a share of every batch as tow** (`MechScutcherTowShare`,
+  default 35%), ejected at the block as coarse fibres. Mill scutching genuinely wasted more fibre than
+  hand work, and the millers were paid in the tow. **Quality is untouched** — this is a
+  throughput-for-yield trade, not throughput-for-quality. The mill's 2-slot inventory is unchanged, so
+  existing saves deserialise; the tow is ejected rather than given a third slot precisely for that.
+- Handbook guide, block/item descriptions and the flax and nettle handbook steps rewritten around
+  load → strike → **listen for the change** → flip → collect, with the under/over trade-off and the
+  mill trade-off stated outright.
+
+### Removed
+- **`textures/block/tool/scutchboard/blade-copper.png` and `blade-iron.png`** — the copper and iron
+  board faces were inaccurate and are retired. `blade-wood.png` is replaced by `board-crude.png`,
+  joined by `board-planed.png` and `board-fine.png` (all three the same plank, differing only in how
+  smooth and pale the worked surface is), and the shape's texture key `blade` is now `face`.
+  **Anyone with a resource pack overriding the two metal textures loses that override.** The
+  ripple's identically-named textures are untouched.
+- The board's old hold-right-click conversion loop, and its `scutchDuration` / `scutchAmount`
+  attributes.
+
+### Notes
+- **Existing boards keep working without being re-placed.** Adding `entityClass` does not retroactively
+  create block entities in loaded worlds, so the block spawns one server-side on first interaction if
+  it finds none.
+- `MechScutcherTowShare` is a yield nerf to existing mill setups. Set it to `0` to restore the old
+  behaviour; quality was never affected either way.
+- Strokes are per *session*, not per bundle — loading fewer bundles than capacity wastes strokes,
+  which is what makes the tier upgrade worth building. This mirrors the old `scutchAmount` model.
+- The board keeps one shared shape across tiers; the tier read is texture-only. A distinct crude-log
+  shape for the primitive tier is a later polish pass.
+- Stroke counts and `ScutchSafeCleanliness` will likely want a playtest pass, as the carding angles did
+  in v0.9.2. Everything is config-exposed and live-reloadable so tuning needs no rebuild.
+
 ## [0.11.0] — 2026-07-16 — Bloom-stage flax harvest & seeds only from mature crops
 
 Two new gameplay rules, both **config-gated and enabled by default** (`ModConfig/rudiments.json`, surfaced in-game via AutoConfigLib's ImGui menu; both flags need a server restart to fully apply since they gate JSON patches).

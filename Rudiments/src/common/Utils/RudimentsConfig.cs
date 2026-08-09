@@ -48,6 +48,59 @@ namespace Rudiments
         /// entirely. Default: 1.0.</summary>
         public float RippleSeedYieldMultiplier { get; set; } = 1.0f;
 
+        // ── Scutching ────────────────────────────────────────────────────────────────
+        // The scutch board is an interactive minigame: load broken bundles, strike them with a
+        // scutching sword, flip halfway. Every value here is read live, so /rudimentsreload is
+        // enough to retune the whole thing without a rebuild. Per-tier capacity and
+        // boon-per-stroke live in blocktypes/tool/scutchboard.json.
+
+        /// <summary>Strokes per second while holding leftmouse with a scutching sword. Kept in sync
+        /// with the vanilla "axechop" animation the sword plays: 34 frames at animationSpeed 1.65
+        /// (30 fps) is one 0.687 s cycle, so 1.456 strokes/second. Change the animation and this
+        /// number must change with it. Default: 1.456.</summary>
+        public float ScutchStrokesPerSecond { get; set; } = 1.456f;
+
+        /// <summary>Global multiplier on how much boon each stroke knocks free. Per-tier base values
+        /// (<c>boonPerStroke</c>: 0.12 / 0.16 / 0.20) live in blocktypes/tool/scutchboard.json.
+        /// Higher values mean fewer strokes to clean a side. Default: 1.0.</summary>
+        public float ScutchBoonPerStrokeMultiplier { get; set; } = 1.0f;
+
+        /// <summary>Fibre integrity lost per stroke once the worked side is completely clean and the
+        /// blade is biting bare fibre. Damaged bundles are not destroyed — they come off as tow
+        /// (rudiments:coarsefibers) instead of scutched line. Set to 0 to make over-scutching
+        /// harmless. Default: 0.10.</summary>
+        public float ScutchDamagePerStroke { get; set; } = 0.10f;
+
+        /// <summary>How clean the worked side may get (0..1) before strokes start shredding line into
+        /// tow. Below this, scutching is free; above it, damage ramps linearly to the full
+        /// per-stroke cost. This is also the point at which the strike changes sound and the
+        /// particles turn pale — the flip cue. Default: 0.75.</summary>
+        public float ScutchSafeCleanliness { get; set; } = 0.75f;
+
+        /// <summary>Fraction of a stroke's cleaning that bleeds onto the side you are *not* working —
+        /// you grip the far end while striking the near one. Set to 0 for strictly independent
+        /// sides (which makes flipping mandatory rather than merely worthwhile). Default: 0.10.</summary>
+        public float ScutchCrossSideBleed { get; set; } = 0.10f;
+
+        /// <summary>Nettle carries substantially more boon than flax, so its boon-per-stroke is
+        /// divided by this — 1.5 means roughly half again as many strokes per side. Default: 1.5.</summary>
+        public float ScutchNettleBoonMultiplier { get; set; } = 1.5f;
+
+        /// <summary>Coarse fibres (tow) handed out per bundle that was shredded by over-scutching, or
+        /// wasted by the mechanical scutch mill. Default: 2.</summary>
+        public int ScutchTowFibersPerBundle { get; set; } = 2;
+
+        /// <summary>Show numeric percentages for cleanliness and fibre integrity on the scutch board.
+        /// When false, the board reports in qualitative words instead, for players who prefer to work
+        /// by feel. Default: true.</summary>
+        public bool ScutchShowMeters { get; set; } = true;
+
+        /// <summary>Share of bundles the mechanical scutch mill wastes as tow instead of scutched
+        /// bundles — mill scutching was faster than hand work but notoriously wasteful, and the
+        /// millers were paid in the tow. Quality is not affected, only yield. Ejected as an item
+        /// entity at the mill. Set to 0 to disable the waste. Default: 0.35.</summary>
+        public float MechScutcherTowShare { get; set; } = 0.35f;
+
         // ── Nettle spread ────────────────────────────────────────────────────────────
 
         /// <summary>

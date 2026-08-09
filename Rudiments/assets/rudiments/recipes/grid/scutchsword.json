@@ -1,0 +1,12 @@
+[
+  {
+    "ingredientPattern": "_P_,_P_,KS_",
+    "ingredients": {
+      "P": { "type": "item", "code": "game:plank-*", "quantity": 1 },
+      "S": { "type": "item", "code": "game:stick", "quantity": 1 },
+      "K": { "type": "item", "code": "game:knife-generic-*", "isTool": true }
+    },
+    "width": 3, "height": 3,
+    "output": { "type": "item", "code": "scutchsword", "quantity": 1 }
+  }
+]

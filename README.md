@@ -42,6 +42,19 @@ Harvest timing sets the quality range; retting timing decides where you land in 
 - **Barrel retting** — seal bundles and water in a barrel; it immediately reopens as a retting bath with a visible progress readout. Controlled, predictable, faster.
 - **Lime retting** — seal in limewater instead for maximum speed, but quality is permanently capped at Standard. Good for bulk, not craft work.
 
+### Scutching — the second quality lever
+
+Retting is not the only decision that matters. Scutching is a hands-on step: load broken bundles onto a **scutch board**, then hold left-mouse with a **scutching sword** to beat the woody boon off them.
+
+- **Only the end facing you is being worked.** Sneak + right-click turns the bundle so you can do the other half. Never turning it caps how clean the batch can get.
+- **Listen for the change.** While there is boon left the strike lands dull and throws brown shives. Once that end runs clean it sharpens in pitch and throws pale fibre fluff — that is your cue to turn it, because from then on the blade has nothing left to ride on and starts cutting the long *line* into short *tow*.
+- **Both mistakes cost you something different.** Under-scutching leaves boon bound in and grades the batch down; over-scutching keeps the grade but reclassifies more and more of the batch into coarse fibres. Neither is a timer — both fall out of the same curve.
+- **Retting stays the ceiling.** Scutching can only lose the quality retting granted, never exceed it.
+
+Board tiers are craftsmanship in wood, not metal: a better-cut notch holds more bundles *and* clears more boon per stroke. Nettle carries far more boon than flax and wants about half again as many strokes per end.
+
+The **mechanical scutch mill** remains the hands-off route, and it is a genuine trade rather than a straight upgrade: it shreds a share of every batch into tow that drops out at the mill. It costs yield, not grade — exactly the complaint the historical millers, who were paid in that tow, kept getting.
+
 ### Fibre quality bonuses
 
 Fine fibre twisted into **fine cord** gives a significant durability bonus on bows and is used in gambeson armour crafting.
@@ -56,9 +69,10 @@ Fine fibre twisted into **fine cord** gives a significant durability bonus on bo
 | Retting vat | Legacy block — existing vats still work but can no longer be crafted |
 | Drying rack | Safe indoor drying; quality preserved |
 | Break | Breaks dried bundles |
-| Scutch board | Removes woody shives; primitive / simple / advanced tiers |
+| Scutch board | Interactive scutching — load bundles, beat them with a scutching sword, turn them halfway. Split-log / planed / joiner's tiers scale capacity and boon cleared per stroke |
+| Scutching sword | The wooden swingle you beat the board with. Deliberately dulled so it scrapes rather than cuts |
 | Hatchel | Final combing; primitive / simple / advanced tiers |
-| Mechanical scutch mill | Axle-driven; automates breaking and scutching |
+| Mechanical scutch mill | Axle-driven; automates breaking and scutching, at the cost of shredding a share of each batch into tow |
 | Oil press | Presses mature flax seeds into linseed oil |
 
 ---
@@ -112,6 +126,20 @@ Apply changes without restarting: `/rudimentsreload` (requires `controlserver` p
 |---|---|---|
 | `FlaxBloomHarvest` | `true` | Staged flax harvest: nothing before bloom, fine-capable seed-free bundles at stage 8, seeds/grain plus standard-capped bundles at stage 9. `false` restores the pre-0.11 table (bundles from stage 3, seeds at every stage, all bundles ret coarse-to-fine). Nettle stays capped at standard either way. Restart required. |
 | `SeedsOnlyWhenMature` | `true` | Vanilla crops only return seeds once fully grown — immature breaks, damaged crops, and animal-eaten crops return nothing. `false` restores vanilla behavior. Restart required. |
+
+### Scutching
+
+| Setting | Default | Effect |
+|---|---|---|
+| `ScutchBoonPerStrokeMultiplier` | `1.0` | Global multiplier on boon cleared per stroke. Raise it to shorten the whole minigame |
+| `ScutchDamagePerStroke` | `0.10` | Fibre integrity lost per stroke once the worked end is clean. `0` makes over-scutching harmless |
+| `ScutchSafeCleanliness` | `0.75` | How clean an end may get before strokes start cutting line into tow — also where the strike changes sound |
+| `ScutchCrossSideBleed` | `0.10` | Share of each stroke's cleaning that bleeds onto the end you are *not* working. `0` makes flipping mandatory rather than merely worthwhile |
+| `ScutchNettleBoonMultiplier` | `1.5` | How much more boon nettle carries than flax, as a divisor on boon cleared per stroke |
+| `ScutchTowFibersPerBundle` | `2` | Coarse fibres handed out per bundle lost to over-scutching or wasted by the mill |
+| `ScutchStrokesPerSecond` | `1.456` | Stroke rate. Matched to the sword's swing animation — change one and change the other |
+| `ScutchShowMeters` | `true` | Show numeric cleanliness and fibre-intact percentages. `false` reports in qualitative words instead |
+| `MechScutcherTowShare` | `0.35` | Share of each batch the mechanical mill shreds into tow. Quality is never affected; `0` disables the waste |
 
 ### Nettle spread and invasiveness
 

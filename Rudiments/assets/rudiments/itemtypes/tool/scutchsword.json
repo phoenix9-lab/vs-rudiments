@@ -1,0 +1,52 @@
+{
+  "code": "scutchsword",
+  "class": "rudiments:ItemScutchSword",
+  "attributes": {
+    "handbook": {
+      "extraSections": [
+        { "title": "game:handbook-item-usage", "text": "rudiments:item-handbooktext-scutchsword" }
+      ]
+    },
+    "displaycaseable": true,
+    "shelvable": true,
+    "toolrackTransform": {
+      "translation": { "x": 0, "y": 0, "z": 0 },
+      "rotation": { "x": 0, "y": 0, "z": 90 },
+      "scale": 1.1
+    }
+  },
+  "creativeinventory": { "general": [ "*" ], "items": [ "*" ], "tools": [ "*" ] },
+  "shape": { "base": "rudiments:item/tool/scutchsword" },
+  "textures": {
+    "side": { "base": "rudiments:block/tool/scutchboard/side" },
+    "top": { "base": "rudiments:block/tool/scutchboard/top" }
+  },
+  "maxstacksize": 1,
+  "durability": 150,
+  "materialDensity": 400,
+  "combustibleProps": {
+    "burnTemperature": 800,
+    "burnDuration": 25
+  },
+  "heldTpHitAnimation": "axechop",
+  "heldTpIdleAnimation": "holdbothhands",
+  "heldRightReadyAnimation": "axeready",
+  "guiTransform": {
+    "translation": { "x": 0, "y": 0, "z": 0 },
+    "rotation": { "x": 0, "y": -45, "z": 130 },
+    "origin": { "x": 0.5, "y": 0.4, "z": 0.5 },
+    "scale": 1.9
+  },
+  "tpHandTransform": {
+    "translation": { "x": -0.9, "y": -0.4, "z": -0.6 },
+    "rotation": { "x": 0, "y": 4, "z": 84 },
+    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+    "scale": 0.7
+  },
+  "groundTransform": {
+    "translation": { "x": 0, "y": 0, "z": 0 },
+    "rotation": { "x": 90, "y": 0, "z": 0 },
+    "origin": { "x": 0.5, "y": 0.1, "z": 0.5 },
+    "scale": 2.5
+  }
+}
