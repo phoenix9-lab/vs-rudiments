@@ -67,8 +67,12 @@ namespace Rudiments
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockSeepingContainer", typeof(BlockSeepingContainer));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWareStorageVessel", typeof(BlockWareStorageVessel));
 
-            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockSmallBrickKiln", typeof(BlockSmallBrickKiln));
+            // One router class serves both kilns — the updraft kiln's chimney requirement is an
+            // ignition condition, and those live on the block entity.
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockSmallBrickKiln", typeof(BlockKiln));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockUpdraftKiln", typeof(BlockKiln));
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntitySmallBrickKiln", typeof(BlockEntitySmallBrickKiln));
+            api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityUpdraftKiln", typeof(BlockEntityUpdraftKiln));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockGlazableClayware", typeof(BlockGlazableClayware));
             api.RegisterBlockClass($"{Mod.Info.ModID}:RudimentsWateringCan", typeof(RudimentsWateringCan));
             api.RegisterCollectibleBehaviorClass($"{Mod.Info.ModID}:GlazeApplicator", typeof(CollectibleBehaviorGlazeApplicator));

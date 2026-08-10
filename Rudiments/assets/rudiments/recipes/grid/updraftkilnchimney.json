@@ -1,0 +1,19 @@
+[
+  {
+    "ingredientPattern": "B_B,B_B,B_B",
+    "ingredients": {
+      "B": {
+        "type": "item",
+        "code": "game:burnedbrick-*",
+        "quantity": 1
+      }
+    },
+    "width": 3,
+    "height": 3,
+    "output": {
+      "type": "block",
+      "code": "updraftkilnchimney",
+      "quantity": 1
+    }
+  }
+]

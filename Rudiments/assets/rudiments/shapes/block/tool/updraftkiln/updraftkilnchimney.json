@@ -1,0 +1,286 @@
+{
+  "textureWidth": 16,
+  "textureHeight": 16,
+  "textures": {
+    "brick": "game:block/clay/brick/eight/running/red1",
+    "inside": "game:block/clay/bloomery/inside"
+  },
+  "elements": [
+    {
+      "name": "North",
+      "from": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "to": [
+        16.0,
+        16.0,
+        4.0
+      ],
+      "faces": {
+        "north": {
+          "texture": "#brick",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        },
+        "east": {
+          "texture": "#brick",
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            16.0
+          ]
+        },
+        "south": {
+          "texture": "#inside",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        },
+        "west": {
+          "texture": "#brick",
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            16.0
+          ]
+        },
+        "up": {
+          "texture": "#brick",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            4.0
+          ]
+        },
+        "down": {
+          "texture": "#brick",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            4.0
+          ]
+        }
+      }
+    },
+    {
+      "name": "South",
+      "from": [
+        0.0,
+        0.0,
+        12.0
+      ],
+      "to": [
+        16.0,
+        16.0,
+        16.0
+      ],
+      "faces": {
+        "north": {
+          "texture": "#inside",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        },
+        "east": {
+          "texture": "#brick",
+          "uv": [
+            12.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        },
+        "south": {
+          "texture": "#brick",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        },
+        "west": {
+          "texture": "#brick",
+          "uv": [
+            12.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        },
+        "up": {
+          "texture": "#brick",
+          "uv": [
+            0.0,
+            12.0,
+            16.0,
+            16.0
+          ]
+        },
+        "down": {
+          "texture": "#brick",
+          "uv": [
+            0.0,
+            12.0,
+            16.0,
+            16.0
+          ]
+        }
+      }
+    },
+    {
+      "name": "West",
+      "from": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "to": [
+        4.0,
+        16.0,
+        12.0
+      ],
+      "faces": {
+        "north": {
+          "texture": "#brick",
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            16.0
+          ]
+        },
+        "east": {
+          "texture": "#inside",
+          "uv": [
+            4.0,
+            0.0,
+            12.0,
+            16.0
+          ]
+        },
+        "south": {
+          "texture": "#brick",
+          "uv": [
+            0.0,
+            0.0,
+            4.0,
+            16.0
+          ]
+        },
+        "west": {
+          "texture": "#brick",
+          "uv": [
+            4.0,
+            0.0,
+            12.0,
+            16.0
+          ]
+        },
+        "up": {
+          "texture": "#brick",
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            12.0
+          ]
+        },
+        "down": {
+          "texture": "#brick",
+          "uv": [
+            0.0,
+            4.0,
+            4.0,
+            12.0
+          ]
+        }
+      }
+    },
+    {
+      "name": "East",
+      "from": [
+        12.0,
+        0.0,
+        4.0
+      ],
+      "to": [
+        16.0,
+        16.0,
+        12.0
+      ],
+      "faces": {
+        "north": {
+          "texture": "#brick",
+          "uv": [
+            12.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        },
+        "east": {
+          "texture": "#brick",
+          "uv": [
+            4.0,
+            0.0,
+            12.0,
+            16.0
+          ]
+        },
+        "south": {
+          "texture": "#brick",
+          "uv": [
+            12.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        },
+        "west": {
+          "texture": "#inside",
+          "uv": [
+            4.0,
+            0.0,
+            12.0,
+            16.0
+          ]
+        },
+        "up": {
+          "texture": "#brick",
+          "uv": [
+            12.0,
+            4.0,
+            16.0,
+            12.0
+          ]
+        },
+        "down": {
+          "texture": "#brick",
+          "uv": [
+            12.0,
+            4.0,
+            16.0,
+            12.0
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -26,6 +26,54 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.16.0] — 2026-08-10 — The updraft kiln
+
+Porcelain has existed since 0.14.0 and there has been exactly one kiln that could fire it. The
+updraft kiln is the cheap, early, unreliable second answer — and the reason to build a beehive
+afterwards rather than instead.
+
+### Added
+- **`rudiments:updraftkiln`** and **`rudiments:updraftkilnchimney`** — a base and a required chimney
+  **directly above it**, validated with the bloomery's own one-line trick rather than a
+  `MultiblockStructure`. Flat ground; there is no slope requirement anywhere in this design. Without
+  the chimney it refuses to light, with a message saying why.
+- **Twice the capacity of the small brick kiln**, expressed the way vanilla expresses ground storage:
+  two tiles, so two large `SingleCenter` pieces or eight small `Quadrants` ones, or any honest mix.
+  Twelve hours to fire, against the small kiln's ten.
+- **It can fire porcelain, badly.** Each porcelain item rolls independently against
+  `UpdraftKilnPorcelainFailChance` (0.30). Survivors come out as the raw block's own
+  `beehivekiln["0"]` entry — the canonical perfect firing, read off the block so the mapping is never
+  duplicated in code — and the rest become shards. A partial loss leaves both in the kiln.
+- That ~30% is not a made-up number. An updraft kiln is hottest at the firemouths and cools toward
+  the crown, which is why potters packed ware into fireclay saggars and why losses stayed routine
+  even in the industrial era. The downdraft beehive exists *because* of that problem. Updraft is a
+  draft direction, not a temperature class — the Staffordshire bottle oven is one, and it fired at
+  1200–1300 °C. Reaching the temperature was never the difficulty; reaching it evenly was.
+- **Two config fields** — `UpdraftKilnBurnHours` and `UpdraftKilnPorcelainFailChance`. Setting the
+  second to 0 makes the beehive redundant, which is the point of it not being 0.
+- The kilns handbook page now covers all four kilns and why you would want more than one of them.
+
+### Changed
+- **`BlockEntityKilnBase`** now holds everything the two kilns share: the fuel gate, loading and
+  unloading, the burn timer and greenware conversion, behind an explicit `--- subclass contract ---`
+  block in the style of `BlockEntityRettingBase`. `BlockEntitySmallBrickKiln` is now twenty lines
+  that say how big it is.
+- Capacity is measured in **quarter-tile units** rather than slots, which turns out to be what
+  "4 ware slots, matching the pit kiln" actually meant: `BlockEntityPitKiln` extends
+  `BlockEntityGroundStorage`, so a pit kiln holds four small pieces *or one large one*, not four of
+  anything. The small brick kiln now matches it exactly, and the updraft kiln is cleanly double.
+- `BlockSmallBrickKiln` → **`BlockKiln`**, registered under both kilns' class names. Neither kiln has
+  any block-level behaviour that differs — the chimney requirement is an ignition condition, and
+  ignition conditions belong to the block entity — so two identical classes would have been worse
+  code than one honest one.
+
+### Verification
+Headless load test, both passes, 0 errors and no mod warnings. Standalone this is **+5 blocks** over
+0.15.0: four updraft kiln orientations and the chimney. The 30% loss rate and the chimney check need
+a playtest.
+
+---
+
 ## [0.15.0] — 2026-08-10 — The small brick kiln, lead glaze and the watering-can gate
 
 0.14.0 gave earthenware a real problem — it leaks — and put the only two answers behind a beehive

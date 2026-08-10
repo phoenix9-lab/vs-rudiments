@@ -1,0 +1,133 @@
+{
+  "code": "updraftkiln",
+  "class": "rudiments:BlockUpdraftKiln",
+  "entityClass": "rudiments:BlockEntityUpdraftKiln",
+  "behaviors": [
+    {
+      "name": "HorizontalOrientable",
+      "properties": {
+        "dropBlockFace": "north",
+        "drop": {
+          "type": "block",
+          "code": "updraftkiln-north"
+        }
+      }
+    }
+  ],
+  "variantgroups": [
+    {
+      "code": "side",
+      "loadFromProperties": "abstract/horizontalorientation"
+    }
+  ],
+  "attributes": {
+    "handbook": {
+      "groupBy": [
+        "updraftkiln-*"
+      ]
+    },
+    "reinforcable": true
+  },
+  "creativeinventory": {
+    "general": [
+      "*-north"
+    ],
+    "construction": [
+      "*-north"
+    ]
+  },
+  "shape": {
+    "base": "block/tool/updraftkiln/updraftkiln",
+    "rotateYByType": {
+      "*-north": 0,
+      "*-east": 270,
+      "*-south": 180,
+      "*-west": 90
+    }
+  },
+  "sidesolid": {
+    "all": false,
+    "down": true
+  },
+  "sideopaque": {
+    "all": false,
+    "down": true
+  },
+  "collisionbox": {
+    "x1": 0,
+    "y1": 0,
+    "z1": 0,
+    "x2": 1,
+    "y2": 1,
+    "z2": 1
+  },
+  "selectionbox": {
+    "x1": 0,
+    "y1": 0,
+    "z1": 0,
+    "x2": 1,
+    "y2": 1,
+    "z2": 1
+  },
+  "drops": [
+    {
+      "type": "item",
+      "code": "game:burnedbrick-fire",
+      "quantity": {
+        "avg": 12,
+        "var": 2
+      }
+    }
+  ],
+  "guiTransform": {
+    "rotation": {
+      "x": -22.6,
+      "y": -45,
+      "z": 0
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.4,
+      "z": 0.5
+    },
+    "scale": 1.4
+  },
+  "tpHandTransform": {
+    "translation": {
+      "x": -1.1,
+      "y": -0.6,
+      "z": -0.6
+    },
+    "rotation": {
+      "x": 0,
+      "y": -45,
+      "z": 0
+    },
+    "origin": {
+      "x": 0.5,
+      "y": 0.3,
+      "z": 0.5
+    },
+    "scale": 0.4
+  },
+  "blockmaterial": "Ceramic",
+  "materialDensity": 2600,
+  "replaceable": 400,
+  "resistance": 3.5,
+  "maxStackSize": 4,
+  "lightAbsorption": 3,
+  "sounds": {
+    "walk": "game:walk/stone",
+    "place": "game:block/ceramicplace",
+    "hit": "game:block/rock-hit-pickaxe",
+    "break": "game:block/rock-break-pickaxe",
+    "byTool": {
+      "Pickaxe": {
+        "hit": "game:block/rock-hit-pickaxe",
+        "break": "game:block/rock-break-pickaxe"
+      }
+    }
+  },
+  "heldTpIdleAnimation": "holdbothhandslarge",
+  "heldTpUseAnimation": "twohandplaceblock"
+}

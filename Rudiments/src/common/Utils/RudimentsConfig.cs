@@ -273,5 +273,16 @@ namespace Rudiments
         /// stoneware, porcelain, or any glaze. Set to false to restore vanilla behaviour, where a
         /// day-one porous can waters crops indefinitely. Default: true.</summary>
         public bool SealedWareRequiredForWateringCan { get; set; } = true;
+
+        /// <summary>In-game hours an updraft kiln takes to finish a firing. Longer than the small
+        /// brick kiln, for double the capacity. Default: 12.</summary>
+        public float UpdraftKilnBurnHours { get; set; } = 12f;
+
+        /// <summary>Per-item chance that porcelain comes out of an updraft kiln as shards. An updraft
+        /// kiln is hottest at the firemouths and cools toward the crown, and that unevenness is why
+        /// potters used saggars and why losses stayed routine even in the industrial era. It is also
+        /// the reason to build a beehive kiln afterwards rather than instead — set this to 0 and the
+        /// beehive becomes redundant. Default: 0.30.</summary>
+        public double UpdraftKilnPorcelainFailChance { get; set; } = 0.30;
     }
 }
