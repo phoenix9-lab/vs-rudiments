@@ -1,0 +1,14 @@
+[
+  {
+    "comment": "Without this the gate is trivially bypassed: a player on a Clayworks install simply makes a Clayworks can instead. Their can declares classByType {\"*-fired*\": \"BlockWateringCan\"}, so the fired states are the ones to swap.",
+    "file": "clayworks:blocktypes/clay/wateringcan.json",
+    "op": "replace",
+    "path": "/classByType/*-fired*",
+    "value": "rudiments:RudimentsWateringCan",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  }
+]

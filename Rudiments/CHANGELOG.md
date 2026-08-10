@@ -26,6 +26,65 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.15.0] — 2026-08-10 — The small brick kiln, lead glaze and the watering-can gate
+
+0.14.0 gave earthenware a real problem — it leaks — and put the only two answers behind a beehive
+kiln. These three ship together because they are the answers, and shipping the gate without them
+would have broken day-one farming.
+
+### Added
+- **`rudiments:smallbrickkiln`** — a single block, eight fired bricks, four ware slots and one fuel.
+  The bricks come from the pit kiln, so the route to it needs nothing new: pit kiln → bricks → brick
+  kiln → stoneware. Right-click to load and unload, sneak + right-click to light, status through
+  block info. No GUI.
+  - **The fuel gate is the bloomery's, verbatim** — burn temperature ≥ 1200 and duration > 30. That
+    admits charcoal, coke, bituminous and anthracite coal, and refuses lignite, peat and every wood.
+    Cold fuel is refused **at insertion** with a readable message, the way every vanilla fuel gate
+    behaves: nothing in vanilla lets you wait ten hours to find out you were wrong.
+  - Ware admission is the generic `SmeltingType == Fire` contract rather than a list of codes, so
+    Clayworks greenware and any other mod's fires here with **no compat file at all**. The output is
+    read off the input block's own combustible properties, never a hardcoded ware code — which is
+    why one code path serves every domain.
+- **Lead glaze.** Right-click bone-dry greenware with a **galena nugget** — a pile of greenware on
+  the ground, or greenware held in your **off hand**. One nugget per vessel, then fire it in **any
+  kiln at all, the pit kiln included**. No glaze item, no glaze bucket, no second firing.
+  - That is not an abstraction of the process, it *is* the process: raw galena dusted onto a pot and
+    fired with it in one pass is how lead-glazed earthenware was made from about 1400 BCE, at
+    900–1150 °C — well inside a pit kiln's reach.
+  - Glazed ware counts as **sealed**, so it stops seeping and fills a watering can. It does not
+    change the body underneath: it is still earthenware, and it gets none of porcelain's advantage
+    for stored food. The cheap answer to the water problem, not a shortcut up the ladder.
+  - Surviving the fire is the interesting part. The pit kiln discards input NBT outright, so the
+    glaze cannot ride the raw stack through firing. `rudiments:BlockGlazableClayware` overrides the
+    stack-aware `GetCombustibleProperties` to hand back a per-stack `SmeltedStack` with the glaze
+    already on it — after which the vanilla pit kiln, the vanilla beehive and both Rudiments kilns
+    carry it for free, with no kiln-side code anywhere.
+- **The watering-can gate.** An unsealed earthenware can refuses to fill from a water source, with a
+  message. Refuse-to-fill rather than refuse-to-craft, deliberately: you learn the rule at the
+  water's edge with the object in hand instead of hitting a silent recipe wall.
+- **A `rudiments-glaze` handbook page**, and the kilns and water pages filled in now that the brick
+  kiln and the glaze route actually exist.
+- **Three config fields** — `KilnMinFuelTemperature`, `SmallBrickKilnBurnHours`,
+  `SealedWareRequiredForWateringCan`. All read live.
+
+### Changed
+- The order fix from 0.14.0 is generalised (`ClayByTypeOrderFix` → `ByTypeCatchAllOrderFix`) because
+  `nugget.json`'s `behaviorsByType` ends in a `"*"` catch-all too, which would have swallowed the
+  glaze applicator exactly as Clayworks' catch-all swallowed the porcelain texture. Same one-line
+  rule, three more assets.
+
+### Compatibility
+- **Clayworks** — its greenware is glazable and its watering can is gated. Without the second of
+  those the gate would be trivially bypassable on the default install by simply making a Clayworks
+  can instead.
+
+### Verification
+Headless load test, both passes, 0 errors and no mod warnings. Standalone this is **+4 blocks** over
+0.14.0 — the kiln's four orientations — and no new items, glaze being an attribute rather than an
+object. Firing, fuel refusal and the gate itself still need a playtest.
+
+---
+
 ## [0.14.0] — 2026-08-10 — Ware tiers: earthenware, stoneware and porcelain
 
 Fired clay was one material with ten paint jobs. It is now three materials. Which one you are

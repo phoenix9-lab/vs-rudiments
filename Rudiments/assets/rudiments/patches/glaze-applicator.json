@@ -1,0 +1,18 @@
+[
+  {
+    "comment": "Galena is lead ore, and raw galena dusted onto a pot and fired with it in one pass is exactly how lead-glazed earthenware was made from about 1400 BCE. No new item, no glaze bucket, no second firing. The nugget rather than crushed galena on purpose: the crushed form exists in vanilla but adds a pointless step.",
+    "file": "game:itemtypes/resource/nugget",
+    "op": "addmerge",
+    "path": "/behaviorsByType",
+    "value": {
+      "nugget-galena": [
+        {
+          "name": "rudiments:GlazeApplicator",
+          "properties": {
+            "glaze": "lead"
+          }
+        }
+      ]
+    }
+  }
+]

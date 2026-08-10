@@ -1,0 +1,75 @@
+[
+  {
+    "comment": "Every vanilla greenware blocktype becomes glazable. `add` sets /class outright, which is correct whether the file declares class: \"Block\" (flowerpot, jug, planter, storagevessel, toolmold) or nothing at all (the rest) \u2014 both resolve to plain Block today, so nothing is being taken away. Molds and crucibles are included even though they are excluded from porcelain: a glazed mold is historically ordinary, and the tier restriction on porcelain is about the body, not the surface.",
+    "file": "game:blocktypes/clay/raw/bowl",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/crock",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/jug",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/pot",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/storagevessel",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/planter",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/flowerpot",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/oillamp",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/wateringcan",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/crucible",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/ingotmold",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/toolmold",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware"
+  }
+]

@@ -1,0 +1,256 @@
+[
+  {
+    "comment": "Lead glaze on Clayworks greenware. Without this the whole mechanic is invisible to anyone working in Clayworks colours, because the greenware they hold is clayworks:-domain. Which path each file needs was read from the files themselves: most declare class: \"Block\" or nothing (so `add /class` is right), but the flowerpot and planter declare classByType: {\"*\": \"Block\"}, whose catch-all would overwrite a plain /class at solveByType time \u2014 those get the ByType entry replaced instead.",
+    "file": "clayworks:blocktypes/clay/raw/bowl-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/barrellid-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bigvessel-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/clayplate-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/jug-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/jug-raw-natural.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/storagevessellid-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/emptyvessel-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bowl-raw-natural.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/crock-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/crock-raw-natural.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/crucible-natural-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/ingotmold-natural-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/oillamp-genie-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/oillamp-genie-raw-natural.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/pot-natural-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/toolmold-natural-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/wateringcan-raw.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/wateringcan-raw-natural.json",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/flowerpot-raw.json",
+    "op": "replace",
+    "path": "/classByType/*",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/flowerpot-raw-natural.json",
+    "op": "replace",
+    "path": "/classByType/*",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/planter-raw.json",
+    "op": "replace",
+    "path": "/classByType/*",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/planter-raw-natural.json",
+    "op": "replace",
+    "path": "/classByType/*",
+    "value": "rudiments:BlockGlazableClayware",
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  }
+]

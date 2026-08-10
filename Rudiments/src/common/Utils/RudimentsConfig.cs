@@ -257,5 +257,21 @@ namespace Rudiments
         /// in clay. Applied the same way (porcelainclay-bonechina.json ships with 1).
         /// Default: 1. Requires restart.</summary>
         public int PorcelainClayPerFlint { get; set; } = 1;
+
+        /// <summary>Minimum burn temperature a fuel must reach to be accepted by a Rudiments kiln,
+        /// paired with a burn duration above 30. This is the bloomery's own gate, verbatim: it
+        /// admits charcoal (1300/40), coke (1340/40), bituminous coal (1200/84) and anthracite
+        /// (1200/196), and refuses lignite (1100), peat (900) and every wood (≤800). Cold fuel is
+        /// refused at insertion rather than accepted and disappointing. Default: 1200.</summary>
+        public int KilnMinFuelTemperature { get; set; } = 1200;
+
+        /// <summary>In-game hours a small brick kiln takes to finish a firing. The bloomery's own
+        /// figure. Default: 10.</summary>
+        public float SmallBrickKilnBurnHours { get; set; } = 10f;
+
+        /// <summary>Whether an unsealed earthenware watering can refuses to fill. Sealed means
+        /// stoneware, porcelain, or any glaze. Set to false to restore vanilla behaviour, where a
+        /// day-one porous can waters crops indefinitely. Default: true.</summary>
+        public bool SealedWareRequiredForWateringCan { get; set; } = true;
     }
 }

@@ -6,35 +6,49 @@ using Vintagestory.API.Common;
 namespace Rudiments.Utils
 {
     /// <summary>
-    /// Moves the <c>"*"</c> catch-all to the end of every <c>*ByType</c> dictionary on the clay
-    /// assets, restoring vanilla's own convention after other mods have appended to them.
+    /// Moves the <c>"*"</c> catch-all to the end of every <c>*ByType</c> dictionary on the assets
+    /// this mod patches, restoring vanilla's own convention after anything has appended to them.
     ///
     /// <para><b>Why this exists.</b> <c>RegistryObjectType.solveByType</c> walks a <c>*ByType</c>
     /// dictionary in insertion order and takes the <b>first</b> wildcard that matches — the loop
     /// literally ends with <c>break; // Replaces for first matched key only</c>. Vanilla therefore
     /// always writes <c>"*"</c> last. But a JSON patch's <c>addmerge</c> appends, and there is no
-    /// patch operation that inserts at the front of an object, so any mod that adds a specific key
-    /// to a dictionary someone else has already given a <c>"*"</c> entry silently loses to that
-    /// catch-all. Which of the two mods wins comes down to load order.</para>
+    /// patch operation that inserts at the front of an object, so a specific key added to a
+    /// dictionary that already ends in <c>"*"</c> silently loses to that catch-all — no error, no
+    /// warning, the entry simply never applies.</para>
     ///
-    /// <para>That is exactly the situation for <c>clay-porcelain</c>: Clayworks ends its
-    /// <c>texturesByType</c> on <c>game:itemtypes/resource/clay</c> with a <c>"*"</c> pointing at a
-    /// texture that has no porcelain variant, and vanilla's own <c>dirtypot</c> does the same thing
-    /// unaided. Rather than depend on load order — which the JSON patch system deliberately does not
-    /// let you control — this normalises the dictionaries after all patching is done and before any
-    /// type is resolved.</para>
+    /// <para>Three places in this mod hit that: <c>clay-porcelain</c>'s texture (Clayworks ends its
+    /// <c>texturesByType</c> with a <c>"*"</c>), vanilla's own <c>dirtypot</c>, which does the same
+    /// unaided, and the glaze applicator on <c>nugget-galena</c>, because <c>nugget.json</c>'s
+    /// <c>behaviorsByType</c> ends in a catch-all too. All three would otherwise be a coin-toss on
+    /// mod load order, which the JSON patch system deliberately gives no way to control.</para>
     ///
     /// <para>It names no mod and reads no mod's assets. "Specific before catch-all" is what
-    /// <c>solveByType</c> wants in every case, so the fix is correct whether or not anything else is
-    /// installed. Nothing is rewritten unless a dictionary was actually out of order.</para>
+    /// <c>solveByType</c> wants in every case, so the normalisation is correct whether or not
+    /// anything else is installed, and nothing is rewritten unless a dictionary was genuinely out of
+    /// order.</para>
     ///
     /// <para>Runs at <c>ExecuteOrder</c> 0.1: after <c>JsonPatchLoader</c> (0.05) and before
     /// <c>RegistryObjectTypeLoader</c> (0.2). Server side only, matching the type loader — block and
     /// item definitions are resolved server side and synced to clients.</para>
     /// </summary>
-    public class ClayByTypeOrderFix : ModSystem
+    public class ByTypeCatchAllOrderFix : ModSystem
     {
         private const string CatchAll = "*";
+
+        /// <summary>Individual assets we add a specific <c>*ByType</c> key to.</summary>
+        private static readonly string[] SingleAssets =
+        {
+            "itemtypes/resource/clay.json",
+            "itemtypes/resource/clayworkitem.json",
+            "itemtypes/resource/nugget.json",
+        };
+
+        /// <summary>Whole trees we patch broadly enough that listing files would go stale.</summary>
+        private static readonly string[] AssetTrees =
+        {
+            "blocktypes/clay/",
+        };
 
         public override bool ShouldLoad(EnumAppSide side) => side == EnumAppSide.Server;
 
@@ -44,27 +58,24 @@ namespace Rudiments.Utils
         {
             int reordered = 0;
 
-            reordered += FixOne(api, new AssetLocation("game", "itemtypes/resource/clay.json"));
-            reordered += FixOne(api, new AssetLocation("game", "itemtypes/resource/clayworkitem.json"));
-
-            foreach (IAsset asset in api.Assets.GetMany("blocktypes/clay/", "game"))
+            foreach (string path in SingleAssets)
             {
-                reordered += Fix(api, asset);
+                IAsset asset = api.Assets.TryGet(new AssetLocation("game", path));
+                if (asset != null) reordered += Fix(asset);
+            }
+
+            foreach (string tree in AssetTrees)
+            {
+                foreach (IAsset asset in api.Assets.GetMany(tree, "game")) reordered += Fix(asset);
             }
 
             if (reordered > 0)
             {
-                api.Logger.VerboseDebug("[{0}] Clay assets: moved the \"*\" catch-all last in {1} *ByType dictionar(y/ies) so specific variants resolve first.", Mod.Info.Name, reordered);
+                api.Logger.VerboseDebug("[{0}] Moved the \"*\" catch-all last in {1} *ByType dictionar(y/ies) so specific variants resolve first.", Mod.Info.Name, reordered);
             }
         }
 
-        private int FixOne(ICoreAPI api, AssetLocation location)
-        {
-            IAsset asset = api.Assets.TryGet(location);
-            return asset == null ? 0 : Fix(api, asset);
-        }
-
-        private int Fix(ICoreAPI api, IAsset asset)
+        private static int Fix(IAsset asset)
         {
             JToken root;
             try

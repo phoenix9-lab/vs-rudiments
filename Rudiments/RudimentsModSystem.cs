@@ -67,6 +67,12 @@ namespace Rudiments
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockSeepingContainer", typeof(BlockSeepingContainer));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWareStorageVessel", typeof(BlockWareStorageVessel));
 
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockSmallBrickKiln", typeof(BlockSmallBrickKiln));
+            api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntitySmallBrickKiln", typeof(BlockEntitySmallBrickKiln));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockGlazableClayware", typeof(BlockGlazableClayware));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:RudimentsWateringCan", typeof(RudimentsWateringCan));
+            api.RegisterCollectibleBehaviorClass($"{Mod.Info.ModID}:GlazeApplicator", typeof(CollectibleBehaviorGlazeApplicator));
+
             api.RegisterItemClass($"{Mod.Info.ModID}:ItemFieldRettableBundle", typeof(ItemFieldRettableBundle));
             api.RegisterItemClass($"{Mod.Info.ModID}:ItemNettleRhizome", typeof(ItemNettleRhizome));
             api.RegisterItemClass($"{Mod.Info.ModID}:ItemHandCards", typeof(ItemHandCards));
