@@ -1,0 +1,30 @@
+[
+  {
+    "comment": "The burden itself lives on the player, next to the health behavior it modifies. Server only, like health: the penalty reaches the client through the synced health tree, and a client-side copy would only be a second opinion nobody asked for.",
+    "file": "game:entities/humanoid/player.json",
+    "op": "addmerge",
+    "path": "/server/behaviors",
+    "value": [{ "code": "rudiments:LeadBurden" }]
+  },
+  {
+    "comment": "The bowl with a meal in it is the only vessel food actually passes through, so it is the only place eating can be observed. The subclass also puts back the ware tier and glaze that vanilla's eatenBlock drops, and finally runs the per-use fragility roll that BlockMeal.OnHeldInteractStop has been skipping since Parcel 1 by overriding without calling base.",
+    "file": "game:blocktypes/clay/fired/bowl-meal",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockWareMeal"
+  },
+  {
+    "comment": "Serving from a cooked pot builds a brand new meal stack from the bowl's mealBlockCode and assigns it over the top, so a stoneware bowl came back untiered and a lead-glazed bowl came back clean. ServeIntoStack is not virtual; the three interaction entry points that reach it are. classByType already exists on the pot with a '*-cooked' key, so replacing that one value leaves BlockCookingContainer on '*-fired' untouched.",
+    "file": "game:blocktypes/clay/fired/pot",
+    "op": "replace",
+    "path": "/classByType/*-cooked",
+    "value": "rudiments:BlockWarePot"
+  },
+  {
+    "comment": "Same three routes, same loss, different base class. The crock declares a plain 'class' and every crock variant serves, so replacing it outright is correct.",
+    "file": "game:blocktypes/clay/fired/crock",
+    "op": "replace",
+    "path": "/class",
+    "value": "rudiments:BlockWareCrock"
+  }
+]

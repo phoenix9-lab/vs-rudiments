@@ -284,5 +284,48 @@ namespace Rudiments
         /// the reason to build a beehive kiln afterwards rather than instead — set this to 0 and the
         /// beehive becomes redundant. Default: 0.30.</summary>
         public double UpdraftKilnPorcelainFailChance { get; set; } = 0.30;
+
+        // ── Lead poisoning ───────────────────────────────────────────────────────────
+        // Lead glaze is the cheapest glaze in the game and works in a pit kiln on day one,
+        // so without a cost there is no reason to ever use tin or salt. The cost is that it
+        // leaches: a burden accrues per helping eaten or drunk from a leaded vessel, decays
+        // whenever you are not doing that, and past a grace threshold it eats into max
+        // health. Exposure is the vessel in your hand when you consume — cooking in a
+        // leaded pot and eating from a clean bowl does not count. Everything here is read
+        // live, so /rudimentsreload retunes it without a restart.
+
+        /// <summary>Whether lead-glazed vessels poison the people who eat and drink from them. Set
+        /// to false and lead glaze becomes a free seal again, the tooltip warnings disappear, and any
+        /// burden already accrued stops costing health (it is kept, not wiped, so turning this back
+        /// on does not hand out an amnesty). Default: true.</summary>
+        public bool LeadPoisoningEnabled { get; set; } = true;
+
+        /// <summary>Burden gained per helping consumed from a lead-glazed vessel. A meal counts the
+        /// servings actually eaten; a drink counts as one. Burden is measured in helpings, so this is
+        /// really a global multiplier on how fast lead accumulates. Default: 1.0.</summary>
+        public double LeadPerServing { get; set; } = 1.0;
+
+        /// <summary>Burden shed per in-game day, always, whether or not the player is online — it is
+        /// calendar-driven, like retting and nettle spread. This is the whole recovery mechanism:
+        /// there is no antidote and no cure but time away from the stuff. At the default a player can
+        /// take five helpings a day off leaded ware and never accumulate anything. Set to 0 for
+        /// permanent, irreversible poisoning. Default: 5.0.</summary>
+        public double LeadDecayPerDay { get; set; } = 5.0;
+
+        /// <summary>Burden that costs nothing at all. Below this the body clears lead about as fast
+        /// as it arrives, so there is no penalty and no message and drinking from a leaded jug once
+        /// in a while is genuinely free. Set to 0 to make the very first helping count.
+        /// Default: 15.0.</summary>
+        public double LeadOnsetBurden { get; set; } = 15.0;
+
+        /// <summary>Burden above the onset threshold per point of max health lost. Lower is harsher.
+        /// At the defaults the first whole point goes at 27 burden and the penalty caps out at 75.
+        /// Default: 12.0.</summary>
+        public double LeadBurdenPerHealthPoint { get; set; } = 12.0;
+
+        /// <summary>Most max health lead can ever take, out of the player's 15. A third is meant to
+        /// be a serious, visible handicap that is still survivable and still reversible — lead
+        /// poisoning should change how you play, not end the run. Default: 5.0.</summary>
+        public double LeadMaxHealthPenalty { get; set; } = 5.0;
     }
 }

@@ -26,6 +26,63 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.18.0] — 2026-08-10 — Lead poisoning, and tin glaze
+
+The rest of Parcel 4, plus the thing that makes it mean something. Lead glaze was the cheapest seal
+in the game with no downside at all, which made tin and salt decoration. Now it has a price, and the
+other two have a reason to exist.
+
+### Added
+- **Lead poisoning.** Eating or drinking from a lead-glazed vessel builds a body burden. The burden
+  decays on its own every in-game day, online or off, and below a grace threshold the two balance and
+  nothing happens — five helpings a day off leaded ware is free. Above it you start losing **maximum
+  health**, up to a third of it, and losing max health at full health takes current health with it.
+  There is no antidote and dying does not clear it: the only cure is time away from the stuff. You are
+  told in chat when it starts, worsens, eases and clears. Built on
+  `EntityBehaviorHealth.SetMaxHealthModifiers`, so it is keyed, cumulative and reversible — no
+  Harmony, no reflection, no invented API.
+- **Exposure is the vessel in your hand when you consume**, and nothing else. A lead-glazed bowl you
+  eat a meal from, or a bowl or jug you drink from. Cooking in a leaded pot and eating from a clean
+  bowl does not count; neither does a leaded flowerpot, oil lamp, watering can or storage vessel.
+  A provenance chain would be invisible and unactionable, where "do not eat off the lead" is a rule a
+  player can follow.
+- **Warned from the first firing, and before it.** The galena nugget says what its glaze costs, raw
+  dusted greenware says it again, and fired ware you can consume from says it a third time — right
+  under the line that says it is sealed. Ware that cannot poison you never shows the warning.
+- **Tin glaze.** A cassiterite nugget over a lead-dusted vessel: two nuggets and a rarer ore against
+  lead's one, and it does not poison anyone. It goes *over* lead rather than onto bare clay because
+  that is what tin glaze is — a lead glaze opacified with tin oxide, invented in 9th-century Baghdad
+  to imitate Chinese porcelain and reinvented at Delft from about 1580. (Real tin-glazed ware still
+  leached lead, Delftware included. Treating the tin layer as the barrier it was believed to be is a
+  deliberate simplification, stated as one in the handbook: a glaze that is merely somewhat less
+  poisonous is not a decision a player can act on.)
+- **Handbook: Lead poisoning** (`rudiments-lead`), and the Glaze page rewritten around three glazes
+  with three different costs rather than one glaze and an also-ran.
+- Config section **Lead poisoning** — `LeadPoisoningEnabled`, `LeadPerServing`, `LeadDecayPerDay`,
+  `LeadOnsetBurden`, `LeadBurdenPerHealthPoint`, `LeadMaxHealthPenalty`. All read live.
+
+### Fixed
+- **Per-use fragility never once fired when eating a meal from a bowl.** `BlockMeal.OnHeldInteractStop`
+  overrides without calling base, and base is what forwards to `CollectibleBehaviors` — so
+  `rudiments:Fragile` has been silently skipped on that path since 0.14.0. It rolls now, on a completed
+  eat only.
+- **A bowl lost its ware tier and glaze the first time you ate out of it.** Vanilla's
+  `ServeIntoStack` does not fill the bowl you are holding; unless it already holds the identical meal
+  it builds a brand new stack from `mealBlockCode` and assigns it over the top, and `eatenBlock` does
+  the same in reverse when the last serving goes. A stoneware bowl therefore came back untiered — and
+  a lead-glazed one came back clean, which would have made the whole feature above unreachable through
+  meals. `ServeIntoStack` is not virtual; the three interaction entry points that reach it are, so the
+  bowl is snapshotted and restored around them. Known gap: serving into a *stack* of bowls sends the
+  meal to `TryGiveItemstack` rather than leaving it in hand, and that one is not tracked.
+
+### Notes
+- Deviates from the frozen plan on tin in two ways, both because tin's job changed. The plan gave it a
+  white texture and a small-brick-kiln gate; it has neither. Rendering white was dropped by request,
+  and the temperature argument never supported the kiln gate — tin glaze fires at about 1000 °C, well
+  inside a pit kiln. The gate is the ore.
+
+---
+
 ## [0.17.0] — 2026-08-10 — Salt glaze
 
 Parcel 4 of the kiln plan, half of it. Tin glaze is deliberately not here — see below.

@@ -74,6 +74,16 @@ namespace Rudiments
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntitySmallBrickKiln", typeof(BlockEntitySmallBrickKiln));
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityUpdraftKiln", typeof(BlockEntityUpdraftKiln));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockGlazableClayware", typeof(BlockGlazableClayware));
+
+            // ── Lead poisoning ──
+            // Three subclasses over the vanilla vessels food and drink pass through. Two of them are
+            // pure plumbing to stop vanilla's serve from wiping the bowl's ware attributes; the meal
+            // bowl is where eating is actually observed.
+            api.RegisterEntityBehaviorClass($"{Mod.Info.ModID}:LeadBurden", typeof(EntityBehaviorLeadBurden));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWareMeal", typeof(BlockWareMeal));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWarePot", typeof(BlockWarePot));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWareCrock", typeof(BlockWareCrock));
+
             api.RegisterBlockClass($"{Mod.Info.ModID}:RudimentsWateringCan", typeof(RudimentsWateringCan));
             api.RegisterCollectibleBehaviorClass($"{Mod.Info.ModID}:GlazeApplicator", typeof(CollectibleBehaviorGlazeApplicator));
 

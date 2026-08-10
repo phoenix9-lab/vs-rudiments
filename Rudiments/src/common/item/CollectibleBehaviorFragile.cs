@@ -72,6 +72,11 @@ namespace Rudiments.SRC.Common.Items
             string glaze = WareTier.GetGlaze(stack);
             if (glaze != null) dsc.AppendLine(Lang.Get("rudiments:glaze-label", WareTier.GlazeName(glaze)));
 
+            // Right under the line that says it is sealed, because that is the line the player read
+            // when they decided to glaze it. A leaded flowerpot never gets this — nothing eats out of
+            // a flowerpot — so the warning only appears where it is true.
+            if (LeadGlaze.Warns(stack)) dsc.AppendLine(Lang.Get("rudiments:glaze-lead-warning"));
+
             double chance = WareTier.BreakChance(tier, RudimentsModSystem.Config);
             if (chance > 0) dsc.AppendLine(Lang.Get("rudiments:ware-breakchance", chance * 100));
 

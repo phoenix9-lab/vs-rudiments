@@ -43,7 +43,16 @@ namespace Rudiments.SRC.Common.Blocks
             base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
 
             string glaze = WareTier.GetGlaze(inSlot?.Itemstack);
-            if (glaze != null) dsc.AppendLine(Lang.Get("rudiments:glaze-raw-label", WareTier.GlazeName(glaze)));
+            if (glaze == null) return;
+
+            dsc.AppendLine(Lang.Get("rudiments:glaze-raw-label", WareTier.GlazeName(glaze)));
+
+            // Unconditional on greenware, unlike the fired warning: this is the moment the player is
+            // deciding, and a raw bowl is not yet a vessel the vessel test would recognise.
+            if (LeadGlaze.IsToxic(glaze) && RudimentsModSystem.Config.LeadPoisoningEnabled)
+            {
+                dsc.AppendLine(Lang.Get("rudiments:glaze-lead-warning"));
+            }
         }
     }
 }
