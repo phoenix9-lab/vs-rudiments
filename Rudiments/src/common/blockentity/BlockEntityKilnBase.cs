@@ -1,7 +1,6 @@
 using System;
 using System.Text;
 using Rudiments.Utils;
-using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
@@ -30,6 +29,13 @@ namespace Rudiments.SRC.Common.BlockEntities
     /// ground-storage layout model: a <c>SingleCenter</c> item — a storage vessel, a big crock — is
     /// one whole tile and costs 4, everything else costs 1. A kiln with 8 units therefore holds two
     /// large pieces or eight small ones, or any honest mix, with no capacity table anywhere.
+    ///
+    /// <b>Lighting is the bloomery's too</b>: hold a torch or firestarter, sneak, and hold right-click.
+    /// The block implements <c>IIgnitable</c> and <see cref="CanLight"/> is the silent test the
+    /// igniter calls every tick. An earlier build used sneak + right-click on the kiln itself, which
+    /// cannot work: with anything in hand the client routes a sneaking right-click to block placement
+    /// or the held item and the block never sees it, so the kiln was unlightable unless your hand
+    /// happened to be empty.
     /// </summary>
     public abstract class BlockEntityKilnBase : BlockEntity
     {
@@ -40,6 +46,7 @@ namespace Rudiments.SRC.Common.BlockEntities
         protected bool burning;
 
         private AssetLocation insertSound;
+        private SimpleParticleProperties fireParticles;
 
         // --- subclass contract ---
         protected abstract string InvKey { get; }
@@ -49,8 +56,14 @@ namespace Rudiments.SRC.Common.BlockEntities
         /// <summary>Ware capacity in quarter-tile units. 4 = one large piece, 8 = two.</summary>
         protected abstract int WareCapacityUnits { get; }
         protected abstract float BurnHours { get; }
-        /// <summary>Extra ignition requirements — the updraft kiln's chimney. Refuse with a message.</summary>
-        protected virtual bool CanIgnite(IPlayer byPlayer) => true;
+
+        /// <summary>
+        /// Code fragment of a chimney this kiln needs directly above it, or null for kilns that need
+        /// none. Read off the blocktype's own <c>chimneyCode</c> attribute rather than a constant, so
+        /// the block JSON that places the chimney and the ignition check that requires it can never
+        /// disagree. Matched with <c>Code.Path.Contains</c>, the bloomery's own one-line trick.
+        /// </summary>
+        public string ChimneyCode => Block?.Attributes?["chimneyCode"]?.AsString(null);
 
         public int FuelSlotIndex => WareSlots;
         public ItemSlot FuelSlot => inventory[FuelSlotIndex];
@@ -64,7 +77,9 @@ namespace Rudiments.SRC.Common.BlockEntities
             inventory.LateInitialize(InvKey + "-" + Pos, api);
 
             insertSound = new AssetLocation("game", "sounds/block/ceramicplace");
-            RegisterGameTickListener(OnGameTick, 1000);
+
+            if (api.Side == EnumAppSide.Server) RegisterGameTickListener(OnServerTick, 1000);
+            else RegisterGameTickListener(OnClientTick, 150);
         }
 
         // ── Admission ────────────────────────────────────────────────────────────────
@@ -173,45 +188,64 @@ namespace Rudiments.SRC.Common.BlockEntities
             return true;
         }
 
+        /// <summary>
+        /// Takes <b>one slot</b> out per click — ware first, newest first, and the leftover fuel only
+        /// once the chamber is clear. Deliberately not "empty the whole kiln": an empty hand is the
+        /// commonest thing to be holding, and one misplaced click should not unload a loaded kiln.
+        /// </summary>
         private bool TryUnload(IPlayer byPlayer)
         {
-            bool any = false;
-            for (int i = 0; i < inventory.Count; i++)
+            for (int i = WareSlots - 1; i >= 0; i--)
             {
-                ItemSlot slot = inventory[i];
-                if (slot.Empty) continue;
-                if (!byPlayer.InventoryManager.TryGiveItemstack(slot.Itemstack.Clone())) continue;
-                slot.Itemstack = null;
-                slot.MarkDirty();
-                any = true;
+                if (TryTakeOut(byPlayer, inventory[i])) return true;
+            }
+            return TryTakeOut(byPlayer, FuelSlot);
+        }
+
+        private bool TryTakeOut(IPlayer byPlayer, ItemSlot slot)
+        {
+            if (slot.Empty) return false;
+            if (!byPlayer.InventoryManager.TryGiveItemstack(slot.Itemstack.Clone())) return false;
+
+            slot.Itemstack = null;
+            slot.MarkDirty();
+            MarkDirty(true);
+            Api.World.PlaySoundAt(insertSound, Pos, 0, byPlayer, false);
+            return true;
+        }
+
+        // ── Ignition ─────────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Whether it would light right now, and why not if it would not. Silent and side-effect free:
+        /// the igniter calls this on every tick of a held right-click, on both sides.
+        /// </summary>
+        public bool CanLight(out string langKey)
+        {
+            langKey = null;
+
+            if (burning) { langKey = LangPrefix + "-burning"; return false; }
+            if (FuelSlot.Empty || !IsHotFuel(FuelSlot.Itemstack)) { langKey = LangPrefix + "-nofuel"; return false; }
+            if (UsedUnits() == 0) { langKey = LangPrefix + "-noware"; return false; }
+
+            string chimney = ChimneyCode;
+            if (chimney != null && Api.World.BlockAccessor.GetBlock(Pos.UpCopy())?.Code?.Path.Contains(chimney) != true)
+            {
+                langKey = LangPrefix + "-nochimney";
+                return false;
             }
 
-            if (any)
-            {
-                MarkDirty(true);
-                Api.World.PlaySoundAt(insertSound, Pos, 0, byPlayer, false);
-            }
-            return any;
+            return true;
         }
 
         /// <summary>Light it. Refuses with a reason rather than failing silently.</summary>
         public virtual bool TryIgnite(IPlayer byPlayer)
         {
-            if (burning) return false;
-
-            if (FuelSlot.Empty || !IsHotFuel(FuelSlot.Itemstack))
+            if (!CanLight(out string reason))
             {
-                Refuse(byPlayer, "nofuel", LangPrefix + "-nofuel");
+                Refuse(byPlayer, "cantlight", reason);
                 return false;
             }
-
-            if (UsedUnits() == 0)
-            {
-                Refuse(byPlayer, "noware", LangPrefix + "-noware");
-                return false;
-            }
-
-            if (!CanIgnite(byPlayer)) return false;
 
             burning = true;
             burnUntilTotalHours = Api.World.Calendar.TotalHours + BurnHours;
@@ -223,9 +257,9 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         // ── Firing ───────────────────────────────────────────────────────────────────
 
-        private void OnGameTick(float dt)
+        private void OnServerTick(float dt)
         {
-            if (Api.Side != EnumAppSide.Server || !burning) return;
+            if (!burning) return;
             if (Api.World.Calendar.TotalHours < burnUntilTotalHours) return;
 
             burning = false;
@@ -237,6 +271,29 @@ namespace Rudiments.SRC.Common.BlockEntities
             }
 
             MarkDirty(true);
+        }
+
+        /// <summary>Fire at the mouth while it burns. Without this there is no way to tell it is lit.</summary>
+        private void OnClientTick(float dt)
+        {
+            if (!burning) return;
+
+            if (fireParticles == null)
+            {
+                fireParticles = new SimpleParticleProperties(
+                    1, 2,
+                    ColorUtil.ToRgba(160, 255, 190, 60),
+                    new Vec3d(), new Vec3d(),
+                    new Vec3f(-0.05f, 0.05f, -0.05f), new Vec3f(0.05f, 0.25f, 0.05f),
+                    0.6f, 0f, 0.3f, 0.7f, EnumParticleModel.Quad)
+                {
+                    VertexFlags = 128,
+                    AddPos = new Vec3d(0.4, 0.15, 0.4)
+                };
+            }
+
+            fireParticles.MinPos.Set(Pos.X + 0.3, Pos.Y + 0.15, Pos.Z + 0.3);
+            Api.World.SpawnParticles(fireParticles);
         }
 
         /// <summary>
@@ -293,21 +350,22 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         protected void Refuse(IPlayer byPlayer, string code, string langKey)
         {
+            if (langKey == null) return;
             if (byPlayer is IServerPlayer splr) splr.SendIngameError(code, Lang.Get(langKey));
-            else (Api as ICoreClientAPI)?.TriggerIngameError(this, code, Lang.Get(langKey));
         }
 
         public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldForResolving)
         {
-            if (inventory == null) inventory = new InventoryGeneric(WareSlots + 1, InvKey + "-" + Pos, Api);
+            // Base first: it is what sets Pos, and Pos is part of the inventory id below.
+            base.FromTreeAttributes(tree, worldForResolving);
+
+            if (inventory == null) inventory = new InventoryGeneric(WareSlots + 1, InvKey + "-" + Pos, Api ?? worldForResolving?.Api);
 
             ITreeAttribute invTree = tree.GetTreeAttribute("inventory");
             if (invTree != null) inventory.FromTreeAttributes(invTree);
 
             burning = tree.GetBool("burning");
             burnUntilTotalHours = tree.GetDouble("burnUntilTotalHours");
-
-            base.FromTreeAttributes(tree, worldForResolving);
         }
 
         public override void ToTreeAttributes(ITreeAttribute tree)
@@ -343,7 +401,9 @@ namespace Rudiments.SRC.Common.BlockEntities
                 ? Lang.Get(LangPrefix + "-nofuel-info")
                 : Lang.Get(LangPrefix + "-fuel", FuelSlot.Itemstack.GetName(), FuelSlot.StackSize));
 
-            if (used > 0 && !FuelSlot.Empty) dsc.AppendLine(Lang.Get(LangPrefix + "-ready", BurnHours));
+            // Name whatever is still missing, unless it is the fuel — the line above already said so.
+            if (CanLight(out string reason)) dsc.AppendLine(Lang.Get(LangPrefix + "-ready", BurnHours));
+            else if (reason != LangPrefix + "-nofuel") dsc.AppendLine(Lang.Get(reason));
         }
 
         public override void OnBlockBroken(IPlayer byPlayer = null)

@@ -26,6 +26,45 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.16.1] — 2026-08-10 — Kiln fixes from first playtest
+
+Everything here came out of playing the 0.16.0 kilns. No new content.
+
+### Fixed
+- **The kilns could not be lit.** Ignition was sneak + right-click on the kiln itself, which the game
+  never delivers: a sneaking right-click is routed to block placement first, then to the held item,
+  and only reaches the block if neither took it — so with anything at all in your hand the kiln never
+  saw the click. Lighting is now the bloomery's, via `IIgnitable`: hold a torch or a firestarter,
+  sneak, and hold right-click. Same gesture as every other lit thing in the game.
+- **Both kilns were placed facing away from you.** With `rotateY: 0` on the `-north` variant vanilla
+  expects the mouth on the *south* face of the shape (see `game:block/clay/bloomery/base`); the small
+  brick kiln's shape had it on the north, so it came out 180° round. The mouth moved to the south face
+  and the inventory icon now shows the front rather than the back.
+- **The updraft kiln was see-through**, having been modelled as an open-topped chamber with no crown.
+  It is now the vanilla bloomery shape re-skinned in red brick, which is solid, correctly oriented and
+  has the chimney seat already in it. Its two hand-authored shape files are gone.
+- **The chimney could not be stacked on the kiln.** Right-clicking the kiln with it in hand was
+  swallowed by the loading interaction. It now places on top from that same click, exactly as the
+  bloomery's does, is `Unplaceable` anywhere else, and is broken along with the kiln beneath it.
+- **The kiln blocks had no names.** Their name and description lang keys were written under the `game:`
+  domain, so `rudiments:block-smallbrickkiln-north` and its two siblings resolved to nothing and the
+  raw key was displayed in-world.
+- Right-clicking a kiln empty-handed emptied the whole thing in one click, which is a bad neighbour to
+  a mis-aimed click. It now takes out one slot: ware first, newest first, leftover fuel last.
+- `FromTreeAttributes` built the inventory id before calling `base`, so the id was composed from a
+  `Pos` that had not been read yet. Base call moved first, and the inventory now takes a live API from
+  `worldForResolving` instead of a null one.
+
+### Changed
+- A lit kiln emits fire particles at the mouth. There was previously no way to tell one was burning
+  except by reading its info panel.
+- The kiln info panel names whatever is still missing — fuel, ware, or the chimney — instead of only
+  ever offering the ignite prompt.
+- The "no fuel" line read *"Charcoal or coal — wood does not burn hot enough"*, which scans as refusing
+  charcoal. Reworded, along with the other fuel and ignition strings.
+
+---
+
 ## [0.16.0] — 2026-08-10 — The updraft kiln
 
 Porcelain has existed since 0.14.0 and there has been exactly one kiln that could fire it. The

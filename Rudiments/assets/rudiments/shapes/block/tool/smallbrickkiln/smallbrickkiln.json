@@ -80,16 +80,16 @@
       "from": [
         0.0,
         3.0,
-        13.0
+        0.0
       ],
       "to": [
         16.0,
         15.0,
-        16.0
+        3.0
       ],
       "faces": {
         "north": {
-          "texture": "#inside",
+          "texture": "#brick",
           "uv": [
             0.0,
             1.0,
@@ -107,7 +107,7 @@
           ]
         },
         "south": {
-          "texture": "#brick",
+          "texture": "#inside",
           "uv": [
             0.0,
             1.0,
@@ -149,12 +149,12 @@
       "from": [
         0.0,
         3.0,
-        0.0
+        3.0
       ],
       "to": [
         3.0,
         15.0,
-        13.0
+        16.0
       ],
       "faces": {
         "north": {
@@ -218,12 +218,12 @@
       "from": [
         13.0,
         3.0,
-        0.0
+        3.0
       ],
       "to": [
         16.0,
         15.0,
-        13.0
+        16.0
       ],
       "faces": {
         "north": {
@@ -287,16 +287,16 @@
       "from": [
         3.0,
         3.0,
-        0.0
+        13.0
       ],
       "to": [
         6.0,
         15.0,
-        3.0
+        16.0
       ],
       "faces": {
         "north": {
-          "texture": "#brick",
+          "texture": "#inside",
           "uv": [
             3.0,
             1.0,
@@ -314,7 +314,7 @@
           ]
         },
         "south": {
-          "texture": "#inside",
+          "texture": "#brick",
           "uv": [
             3.0,
             1.0,
@@ -356,16 +356,16 @@
       "from": [
         10.0,
         3.0,
-        0.0
+        13.0
       ],
       "to": [
         13.0,
         15.0,
-        3.0
+        16.0
       ],
       "faces": {
         "north": {
-          "texture": "#brick",
+          "texture": "#inside",
           "uv": [
             10.0,
             1.0,
@@ -383,7 +383,7 @@
           ]
         },
         "south": {
-          "texture": "#inside",
+          "texture": "#brick",
           "uv": [
             10.0,
             1.0,
@@ -425,16 +425,16 @@
       "from": [
         6.0,
         11.0,
-        0.0
+        13.0
       ],
       "to": [
         10.0,
         15.0,
-        3.0
+        16.0
       ],
       "faces": {
         "north": {
-          "texture": "#brick",
+          "texture": "#inside",
           "uv": [
             6.0,
             1.0,
@@ -452,7 +452,7 @@
           ]
         },
         "south": {
-          "texture": "#inside",
+          "texture": "#brick",
           "uv": [
             6.0,
             1.0,
