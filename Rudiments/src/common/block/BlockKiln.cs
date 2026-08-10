@@ -138,6 +138,28 @@ namespace Rudiments.SRC.Common.Blocks
                 }
             };
 
+            // Cached: this runs every frame the player is looking at a kiln.
+            ItemStack[] salts = ObjectCacheUtil.GetOrCreate(api, "rudimentsKilnSalts", () =>
+            {
+                var found = new List<ItemStack>();
+                foreach (CollectibleObject obj in world.Collectibles)
+                {
+                    var stack = new ItemStack(obj);
+                    if (BlockEntityKilnBase.IsKilnSalt(stack)) found.Add(stack);
+                }
+                return found.ToArray();
+            });
+
+            if (salts.Length > 0)
+            {
+                help.Add(new WorldInteraction
+                {
+                    ActionLangCode = "rudiments:blockhelp-kiln-salt",
+                    MouseButton = EnumMouseButton.Right,
+                    Itemstacks = salts
+                });
+            }
+
             string chimneyCode = ChimneyCode;
             if (chimneyCode != null)
             {

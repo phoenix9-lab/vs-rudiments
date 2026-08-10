@@ -26,6 +26,31 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.17.0] — 2026-08-10 — Salt glaze
+
+Parcel 4 of the kiln plan, half of it. Tin glaze is deliberately not here — see below.
+
+### Added
+- **Salt glaze.** Put salt into a lit small brick or updraft kiln alongside the ware and the fuel and
+  the whole load comes out salt-glazed, which seals it exactly as a lead glaze does. One handful does
+  a full chamber where lead costs a galena nugget per vessel; in exchange it needs a kiln that can
+  actually reach stoneware temperature, which is the gate and needs no code — only the Rudiments kilns
+  have a salt slot at all. There is no coating step and no second firing, because the real process has
+  neither: at temperature the salt volatilises and the sodium vapour reacts with the silica in the clay
+  body itself, so the glaze is made out of the pot. Ware already dusted with lead keeps its lead glaze.
+- Salt is recognised by a `rudimentskilnsalt` attribute stamped onto `game:salt`, not by item code, so
+  another mod's salt opts in with a one-line patch.
+- A handbook section on `game:salt`, and a salt half to the glaze guide page.
+
+### Not added
+- **Tin glaze**, which the plan specifies as a white, convincing fake porcelain. Glaze is a stack
+  attribute, and an attribute cannot change how a block looks — no texture swap reaches a placed block
+  or a ground-storage pile. Without the white it is a strictly worse lead glaze, so it is on hold
+  pending a decision about giving lead glaze a health cost, which is the one thing that would make a
+  tin alternative matter on its own merits.
+
+---
+
 ## [0.16.1] — 2026-08-10 — Kiln fixes from first playtest
 
 Everything here came out of playing the 0.16.0 kilns. No new content.

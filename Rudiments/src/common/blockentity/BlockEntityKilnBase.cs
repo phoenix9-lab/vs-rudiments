@@ -45,6 +45,9 @@ namespace Rudiments.SRC.Common.BlockEntities
         protected double burnUntilTotalHours;
         protected bool burning;
 
+        /// <summary>Set for the duration of one firing's output pass. See <see cref="ApplySaltGlaze"/>.</summary>
+        private bool salting;
+
         private AssetLocation insertSound;
         private SimpleParticleProperties fireParticles;
 
@@ -65,13 +68,18 @@ namespace Rudiments.SRC.Common.BlockEntities
         /// </summary>
         public string ChimneyCode => Block?.Attributes?["chimneyCode"]?.AsString(null);
 
+        /// <summary>Ware slots, then fuel, then salt. Two service slots on top of the ware.</summary>
+        private int SlotCount => WareSlots + 2;
+
         public int FuelSlotIndex => WareSlots;
+        public int SaltSlotIndex => WareSlots + 1;
         public ItemSlot FuelSlot => inventory[FuelSlotIndex];
+        public ItemSlot SaltSlot => inventory[SaltSlotIndex];
         public bool IsBurning => burning;
 
         public override void Initialize(ICoreAPI api)
         {
-            if (inventory == null) inventory = new InventoryGeneric(WareSlots + 1, InvKey + "-" + Pos, api);
+            if (inventory == null) inventory = new InventoryGeneric(SlotCount, InvKey + "-" + Pos, api);
 
             base.Initialize(api);
             inventory.LateInitialize(InvKey + "-" + Pos, api);
@@ -96,6 +104,16 @@ namespace Rudiments.SRC.Common.BlockEntities
             CombustibleProperties props = stack?.Collectible?.CombustibleProps;
             if (props == null) return false;
             return props.BurnTemperature >= RudimentsModSystem.Config.KilnMinFuelTemperature && props.BurnDuration > 30;
+        }
+
+        /// <summary>
+        /// Salt for salt-glazing, by opt-in attribute rather than an item code, so another mod's salt
+        /// joins in with a one-line patch. Rudiments stamps <c>rudimentskilnsalt</c> onto
+        /// <c>game:salt</c> in <c>patches/glaze-salt.json</c>.
+        /// </summary>
+        public static bool IsKilnSalt(ItemStack stack)
+        {
+            return stack?.Collectible?.Attributes?["rudimentskilnsalt"].AsBool(false) == true;
         }
 
         /// <summary>True for fuel that burns but nowhere near hot enough — firewood, peat, lignite.</summary>
@@ -141,6 +159,7 @@ namespace Rudiments.SRC.Common.BlockEntities
 
             if (held == null) return TryUnload(byPlayer);
             if (IsHotFuel(held)) return TryInsert(byPlayer, heldSlot, FuelSlot, heldSlot.StackSize);
+            if (IsKilnSalt(held)) return TryInsert(byPlayer, heldSlot, SaltSlot, heldSlot.StackSize);
             if (IsFirableWare(held)) return TryInsertWare(byPlayer, heldSlot);
 
             if (IsColdFuel(held))
@@ -199,7 +218,7 @@ namespace Rudiments.SRC.Common.BlockEntities
             {
                 if (TryTakeOut(byPlayer, inventory[i])) return true;
             }
-            return TryTakeOut(byPlayer, FuelSlot);
+            return TryTakeOut(byPlayer, FuelSlot) || TryTakeOut(byPlayer, SaltSlot);
         }
 
         private bool TryTakeOut(IPlayer byPlayer, ItemSlot slot)
@@ -265,12 +284,33 @@ namespace Rudiments.SRC.Common.BlockEntities
             burning = false;
             burnUntilTotalHours = 0;
 
+            // Salt is thrown in at peak temperature and vapour-glazes everything in the chamber at
+            // once — that is the whole point of it, and why one handful does a load where lead needs
+            // a nugget per pot. Decided before firing so every slot in this load agrees.
+            salting = !SaltSlot.Empty;
+            if (salting)
+            {
+                SaltSlot.TakeOut(1);
+                SaltSlot.MarkDirty();
+            }
+
             for (int i = 0; i < WareSlots; i++)
             {
                 if (!inventory[i].Empty) FireSlot(inventory[i]);
             }
 
+            salting = false;
             MarkDirty(true);
+        }
+
+        /// <summary>
+        /// Stamps the salt glaze on a firing's output, if this firing is a salted one. Never overrides
+        /// a glaze the piece was already dusted with: a lead-glazed pot that happens to share a kiln
+        /// with salt stays lead-glazed.
+        /// </summary>
+        protected void ApplySaltGlaze(ItemStack fired)
+        {
+            if (salting && fired != null && WareTier.GetGlaze(fired) == null) WareTier.SetGlaze(fired, "salt");
         }
 
         /// <summary>Fire at the mouth while it burns. Without this there is no way to tell it is lit.</summary>
@@ -311,6 +351,7 @@ namespace Rudiments.SRC.Common.BlockEntities
             // Glaze rides through on the smelted stack already — BlockGlazableClayware clones it per
             // stack — so only the tier is stamped here.
             WareTier.Set(result, EnumWareTier.Stoneware);
+            ApplySaltGlaze(result);
 
             slot.Itemstack = result;
             slot.MarkDirty();
@@ -359,7 +400,7 @@ namespace Rudiments.SRC.Common.BlockEntities
             // Base first: it is what sets Pos, and Pos is part of the inventory id below.
             base.FromTreeAttributes(tree, worldForResolving);
 
-            if (inventory == null) inventory = new InventoryGeneric(WareSlots + 1, InvKey + "-" + Pos, Api ?? worldForResolving?.Api);
+            if (inventory == null) inventory = new InventoryGeneric(SlotCount, InvKey + "-" + Pos, Api ?? worldForResolving?.Api);
 
             ITreeAttribute invTree = tree.GetTreeAttribute("inventory");
             if (invTree != null) inventory.FromTreeAttributes(invTree);
@@ -390,7 +431,7 @@ namespace Rudiments.SRC.Common.BlockEntities
             }
 
             int used = UsedUnits();
-            if (used == 0 && FuelSlot.Empty)
+            if (used == 0 && FuelSlot.Empty && SaltSlot.Empty)
             {
                 dsc.AppendLine(Lang.Get(LangPrefix + "-empty"));
                 return;
@@ -400,6 +441,8 @@ namespace Rudiments.SRC.Common.BlockEntities
             dsc.AppendLine(FuelSlot.Empty
                 ? Lang.Get(LangPrefix + "-nofuel-info")
                 : Lang.Get(LangPrefix + "-fuel", FuelSlot.Itemstack.GetName(), FuelSlot.StackSize));
+
+            if (!SaltSlot.Empty) dsc.AppendLine(Lang.Get("rudiments:kiln-salt", SaltSlot.StackSize));
 
             // Name whatever is still missing, unless it is the fuel — the line above already said so.
             if (CanLight(out string reason)) dsc.AppendLine(Lang.Get(LangPrefix + "-ready", BurnHours));

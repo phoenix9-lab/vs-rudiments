@@ -76,6 +76,7 @@ namespace Rudiments.SRC.Common.BlockEntities
                 ItemStack good = perfect.Clone();
                 good.StackSize = survived;
                 WareTier.CarryGlaze(raw, good);
+                ApplySaltGlaze(good);
                 slot.Itemstack = good;
             }
 
