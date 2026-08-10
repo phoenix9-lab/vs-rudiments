@@ -77,6 +77,10 @@ namespace Rudiments.SRC.Common.Items
             // a flowerpot — so the warning only appears where it is true.
             if (LeadGlaze.Warns(stack)) dsc.AppendLine(Lang.Get("rudiments:glaze-lead-warning"));
 
+            // And the one a player has no other way of discovering: a spotless bowl holding a stew
+            // that was cooked in a leaded pot three vessels ago.
+            else if (LeadGlaze.WarnsContents(stack)) dsc.AppendLine(Lang.Get("rudiments:lead-contents-warning"));
+
             double chance = WareTier.BreakChance(tier, RudimentsModSystem.Config);
             if (chance > 0) dsc.AppendLine(Lang.Get("rudiments:ware-breakchance", chance * 100));
 

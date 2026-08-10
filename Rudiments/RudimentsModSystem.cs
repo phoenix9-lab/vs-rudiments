@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Config;
 using Vintagestory.API.Server;
+using Vintagestory.API.Util;
 using Vintagestory.GameContent;
 using Rudiments.SRC.Common.Blocks;
 using Rudiments.SRC.Common.BlockEntities;
@@ -20,6 +22,15 @@ namespace Rudiments
             base.StartPre(api);
             Config = api.LoadModConfig<RudimentsConfig>("rudiments.json") ?? new();
             api.StoreModConfig(Config, "rudiments.json");
+
+            // The lead mark rides on food and liquid stacks, so it must never be the reason two of
+            // them refuse to merge — vanilla's TryPutLiquid returns 0 outright when the contents
+            // differ by any attribute it does not know to ignore, which would read as "these two
+            // waters will not combine" with nothing on screen to explain it.
+            if (!GlobalConstants.IgnoredStackAttributes.Contains(LeadGlaze.MarkKey))
+            {
+                GlobalConstants.IgnoredStackAttributes = GlobalConstants.IgnoredStackAttributes.Append(LeadGlaze.MarkKey);
+            }
 
             // Mirror the feature flags into the world config so JSON patches can condition on
             // them (patches are server-side; the JsonPatch loader runs after every StartPre).
@@ -83,6 +94,7 @@ namespace Rudiments
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWareMeal", typeof(BlockWareMeal));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWarePot", typeof(BlockWarePot));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWareCrock", typeof(BlockWareCrock));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWareCookingContainer", typeof(BlockWareCookingContainer));
 
             api.RegisterBlockClass($"{Mod.Info.ModID}:RudimentsWateringCan", typeof(RudimentsWateringCan));
             api.RegisterCollectibleBehaviorClass($"{Mod.Info.ModID}:GlazeApplicator", typeof(CollectibleBehaviorGlazeApplicator));

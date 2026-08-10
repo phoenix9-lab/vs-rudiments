@@ -4,19 +4,26 @@ using Vintagestory.GameContent;
 namespace Rudiments.Utils
 {
     /// <summary>
-    /// Carries a bowl's ware tier and glaze across vanilla's serve, which throws them away.
+    /// Carries a vessel's ware tier and glaze across the four places vanilla throws them away.
     ///
-    /// <c>BlockCookedContainerBase.ServeIntoStack</c> does not fill the bowl you are holding. Unless
-    /// that bowl already holds the identical meal it builds a <b>brand new stack</b> from the bowl
-    /// blocktype's <c>mealBlockCode</c> and assigns it over the top — so a stoneware bowl comes back
-    /// as an untiered one the first time you eat soup out of it, and a lead-glazed bowl comes back
-    /// clean. <c>BlockMeal</c>'s <c>eatenBlock</c> does the same thing in reverse when the last
-    /// serving goes. Neither is reachable by overriding: <c>ServeIntoStack</c> is not virtual.
+    /// All four are the same mistake: a stack is not modified, it is <b>replaced</b> by a freshly
+    /// built one whose only inheritance is the blocktype code.
     ///
-    /// So the fix is at the callers, which are: snapshot the bowl slot, let vanilla do whatever it
-    /// does, then put the two attributes back on whatever meal is now sitting there. The tier half of
-    /// this is a plain bug fix that predates lead; the glaze half is what makes a lead-glazed bowl
-    /// reach the person eating from it at all.
+    /// <list type="bullet">
+    /// <item><c>ServeIntoStack</c> — unless the bowl already holds the identical meal, it builds a new
+    /// stack from the bowl's <c>mealBlockCode</c> and assigns it over the top.</item>
+    /// <item><c>SetServingsMaybeEmpty</c> — the pot or crock that just gave up its last serving is
+    /// replaced by its <c>emptiedBlockCode</c>.</item>
+    /// <item><c>BlockMeal</c>'s <c>eatenBlock</c> — the bowl you just emptied.</item>
+    /// <item><c>BlockCookingContainer.DoSmelt</c> — the cooked pot is a new stack of the
+    /// <c>type: cooked</c> variant; the raw pot that went into the fire is simply dropped.</item>
+    /// </list>
+    ///
+    /// So a stoneware bowl came back untiered the first time you ate soup out of it, and a lead-glazed
+    /// pot came out of the firepit clean. None of the four methods is virtual. What is virtual is
+    /// every interaction that reaches them, so the fix is the same everywhere: snapshot the slot,
+    /// let vanilla do whatever it does, and if the collectible changed underneath us, stamp the two
+    /// attributes back onto whatever is there now.
     ///
     /// <b>Known gap.</b> Right-clicking a ground-stored pot while holding a <i>stack</i> of bowls
     /// sends the served meal off to <c>TryGiveItemstack</c> rather than leaving it in hand, and it is
@@ -25,12 +32,14 @@ namespace Rudiments.Utils
     internal readonly struct WareKeep
     {
         private readonly ItemSlot slot;
+        private readonly CollectibleObject was;
         private readonly string tier;
         private readonly string glaze;
 
-        private WareKeep(ItemSlot slot, string tier, string glaze)
+        private WareKeep(ItemSlot slot, CollectibleObject was, string tier, string glaze)
         {
             this.slot = slot;
+            this.was = was;
             this.tier = tier;
             this.glaze = glaze;
         }
@@ -41,41 +50,38 @@ namespace Rudiments.Utils
             ItemStack stack = slot?.Itemstack;
             if (stack?.Attributes == null) return default;
 
-            return new WareKeep(slot,
+            return new WareKeep(slot, stack.Collectible,
                 stack.Attributes.GetString(WareTier.AttrKey),
                 stack.Attributes.GetString(WareTier.GlazeAttrKey));
         }
 
-        /// <summary>Snapshots the ground-storage slot under the cursor, which is where greenware and
-        /// bowls actually live. Returns an empty keep when the player is not pointing at one.</summary>
-        public static WareKeep OfGroundStorage(IWorldAccessor world, BlockSelection blockSel)
+        /// <summary>The ground-storage slot under the cursor, which is where bowls and crocks actually
+        /// live. Null when the player is not pointing at one.</summary>
+        public static ItemSlot GroundStorageSlot(IWorldAccessor world, BlockSelection blockSel)
         {
-            if (blockSel == null) return default;
-            if (world?.BlockAccessor.GetBlockEntity(blockSel.Position) is not BlockEntityGroundStorage begs) return default;
+            if (blockSel == null) return null;
+            if (world?.BlockAccessor.GetBlockEntity(blockSel.Position) is not BlockEntityGroundStorage begs) return null;
 
-            return Of(begs.GetSlotAt(blockSel));
+            return begs.GetSlotAt(blockSel);
         }
+
+        public void Restore() => RestoreTo(slot);
 
         /// <summary>
-        /// Puts the snapshot back, but only onto a meal — if the slot still holds the bowl we started
-        /// with, or something unrelated, vanilla did not do the swap and there is nothing to restore.
+        /// Puts the snapshot onto <paramref name="target"/>, but only if the stack there has been
+        /// swapped for a different collectible — that swap is the whole failure mode. An untouched
+        /// slot, an emptied slot, or one holding the leftovers of the same stack is left alone.
         /// </summary>
-        public void Restore()
+        public void RestoreTo(ItemSlot target)
         {
-            ItemStack stack = slot?.Itemstack;
-            if (stack?.Block is not IBlockMealContainer) return;
+            if (was == null || (tier == null && glaze == null)) return;
 
-            if (ApplyTo(stack)) slot.MarkDirty();
-        }
-
-        /// <summary>Writes the snapshot onto any stack. Returns false when there was nothing to write.</summary>
-        public bool ApplyTo(ItemStack stack)
-        {
-            if (stack?.Attributes == null || (tier == null && glaze == null)) return false;
+            ItemStack stack = target?.Itemstack;
+            if (stack?.Attributes == null || stack.Collectible == was) return;
 
             if (tier != null) stack.Attributes.SetString(WareTier.AttrKey, tier);
             if (glaze != null) stack.Attributes.SetString(WareTier.GlazeAttrKey, glaze);
-            return true;
+            target.MarkDirty();
         }
     }
 }

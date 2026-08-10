@@ -14,11 +14,18 @@
     "value": "rudiments:BlockWareMeal"
   },
   {
-    "comment": "Serving from a cooked pot builds a brand new meal stack from the bowl's mealBlockCode and assigns it over the top, so a stoneware bowl came back untiered and a lead-glazed bowl came back clean. ServeIntoStack is not virtual; the three interaction entry points that reach it are. classByType already exists on the pot with a '*-cooked' key, so replacing that one value leaves BlockCookingContainer on '*-fired' untouched.",
+    "comment": "Serving from a cooked pot builds a brand new meal stack from the bowl's mealBlockCode and assigns it over the top, so a stoneware bowl came back untiered and a lead-glazed bowl came back clean. ServeIntoStack is not virtual; the three interaction entry points that reach it are. classByType already exists on the pot with a '*-cooked' key, so replacing that one value leaves the raw pot's own key alone.",
     "file": "game:blocktypes/clay/fired/pot",
     "op": "replace",
     "path": "/classByType/*-cooked",
     "value": "rudiments:BlockWarePot"
+  },
+  {
+    "comment": "The raw pot is the cooking vessel, and BlockCookingContainer.DoSmelt builds the cooked pot from scratch — so a stoneware pot cooked itself back down to earthenware and a lead-glazed one came out of the firepit clean. This is also where 'cooked in lead' enters the chain: the contamination is stamped on the meal here and travels with it from then on.",
+    "file": "game:blocktypes/clay/fired/pot",
+    "op": "replace",
+    "path": "/classByType/*-fired",
+    "value": "rudiments:BlockWareCookingContainer"
   },
   {
     "comment": "Same three routes, same loss, different base class. The crock declares a plain 'class' and every crock variant serves, so replacing it outright is correct.",

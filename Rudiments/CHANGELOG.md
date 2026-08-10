@@ -26,6 +26,47 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.19.0] — 2026-08-10 — The lead travels with the food
+
+0.18.0 tied lead exposure to the vessel in your hand at the moment you ate. This replaces that: the
+contamination now rides the food itself, so nothing is laundered by changing plates. 0.18.0 was never
+played, so nothing here is a migration — it is the same feature with the right model under it.
+
+### Changed
+- **Lead follows the food, not the pot.** A lead-glazed vessel contaminates whatever it is holding,
+  and the contamination travels with it. Cook a stew in a leaded pot, decant it into a clean crock,
+  serve it into a spotless porcelain bowl — it is still leaded and it will still poison you. Same for
+  water: fill a leaded jug, pour it into a clean cup, and the cup is leaded. Carried by one boolean
+  stack attribute, `rudimentslead`, stamped at each hand-off.
+- **Cooking counts, storing counts, serving counts.** Pots, crocks, bowls and jugs, exactly as asked.
+  Ware nothing edible passes through — flowerpots, oil lamps, watering cans, storage vessels — is
+  still harmless and still shows no warning.
+- **A clean vessel holding leaded food says so on its tooltip.** There would otherwise be no way to
+  tell, which would make the whole thing feel like a bug rather than a consequence.
+- **Two carriers, because food is stored two ways.** Meals mark the vessel stack (a meal has no single
+  contents object, and marking the ingredient stacks would stop them merging); liquids mark the
+  portion, which is the thing that actually moves, so it propagates through buckets and barrels with
+  no code at all.
+- `rudimentslead` is registered in `GlobalConstants.IgnoredStackAttributes` at startup so it can never
+  refuse a merge, a liquid top-up or a recipe match. The visible consequence is dilution: tipping a
+  leaded jug into a full clean barrel loses the lead rather than spoiling the barrel, and the reverse
+  keeps it. That is roughly what happens, and much kinder than a silent "these two waters will not
+  combine".
+- Handbook **Lead poisoning** rewritten around provenance, including the dilution rule.
+
+### Fixed
+- **A clay pot lost its ware tier and glaze every time it cooked.** `BlockCookingContainer.DoSmelt`
+  builds the cooked pot with `new ItemStack(CodeWithVariant("type", "cooked"), 1)` and never looks at
+  the raw pot again, so a stoneware pot cooked itself back down to earthenware. Fourth instance of the
+  same vanilla pattern.
+- **A pot or crock lost its ware tier and glaze when it gave up its last serving.**
+  `SetServingsMaybeEmpty` replaces it with its `emptiedBlockCode`. Third instance.
+- The serve wrappers added in 0.18.0 only snapshotted the receiving bowl; they now snapshot both sides,
+  and the restore triggers on "the collectible under this slot changed" rather than on a guess about
+  what it changed into.
+
+---
+
 ## [0.18.0] — 2026-08-10 — Lead poisoning, and tin glaze
 
 The rest of Parcel 4, plus the thing that makes it mean something. Lead glaze was the cheapest seal

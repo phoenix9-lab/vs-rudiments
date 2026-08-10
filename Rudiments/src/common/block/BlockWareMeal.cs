@@ -7,17 +7,19 @@ using Vintagestory.GameContent;
 namespace Rudiments.SRC.Common.Blocks
 {
     /// <summary>
-    /// A bowl with a meal in it — the one vessel in the game that food actually passes through on its
-    /// way into a player, and therefore the one place eating can be observed.
+    /// A bowl with a meal in it — the last link in the chain, and the only place eating can be
+    /// observed.
     ///
     /// Three things happen here that <c>BlockMeal</c> does not do:
     ///
     /// <list type="bullet">
     /// <item><b>The ware survives the meal.</b> <c>eatenBlock</c> hands back a freshly built empty
-    /// bowl with none of the original's attributes on it. See <see cref="WareKeep"/> — this is the
-    /// return leg of the same loss.</item>
-    /// <item><b>Lead reaches the eater.</b> A leaded bowl doses whoever empties it, scaled by how
-    /// many servings actually went down rather than by the click.</item>
+    /// bowl with none of the original's attributes on it. See <see cref="WareKeep"/> — one of four
+    /// places vanilla does this.</item>
+    /// <item><b>Lead reaches the eater.</b> Not the bowl's lead: <i>the meal's</i>. A clean bowl
+    /// holding a stew that was cooked in a leaded pot poisons you exactly as much as a leaded bowl
+    /// does, which is the point of tracking it. Scaled by the servings that actually went down rather
+    /// than by the click.</item>
     /// <item><b>Fragility finally fires.</b> <c>BlockMeal.OnHeldInteractStop</c> overrides without
     /// calling base, and base is what forwards to <c>CollectibleBehaviors</c> — so
     /// <see cref="CollectibleBehaviorFragile"/> has never once rolled when a player ate a meal out of
@@ -36,13 +38,16 @@ namespace Rudiments.SRC.Common.Blocks
             ItemStack before = slot?.Itemstack;
 
             WareKeep keep = WareKeep.Of(slot);
+            bool leaded = LeadGlaze.MealIsLeaded(before);
             float servingsBefore = before == null ? 0 : GetQuantityServings(world, before);
 
             base.OnHeldInteractStop(secondsUsed, slot, byEntity, blockSel, entitySel);
 
             if (world == null || world.Side != EnumAppSide.Server) return;
 
-            RestoreWare(slot, keep);
+            // The emptied bowl is a new stack, so the ware goes back on it — but deliberately not the
+            // lead mark. The mark says "what is in this is leaded", and there is nothing in it now.
+            keep.Restore();
 
             ItemStack after = slot?.Itemstack;
             float servingsAfter = after?.Collectible == this ? GetQuantityServings(world, after) : 0;
@@ -50,21 +55,8 @@ namespace Rudiments.SRC.Common.Blocks
             double eaten = servingsBefore - servingsAfter;
             if (eaten <= 0) return;
 
-            LeadGlaze.Expose(byEntity, before, eaten);
+            LeadGlaze.Expose(byEntity, leaded, eaten);
             CollectibleBehaviorFragile.TryShatterInHand(world, slot, byEntity);
-        }
-
-        /// <summary>
-        /// Re-stamps the bowl once the last serving is gone. <see cref="WareKeep.Restore"/> only
-        /// writes onto meals, and this is the opposite case — the meal became an empty bowl — so the
-        /// two attributes go back on by hand.
-        /// </summary>
-        private static void RestoreWare(ItemSlot slot, WareKeep keep)
-        {
-            ItemStack stack = slot?.Itemstack;
-            if (stack?.Block is IBlockMealContainer) return;
-
-            if (keep.ApplyTo(stack)) slot.MarkDirty();
         }
     }
 }

@@ -288,11 +288,11 @@ namespace Rudiments
         // ── Lead poisoning ───────────────────────────────────────────────────────────
         // Lead glaze is the cheapest glaze in the game and works in a pit kiln on day one,
         // so without a cost there is no reason to ever use tin or salt. The cost is that it
-        // leaches: a burden accrues per helping eaten or drunk from a leaded vessel, decays
-        // whenever you are not doing that, and past a grace threshold it eats into max
-        // health. Exposure is the vessel in your hand when you consume — cooking in a
-        // leaded pot and eating from a clean bowl does not count. Everything here is read
-        // live, so /rudimentsreload retunes it without a restart.
+        // leaches: a burden accrues per leaded helping eaten or drunk, decays whenever you
+        // are not doing that, and past a grace threshold it eats into max health.
+        // The lead travels with the food rather than with the pot — cook a stew in a leaded
+        // pot and it is leaded in whatever bowl you finally eat it from. Everything here is
+        // read live, so /rudimentsreload retunes it without a restart.
 
         /// <summary>Whether lead-glazed vessels poison the people who eat and drink from them. Set
         /// to false and lead glaze becomes a free seal again, the tooltip warnings disappear, and any
