@@ -1,0 +1,29 @@
+[
+  {
+    "ingredientPattern": "FCB",
+    "ingredients": {
+      "F": {
+        "type": "item",
+        "code": "game:powder-flint",
+        "quantity": 1
+      },
+      "C": {
+        "type": "item",
+        "code": "game:clay-blue",
+        "quantity": 1
+      },
+      "B": {
+        "type": "item",
+        "code": "game:bonemeal",
+        "quantity": 1
+      }
+    },
+    "width": 3,
+    "height": 1,
+    "output": {
+      "type": "item",
+      "code": "game:clay-porcelain",
+      "quantity": 1
+    }
+  }
+]

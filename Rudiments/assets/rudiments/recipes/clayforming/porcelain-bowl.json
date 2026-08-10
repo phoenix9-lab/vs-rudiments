@@ -1,0 +1,31 @@
+{
+  "ingredient": {
+    "type": "item",
+    "code": "game:clay-*",
+    "name": "color",
+    "allowedVariants": [
+      "porcelain"
+    ]
+  },
+  "pattern": [
+    [
+      "#####",
+      "#####",
+      "#####",
+      "#####",
+      "#####"
+    ],
+    [
+      "#####",
+      "#___#",
+      "#___#",
+      "#___#",
+      "#####"
+    ]
+  ],
+  "name": "Bowl",
+  "output": {
+    "type": "block",
+    "code": "game:bowl-porcelain-raw"
+  }
+}

@@ -1,0 +1,319 @@
+[
+  {
+    "comment": "Third-party structural ceramics, same treatment as ware-dropexempt.json gives vanilla's. Clayworks' brick, claytile and shingle ITEMS need nothing \u2014 an item has no block material \u2014 but their block forms and its whole roofing set do. Architecture does not shatter into pottery shards when you put it down. Clayworks' own claytile.json is left alone: as shipped in 0.6.1 it is malformed JSON (one unclosed brace), so JToken.Parse throws on it and any patch against it fails loudly. Nothing to do until upstream fixes the file.",
+    "file": "clayworks:blocktypes/clay/shingleblock.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/brickcourse.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/brickcourse_uneven.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/chimneycourse.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/hardenedclay.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/hardenedclay_natural.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/beam-plane.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/beam-ridge.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/slantedroofing.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/slantedroofingbottom.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/slantedroofingcorner-inner.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/slantedroofingcorner-outer.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/slantedroofinghalfleft.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/slantedroofinghalfright.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/slantedroofingridge.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/slantedroofingridgeend.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/slantedroofingridgehalfleft.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/slantedroofingridgehalfright.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/slantedroofingtip.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/roofing/slantedroofingtop.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "comment": "vsroofing declares no blocktype-level blockmaterial \u2014 its roof block defaults to Stone and only sets Ceramic per roof type inside its own attributes, which its RoofBlock class reads at runtime. If it ever applies that to the Block itself, this keeps roofs out of the shatter path; if it does not, the flag is inert. Either way it costs nothing.",
+    "file": "vsroofing:blocktypes/roof.json",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    },
+    "dependsOn": [
+      {
+        "modid": "vsroofing"
+      }
+    ]
+  }
+]

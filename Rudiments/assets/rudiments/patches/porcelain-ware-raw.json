@@ -1,0 +1,582 @@
+[
+  {
+    "comment": "Porcelain greenware. Molds and crucibles are deliberately absent: they are fire-clay-only for the same reason porcelain would be wrong in them. Every entry below fires to shards except a perfectly sealed beehive (0 open doors) \u2014 porcelain needs an even, fully oxidising soak, and the pit kiln cannot give it one at all. The '0' beehive entry doubles as the canonical perfect-firing output that the Parcel 3 updraft kiln reads off the block, so the mapping is never duplicated in C#.",
+    "file": "game:blocktypes/clay/raw/bowl",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/bowl",
+    "op": "addmerge",
+    "path": "/combustiblePropsByType",
+    "value": {
+      "*-porcelain-raw": {
+        "meltingPoint": 600,
+        "meltingDuration": 30,
+        "smeltedRatio": 1,
+        "smeltingType": "fire",
+        "requiresContainer": false,
+        "smeltedStack": {
+          "type": "block",
+          "code": "game:clayshattered-normal"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/bowl",
+    "op": "addmerge",
+    "path": "/attributesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "beehivekiln": {
+          "0": {
+            "type": "block",
+            "code": "bowl-porcelain-fired"
+          },
+          "1": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "2": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "3": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          }
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/bowl",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "floor": {
+          "base": "rudiments:block/clay/porcelainclay"
+        },
+        "mat": {
+          "base": "rudiments:block/clay/porcelainclay"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/crock",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/crock",
+    "op": "addmerge",
+    "path": "/combustiblePropsByType",
+    "value": {
+      "*-porcelain-raw": {
+        "meltingPoint": 600,
+        "meltingDuration": 30,
+        "smeltedRatio": 1,
+        "smeltingType": "fire",
+        "requiresContainer": false,
+        "smeltedStack": {
+          "type": "block",
+          "code": "game:clayshattered-normal"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/crock",
+    "op": "addmerge",
+    "path": "/attributesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "beehivekiln": {
+          "0": {
+            "type": "block",
+            "code": "crock-porcelain-fired"
+          },
+          "1": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "2": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "3": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          }
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/crock",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "ceramic": {
+          "base": "rudiments:block/clay/porcelainclay"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/jug",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/jug",
+    "op": "addmerge",
+    "path": "/combustiblePropsByType",
+    "value": {
+      "*-porcelain-raw": {
+        "meltingPoint": 600,
+        "meltingDuration": 30,
+        "smeltedRatio": 1,
+        "smeltingType": "fire",
+        "requiresContainer": false,
+        "smeltedStack": {
+          "type": "block",
+          "code": "game:clayshattered-normal"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/jug",
+    "op": "addmerge",
+    "path": "/attributesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "beehivekiln": {
+          "0": {
+            "type": "block",
+            "code": "jug-porcelain-fired"
+          },
+          "1": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "2": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "3": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          }
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/jug",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "all": {
+          "base": "rudiments:block/clay/porcelainclay"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/pot",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/pot",
+    "op": "addmerge",
+    "path": "/combustiblePropsByType",
+    "value": {
+      "*-porcelain-raw": {
+        "meltingPoint": 600,
+        "meltingDuration": 30,
+        "smeltedRatio": 1,
+        "smeltingType": "fire",
+        "requiresContainer": false,
+        "smeltedStack": {
+          "type": "block",
+          "code": "game:clayshattered-normal"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/pot",
+    "op": "addmerge",
+    "path": "/attributesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "beehivekiln": {
+          "0": {
+            "type": "block",
+            "code": "claypot-porcelain-fired"
+          },
+          "1": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "2": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "3": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          }
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/pot",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "all": {
+          "base": "rudiments:block/clay/porcelainclay"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/storagevessel",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/storagevessel",
+    "op": "addmerge",
+    "path": "/combustiblePropsByType",
+    "value": {
+      "*-porcelain-raw": {
+        "meltingPoint": 600,
+        "meltingDuration": 30,
+        "smeltedRatio": 1,
+        "smeltingType": "fire",
+        "requiresContainer": false,
+        "smeltedStack": {
+          "type": "block",
+          "code": "game:clayshattered-normal"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/storagevessel",
+    "op": "addmerge",
+    "path": "/attributesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "beehivekiln": {
+          "0": {
+            "type": "block",
+            "code": "storagevessel-porcelain-fired"
+          },
+          "1": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "2": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "3": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          }
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/storagevessel",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "all": {
+          "base": "rudiments:block/clay/porcelainclay"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/planter",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/planter",
+    "op": "addmerge",
+    "path": "/combustiblePropsByType",
+    "value": {
+      "*-porcelain-raw": {
+        "meltingPoint": 600,
+        "meltingDuration": 30,
+        "smeltedRatio": 1,
+        "smeltingType": "fire",
+        "requiresContainer": false,
+        "smeltedStack": {
+          "type": "block",
+          "code": "game:clayshattered-normal"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/planter",
+    "op": "addmerge",
+    "path": "/attributesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "beehivekiln": {
+          "0": {
+            "type": "block",
+            "code": "clayplanter-porcelain-fired"
+          },
+          "1": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "2": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "3": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          }
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/planter",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "all": {
+          "base": "rudiments:block/clay/porcelainclay"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/flowerpot",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/flowerpot",
+    "op": "addmerge",
+    "path": "/combustiblePropsByType",
+    "value": {
+      "*-porcelain-raw": {
+        "meltingPoint": 600,
+        "meltingDuration": 30,
+        "smeltedRatio": 1,
+        "smeltingType": "fire",
+        "requiresContainer": false,
+        "smeltedStack": {
+          "type": "block",
+          "code": "game:clayshattered-normal"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/flowerpot",
+    "op": "addmerge",
+    "path": "/attributesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "beehivekiln": {
+          "0": {
+            "type": "block",
+            "code": "flowerpot-porcelain-fired"
+          },
+          "1": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "2": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "3": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          }
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/flowerpot",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "all": {
+          "base": "rudiments:block/clay/porcelainclay"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/oillamp",
+    "op": "add",
+    "path": "/variantgroups/1/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/oillamp",
+    "op": "addmerge",
+    "path": "/combustiblePropsByType",
+    "value": {
+      "*-porcelain-raw": {
+        "meltingPoint": 600,
+        "meltingDuration": 30,
+        "smeltedRatio": 1,
+        "smeltingType": "fire",
+        "requiresContainer": false,
+        "smeltedStack": {
+          "type": "block",
+          "code": "game:clayshattered-normal"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/oillamp",
+    "op": "addmerge",
+    "path": "/attributesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "beehivekiln": {
+          "0": {
+            "type": "block",
+            "code": "oillamp-genie-porcelain-fired"
+          },
+          "1": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "2": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "3": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          }
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/oillamp",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "ceramic": {
+          "base": "rudiments:block/clay/porcelainclay"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/wateringcan",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/raw/wateringcan",
+    "op": "addmerge",
+    "path": "/combustiblePropsByType",
+    "value": {
+      "*-porcelain-raw": {
+        "meltingPoint": 600,
+        "meltingDuration": 30,
+        "smeltedRatio": 1,
+        "smeltingType": "fire",
+        "requiresContainer": false,
+        "smeltedStack": {
+          "type": "block",
+          "code": "game:clayshattered-normal"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/wateringcan",
+    "op": "addmerge",
+    "path": "/attributesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "beehivekiln": {
+          "0": {
+            "type": "block",
+            "code": "wateringcan-porcelain-fired"
+          },
+          "1": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "2": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          },
+          "3": {
+            "type": "block",
+            "code": "game:clayshattered-normal"
+          }
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/raw/wateringcan",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-raw": {
+        "wateringcanup": {
+          "base": "rudiments:block/clay/porcelainclay"
+        },
+        "wateringcanrose": {
+          "base": "rudiments:block/clay/porcelainclay",
+          "overlays": [
+            "game:block/clay/overlay/wateringcan"
+          ]
+        },
+        "watering-can": {
+          "base": "rudiments:block/clay/porcelainclay"
+        }
+      }
+    }
+  }
+]

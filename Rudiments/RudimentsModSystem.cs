@@ -5,6 +5,7 @@ using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 using Rudiments.SRC.Common.Blocks;
 using Rudiments.SRC.Common.BlockEntities;
+using Rudiments.SRC.Common.Entities;
 using Rudiments.SRC.Common.Items;
 using Rudiments.Utils;
 
@@ -57,6 +58,15 @@ namespace Rudiments
             api.RegisterCollectibleBehaviorClass($"{Mod.Info.ModID}:FiberQuality", typeof(FiberQualityBehavior));
             api.RegisterCollectibleBehaviorClass($"{Mod.Info.ModID}:DurabilityBonus", typeof(DurabilityBonusBehavior));
 
+            // ── Ware tiers and kilns ──
+            api.RegisterCollectibleBehaviorClass($"{Mod.Info.ModID}:Fragile", typeof(CollectibleBehaviorFragile));
+            api.RegisterCollectibleBehaviorClass($"{Mod.Info.ModID}:Seepage", typeof(CollectibleBehaviorSeepage));
+            api.RegisterEntityBehaviorClass($"{Mod.Info.ModID}:ClayFragile", typeof(EntityBehaviorClayFragile));
+            api.RegisterBlockBehaviorClass($"{Mod.Info.ModID}:WareTier", typeof(BlockBehaviorWareTier));
+            api.RegisterBlockEntityBehaviorClass($"{Mod.Info.ModID}:WareTier", typeof(BlockEntityBehaviorWareTier));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockSeepingContainer", typeof(BlockSeepingContainer));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWareStorageVessel", typeof(BlockWareStorageVessel));
+
             api.RegisterItemClass($"{Mod.Info.ModID}:ItemFieldRettableBundle", typeof(ItemFieldRettableBundle));
             api.RegisterItemClass($"{Mod.Info.ModID}:ItemNettleRhizome", typeof(ItemNettleRhizome));
             api.RegisterItemClass($"{Mod.Info.ModID}:ItemHandCards", typeof(ItemHandCards));
@@ -77,6 +87,11 @@ namespace Rudiments
         public override void StartServerSide(ICoreServerAPI api)
         {
             base.StartServerSide(api);
+
+            // Death drops carry the same ByPlayerUid marker as a deliberately thrown item, so drop
+            // breakage needs to know who died recently or dying with pottery in your bags would
+            // smash all of it.
+            RudimentsDeathTracker.Register(api);
 
             // Re-read ModConfig/rudiments.json into the live Config object so edits (manual or via
             // AutoConfigLib) take effect without a restart. All mod code reads RudimentsModSystem.Config
@@ -101,9 +116,10 @@ namespace Rudiments
         {
             base.AssetsFinalize(api);
 
-            // Barrel recipes are parsed independently on both client and server from the same
-            // assets, so apply the config override on both sides to keep them in sync.
+            // Barrel and grid recipes are parsed independently on both client and server from the
+            // same assets, so apply the config overrides on both sides to keep them in sync.
             ApplyBarrelRettingRatio(api);
+            ApplyPorcelainClayRatios(api);
 
             // Itemtypes are server-authoritative and synced to clients, so attribute edits here
             // reach both sides.
@@ -194,6 +210,39 @@ namespace Rudiments
             if (changed > 0)
             {
                 api.Logger.Notification("[{0}] Barrel retting: {1} litre(s) of water/limewater per bundle ({2} ingredient(s) adjusted).", Mod.Info.Name, litresPerBundle, changed);
+            }
+        }
+
+        /// <summary>
+        /// Retunes how much blue clay each porcelain route converts, by editing the two loaded grid
+        /// recipes rather than making server owners hand-edit
+        /// assets/rudiments/recipes/grid/porcelainclay-*.json. Both the clay input and the porcelain
+        /// output move together, because the config value means "blue clay converted per unit of
+        /// temper" — the temper quantity itself never changes.
+        /// </summary>
+        private void ApplyPorcelainClayRatios(ICoreAPI api)
+        {
+            int perQuartz = System.Math.Max(1, Config.PorcelainClayPerQuartz);
+            int perFlint = System.Math.Max(1, Config.PorcelainClayPerFlint);
+            int changed = 0;
+
+            foreach (GridRecipe recipe in api.World.GridRecipes)
+            {
+                if (recipe?.Output?.Code?.Path != "clay-porcelain") continue;
+                if (recipe.Ingredients == null || !recipe.Ingredients.TryGetValue("C", out var clay)) continue;
+
+                // The two routes differ by which temper they use, and each has its own lever.
+                bool quartz = recipe.Ingredients.ContainsKey("Q");
+                int perUnit = quartz ? perQuartz : perFlint;
+
+                clay.Quantity = perUnit;
+                recipe.Output.StackSize = perUnit;
+                changed++;
+            }
+
+            if (changed > 0)
+            {
+                api.Logger.Notification("[{0}] Porcelain clay: {1} blue clay per crushed quartz, {2} per powdered flint + bonemeal ({3} recipe(s) adjusted).", Mod.Info.Name, perQuartz, perFlint, changed);
             }
         }
     }

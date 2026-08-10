@@ -1,0 +1,313 @@
+[
+  {
+    "comment": "Structural ceramics in BLOCK form. The drop-breakage predicate is the block material, and `blockmaterial: \"Ceramic\"` turns out to be far wider than pottery: 60 vanilla blocktypes carry it, including every brick and tile course, the bloomery, the clay oven, the kiln door, and six aquatic overlay blocks that have nothing to do with clay at all. Their ITEM forms (burnedbrick, claytile, shingle) are exempt for free because an item has no block material. Greenware needs no entry here either: it is excluded generically by still having fire-type combustible properties. Third-party mods can opt out the same way, by setting this attribute, with no change to Rudiments.",
+    "file": "game:blocktypes/clay/bloomerybase",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/bloomerychimney",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/brick",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/brick-clinker",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/brickcourse",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/brickcourse-uneven",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/brickruin",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/brickslab",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/brickslabcourse",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/brickstairs",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/brickstairscourse",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/chimneycourse",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/door-kiln",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/lootvessel",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/oven",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/refractorybrick",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/refractorybrickgrating",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/shingleblock",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/shingleslab",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/shinglestairs",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/tile-block",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/stone/tile-block",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/roofing/shingleblock-metal",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/legacy/chimney",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/legacy/hardenedclay",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/aquatic/overlay/aquaticworms",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/aquatic/overlay/barnacles",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/aquatic/overlay/crust",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/aquatic/overlay/frill",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/aquatic/overlay/fringe",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/aquatic/overlay/shroom",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudiments": {
+        "unbreakableOnDrop": true
+      }
+    }
+  }
+]

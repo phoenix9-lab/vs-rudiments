@@ -1,0 +1,47 @@
+[
+  {
+    "comment": "Ware tier rides the itemstack, so any ware that is genuinely PLACED as a block loses it when broken — the drop is rebuilt from scratch. Most fired ware is Unplaceable+GroundStorable and keeps its real stack in a ground-storage inventory, so it needs nothing. These are the exceptions. The block-entity behavior parks the tier in the BE tree on placement (which also makes CarryOn round-trip it, since CarryOn serialises the whole tree); the block behavior puts it back on the drop. Ingot molds already survive — BlockEntityIngotMold stores and clones the placing stack itself.",
+    "file": "game:blocktypes/clay/fired/flowerpot",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:WareTier" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/flowerpot",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [{ "name": "rudiments:WareTier" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/planter",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:WareTier" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/planter",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [{ "name": "rudiments:WareTier" }]
+  },
+  {
+    "comment": "BlockGenericTypedContainer overrides both OnPickBlock and GetDrops without calling base, so a BlockBehavior can never see the storage vessel. rudiments:BlockWareStorageVessel is a thin subclass that calls base and restamps. Nothing else about the vessel changes.",
+    "file": "game:blocktypes/clay/fired/storagevessel",
+    "op": "replace",
+    "path": "/class",
+    "value": "rudiments:BlockWareStorageVessel"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/storagevessel",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [{ "name": "rudiments:WareTier" }]
+  },
+  {
+    "comment": "The block behavior goes on the vessel too, but only for BreakageIncludesPlacedContainers — its OnPickBlock/GetDrops never run here because BlockGenericTypedContainer does not dispatch to behaviors for those two. OnBlockInteractStart it does dispatch, which is what the flag needs.",
+    "file": "game:blocktypes/clay/fired/storagevessel",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:WareTier" }]
+  }
+]

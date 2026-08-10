@@ -191,5 +191,71 @@ namespace Rudiments
         /// <summary>Hard outward cap for reeds: a patch won't spread further than this many blocks from
         /// where it started. Set to 0 for UNLIMITED spread (reeds grow without bound). Default: 16.</summary>
         public int ReedSpreadMaxRadius { get; set; } = 16;
+
+        // ── Ware tiers and kilns ─────────────────────────────────────────────────────
+        // Fired clay comes in three bodies: earthenware (the default, and what a pit kiln
+        // gives you), stoneware (anything out of a beehive kiln), and porcelain (its own
+        // clay, and a real block variant rather than an attribute). Everything here is
+        // read live except the two PorcelainClayPer* values, which edit loaded grid
+        // recipes and therefore need a restart.
+
+        /// <summary>Per-use shatter chance for untiered fired clay — the body a pit kiln gives you.
+        /// Applies when a vessel is actually used: drunk from, filled, emptied, poured. At the
+        /// default a bowl survives a median of ~693 uses. Set to 0 to disable wear breakage for
+        /// earthenware. Default: 0.001.</summary>
+        public double EarthenwareBreakChance { get; set; } = 0.001;
+
+        /// <summary>Per-use shatter chance for stoneware — vitrified, sealed, and a little more
+        /// brittle for it. Median ~138 uses. Default: 0.005.</summary>
+        public double StonewareBreakChance { get; set; } = 0.005;
+
+        /// <summary>Per-use shatter chance for porcelain, deliberately the highest of the three.
+        /// Porcelain's flexural strength is genuinely higher than earthenware's, but it is
+        /// thin-walled and brittle: it shatters where thick porous ware chips. Median ~46 uses.
+        /// Default: 0.015.</summary>
+        public double PorcelainBreakChance { get; set; } = 0.015;
+
+        /// <summary>Widen "use" to include opening a placed container, so a stoneware storage vessel
+        /// can fail when you reach into it. Off by default — carrying and opening are free, only
+        /// working a vessel wears it. Default: false.</summary>
+        public bool BreakageIncludesPlacedContainers { get; set; } = false;
+
+        /// <summary>Chance that a deliberately dropped fired clay item shatters on landing. Set to 0
+        /// to disable drop breakage entirely (the hard-landing trigger below still applies).
+        /// Default: 1.0.</summary>
+        public double ThrownClayBreakChance { get; set; } = 1.0;
+
+        /// <summary>Break the whole dropped stack rather than a single item, so Ctrl+Q costs you all
+        /// of it and Q costs you one. Default: true.</summary>
+        public bool ThrownClayBreakWholeStack { get; set; } = true;
+
+        /// <summary>Whether pottery scattered when you die also shatters. Death drops carry the same
+        /// "dropped by a player" marker as a hand-thrown item, so without this exemption dying with
+        /// a shelf of pottery in your bags would smash all of it. Default: false.</summary>
+        public bool ThrownBreakOnDeathDrop { get; set; } = false;
+
+        /// <summary>Downward speed at landing above which <em>any</em> fired clay item shatters,
+        /// however it got there — pushed off a ledge, spilled from a broken shelf, thrown by an
+        /// explosion. Set to 0 to disable the hard-landing trigger and leave only deliberate drops.
+        /// Default: 0.4.</summary>
+        public double ClayImpactBreakSpeed { get; set; } = 0.4;
+
+        /// <summary>In-game hours for a full unsealed earthenware vessel to leak dry, linear to zero
+        /// — half empty at half this. The loss is a share of each vessel's own capacity, so a 1 L
+        /// bowl and a 3 L jug empty on the same clock. Sealed ware (stoneware, porcelain, or any
+        /// glaze) never seeps. Set to 0 to disable seepage. Default: 12.</summary>
+        public float EarthenwareEmptyHours { get; set; } = 12f;
+
+        /// <summary>Blue clay converted per crushed quartz on the pulverizer route to porcelain clay.
+        /// Applied by editing the loaded GridRecipe in AssetsFinalize
+        /// (assets/rudiments/recipes/grid/porcelainclay-quartz.json ships with 2).
+        /// Default: 2. Requires restart.</summary>
+        public int PorcelainClayPerQuartz { get; set; } = 2;
+
+        /// <summary>Blue clay converted per powdered flint + bonemeal on the bone-china route.
+        /// Deliberately half the quartz route: bone china needs no metal at all, so it pays for that
+        /// in clay. Applied the same way (porcelainclay-bonechina.json ships with 1).
+        /// Default: 1. Requires restart.</summary>
+        public int PorcelainClayPerFlint { get; set; } = 1;
     }
 }

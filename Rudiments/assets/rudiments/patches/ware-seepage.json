@@ -1,0 +1,29 @@
+[
+  {
+    "comment": "Seepage attaches only to real liquid containers — vessels with liquidContainerProps.capacityLitres. In vanilla clay that is exactly the fired bowl (1 L) and the fired jug (3 L). The clay pot is a BlockCookingContainer and holds ingredients, not litres, and the watering can measures watering-seconds rather than litres, so neither can seep; the can is gated a different way in Parcel 2.",
+    "file": "game:blocktypes/clay/fired/bowl",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Seepage" }]
+  },
+  {
+    "comment": "The class swap is what guarantees the settle actually runs — see BlockSeepingContainer. classByType already exists on the bowl with a '*-fired' key, so replacing that one value keeps every other variant untouched.",
+    "file": "game:blocktypes/clay/fired/bowl",
+    "op": "replace",
+    "path": "/classByType/*-fired",
+    "value": "rudiments:BlockSeepingContainer"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/jug",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Seepage" }]
+  },
+  {
+    "comment": "The jug declares a plain 'class' rather than classByType, and every jug variant is fired ware, so replacing it outright is correct.",
+    "file": "game:blocktypes/clay/fired/jug",
+    "op": "replace",
+    "path": "/class",
+    "value": "rudiments:BlockSeepingContainer"
+  }
+]

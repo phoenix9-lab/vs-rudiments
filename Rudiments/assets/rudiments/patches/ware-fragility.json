@@ -1,0 +1,75 @@
+[
+  {
+    "comment": "Per-use fragility on the fired clay vessels that take part in the ware ladder. Crucibles and both mold types are deliberately excluded: they are fire-clay-only, they are excluded from porcelain for the same reason, and they already have their own vanilla thermal-shock shatter — stacking a second break roll on top would be a nasty surprise. The decorative *-fancy vessels are excluded because they have no greenware form, so a player could never fire them to a better tier: a permanent break chance with no upgrade path is a pure nerf.",
+    "file": "game:blocktypes/clay/fired/bowl",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/bowl-meal",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/crock",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/dirtypot",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/jug",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/oillamp",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/oillamp-empty",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/pot",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/wateringcan",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/flowerpot",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/planter",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }]
+  },
+  {
+    "file": "game:blocktypes/clay/fired/storagevessel",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }]
+  }
+]

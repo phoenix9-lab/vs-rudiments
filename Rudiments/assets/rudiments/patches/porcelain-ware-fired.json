@@ -1,0 +1,330 @@
+[
+  {
+    "comment": "The fired side of porcelain. Every companion blocktype gets the colour too, not just the headline vessel: bowl-meal or a filled porcelain bowl fails to resolve when you eat from it, dirtypot or a used porcelain cooking pot has nowhere to go, and oillamp-empty is where the raw genie lamp actually fires to. dirtypot's texturesByType ends in a '*' catch-all that would claim porcelain first \u2014 ClayByTypeOrderFix moves it back to last at load, which is where vanilla's own convention says it belongs.",
+    "file": "game:blocktypes/clay/fired/bowl",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/bowl",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-*": {
+        "mat": {
+          "base": "rudiments:block/clay/hardened/porcelain"
+        },
+        "floor": {
+          "base": "rudiments:block/clay/hardened/porcelain"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/fired/bowl-meal",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/bowl-meal",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-*": {
+        "mat": {
+          "base": "rudiments:block/clay/hardened/porcelain"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/fired/crock",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/crock",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-*": {
+        "ceramic": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/crock"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/fired/jug",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/jug",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-*": {
+        "all": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/jug"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/fired/pot",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/pot",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-*": {
+        "ceramic": {
+          "base": "rudiments:block/clay/pot/porcelain"
+        },
+        "dark": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/dark"
+          ]
+        },
+        "lid": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/crock"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/fired/dirtypot",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/dirtypot",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-*": {
+        "ceramic": {
+          "base": "rudiments:block/clay/pot/dirtyporcelain"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/fired/storagevessel",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/storagevessel",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-*": {
+        "ceramic": {
+          "base": "rudiments:block/clay/hardened/porcelain"
+        },
+        "top": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/vessel-top"
+          ]
+        },
+        "sides": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/vessel-sides"
+          ]
+        },
+        "inside": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/vessel-inside"
+          ]
+        },
+        "normal-ceramic": {
+          "base": "rudiments:block/clay/hardened/porcelain"
+        },
+        "normal-top": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/vessel-top"
+          ]
+        },
+        "normal-sides": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/vessel-sides"
+          ]
+        },
+        "normal-inside": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/vessel-inside"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/fired/planter",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/planter",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-*": {
+        "sides": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/planter"
+          ]
+        },
+        "ceramic": {
+          "base": "rudiments:block/clay/hardened/porcelain"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/fired/flowerpot",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/flowerpot",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-*": {
+        "sides": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/flowerpot-sides"
+          ]
+        },
+        "topbottom": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/flowerpot-topbot"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/fired/wateringcan",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/wateringcan",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-*": {
+        "wateringcanup": {
+          "base": "rudiments:block/clay/hardened/porcelain"
+        },
+        "wateringcanrose": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/wateringcan"
+          ]
+        },
+        "watering-can": {
+          "base": "rudiments:block/clay/hardened/porcelain",
+          "overlays": [
+            "game:block/clay/overlay/wateringcan"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/fired/oillamp",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/oillamp",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-*": {
+        "ceramic": {
+          "base": "rudiments:block/clay/oillamp/porcelain"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:blocktypes/clay/fired/oillamp-empty",
+    "op": "add",
+    "path": "/variantgroups/1/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/oillamp-empty",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain-*": {
+        "ceramic": {
+          "base": "rudiments:block/clay/oillamp/porcelain"
+        }
+      }
+    }
+  },
+  {
+    "comment": "The porcelain payoff, and the reason to want it beyond looks. Vanilla reads spoilSpeedMulByFoodCat and transitionSpeedMul off the block for a BlockEntityGenericTypedContainer and renders the 'Stored food perish speed' line itself, so this needs no code at all. Vanilla's own vessel is vegetable 0.75 / grain 0.5; the values here merge over those. The crock is not eligible \u2014 BlockCrock hardcodes its 0.85/0.25/0.1 multipliers with no JSON exposure.",
+    "file": "game:blocktypes/clay/fired/storagevessel",
+    "op": "addmerge",
+    "path": "/attributesByType",
+    "value": {
+      "*-porcelain-*": {
+        "spoilSpeedMulByFoodCat": {
+          "normal": {
+            "vegetable": 0.5,
+            "grain": 0.3,
+            "fruit": 0.6,
+            "dairy": 0.6,
+            "protein": 0.75
+          }
+        },
+        "transitionSpeedMul": {
+          "normal": {
+            "Perish": 0.6
+          }
+        }
+      }
+    }
+  }
+]

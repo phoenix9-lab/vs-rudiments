@@ -26,6 +26,97 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.14.0] — 2026-08-10 — Ware tiers: earthenware, stoneware and porcelain
+
+Fired clay was one material with ten paint jobs. It is now three materials. Which one you are
+holding decides whether it holds water, how the food inside it keeps, and how easily it breaks —
+and the only way up the ladder is a better kiln or a better clay.
+
+**Clayworks is a first-class target, not an afterthought.** Everything below works with it
+installed and with it absent; the compat patches simply never apply in the second case.
+
+### Added
+- **Three ware tiers.** Earthenware is what unmarked fired clay is and what a pit kiln gives you —
+  porous, above 3% water absorption, and it genuinely weeps. Stoneware is anything that comes out of
+  a **beehive kiln**: vitrified, sealed, no recipe change and no new clay needed. Porcelain is its
+  own body from its own clay. Carried as the `rudimentsware` stack attribute, where *absent* means
+  earthenware, so every existing save and every third-party clay item reads correctly with no
+  migration.
+- **`game:clay-porcelain`** — a fourth state on the vanilla `clay` variantgroup rather than a
+  standalone item, so it is a real material with a real code and the vanilla fire clay recipe is
+  untouched. Two routes, both from **blue clay only**:
+  - **quartz** — 1 crushed quartz + 2 blue clay. Needs a pulverizer, so bronze pounders and
+    mechanical power.
+  - **bone china** — 1 powdered flint + 1 bonemeal + 1 blue clay. No metal at all: a firepit and a
+    quern. Exactly the substitution English potters made from Spode's work in 1789–1793 when they
+    could not source petuntse.
+- **Porcelain ware** — bowl, crock, jug, cooking pot, storage vessel, planter, flowerpot, oil lamp
+  and watering can, with their `-meal`, `-cooked` and dirty-pot companions so a filled porcelain bowl
+  actually resolves. Molds and crucibles stay fire clay. Fires white only in a beehive kiln with
+  **every door shut**; any door ajar, or a pit kiln, and it comes out as shards.
+- **Porcelain's payoff** — food in a porcelain storage vessel keeps markedly longer. Vanilla renders
+  the `Stored food perish speed` line for free; no code involved.
+- **Seepage.** An unsealed earthenware bowl or jug leaks: half empty at six in-game hours, dry at
+  twelve. The rate is a share of *each vessel's own capacity*, so the 3 L jug does not outlast the
+  1 L bowl. Nothing ticks — the loss settles from a timestamp the moment you next handle the vessel.
+- **Wear fragility.** Using a vessel — drinking, filling, emptying, pouring — can break it. 0.1% /
+  0.5% / 1.5% by tier, a median of ~693 / ~138 / ~46 uses. Porcelain is deliberately the most
+  fragile: its flexural strength is higher, but it is thin-walled and shatters where thick porous
+  ware chips.
+- **Drop breakage.** Throw fired pottery on the floor and it shatters, leaving shards and spilling
+  its contents rather than voiding them. One entity behavior covers every clay item in the game,
+  including other mods', with no per-item patching. Three exemptions: **death drops** (they carry the
+  same "dropped by a player" marker as a throw, so this had to be explicit), **greenware** (unfired
+  clay deforms, and the test is generic — "still fire-smeltable" — so it covers modded greenware
+  too), and **structural ceramics** — bricks, tiles, shingles, chimneys, kiln parts.
+- **Five handbook guide pages** — ware tiers, handling, water and porous ware, porcelain, and kilns —
+  plus a section on `clay-fire` explaining why fire clay is emphatically not the porcelain body.
+- **Fourteen config fields** under `── Ware tiers and kilns ──`. All live-reloadable via
+  `/rudimentsreload` except `PorcelainClayPerQuartz` / `PorcelainClayPerFlint`, which retune the
+  loaded grid recipes and need a restart.
+
+### Changed
+- The **beehive kiln** now yields stoneware. Colours are untouched — the same four door counts give
+  the same four results they always did; the tier rides alongside as a stack attribute.
+- The fired **bowl**, **jug** and **storage vessel** get thin Rudiments subclasses. The first two
+  because `BlockLiquidContainerBase` skips `base` on its fill/pour path, so a pour would otherwise
+  transfer un-seeped liquid; the third because `BlockGenericTypedContainer` rebuilds its drop from
+  scratch and would drop a stoneware vessel's tier. Behaviour is otherwise unchanged.
+
+### Compatibility
+- **Clayworks** — its six exclusive clay colours (azure, crimson, green, orange, pink, snow) get the
+  same beehive tiering, fragility and seepage as vanilla ware. Its blue/red/fire chain needs nothing:
+  contrary to appearances it does not displace vanilla ware for those three, it adds a wet stage that
+  dries back into `game:<ware>-{color}-raw`. Its bricks, tiles, shingles and whole roofing set are
+  exempted from drop breakage.
+- **CarryOn** — a carried storage vessel keeps its ware tier, because the tier is persisted in the
+  block entity tree that CarryOn serialises.
+- **vsroofing** — roofs flagged unbreakable-on-drop, behind `dependsOn`.
+
+### Fixed
+- `"*"` catch-alls in `*ByType` dictionaries on the clay assets are moved back to last at load.
+  `RegistryObjectType.solveByType` takes the **first** matching wildcard, so a catch-all appended by
+  any mod silently claims every later, more specific key — including vanilla's own `dirtypot`. This
+  restores vanilla's own convention and is what makes porcelain render correctly regardless of mod
+  load order.
+- The vanilla `rawbrick` grid recipe is narrowed to the three brick clays. It binds `clay-*` to the
+  name `type` and emits `rawbrick-{type}`, so a fourth clay state made it try to produce a
+  `rawbrick-porcelain` that does not exist. Clayworks ships the identical patch, which is why this
+  only surfaced with Clayworks **absent** — a good argument for running both passes.
+
+### Verification
+Headless load test, both passes, 0 errors and no mod warnings:
+- **Pass 1** — Clayworks 0.6.1, CarryOn 2.0.0-pre.8, Primitive Survival 5.1.0 and vsroofing 1.7.0
+  installed.
+- **Pass 2** — Rudiments alone. Compared against 0.13.0 this is exactly **+28 blocks and +2 items**:
+  9 porcelain greenware, 13 fired forms, 6 lamp orientations, plus `clay-porcelain` and
+  `clayworkitem-porcelain`. Every `beehivekiln` and `combustibleProps` target resolved.
+
+In-world behaviour (breakage rolls, seepage over time, kiln outcomes, tooltips, handbook rendering)
+still needs a playtest; the load test only proves everything resolves and loads.
+
+---
+
 ## [0.13.0] — 2026-08-09 — Interactive scutching: board + scutching sword
 
 Scutching was the most inert step in the fibre chain — a hold-right-click conversion loop identical

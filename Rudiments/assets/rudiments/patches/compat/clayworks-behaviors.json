@@ -1,0 +1,209 @@
+[
+  {
+    "comment": "Fragility and seepage on Clayworks' own fired ware. This matters for the six Clayworks-exclusive colours (azure, crimson, green, orange, pink, snow): those are the only ware that actually reaches a clayworks:-domain fired block, because the blue/red/fire chain dries back into vanilla game: ware. Without this file, a player working in Clayworks colours would see none of rung 1 or rung 2.",
+    "file": "clayworks:blocktypes/clay/bowl.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }, { "name": "rudiments:Seepage" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "comment": "Their bowl and jug are the two Clayworks vessels with liquidContainerProps, so they are the two that can seep — and like vanilla they need the class swap, not just the behavior, because BlockLiquidContainerBase.OnHeldInteractStart does not call base on the fill/pour path.",
+    "file": "clayworks:blocktypes/clay/bowl.json",
+    "op": "replace",
+    "path": "/classByType/*-fired*",
+    "value": "rudiments:BlockSeepingContainer",
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/jug.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }, { "name": "rudiments:Seepage" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/jug.json",
+    "op": "replace",
+    "path": "/classByType/*-fired*",
+    "value": "rudiments:BlockSeepingContainer",
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "comment": "The rest take fragility only — they hold food or plants, not litres.",
+    "file": "clayworks:blocktypes/clay/crock.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/crock_separate.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/bigcrock.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/bowl_meal.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/clayplate.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/bigvessel.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/emptyvessel.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/decoratedvessel.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/flowerpot.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/planter.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/bigplanter.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/vesselplanter.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/wateringcan.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Fragile" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "comment": "The five fired storage vessels get the tier-preservation pair, not fragility: they are placeable BlockGenericTypedContainers, so their tier would be lost the moment one is placed and broken again. The class swap is the same thin subclass vanilla's vessel uses.",
+    "file": "clayworks:blocktypes/clay/storagevessel_fired0.json",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [{ "name": "rudiments:WareTier" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/storagevessel_fired0.json",
+    "op": "replace",
+    "path": "/classByType/*",
+    "value": "rudiments:BlockWareStorageVessel",
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/storagevessel_fired1.json",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [{ "name": "rudiments:WareTier" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/storagevessel_fired1.json",
+    "op": "replace",
+    "path": "/classByType/*",
+    "value": "rudiments:BlockWareStorageVessel",
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/storagevessel_fired2.json",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [{ "name": "rudiments:WareTier" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/storagevessel_fired2.json",
+    "op": "replace",
+    "path": "/classByType/*",
+    "value": "rudiments:BlockWareStorageVessel",
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/storagevessel_fired3.json",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [{ "name": "rudiments:WareTier" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/storagevessel_fired3.json",
+    "op": "replace",
+    "path": "/classByType/*",
+    "value": "rudiments:BlockWareStorageVessel",
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/storagevessel_fired4.json",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [{ "name": "rudiments:WareTier" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/storagevessel_fired4.json",
+    "op": "replace",
+    "path": "/classByType/*",
+    "value": "rudiments:BlockWareStorageVessel",
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/decoratedvessel.json",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [{ "name": "rudiments:WareTier" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/decoratedvessel.json",
+    "op": "replace",
+    "path": "/classByType/*",
+    "value": "rudiments:BlockWareStorageVessel",
+    "dependsOn": [{ "modid": "clayworks" }]
+  }
+]

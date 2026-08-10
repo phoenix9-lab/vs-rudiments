@@ -1,0 +1,887 @@
+[
+  {
+    "comment": "The P1-BEEHIVE treatment applied to Clayworks greenware. Only the dry states are stamped: every *-wet entry fires to shards, and a shard has no ware tier. Note that Clayworks does NOT displace vanilla ware for blue/red/fire clay \u2014 its `-natural` set is a wet stage that dries into game:<ware>-{color}-raw and goes on through the vanilla pipeline, so those three colours are already covered by ware-beehive.json. What this file adds is the six Clayworks-exclusive colours (azure, crimson, green, orange, pink, snow), which are the only ware that actually reaches a clayworks:-domain fired block.",
+    "file": "clayworks:blocktypes/clay/raw/barrellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/barrellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/barrellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/barrellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/barrellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/barrellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/barrellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/barrellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bigvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bigvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bigvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bigvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bigvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bigvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bigvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bigvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bowl-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bowl-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bowl-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/bowl-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/clayplate-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/clayplate-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/clayplate-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/clayplate-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/clayplate-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/clayplate-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/clayplate-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/clayplate-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/crock-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry-*/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/crock-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry-*/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/crock-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry-*/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/crock-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry-*/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/emptyvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/emptyvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/emptyvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/emptyvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/emptyvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/emptyvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/emptyvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/emptyvessel-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/flowerpot-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/flowerpot-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/flowerpot-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/flowerpot-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/jug-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/jug-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/jug-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/jug-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/oillamp-genie-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/oillamp-genie-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/oillamp-genie-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/oillamp-genie-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/planter-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/planter-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/planter-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/planter-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/storagevessellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/storagevessellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/storagevessellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/storagevessellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-naturalfire-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/storagevessellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/storagevessellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/storagevessellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/storagevessellid-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/wateringcan-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/0/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/wateringcan-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/1/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/wateringcan-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/2/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  },
+  {
+    "file": "clayworks:blocktypes/clay/raw/wateringcan-raw.json",
+    "op": "addmerge",
+    "path": "/attributesByType/*-dry/beehivekiln/3/attributes",
+    "value": {
+      "rudimentsware": "stoneware"
+    },
+    "dependsOn": [
+      {
+        "modid": "clayworks"
+      }
+    ]
+  }
+]
