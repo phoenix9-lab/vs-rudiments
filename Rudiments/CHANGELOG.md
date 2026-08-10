@@ -26,6 +26,204 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.16.0] — 2026-08-10 — The updraft kiln
+
+Porcelain has existed since 0.14.0 and there has been exactly one kiln that could fire it. The
+updraft kiln is the cheap, early, unreliable second answer — and the reason to build a beehive
+afterwards rather than instead.
+
+### Added
+- **`rudiments:updraftkiln`** and **`rudiments:updraftkilnchimney`** — a base and a required chimney
+  **directly above it**, validated with the bloomery's own one-line trick rather than a
+  `MultiblockStructure`. Flat ground; there is no slope requirement anywhere in this design. Without
+  the chimney it refuses to light, with a message saying why.
+- **Twice the capacity of the small brick kiln**, expressed the way vanilla expresses ground storage:
+  two tiles, so two large `SingleCenter` pieces or eight small `Quadrants` ones, or any honest mix.
+  Twelve hours to fire, against the small kiln's ten.
+- **It can fire porcelain, badly.** Each porcelain item rolls independently against
+  `UpdraftKilnPorcelainFailChance` (0.30). Survivors come out as the raw block's own
+  `beehivekiln["0"]` entry — the canonical perfect firing, read off the block so the mapping is never
+  duplicated in code — and the rest become shards. A partial loss leaves both in the kiln.
+- That ~30% is not a made-up number. An updraft kiln is hottest at the firemouths and cools toward
+  the crown, which is why potters packed ware into fireclay saggars and why losses stayed routine
+  even in the industrial era. The downdraft beehive exists *because* of that problem. Updraft is a
+  draft direction, not a temperature class — the Staffordshire bottle oven is one, and it fired at
+  1200–1300 °C. Reaching the temperature was never the difficulty; reaching it evenly was.
+- **Two config fields** — `UpdraftKilnBurnHours` and `UpdraftKilnPorcelainFailChance`. Setting the
+  second to 0 makes the beehive redundant, which is the point of it not being 0.
+- The kilns handbook page now covers all four kilns and why you would want more than one of them.
+
+### Changed
+- **`BlockEntityKilnBase`** now holds everything the two kilns share: the fuel gate, loading and
+  unloading, the burn timer and greenware conversion, behind an explicit `--- subclass contract ---`
+  block in the style of `BlockEntityRettingBase`. `BlockEntitySmallBrickKiln` is now twenty lines
+  that say how big it is.
+- Capacity is measured in **quarter-tile units** rather than slots, which turns out to be what
+  "4 ware slots, matching the pit kiln" actually meant: `BlockEntityPitKiln` extends
+  `BlockEntityGroundStorage`, so a pit kiln holds four small pieces *or one large one*, not four of
+  anything. The small brick kiln now matches it exactly, and the updraft kiln is cleanly double.
+- `BlockSmallBrickKiln` → **`BlockKiln`**, registered under both kilns' class names. Neither kiln has
+  any block-level behaviour that differs — the chimney requirement is an ignition condition, and
+  ignition conditions belong to the block entity — so two identical classes would have been worse
+  code than one honest one.
+
+### Verification
+Headless load test, both passes, 0 errors and no mod warnings. Standalone this is **+5 blocks** over
+0.15.0: four updraft kiln orientations and the chimney. The 30% loss rate and the chimney check need
+a playtest.
+
+---
+
+## [0.15.0] — 2026-08-10 — The small brick kiln, lead glaze and the watering-can gate
+
+0.14.0 gave earthenware a real problem — it leaks — and put the only two answers behind a beehive
+kiln. These three ship together because they are the answers, and shipping the gate without them
+would have broken day-one farming.
+
+### Added
+- **`rudiments:smallbrickkiln`** — a single block, eight fired bricks, four ware slots and one fuel.
+  The bricks come from the pit kiln, so the route to it needs nothing new: pit kiln → bricks → brick
+  kiln → stoneware. Right-click to load and unload, sneak + right-click to light, status through
+  block info. No GUI.
+  - **The fuel gate is the bloomery's, verbatim** — burn temperature ≥ 1200 and duration > 30. That
+    admits charcoal, coke, bituminous and anthracite coal, and refuses lignite, peat and every wood.
+    Cold fuel is refused **at insertion** with a readable message, the way every vanilla fuel gate
+    behaves: nothing in vanilla lets you wait ten hours to find out you were wrong.
+  - Ware admission is the generic `SmeltingType == Fire` contract rather than a list of codes, so
+    Clayworks greenware and any other mod's fires here with **no compat file at all**. The output is
+    read off the input block's own combustible properties, never a hardcoded ware code — which is
+    why one code path serves every domain.
+- **Lead glaze.** Right-click bone-dry greenware with a **galena nugget** — a pile of greenware on
+  the ground, or greenware held in your **off hand**. One nugget per vessel, then fire it in **any
+  kiln at all, the pit kiln included**. No glaze item, no glaze bucket, no second firing.
+  - That is not an abstraction of the process, it *is* the process: raw galena dusted onto a pot and
+    fired with it in one pass is how lead-glazed earthenware was made from about 1400 BCE, at
+    900–1150 °C — well inside a pit kiln's reach.
+  - Glazed ware counts as **sealed**, so it stops seeping and fills a watering can. It does not
+    change the body underneath: it is still earthenware, and it gets none of porcelain's advantage
+    for stored food. The cheap answer to the water problem, not a shortcut up the ladder.
+  - Surviving the fire is the interesting part. The pit kiln discards input NBT outright, so the
+    glaze cannot ride the raw stack through firing. `rudiments:BlockGlazableClayware` overrides the
+    stack-aware `GetCombustibleProperties` to hand back a per-stack `SmeltedStack` with the glaze
+    already on it — after which the vanilla pit kiln, the vanilla beehive and both Rudiments kilns
+    carry it for free, with no kiln-side code anywhere.
+- **The watering-can gate.** An unsealed earthenware can refuses to fill from a water source, with a
+  message. Refuse-to-fill rather than refuse-to-craft, deliberately: you learn the rule at the
+  water's edge with the object in hand instead of hitting a silent recipe wall.
+- **A `rudiments-glaze` handbook page**, and the kilns and water pages filled in now that the brick
+  kiln and the glaze route actually exist.
+- **Three config fields** — `KilnMinFuelTemperature`, `SmallBrickKilnBurnHours`,
+  `SealedWareRequiredForWateringCan`. All read live.
+
+### Changed
+- The order fix from 0.14.0 is generalised (`ClayByTypeOrderFix` → `ByTypeCatchAllOrderFix`) because
+  `nugget.json`'s `behaviorsByType` ends in a `"*"` catch-all too, which would have swallowed the
+  glaze applicator exactly as Clayworks' catch-all swallowed the porcelain texture. Same one-line
+  rule, three more assets.
+
+### Compatibility
+- **Clayworks** — its greenware is glazable and its watering can is gated. Without the second of
+  those the gate would be trivially bypassable on the default install by simply making a Clayworks
+  can instead.
+
+### Verification
+Headless load test, both passes, 0 errors and no mod warnings. Standalone this is **+4 blocks** over
+0.14.0 — the kiln's four orientations — and no new items, glaze being an attribute rather than an
+object. Firing, fuel refusal and the gate itself still need a playtest.
+
+---
+
+## [0.14.0] — 2026-08-10 — Ware tiers: earthenware, stoneware and porcelain
+
+Fired clay was one material with ten paint jobs. It is now three materials. Which one you are
+holding decides whether it holds water, how the food inside it keeps, and how easily it breaks —
+and the only way up the ladder is a better kiln or a better clay.
+
+**Clayworks is a first-class target, not an afterthought.** Everything below works with it
+installed and with it absent; the compat patches simply never apply in the second case.
+
+### Added
+- **Three ware tiers.** Earthenware is what unmarked fired clay is and what a pit kiln gives you —
+  porous, above 3% water absorption, and it genuinely weeps. Stoneware is anything that comes out of
+  a **beehive kiln**: vitrified, sealed, no recipe change and no new clay needed. Porcelain is its
+  own body from its own clay. Carried as the `rudimentsware` stack attribute, where *absent* means
+  earthenware, so every existing save and every third-party clay item reads correctly with no
+  migration.
+- **`game:clay-porcelain`** — a fourth state on the vanilla `clay` variantgroup rather than a
+  standalone item, so it is a real material with a real code and the vanilla fire clay recipe is
+  untouched. Two routes, both from **blue clay only**:
+  - **quartz** — 1 crushed quartz + 2 blue clay. Needs a pulverizer, so bronze pounders and
+    mechanical power.
+  - **bone china** — 1 powdered flint + 1 bonemeal + 1 blue clay. No metal at all: a firepit and a
+    quern. Exactly the substitution English potters made from Spode's work in 1789–1793 when they
+    could not source petuntse.
+- **Porcelain ware** — bowl, crock, jug, cooking pot, storage vessel, planter, flowerpot, oil lamp
+  and watering can, with their `-meal`, `-cooked` and dirty-pot companions so a filled porcelain bowl
+  actually resolves. Molds and crucibles stay fire clay. Fires white only in a beehive kiln with
+  **every door shut**; any door ajar, or a pit kiln, and it comes out as shards.
+- **Porcelain's payoff** — food in a porcelain storage vessel keeps markedly longer. Vanilla renders
+  the `Stored food perish speed` line for free; no code involved.
+- **Seepage.** An unsealed earthenware bowl or jug leaks: half empty at six in-game hours, dry at
+  twelve. The rate is a share of *each vessel's own capacity*, so the 3 L jug does not outlast the
+  1 L bowl. Nothing ticks — the loss settles from a timestamp the moment you next handle the vessel.
+- **Wear fragility.** Using a vessel — drinking, filling, emptying, pouring — can break it. 0.1% /
+  0.5% / 1.5% by tier, a median of ~693 / ~138 / ~46 uses. Porcelain is deliberately the most
+  fragile: its flexural strength is higher, but it is thin-walled and shatters where thick porous
+  ware chips.
+- **Drop breakage.** Throw fired pottery on the floor and it shatters, leaving shards and spilling
+  its contents rather than voiding them. One entity behavior covers every clay item in the game,
+  including other mods', with no per-item patching. Three exemptions: **death drops** (they carry the
+  same "dropped by a player" marker as a throw, so this had to be explicit), **greenware** (unfired
+  clay deforms, and the test is generic — "still fire-smeltable" — so it covers modded greenware
+  too), and **structural ceramics** — bricks, tiles, shingles, chimneys, kiln parts.
+- **Five handbook guide pages** — ware tiers, handling, water and porous ware, porcelain, and kilns —
+  plus a section on `clay-fire` explaining why fire clay is emphatically not the porcelain body.
+- **Fourteen config fields** under `── Ware tiers and kilns ──`. All live-reloadable via
+  `/rudimentsreload` except `PorcelainClayPerQuartz` / `PorcelainClayPerFlint`, which retune the
+  loaded grid recipes and need a restart.
+
+### Changed
+- The **beehive kiln** now yields stoneware. Colours are untouched — the same four door counts give
+  the same four results they always did; the tier rides alongside as a stack attribute.
+- The fired **bowl**, **jug** and **storage vessel** get thin Rudiments subclasses. The first two
+  because `BlockLiquidContainerBase` skips `base` on its fill/pour path, so a pour would otherwise
+  transfer un-seeped liquid; the third because `BlockGenericTypedContainer` rebuilds its drop from
+  scratch and would drop a stoneware vessel's tier. Behaviour is otherwise unchanged.
+
+### Compatibility
+- **Clayworks** — its six exclusive clay colours (azure, crimson, green, orange, pink, snow) get the
+  same beehive tiering, fragility and seepage as vanilla ware. Its blue/red/fire chain needs nothing:
+  contrary to appearances it does not displace vanilla ware for those three, it adds a wet stage that
+  dries back into `game:<ware>-{color}-raw`. Its bricks, tiles, shingles and whole roofing set are
+  exempted from drop breakage.
+- **CarryOn** — a carried storage vessel keeps its ware tier, because the tier is persisted in the
+  block entity tree that CarryOn serialises.
+- **vsroofing** — roofs flagged unbreakable-on-drop, behind `dependsOn`.
+
+### Fixed
+- `"*"` catch-alls in `*ByType` dictionaries on the clay assets are moved back to last at load.
+  `RegistryObjectType.solveByType` takes the **first** matching wildcard, so a catch-all appended by
+  any mod silently claims every later, more specific key — including vanilla's own `dirtypot`. This
+  restores vanilla's own convention and is what makes porcelain render correctly regardless of mod
+  load order.
+- The vanilla `rawbrick` grid recipe is narrowed to the three brick clays. It binds `clay-*` to the
+  name `type` and emits `rawbrick-{type}`, so a fourth clay state made it try to produce a
+  `rawbrick-porcelain` that does not exist. Clayworks ships the identical patch, which is why this
+  only surfaced with Clayworks **absent** — a good argument for running both passes.
+
+### Verification
+Headless load test, both passes, 0 errors and no mod warnings:
+- **Pass 1** — Clayworks 0.6.1, CarryOn 2.0.0-pre.8, Primitive Survival 5.1.0 and vsroofing 1.7.0
+  installed.
+- **Pass 2** — Rudiments alone. Compared against 0.13.0 this is exactly **+28 blocks and +2 items**:
+  9 porcelain greenware, 13 fired forms, 6 lamp orientations, plus `clay-porcelain` and
+  `clayworkitem-porcelain`. Every `beehivekiln` and `combustibleProps` target resolved.
+
+In-world behaviour (breakage rolls, seepage over time, kiln outcomes, tooltips, handbook rendering)
+still needs a playtest; the load test only proves everything resolves and loads.
+
+---
+
 ## [0.13.0] — 2026-08-09 — Interactive scutching: board + scutching sword
 
 Scutching was the most inert step in the fibre chain — a hold-right-click conversion loop identical

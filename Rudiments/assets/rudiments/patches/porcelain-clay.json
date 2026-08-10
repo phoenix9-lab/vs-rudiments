@@ -1,0 +1,74 @@
+[
+  {
+    "comment": "Porcelain clay is a fourth state on the existing vanilla `clay` variantgroup rather than a standalone itemtype, so it is a real material with a real code and the vanilla fire clay recipe is untouched. Appending is essential: Clayworks appends six of its own states to this same array, and two appends coexist where a replace would not. Every vanilla clayforming recipe guards its ingredient with allowedVariants, so the new state stays inert until an individual recipe opts into it \u2014 which is why P1-PORC ships its own recipe files instead.",
+    "file": "game:itemtypes/resource/clay",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "file": "game:itemtypes/resource/clay",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain": {
+        "clay": {
+          "base": "rudiments:block/soil/porcelainclay"
+        }
+      }
+    }
+  },
+  {
+    "comment": "inContainerTexture is an attribute, not a texture, so it needs its own entry or porcelain clay in a bowl or on a shelf renders as blue clay.",
+    "file": "game:itemtypes/resource/clay",
+    "op": "addmerge",
+    "path": "/attributesByType",
+    "value": {
+      "*-porcelain": {
+        "inContainerTexture": {
+          "base": "rudiments:block/soil/porcelainclay"
+        }
+      }
+    }
+  },
+  {
+    "file": "game:itemtypes/resource/clayworkitem",
+    "op": "add",
+    "path": "/variantgroups/0/states/-",
+    "value": "porcelain"
+  },
+  {
+    "comment": "The work item declares `texture` (singular), which the loader folds into Textures[\"all\"] after deserialisation \u2014 but Clayworks removes that property outright and replaces it with a `texturesByType`. Writing both ByType forms covers each case without a dependsOn branch: whichever property survives ends up pointing at the porcelain sprite, and the other simply creates a second key with the same image.",
+    "file": "game:itemtypes/resource/clayworkitem",
+    "op": "addmerge",
+    "path": "/textureByType",
+    "value": {
+      "*-porcelain": {
+        "base": "rudiments:block/soil/porcelainclay"
+      }
+    }
+  },
+  {
+    "file": "game:itemtypes/resource/clayworkitem",
+    "op": "addmerge",
+    "path": "/texturesByType",
+    "value": {
+      "*-porcelain": {
+        "clay": {
+          "base": "rudiments:block/soil/porcelainclay"
+        }
+      }
+    }
+  },
+  {
+    "comment": "Adding a clay variant silently breaks one vanilla grid recipe: recipes/grid/rawbrick binds clay-* to the name `type` and emits rawbrick-{type}, so porcelain clay would try to produce a rawbrick-porcelain that does not exist. Narrowing it to the three real brick clays is the fix, and it is not optional \u2014 without it the recipe fails to resolve at load. `add` sets the key outright rather than appending, so this is idempotent even though Clayworks ships the very same patch (which is why the problem only shows up with Clayworks absent). Every other vanilla recipe that takes clay-* uses it as an unnamed binder whose output does not depend on the variant, so porcelain is merely an accepted \u2014 and wasteful \u2014 alternative there, exactly as fire clay already is.",
+    "file": "game:recipes/grid/rawbrick",
+    "op": "add",
+    "path": "/ingredients/D/allowedVariants",
+    "value": [
+      "blue",
+      "fire",
+      "red"
+    ]
+  }
+]

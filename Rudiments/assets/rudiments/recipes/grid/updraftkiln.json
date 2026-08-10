@@ -1,0 +1,19 @@
+[
+  {
+    "ingredientPattern": "BBB,B_B,BBB",
+    "ingredients": {
+      "B": {
+        "type": "item",
+        "code": "game:burnedbrick-*",
+        "quantity": 2
+      }
+    },
+    "width": 3,
+    "height": 3,
+    "output": {
+      "type": "block",
+      "code": "updraftkiln-north",
+      "quantity": 1
+    }
+  }
+]

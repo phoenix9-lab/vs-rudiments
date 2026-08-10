@@ -1,0 +1,9 @@
+[
+  {
+    "comment": "The gate is on the fired can, not the raw one \u2014 you find out at the water's edge with the object in hand rather than at a silent recipe wall. rudiments:RudimentsWateringCan subclasses vanilla's BlockWateringCan and changes exactly one thing, so replacing the declared class here takes nothing away.",
+    "file": "game:blocktypes/clay/fired/wateringcan",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:RudimentsWateringCan"
+  }
+]

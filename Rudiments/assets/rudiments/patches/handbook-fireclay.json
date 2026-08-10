@@ -1,0 +1,20 @@
+[
+  {
+    "comment": "Fire clay is the obvious wrong answer to 'what do I make porcelain from', and a player who has just unlocked it will try. One paragraph on its own page saves that experiment, and it is a genuinely interesting distinction rather than a rule to memorise.",
+    "file": "game:itemtypes/resource/clay",
+    "op": "addmerge",
+    "path": "/attributesByType",
+    "value": {
+      "*-fire": {
+        "handbook": {
+          "extraSections": [
+            {
+              "title": "rudiments:handbook-fireclay-title",
+              "text": "rudiments:handbook-fireclay-text"
+            }
+          ]
+        }
+      }
+    }
+  }
+]
