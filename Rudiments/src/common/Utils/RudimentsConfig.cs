@@ -294,10 +294,13 @@ namespace Rudiments
         // pot and it is leaded in whatever bowl you finally eat it from. Everything here is
         // read live, so /rudimentsreload retunes it without a restart.
 
-        /// <summary>Whether lead-glazed vessels poison the people who eat and drink from them. Set
-        /// to false and lead glaze becomes a free seal again, the tooltip warnings disappear, and any
-        /// burden already accrued stops costing health (it is kept, not wiped, so turning this back
-        /// on does not hand out an amnesty). Default: true.</summary>
+        /// <summary>Whether lead-glazed vessels poison the people who eat and drink from them. Set to
+        /// false and lead glaze becomes a free seal again: no burden accrues, no food is marked, the
+        /// tooltip warnings disappear, and any burden already on a character stops costing health
+        /// immediately. The burden is kept rather than wiped, so switching back on is not an amnesty —
+        /// <c>/rudimentslead clear</c> wipes one deliberately. <b>The server decides this one</b>, not
+        /// the client: it is mirrored into the world config so a client cannot silently turn off the
+        /// warnings while the server carries on poisoning them. Default: true.</summary>
         public bool LeadPoisoningEnabled { get; set; } = true;
 
         /// <summary>Burden gained per helping consumed from a lead-glazed vessel. A meal counts the

@@ -53,6 +53,14 @@ namespace Rudiments.SRC.Common.Entities
             private set => entity.WatchedAttributes.SetDouble(BurdenKey, Math.Max(0, value));
         }
 
+        /// <summary>Wipes the burden and the penalty with it. The <c>/rudimentslead clear</c> route.</summary>
+        public void Clear()
+        {
+            Burden = 0;
+            entity.WatchedAttributes.SetDouble(SettledKey, entity.World.Calendar.TotalDays);
+            ApplyPenalty();
+        }
+
         /// <summary>Takes a dose. Settles first so the new lead is not retroactively decayed.</summary>
         public void Add(double amount)
         {
@@ -100,8 +108,9 @@ namespace Rudiments.SRC.Common.Entities
         /// <summary>Max health points currently lost to lead. Zero below the grace threshold.</summary>
         public float Penalty()
         {
+            if (!RudimentsModSystem.LeadPoisoningEnabled) return 0;
+
             RudimentsConfig cfg = RudimentsModSystem.Config;
-            if (!cfg.LeadPoisoningEnabled) return 0;
 
             double over = Burden - Math.Max(0, cfg.LeadOnsetBurden);
             if (over <= 0) return 0;

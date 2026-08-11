@@ -49,7 +49,7 @@ namespace Rudiments.SRC.Common.Blocks
 
             // Unconditional on greenware, unlike the fired warning: this is the moment the player is
             // deciding, and a raw bowl is not yet a vessel the vessel test would recognise.
-            if (LeadGlaze.IsToxic(glaze) && RudimentsModSystem.Config.LeadPoisoningEnabled)
+            if (LeadGlaze.IsToxic(glaze) && RudimentsModSystem.LeadPoisoningEnabled)
             {
                 dsc.AppendLine(Lang.Get("rudiments:glaze-lead-warning"));
             }

@@ -26,6 +26,36 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.20.0] — 2026-08-10 — Turning lead poisoning off, properly
+
+Every number in the mod was already a config value and read live. Two things about the off switch
+were not good enough.
+
+### Added
+- **`/rudimentslead`** — reports your burden, the threshold nothing happens below, how much max health
+  it is currently costing, and how fast it is draining. There is no GUI for lead and there is not
+  going to be one, so this is the only way to see the number behind the messages.
+- **`/rudimentslead clear [player]`** — wipes a burden. Requires `controlserver`. The way back for a
+  character who accumulated one under a setting the server has since changed its mind about; without
+  it, switching the feature off and on again re-applies the old penalty in full.
+
+### Fixed
+- **A client could turn the warnings off and still be poisoned.** Config is loaded per side from the
+  local `ModConfig/rudiments.json`, which is harmless for every other setting in this mod but not for
+  this one: the burden is server-authoritative and the warnings are client-side, so a client with
+  `LeadPoisoningEnabled: false` in their own file stopped being warned and carried on accumulating.
+  The server now mirrors its answer into the world config, which is synced, and every check reads
+  that in preference to the local file. `/rudimentsreload` re-mirrors it, so the switch is live.
+
+### Notes
+- Existing configs gain the six `Lead*` keys at their defaults the next time the game writes the file,
+  which happens on the first launch after updating. Nothing needs deleting.
+- With lead poisoning off, the four vessel classes stay installed. They are also what stops a pot,
+  crock or bowl losing its ware tier when it cooks, empties, serves or is eaten from, and that is not
+  a lead feature.
+
+---
+
 ## [0.19.0] — 2026-08-10 — The lead travels with the food
 
 0.18.0 tied lead exposure to the vessel in your hand at the moment you ate. This replaces that: the

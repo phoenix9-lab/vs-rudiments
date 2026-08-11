@@ -52,7 +52,7 @@ namespace Rudiments.Utils
         public static void Mark(ItemStack stack)
         {
             if (stack?.Attributes == null) return;
-            if (!RudimentsModSystem.Config.LeadPoisoningEnabled) return;
+            if (!RudimentsModSystem.LeadPoisoningEnabled) return;
 
             stack.Attributes.SetBool(MarkKey, true);
         }
@@ -102,7 +102,7 @@ namespace Rudiments.Utils
         /// <summary>True if this stack should carry the "the ware itself is lead" warning.</summary>
         public static bool Warns(ItemStack stack)
         {
-            return RudimentsModSystem.Config.LeadPoisoningEnabled
+            return RudimentsModSystem.LeadPoisoningEnabled
                 && IsToxic(stack)
                 && IsConsumptionVessel(stack);
         }
@@ -111,7 +111,7 @@ namespace Rudiments.Utils
         /// other way of finding out about, and the whole reason the mark is visible at all.</summary>
         public static bool WarnsContents(ItemStack stack)
         {
-            if (!RudimentsModSystem.Config.LeadPoisoningEnabled || IsToxic(stack)) return false;
+            if (!RudimentsModSystem.LeadPoisoningEnabled || IsToxic(stack)) return false;
 
             return IsMarked(stack) || IsMarked(ContentOf(stack));
         }
@@ -125,8 +125,10 @@ namespace Rudiments.Utils
             if (!leaded || servings <= 0 || byEntity?.World == null) return;
             if (byEntity.World.Side != EnumAppSide.Server) return;
 
+            if (!RudimentsModSystem.LeadPoisoningEnabled) return;
+
             RudimentsConfig cfg = RudimentsModSystem.Config;
-            if (!cfg.LeadPoisoningEnabled || cfg.LeadPerServing <= 0) return;
+            if (cfg.LeadPerServing <= 0) return;
 
             byEntity.GetBehavior<EntityBehaviorLeadBurden>()?.Add(servings * cfg.LeadPerServing);
         }

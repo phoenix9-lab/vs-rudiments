@@ -135,7 +135,7 @@ namespace Rudiments.SRC.Common.Items
             }
 
             // The earliest possible warning: before a single pot has been dusted, let alone fired.
-            if (LeadGlaze.IsToxic(glaze) && RudimentsModSystem.Config.LeadPoisoningEnabled)
+            if (LeadGlaze.IsToxic(glaze) && RudimentsModSystem.LeadPoisoningEnabled)
             {
                 dsc.AppendLine(Lang.Get("rudiments:glaze-applicator-lead-warning"));
             }
