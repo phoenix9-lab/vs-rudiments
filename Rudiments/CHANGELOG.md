@@ -26,6 +26,198 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.20.0] — 2026-08-10 — Turning lead poisoning off, properly
+
+Every number in the mod was already a config value and read live. Two things about the off switch
+were not good enough.
+
+### Added
+- **`/rudimentslead`** — reports your burden, the threshold nothing happens below, how much max health
+  it is currently costing, and how fast it is draining. There is no GUI for lead and there is not
+  going to be one, so this is the only way to see the number behind the messages.
+- **`/rudimentslead clear [player]`** — wipes a burden. Requires `controlserver`. The way back for a
+  character who accumulated one under a setting the server has since changed its mind about; without
+  it, switching the feature off and on again re-applies the old penalty in full.
+
+### Fixed
+- **A client could turn the warnings off and still be poisoned.** Config is loaded per side from the
+  local `ModConfig/rudiments.json`, which is harmless for every other setting in this mod but not for
+  this one: the burden is server-authoritative and the warnings are client-side, so a client with
+  `LeadPoisoningEnabled: false` in their own file stopped being warned and carried on accumulating.
+  The server now mirrors its answer into the world config, which is synced, and every check reads
+  that in preference to the local file. `/rudimentsreload` re-mirrors it, so the switch is live.
+
+### Notes
+- Existing configs gain the six `Lead*` keys at their defaults the next time the game writes the file,
+  which happens on the first launch after updating. Nothing needs deleting.
+- With lead poisoning off, the four vessel classes stay installed. They are also what stops a pot,
+  crock or bowl losing its ware tier when it cooks, empties, serves or is eaten from, and that is not
+  a lead feature.
+
+---
+
+## [0.19.0] — 2026-08-10 — The lead travels with the food
+
+0.18.0 tied lead exposure to the vessel in your hand at the moment you ate. This replaces that: the
+contamination now rides the food itself, so nothing is laundered by changing plates. 0.18.0 was never
+played, so nothing here is a migration — it is the same feature with the right model under it.
+
+### Changed
+- **Lead follows the food, not the pot.** A lead-glazed vessel contaminates whatever it is holding,
+  and the contamination travels with it. Cook a stew in a leaded pot, decant it into a clean crock,
+  serve it into a spotless porcelain bowl — it is still leaded and it will still poison you. Same for
+  water: fill a leaded jug, pour it into a clean cup, and the cup is leaded. Carried by one boolean
+  stack attribute, `rudimentslead`, stamped at each hand-off.
+- **Cooking counts, storing counts, serving counts.** Pots, crocks, bowls and jugs, exactly as asked.
+  Ware nothing edible passes through — flowerpots, oil lamps, watering cans, storage vessels — is
+  still harmless and still shows no warning.
+- **A clean vessel holding leaded food says so on its tooltip.** There would otherwise be no way to
+  tell, which would make the whole thing feel like a bug rather than a consequence.
+- **Two carriers, because food is stored two ways.** Meals mark the vessel stack (a meal has no single
+  contents object, and marking the ingredient stacks would stop them merging); liquids mark the
+  portion, which is the thing that actually moves, so it propagates through buckets and barrels with
+  no code at all.
+- `rudimentslead` is registered in `GlobalConstants.IgnoredStackAttributes` at startup so it can never
+  refuse a merge, a liquid top-up or a recipe match. The visible consequence is dilution: tipping a
+  leaded jug into a full clean barrel loses the lead rather than spoiling the barrel, and the reverse
+  keeps it. That is roughly what happens, and much kinder than a silent "these two waters will not
+  combine".
+- Handbook **Lead poisoning** rewritten around provenance, including the dilution rule.
+
+### Fixed
+- **A clay pot lost its ware tier and glaze every time it cooked.** `BlockCookingContainer.DoSmelt`
+  builds the cooked pot with `new ItemStack(CodeWithVariant("type", "cooked"), 1)` and never looks at
+  the raw pot again, so a stoneware pot cooked itself back down to earthenware. Fourth instance of the
+  same vanilla pattern.
+- **A pot or crock lost its ware tier and glaze when it gave up its last serving.**
+  `SetServingsMaybeEmpty` replaces it with its `emptiedBlockCode`. Third instance.
+- The serve wrappers added in 0.18.0 only snapshotted the receiving bowl; they now snapshot both sides,
+  and the restore triggers on "the collectible under this slot changed" rather than on a guess about
+  what it changed into.
+
+---
+
+## [0.18.0] — 2026-08-10 — Lead poisoning, and tin glaze
+
+The rest of Parcel 4, plus the thing that makes it mean something. Lead glaze was the cheapest seal
+in the game with no downside at all, which made tin and salt decoration. Now it has a price, and the
+other two have a reason to exist.
+
+### Added
+- **Lead poisoning.** Eating or drinking from a lead-glazed vessel builds a body burden. The burden
+  decays on its own every in-game day, online or off, and below a grace threshold the two balance and
+  nothing happens — five helpings a day off leaded ware is free. Above it you start losing **maximum
+  health**, up to a third of it, and losing max health at full health takes current health with it.
+  There is no antidote and dying does not clear it: the only cure is time away from the stuff. You are
+  told in chat when it starts, worsens, eases and clears. Built on
+  `EntityBehaviorHealth.SetMaxHealthModifiers`, so it is keyed, cumulative and reversible — no
+  Harmony, no reflection, no invented API.
+- **Exposure is the vessel in your hand when you consume**, and nothing else. A lead-glazed bowl you
+  eat a meal from, or a bowl or jug you drink from. Cooking in a leaded pot and eating from a clean
+  bowl does not count; neither does a leaded flowerpot, oil lamp, watering can or storage vessel.
+  A provenance chain would be invisible and unactionable, where "do not eat off the lead" is a rule a
+  player can follow.
+- **Warned from the first firing, and before it.** The galena nugget says what its glaze costs, raw
+  dusted greenware says it again, and fired ware you can consume from says it a third time — right
+  under the line that says it is sealed. Ware that cannot poison you never shows the warning.
+- **Tin glaze.** A cassiterite nugget over a lead-dusted vessel: two nuggets and a rarer ore against
+  lead's one, and it does not poison anyone. It goes *over* lead rather than onto bare clay because
+  that is what tin glaze is — a lead glaze opacified with tin oxide, invented in 9th-century Baghdad
+  to imitate Chinese porcelain and reinvented at Delft from about 1580. (Real tin-glazed ware still
+  leached lead, Delftware included. Treating the tin layer as the barrier it was believed to be is a
+  deliberate simplification, stated as one in the handbook: a glaze that is merely somewhat less
+  poisonous is not a decision a player can act on.)
+- **Handbook: Lead poisoning** (`rudiments-lead`), and the Glaze page rewritten around three glazes
+  with three different costs rather than one glaze and an also-ran.
+- Config section **Lead poisoning** — `LeadPoisoningEnabled`, `LeadPerServing`, `LeadDecayPerDay`,
+  `LeadOnsetBurden`, `LeadBurdenPerHealthPoint`, `LeadMaxHealthPenalty`. All read live.
+
+### Fixed
+- **Per-use fragility never once fired when eating a meal from a bowl.** `BlockMeal.OnHeldInteractStop`
+  overrides without calling base, and base is what forwards to `CollectibleBehaviors` — so
+  `rudiments:Fragile` has been silently skipped on that path since 0.14.0. It rolls now, on a completed
+  eat only.
+- **A bowl lost its ware tier and glaze the first time you ate out of it.** Vanilla's
+  `ServeIntoStack` does not fill the bowl you are holding; unless it already holds the identical meal
+  it builds a brand new stack from `mealBlockCode` and assigns it over the top, and `eatenBlock` does
+  the same in reverse when the last serving goes. A stoneware bowl therefore came back untiered — and
+  a lead-glazed one came back clean, which would have made the whole feature above unreachable through
+  meals. `ServeIntoStack` is not virtual; the three interaction entry points that reach it are, so the
+  bowl is snapshotted and restored around them. Known gap: serving into a *stack* of bowls sends the
+  meal to `TryGiveItemstack` rather than leaving it in hand, and that one is not tracked.
+
+### Notes
+- Deviates from the frozen plan on tin in two ways, both because tin's job changed. The plan gave it a
+  white texture and a small-brick-kiln gate; it has neither. Rendering white was dropped by request,
+  and the temperature argument never supported the kiln gate — tin glaze fires at about 1000 °C, well
+  inside a pit kiln. The gate is the ore.
+
+---
+
+## [0.17.0] — 2026-08-10 — Salt glaze
+
+Parcel 4 of the kiln plan, half of it. Tin glaze is deliberately not here — see below.
+
+### Added
+- **Salt glaze.** Put salt into a lit small brick or updraft kiln alongside the ware and the fuel and
+  the whole load comes out salt-glazed, which seals it exactly as a lead glaze does. One handful does
+  a full chamber where lead costs a galena nugget per vessel; in exchange it needs a kiln that can
+  actually reach stoneware temperature, which is the gate and needs no code — only the Rudiments kilns
+  have a salt slot at all. There is no coating step and no second firing, because the real process has
+  neither: at temperature the salt volatilises and the sodium vapour reacts with the silica in the clay
+  body itself, so the glaze is made out of the pot. Ware already dusted with lead keeps its lead glaze.
+- Salt is recognised by a `rudimentskilnsalt` attribute stamped onto `game:salt`, not by item code, so
+  another mod's salt opts in with a one-line patch.
+- A handbook section on `game:salt`, and a salt half to the glaze guide page.
+
+### Not added
+- **Tin glaze**, which the plan specifies as a white, convincing fake porcelain. Glaze is a stack
+  attribute, and an attribute cannot change how a block looks — no texture swap reaches a placed block
+  or a ground-storage pile. Without the white it is a strictly worse lead glaze, so it is on hold
+  pending a decision about giving lead glaze a health cost, which is the one thing that would make a
+  tin alternative matter on its own merits.
+
+---
+
+## [0.16.1] — 2026-08-10 — Kiln fixes from first playtest
+
+Everything here came out of playing the 0.16.0 kilns. No new content.
+
+### Fixed
+- **The kilns could not be lit.** Ignition was sneak + right-click on the kiln itself, which the game
+  never delivers: a sneaking right-click is routed to block placement first, then to the held item,
+  and only reaches the block if neither took it — so with anything at all in your hand the kiln never
+  saw the click. Lighting is now the bloomery's, via `IIgnitable`: hold a torch or a firestarter,
+  sneak, and hold right-click. Same gesture as every other lit thing in the game.
+- **Both kilns were placed facing away from you.** With `rotateY: 0` on the `-north` variant vanilla
+  expects the mouth on the *south* face of the shape (see `game:block/clay/bloomery/base`); the small
+  brick kiln's shape had it on the north, so it came out 180° round. The mouth moved to the south face
+  and the inventory icon now shows the front rather than the back.
+- **The updraft kiln was see-through**, having been modelled as an open-topped chamber with no crown.
+  It is now the vanilla bloomery shape re-skinned in red brick, which is solid, correctly oriented and
+  has the chimney seat already in it. Its two hand-authored shape files are gone.
+- **The chimney could not be stacked on the kiln.** Right-clicking the kiln with it in hand was
+  swallowed by the loading interaction. It now places on top from that same click, exactly as the
+  bloomery's does, is `Unplaceable` anywhere else, and is broken along with the kiln beneath it.
+- **The kiln blocks had no names.** Their name and description lang keys were written under the `game:`
+  domain, so `rudiments:block-smallbrickkiln-north` and its two siblings resolved to nothing and the
+  raw key was displayed in-world.
+- Right-clicking a kiln empty-handed emptied the whole thing in one click, which is a bad neighbour to
+  a mis-aimed click. It now takes out one slot: ware first, newest first, leftover fuel last.
+- `FromTreeAttributes` built the inventory id before calling `base`, so the id was composed from a
+  `Pos` that had not been read yet. Base call moved first, and the inventory now takes a live API from
+  `worldForResolving` instead of a null one.
+
+### Changed
+- A lit kiln emits fire particles at the mouth. There was previously no way to tell one was burning
+  except by reading its info panel.
+- The kiln info panel names whatever is still missing — fuel, ware, or the chimney — instead of only
+  ever offering the ignite prompt.
+- The "no fuel" line read *"Charcoal or coal — wood does not burn hot enough"*, which scans as refusing
+  charcoal. Reworded, along with the other fuel and ignition strings.
+
+---
+
 ## [0.16.0] — 2026-08-10 — The updraft kiln
 
 Porcelain has existed since 0.14.0 and there has been exactly one kiln that could fire it. The

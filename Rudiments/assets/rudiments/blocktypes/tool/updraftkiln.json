@@ -26,7 +26,8 @@
         "updraftkiln-*"
       ]
     },
-    "reinforcable": true
+    "reinforcable": true,
+    "chimneyCode": "updraftkilnchimney"
   },
   "creativeinventory": {
     "general": [
@@ -36,31 +37,28 @@
       "*-north"
     ]
   },
-  "shape": {
-    "base": "block/tool/updraftkiln/updraftkiln",
-    "rotateYByType": {
-      "*-north": 0,
-      "*-east": 270,
-      "*-south": 180,
-      "*-west": 90
-    }
+  "shapeByType": {
+    "*-north": { "base": "game:block/clay/bloomery/base", "rotateY": 0 },
+    "*-east": { "base": "game:block/clay/bloomery/base", "rotateY": 270 },
+    "*-south": { "base": "game:block/clay/bloomery/base", "rotateY": 180 },
+    "*-west": { "base": "game:block/clay/bloomery/base", "rotateY": 90 }
+  },
+  "textures": {
+    "base": { "base": "game:block/clay/brick/eight/running/red1" },
+    "base front": { "base": "game:block/clay/brick/eight/running/red1" }
   },
   "sidesolid": {
-    "all": false,
-    "down": true
+    "all": false
   },
   "sideopaque": {
-    "all": false,
-    "down": true
+    "all": false
   },
-  "collisionbox": {
-    "x1": 0,
-    "y1": 0,
-    "z1": 0,
-    "x2": 1,
-    "y2": 1,
-    "z2": 1
-  },
+  "collisionboxes": [
+    { "x1": 0, "y1": 0.25, "z1": 0, "x2": 1, "y2": 1, "z2": 1 },
+    { "x1": 0, "y1": 0, "z1": 0.25, "x2": 1, "y2": 0.25, "z2": 1, "rotateYByType": { "*-north": 180, "*-east": 90, "*-west": 270 } },
+    { "x1": 0, "y1": 0, "z1": 0, "x2": 0.375, "y2": 0.25, "z2": 0.25, "rotateYByType": { "*-north": 180, "*-east": 90, "*-west": 270 } },
+    { "x1": 0.625, "y1": 0, "z1": 0, "x2": 1, "y2": 0.25, "z2": 0.25, "rotateYByType": { "*-north": 180, "*-east": 90, "*-west": 270 } }
+  ],
   "selectionbox": {
     "x1": 0,
     "y1": 0,
@@ -82,7 +80,7 @@
   "guiTransform": {
     "rotation": {
       "x": -22.6,
-      "y": -45,
+      "y": 135,
       "z": 0
     },
     "origin": {

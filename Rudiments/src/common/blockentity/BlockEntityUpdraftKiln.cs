@@ -23,9 +23,6 @@ namespace Rudiments.SRC.Common.BlockEntities
     /// </summary>
     public class BlockEntityUpdraftKiln : BlockEntityKilnBase
     {
-        /// <summary>Matched with <c>Code.Path.Contains</c>, the bloomery's own one-line trick.</summary>
-        private const string ChimneyCode = "updraftkilnchimney";
-
         protected override string InvKey => "updraftkiln";
         protected override string LangPrefix => "rudiments:updraftkiln";
         protected override int WareSlots => 8;
@@ -35,19 +32,10 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         protected override float BurnHours => RudimentsModSystem.Config.UpdraftKilnBurnHours;
 
-        /// <summary>
-        /// Needs a chimney directly above and nothing else. Validated the way the bloomery validates
-        /// its own chimney — a <c>Code.Path.Contains</c> on the block above — rather than with a
-        /// MultiblockStructure. Flat ground; there is no slope requirement anywhere in this design.
-        /// </summary>
-        protected override bool CanIgnite(IPlayer byPlayer)
-        {
-            Block above = Api.World.BlockAccessor.GetBlock(Pos.UpCopy());
-            if (above?.Code?.Path.Contains(ChimneyCode) == true) return true;
-
-            Refuse(byPlayer, "nochimney", LangPrefix + "-nochimney");
-            return false;
-        }
+        // It also needs a chimney directly above, but that requirement is not written here: it is
+        // declared by the blocktype's chimneyCode attribute and enforced by the base class, which is
+        // the same attribute the block reads to place the chimney for you. Flat ground; there is no
+        // slope requirement anywhere in this design.
 
         /// <summary>
         /// Same as the base for ordinary ware, but porcelain gets a per-item roll instead of the
@@ -88,6 +76,7 @@ namespace Rudiments.SRC.Common.BlockEntities
                 ItemStack good = perfect.Clone();
                 good.StackSize = survived;
                 WareTier.CarryGlaze(raw, good);
+                ApplySaltGlaze(good);
                 slot.Itemstack = good;
             }
 

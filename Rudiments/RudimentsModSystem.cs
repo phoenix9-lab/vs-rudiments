@@ -1,7 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Linq;
+using Newtonsoft.Json.Linq;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Datastructures;
+using Vintagestory.API.Config;
 using Vintagestory.API.Server;
+using Vintagestory.API.Util;
 using Vintagestory.GameContent;
 using Rudiments.SRC.Common.Blocks;
 using Rudiments.SRC.Common.BlockEntities;
@@ -15,11 +20,46 @@ namespace Rudiments
     {
         public static RudimentsConfig Config { get; private set; } = new();
 
+        /// <summary>World-config key mirroring <see cref="RudimentsConfig.LeadPoisoningEnabled"/>.</summary>
+        public const string LeadPoisoningWorldKey = "Rudiments.LeadPoisoning";
+
+        private static ICoreAPI coreApi;
+
+        /// <summary>
+        /// Whether lead poisoning is on — <b>as decided by the server</b>, not by whoever is looking.
+        ///
+        /// Every other setting in this mod is read from the local ModConfig on whichever side is
+        /// asking, which is fine when the two sides agree and harmless when they do not. This one is
+        /// different, because the burden is server-authoritative and the warnings are client-side: a
+        /// client who turned it off in their own config would stop being warned and carry on being
+        /// poisoned. So the server mirrors its answer into the world config, which is synced, and the
+        /// local value is only the fallback for when there is no world config yet.
+        /// </summary>
+        public static bool LeadPoisoningEnabled
+        {
+            get
+            {
+                bool local = Config.LeadPoisoningEnabled;
+                ITreeAttribute worldConfig = coreApi?.World?.Config;
+                return worldConfig == null ? local : worldConfig.GetBool(LeadPoisoningWorldKey, local);
+            }
+        }
+
         public override void StartPre(ICoreAPI api)
         {
             base.StartPre(api);
+            coreApi = api;
             Config = api.LoadModConfig<RudimentsConfig>("rudiments.json") ?? new();
             api.StoreModConfig(Config, "rudiments.json");
+
+            // The lead mark rides on food and liquid stacks, so it must never be the reason two of
+            // them refuse to merge — vanilla's TryPutLiquid returns 0 outright when the contents
+            // differ by any attribute it does not know to ignore, which would read as "these two
+            // waters will not combine" with nothing on screen to explain it.
+            if (!GlobalConstants.IgnoredStackAttributes.Contains(LeadGlaze.MarkKey))
+            {
+                GlobalConstants.IgnoredStackAttributes = GlobalConstants.IgnoredStackAttributes.Append(LeadGlaze.MarkKey);
+            }
 
             // Mirror the feature flags into the world config so JSON patches can condition on
             // them (patches are server-side; the JsonPatch loader runs after every StartPre).
@@ -27,6 +67,7 @@ namespace Rudiments
             {
                 api.World.Config.SetBool("Rudiments.FlaxBloomHarvest", Config.FlaxBloomHarvest);
                 api.World.Config.SetBool("Rudiments.SeedsOnlyWhenMature", Config.SeedsOnlyWhenMature);
+                api.World.Config.SetBool(LeadPoisoningWorldKey, Config.LeadPoisoningEnabled);
             }
         }
 
@@ -74,6 +115,17 @@ namespace Rudiments
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntitySmallBrickKiln", typeof(BlockEntitySmallBrickKiln));
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityUpdraftKiln", typeof(BlockEntityUpdraftKiln));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockGlazableClayware", typeof(BlockGlazableClayware));
+
+            // ── Lead poisoning ──
+            // Three subclasses over the vanilla vessels food and drink pass through. Two of them are
+            // pure plumbing to stop vanilla's serve from wiping the bowl's ware attributes; the meal
+            // bowl is where eating is actually observed.
+            api.RegisterEntityBehaviorClass($"{Mod.Info.ModID}:LeadBurden", typeof(EntityBehaviorLeadBurden));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWareMeal", typeof(BlockWareMeal));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWarePot", typeof(BlockWarePot));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWareCrock", typeof(BlockWareCrock));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWareCookingContainer", typeof(BlockWareCookingContainer));
+
             api.RegisterBlockClass($"{Mod.Info.ModID}:RudimentsWateringCan", typeof(RudimentsWateringCan));
             api.RegisterCollectibleBehaviorClass($"{Mod.Info.ModID}:GlazeApplicator", typeof(CollectibleBehaviorGlazeApplicator));
 
@@ -113,8 +165,69 @@ namespace Rudiments
                 {
                     Config = api.LoadModConfig<RudimentsConfig>("rudiments.json") ?? new RudimentsConfig();
                     api.StoreModConfig(Config, "rudiments.json");
+
+                    // Re-mirror, or turning lead poisoning off would leave every client still warning
+                    // about it until the next restart.
+                    api.World.Config.SetBool(LeadPoisoningWorldKey, Config.LeadPoisoningEnabled);
+
                     return TextCommandResult.Success("Rudiments config reloaded.");
                 });
+
+            RegisterLeadCommand(api);
+        }
+
+        /// <summary>
+        /// Read and clear a player's lead burden. There is no GUI for it anywhere and there is not
+        /// going to be, so this is the only way to see a number that is otherwise only ever described
+        /// in words — and the only way back for a character who accumulated one under a setting the
+        /// server has since changed its mind about.
+        /// </summary>
+        private void RegisterLeadCommand(ICoreServerAPI api)
+        {
+            api.ChatCommands.Create("rudimentslead")
+                .WithDescription("Show your lead burden, or clear one")
+                .RequiresPlayer()
+                .HandleWith(args => Report(args.Caller.Entity))
+                .BeginSubCommand("clear")
+                    .WithDescription("Clear a lead burden — yours, or the named player's")
+                    .RequiresPrivilege(Privilege.controlserver)
+                    .WithArgs(api.ChatCommands.Parsers.OptionalWord("player"))
+                    .HandleWith(args =>
+                    {
+                        string name = args[0] as string;
+                        Entity target = args.Caller.Entity;
+
+                        if (name != null)
+                        {
+                            IServerPlayer found = api.World.AllOnlinePlayers
+                                .FirstOrDefault(p => p.PlayerName.Equals(name, System.StringComparison.OrdinalIgnoreCase)) as IServerPlayer;
+
+                            if (found == null) return TextCommandResult.Error($"No online player named '{name}'.");
+                            target = found.Entity;
+                        }
+
+                        var behavior = target?.GetBehavior<EntityBehaviorLeadBurden>();
+                        if (behavior == null) return TextCommandResult.Error("That entity carries no lead burden.");
+
+                        behavior.Clear();
+                        return TextCommandResult.Success($"Lead burden cleared for {name ?? args.Caller.GetName()}.");
+                    })
+                .EndSubCommand();
+        }
+
+        private static TextCommandResult Report(Entity entity)
+        {
+            var behavior = entity?.GetBehavior<EntityBehaviorLeadBurden>();
+            if (behavior == null) return TextCommandResult.Error("You carry no lead burden.");
+
+            if (!LeadPoisoningEnabled)
+            {
+                return TextCommandResult.Success($"Lead poisoning is off on this server. Burden on record: {behavior.Burden:0.#}.");
+            }
+
+            return TextCommandResult.Success(
+                $"Lead burden {behavior.Burden:0.#} (nothing happens below {Config.LeadOnsetBurden:0.#}). " +
+                $"Max health lost: {behavior.Penalty():0.#}. Shedding {Config.LeadDecayPerDay:0.#} per day.");
         }
 
         public override void StartClientSide(ICoreClientAPI api)

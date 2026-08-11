@@ -1,0 +1,19 @@
+[
+  {
+    "comment": "Salt glazing is the one glaze with no coating step: salt is thrown into the kiln at peak temperature and the sodium vapour reacts with the silica in the body itself. So it is a kiln slot, not an applicator, and one handful glazes the whole load where lead needs a nugget per pot. Flagged by attribute rather than matched by item code so another mod's salt joins in with a one-line patch of its own.",
+    "file": "game:itemtypes/resource/crushed/salt",
+    "op": "addmerge",
+    "path": "/attributes",
+    "value": {
+      "rudimentskilnsalt": true,
+      "handbook": {
+        "extraSections": [
+          {
+            "title": "rudiments:handbook-saltglaze-title",
+            "text": "rudiments:handbook-saltglaze-text"
+          }
+        ]
+      }
+    }
+  }
+]

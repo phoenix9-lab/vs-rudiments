@@ -128,6 +128,17 @@ namespace Rudiments.SRC.Common.Items
         {
             base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
             dsc.AppendLine(Lang.Get("rudiments:glaze-applicator-help", WareTier.GlazeName(glaze)));
+
+            if (requiresGlaze != null)
+            {
+                dsc.AppendLine(Lang.Get("rudiments:glaze-applicator-needs", WareTier.GlazeName(requiresGlaze)));
+            }
+
+            // The earliest possible warning: before a single pot has been dusted, let alone fired.
+            if (LeadGlaze.IsToxic(glaze) && RudimentsModSystem.LeadPoisoningEnabled)
+            {
+                dsc.AppendLine(Lang.Get("rudiments:glaze-applicator-lead-warning"));
+            }
         }
     }
 }
