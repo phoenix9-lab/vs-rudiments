@@ -1,5 +1,6 @@
 using Rudiments.Utils;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -334,11 +335,16 @@ namespace Rudiments.SRC.Common.BlockEntities
             dsc.AppendLine(Lang.Get("rudiments:scutchboard-grade",
                 FiberQuality.Name(Math.Min(FiberQuality.Get(batch), GradeFor(Cleanliness)))));
 
-            // The tell fires on the worked side; prompt the flip only while the other half is still
-            // filthy, so it reads as instruction the first time and stays quiet afterwards.
-            if (BladeOnBareFiber && LocalCleanlinessOf(!workingFar) < RudimentsModSystem.Config.ScutchSafeCleanliness)
+            // The tell fires on the worked side. While the other half is still filthy it reads as the
+            // instruction to flip; once both halves are clean there is nothing left to flip to, so the
+            // same signal switches to telling the player to stop and collect — otherwise the only
+            // in-game cue goes quiet exactly when over-scutching starts turning line into tow.
+            if (BladeOnBareFiber)
             {
-                dsc.AppendLine(Lang.Get("rudiments:scutchboard-flipprompt"));
+                bool otherSideDone = LocalCleanlinessOf(!workingFar) >= RudimentsModSystem.Config.ScutchSafeCleanliness;
+                dsc.AppendLine(Lang.Get(otherSideDone
+                    ? "rudiments:scutchboard-donewarning"
+                    : "rudiments:scutchboard-flipprompt"));
             }
         }
 
@@ -381,12 +387,27 @@ namespace Rudiments.SRC.Common.BlockEntities
         {
             if (stack?.Item?.Shape == null) return null;
 
+            // TesselateItem's 2-arg overload resolves UVs against the item texture atlas, but this
+            // mesh is baked straight into the chunk's terrain mesh, which is drawn against the block
+            // atlas. Without remapping through a texture source backed by BlockTextureAtlas, the UVs
+            // point at whatever happens to sit at those coordinates in the wrong atlas — the bundle
+            // tesselates without error but never actually appears. Same fix vanilla tool racks and
+            // display cases use for contained items baked into terrain mesh.
+            Dictionary<string, AssetLocation> textures = new Dictionary<string, AssetLocation>();
+            foreach (var kv in stack.Item.Textures) textures[kv.Key] = kv.Value.Baked.BakedName;
+            ITexPositionSource texSource = new ContainedTextureSource(
+                capi, capi.BlockTextureAtlas, textures, "scutchboard bundle " + stack.Collectible.Code);
+
             MeshData mesh;
             try
             {
-                capi.Tesselator.TesselateItem(stack.Item, out mesh);
+                capi.Tesselator.TesselateItem(stack.Item, out mesh, texSource);
             }
-            catch { return null; }
+            catch (Exception e)
+            {
+                Api.World.Logger.Warning("[rudiments] Failed to tesselate scutch board bundle mesh for {0}: {1}", stack.Collectible.Code, e);
+                return null;
+            }
             if (mesh == null) return null;
 
             for (int p = 0; p < mesh.RenderPassesAndExtraBits.Length; p++)

@@ -44,8 +44,15 @@
     "*-west": { "base": "game:block/clay/bloomery/base", "rotateY": 90 }
   },
   "textures": {
-    "base": { "base": "game:block/clay/brick/eight/running/red1" },
-    "base front": { "base": "game:block/clay/brick/eight/running/red1" }
+    "base": {
+      "base": "game:block/clay/brick/eight/running/cream1",
+      "overlays": [ "game:block/clay/brick/eight/running/red1" ]
+    },
+    "base front": {
+      "base": "game:block/clay/brick/eight/running/cream1",
+      "overlays": [ "game:block/clay/brick/eight/running/red1" ]
+    },
+    "inside": { "base": "game:block/clay/bloomery/inside" }
   },
   "sidesolid": {
     "all": false

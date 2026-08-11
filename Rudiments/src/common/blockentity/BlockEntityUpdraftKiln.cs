@@ -32,22 +32,26 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         protected override float BurnHours => RudimentsModSystem.Config.UpdraftKilnBurnHours;
 
+        protected override int FuelPerFiring => RudimentsModSystem.Config.UpdraftKilnFuelPerFiring;
+
         // It also needs a chimney directly above, but that requirement is not written here: it is
         // declared by the blocktype's chimneyCode attribute and enforced by the base class, which is
         // the same attribute the block reads to place the chimney for you. Flat ground; there is no
         // slope requirement anywhere in this design.
 
         /// <summary>
-        /// Same as the base for ordinary ware, but porcelain gets a per-item roll instead of the
-        /// automatic shards its own combustible properties would give it. On a success the output is
-        /// the raw block's own <c>beehivekiln["0"]</c> entry — the canonical perfect-firing result,
-        /// read off the block so the mapping is never duplicated in code.
+        /// Same as the base for ordinary ware, but porcelain fired hot enough gets a per-item roll
+        /// instead of the automatic shards its own combustible properties would give it. On a
+        /// success the output is the raw block's own <c>beehivekiln["0"]</c> entry — the canonical
+        /// perfect-firing result, read off the block so the mapping is never duplicated in code.
+        /// Porcelain fired on wood, peat or lignite never gets the roll — it cannot vitrify at that
+        /// temperature — and falls through to the base class, coming out as shards.
         /// </summary>
         protected override void FireSlot(ItemSlot slot)
         {
             ItemStack raw = slot.Itemstack;
 
-            if (!WareTier.IsPorcelain(raw.Collectible))
+            if (!firedHot || !WareTier.IsPorcelain(raw.Collectible))
             {
                 base.FireSlot(slot);
                 return;

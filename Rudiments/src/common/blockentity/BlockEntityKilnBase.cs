@@ -14,11 +14,10 @@ namespace Rudiments.SRC.Common.BlockEntities
     /// Everything the Rudiments kilns have in common: the fuel gate, the loading and unloading,
     /// the burn timer, and turning greenware into fired ware.
     ///
-    /// The fuel gate is the bloomery's, verbatim: <c>BurnTemperature &gt;= 1200 &amp;&amp;
-    /// BurnDuration &gt; 30</c>. That admits charcoal, coke, bituminous and anthracite coal, and
-    /// refuses lignite, peat and every wood. Cold fuel is refused **at insertion** with an ingame
-    /// error rather than accepted and then disappointing, which is how every vanilla fuel gate
-    /// behaves — nothing in vanilla lets a player wait ten in-game hours for a worse result.
+    /// The stoneware gate is the bloomery's, verbatim: <c>BurnTemperature &gt;= 1200 &amp;&amp;
+    /// BurnDuration &gt; 30</c>. Charcoal, coke, bituminous and anthracite coal clear it. Wood,
+    /// peat and lignite do not, but they are not refused any more: a kiln lit on them still fires,
+    /// just cooler, and turns out earthenware instead of stoneware — see <see cref="firedHot"/>.
     ///
     /// Ware admission is the generic <c>SmeltingType == Fire</c> contract rather than a list of
     /// codes, so Clayworks greenware and any other mod's fires here with no compat file at all, and
@@ -48,6 +47,11 @@ namespace Rudiments.SRC.Common.BlockEntities
         /// <summary>Set for the duration of one firing's output pass. See <see cref="ApplySaltGlaze"/>.</summary>
         private bool salting;
 
+        /// <summary>Whether the fuel that lit the current (or most recently finished) burn reached
+        /// stoneware temperature. Ware fires to <see cref="EnumWareTier.Stoneware"/> when true,
+        /// <see cref="EnumWareTier.Earthenware"/> when the kiln was lit on wood, peat or lignite.</summary>
+        protected bool firedHot;
+
         private AssetLocation insertSound;
         private SimpleParticleProperties fireParticles;
 
@@ -59,6 +63,9 @@ namespace Rudiments.SRC.Common.BlockEntities
         /// <summary>Ware capacity in quarter-tile units. 4 = one large piece, 8 = two.</summary>
         protected abstract int WareCapacityUnits { get; }
         protected abstract float BurnHours { get; }
+        /// <summary>Fuel items needed for one firing — also the hard cap on the fuel slot, so a
+        /// kiln never holds more than one firing's worth. The whole slot is spent at ignition.</summary>
+        protected abstract int FuelPerFiring { get; }
 
         /// <summary>
         /// Code fragment of a chimney this kiln needs directly above it, or null for kilns that need
@@ -158,18 +165,29 @@ namespace Rudiments.SRC.Common.BlockEntities
             ItemStack held = heldSlot?.Itemstack;
 
             if (held == null) return TryUnload(byPlayer);
-            if (IsHotFuel(held)) return TryInsert(byPlayer, heldSlot, FuelSlot, heldSlot.StackSize);
+            if (IsHotFuel(held) || IsColdFuel(held)) return TryInsertFuel(byPlayer, heldSlot);
             if (IsKilnSalt(held)) return TryInsert(byPlayer, heldSlot, SaltSlot, heldSlot.StackSize);
             if (IsFirableWare(held)) return TryInsertWare(byPlayer, heldSlot);
 
-            if (IsColdFuel(held))
+            Refuse(byPlayer, "notware", LangPrefix + "-notware");
+            return true;
+        }
+
+        /// <summary>
+        /// Caps the fuel slot at <see cref="FuelPerFiring"/> — exactly one firing's worth, never a
+        /// spare stack sitting there for the next one. The whole slot burns down to nothing at
+        /// ignition (see <see cref="TryIgnite"/>), so there is never a reason to hold more than this.
+        /// </summary>
+        private bool TryInsertFuel(IPlayer byPlayer, ItemSlot heldSlot)
+        {
+            int room = FuelPerFiring - FuelSlot.StackSize;
+            if (room <= 0)
             {
-                Refuse(byPlayer, "coldfuel", LangPrefix + "-coldfuel");
+                Refuse(byPlayer, "fuelfull", LangPrefix + "-fuelfull");
                 return true;
             }
 
-            Refuse(byPlayer, "notware", LangPrefix + "-notware");
-            return true;
+            return TryInsert(byPlayer, heldSlot, FuelSlot, Math.Min(room, heldSlot.StackSize));
         }
 
         private bool TryInsertWare(IPlayer byPlayer, ItemSlot heldSlot)
@@ -244,7 +262,7 @@ namespace Rudiments.SRC.Common.BlockEntities
             langKey = null;
 
             if (burning) { langKey = LangPrefix + "-burning"; return false; }
-            if (FuelSlot.Empty || !IsHotFuel(FuelSlot.Itemstack)) { langKey = LangPrefix + "-nofuel"; return false; }
+            if (FuelSlot.Empty || !(IsHotFuel(FuelSlot.Itemstack) || IsColdFuel(FuelSlot.Itemstack))) { langKey = LangPrefix + "-nofuel"; return false; }
             if (UsedUnits() == 0) { langKey = LangPrefix + "-noware"; return false; }
 
             string chimney = ChimneyCode;
@@ -266,9 +284,10 @@ namespace Rudiments.SRC.Common.BlockEntities
                 return false;
             }
 
+            firedHot = IsHotFuel(FuelSlot.Itemstack);
             burning = true;
             burnUntilTotalHours = Api.World.Calendar.TotalHours + BurnHours;
-            FuelSlot.TakeOut(1);
+            FuelSlot.Itemstack = null;
             FuelSlot.MarkDirty();
             MarkDirty(true);
             return true;
@@ -286,8 +305,10 @@ namespace Rudiments.SRC.Common.BlockEntities
 
             // Salt is thrown in at peak temperature and vapour-glazes everything in the chamber at
             // once — that is the whole point of it, and why one handful does a load where lead needs
-            // a nugget per pot. Decided before firing so every slot in this load agrees.
-            salting = !SaltSlot.Empty;
+            // a nugget per pot. Decided before firing so every slot in this load agrees. It needs
+            // stoneware heat to volatilise at all, so a load fired on cold fuel leaves the salt
+            // untouched in its slot rather than wasting it on a firing that could never use it.
+            salting = firedHot && !SaltSlot.Empty;
             if (salting)
             {
                 SaltSlot.TakeOut(1);
@@ -350,7 +371,7 @@ namespace Rudiments.SRC.Common.BlockEntities
 
             // Glaze rides through on the smelted stack already — BlockGlazableClayware clones it per
             // stack — so only the tier is stamped here.
-            WareTier.Set(result, EnumWareTier.Stoneware);
+            WareTier.Set(result, firedHot ? EnumWareTier.Stoneware : EnumWareTier.Earthenware);
             ApplySaltGlaze(result);
 
             slot.Itemstack = result;
@@ -407,6 +428,7 @@ namespace Rudiments.SRC.Common.BlockEntities
 
             burning = tree.GetBool("burning");
             burnUntilTotalHours = tree.GetDouble("burnUntilTotalHours");
+            firedHot = tree.GetBool("firedHot");
         }
 
         public override void ToTreeAttributes(ITreeAttribute tree)
@@ -419,6 +441,7 @@ namespace Rudiments.SRC.Common.BlockEntities
 
             tree.SetBool("burning", burning);
             tree.SetDouble("burnUntilTotalHours", burnUntilTotalHours);
+            tree.SetBool("firedHot", firedHot);
         }
 
         public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)

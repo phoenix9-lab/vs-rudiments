@@ -26,6 +26,49 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.21.0] — 2026-08-10 — Fuel decides the ware, not just the gate
+
+The two custom kilns treated fuel as a binary pass/fail switch and a spare stack rather than a real
+cost. Three fixes from the same playtest pass.
+
+### Changed
+- **Cold fuel is no longer refused.** Wood, peat and lignite used to be rejected at the kiln's mouth
+  outright. They are accepted now, and a kiln lit on them still fires — just cooler.
+- **What comes out follows the fuel.** A firing lit on charcoal, coke, bituminous or anthracite coal
+  still comes out stoneware, exactly as before. Lit on wood, peat or lignite it comes out earthenware
+  instead. The updraft kiln's porcelain roll only ever happens on a hot firing — porcelain fired cold
+  cannot vitrify and falls back to shards, the same outcome it always had before that roll existed.
+- **A kiln's fuel slot now holds exactly one firing's worth.** Small kiln 4, updraft kiln 8 — double,
+  matching its double ware capacity — and the whole slot is spent at ignition. Previously the slot
+  took a full stack of up to 64 and a firing burned exactly 1 off the top, so a single load quietly
+  lasted dozens of firings unnoticed.
+
+- **Salt no longer glazes a cold firing.** Salt vaporises and reacts with the clay body only at
+  stoneware heat, so a load lit on wood, peat or lignite now leaves a loaded salt slot untouched
+  rather than stamping a "salt-glazed earthenware" that the game's own lore says can't exist.
+
+### Fixed
+- **The updraft kiln, and its chimney, rendered see-through.** Root cause was a texture, not a missing
+  one: both reuse a vanilla shape re-skinned with `block/clay/brick/eight/running/red1` as the base
+  wall texture, but that PNG is authored as a colour-tint **overlay** with a partially transparent
+  alpha channel — every vanilla use of it composites it over an opaque `cream1` base
+  (`blocktypes/clay/brickcourse.json`'s own convention) rather than using it bare. Both blocktypes now
+  do the same. (`inside` was also missing from both and has been declared too, matching the small
+  brick kiln's own shape — real gap, but not what was making the kiln see-through.)
+- **Three handbook pages still promised guaranteed vitrification.** Water, porcelain and lead all told
+  players a brick/updraft kiln firing vitrifies the body outright; now that cold fuel is accepted,
+  that's only true when it's lit on charcoal, coke or coal. Reworded to say so, including that a
+  cold-fired porcelain load is a total loss rather than the usual ~30%.
+
+### Notes
+- New config: `SmallBrickKilnFuelPerFiring` (4), `UpdraftKilnFuelPerFiring` (8) — also the hard cap on
+  each kiln's fuel slot. `KilnMinFuelTemperature`'s doc comment now describes what it actually gates:
+  the stoneware/earthenware split, not fuel acceptance.
+- Compiles clean; the fuel amounts and the earthenware-from-cold-fuel path are new enough to want a
+  playtest before calling the balance settled.
+
+---
+
 ## [0.20.0] — 2026-08-10 — Turning lead poisoning off, properly
 
 Every number in the mod was already a config value and read live. Two things about the off switch

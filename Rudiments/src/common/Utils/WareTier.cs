@@ -6,8 +6,10 @@ namespace Rudiments.Utils
 {
     /// <summary>
     /// The three ceramic bodies, in the order a potter unlocks them.
-    /// Earthenware is porous and weeps; stoneware is vitrified and does not; porcelain is
-    /// vitrified, white and the most brittle of the three under impact.
+    /// Earthenware is porous, weeps, and — being the most lightly fired — wears out fastest in the
+    /// hand. Stoneware is vitrified and does not weep. Porcelain is vitrified, white, and dense
+    /// enough that ordinary use does not wear it out at all; all three shatter alike when dropped
+    /// or thrown.
     /// </summary>
     public enum EnumWareTier
     {
@@ -120,9 +122,10 @@ namespace Rudiments.Utils
         }
 
         /// <summary>
-        /// Per-use shatter chance for a tier. Porcelain is deliberately the highest: it is
-        /// thinner-walled and more brittle under impact than thick porous earthenware, which chips
-        /// where porcelain shatters.
+        /// Per-use shatter chance for a tier. Earthenware is deliberately the highest: it is porous
+        /// and the most lightly fired of the three, so it wears out fastest. Porcelain defaults to
+        /// 0 — fully vitrified, it does not wear out from ordinary use at all, only from being
+        /// dropped or thrown, which this method has nothing to do with.
         /// </summary>
         public static double BreakChance(EnumWareTier tier, RudimentsConfig cfg)
         {

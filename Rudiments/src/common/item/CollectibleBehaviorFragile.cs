@@ -16,9 +16,11 @@ namespace Rudiments.SRC.Common.Items
     /// putting it on a shelf and opening a placed container are all free. The last of those is
     /// widened by <c>BreakageIncludesPlacedContainers</c>, handled on the vessel block itself.
     ///
-    /// The numbers are low on purpose (0.1% / 0.5% / 1.5%): median uses before a break are ~693,
-    /// ~138 and ~46. Wear is texture, not a tax. Seepage is what actually pushes the player up the
-    /// ware ladder.
+    /// The numbers favor the top of the ladder on purpose (1.5% / 0.5% / 0%, earthenware to
+    /// porcelain): a starter bowl breaks on a median of ~46 uses, stoneware ~138, and porcelain does
+    /// not wear out from ordinary use at all — only from being dropped or thrown, which this
+    /// behavior has nothing to do with. Between seepage and wear, earthenware now gives two good
+    /// reasons to move up the ware ladder instead of one.
     /// </summary>
     public class CollectibleBehaviorFragile : CollectibleBehavior
     {
