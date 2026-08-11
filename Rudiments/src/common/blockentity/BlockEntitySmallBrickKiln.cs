@@ -20,5 +20,7 @@ namespace Rudiments.SRC.Common.BlockEntities
         protected override int WareCapacityUnits => 4;
 
         protected override float BurnHours => RudimentsModSystem.Config.SmallBrickKilnBurnHours;
+
+        protected override int FuelPerFiring => RudimentsModSystem.Config.SmallBrickKilnFuelPerFiring;
     }
 }

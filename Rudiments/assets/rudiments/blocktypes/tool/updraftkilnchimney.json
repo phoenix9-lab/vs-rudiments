@@ -19,7 +19,11 @@
     "base": "game:block/clay/bloomery/chimney"
   },
   "textures": {
-    "chimney": { "base": "game:block/clay/brick/eight/running/red1" }
+    "chimney": {
+      "base": "game:block/clay/brick/eight/running/cream1",
+      "overlays": [ "game:block/clay/brick/eight/running/red1" ]
+    },
+    "inside": { "base": "game:block/clay/bloomery/inside" }
   },
   "sidesolid": {
     "all": false

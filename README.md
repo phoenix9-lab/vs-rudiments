@@ -104,12 +104,65 @@ Both this and the bloom-stage flax harvest can be disabled in the [config](#conf
 
 ---
 
+## Pottery & Kilns
+
+Fired clay comes in three progressively better bodies, and which one you get depends on the kiln you
+fire it in and — for the two custom kilns — the fuel you fire it with.
+
+### Ware tiers
+
+| Tier | How you get it | Behaviour |
+|---|---|---|
+| Earthenware | The default. A pit kiln, or a small brick/updraft kiln fired on wood, peat or lignite | Porous — leaks liquids over time unless glazed; the most fragile in the hand |
+| Stoneware | Any beehive firing, or a small brick/updraft kiln fired on charcoal, coke, bituminous or anthracite coal | Vitrified and sealed; sturdier than earthenware |
+| Porcelain | Its own clay (`clay-porcelain`, from blue clay via a pulverizer or a firepit+quern route), fired white only in a beehive kiln with every door shut | Vitrified, dense, and does not wear from ordinary use — only from being dropped or thrown |
+
+- **Seepage.** Unsealed earthenware leaks: half empty at 6 in-game hours, dry at 12 — a share of
+  *each vessel's own capacity*, so a 1 L bowl and a 3 L jug empty on the same clock.
+- **Wear fragility.** Using a vessel — drinking, filling, emptying, pouring — carries a per-use
+  shatter chance, highest for earthenware and zero by default for porcelain.
+- **Drop breakage.** Any fired clay item shatters if thrown or dropped hard enough, spilling its
+  contents rather than voiding them.
+- **The watering-can gate.** An unsealed earthenware can refuses to fill from a water source — glaze
+  it or move up the ladder.
+
+### The kiln ladder
+
+`Pit kiln` (free, earthenware only) → `Small brick kiln` / `Updraft kiln` → `Beehive kiln` (vanilla, downdraft, even heat)
+
+- **Small brick kiln** — a single block, four ware slots, built from bricks the pit kiln already
+  gives you. The cheapest way off earthenware.
+- **Updraft kiln** — double the capacity, needs a chimney directly above it, and is the first kiln
+  that can fire porcelain — unevenly: expect to lose around 30% of a porcelain load to shards. The
+  vanilla beehive kiln's even downdraft heat is the reliable answer to that loss.
+- **Fuel decides the tier, not a pass/fail gate.** Charcoal, coke, bituminous and anthracite coal fire
+  stoneware, and in the updraft kiln give porcelain its chance at surviving whole. Wood, peat and
+  lignite still fire the kiln — just cooler — so the load comes out earthenware instead, and
+  porcelain gets no roll at all. Nothing is refused at the mouth.
+- **One firing's worth, no more.** Each kiln's fuel slot caps at exactly what one firing needs (4 for
+  the small kiln, 8 for the updraft) and burns down to nothing when it lights — no stockpiling a
+  64-stack for dozens of firings.
+
+### Glazes
+
+Right-click bone-dry greenware — a pile on the ground, or held in your off hand — to apply. No glaze
+item and no second firing: it fires alongside the piece in any kiln, the pit kiln included.
+
+| Glaze | Applied with | Cost |
+|---|---|---|
+| Lead | A galena nugget, one per vessel | The cheapest seal in the game — but eating or drinking from leaded ware builds a burden that costs max health past a threshold. Decays on its own if you ease off; `/rudimentslead` shows your number |
+| Tin | A cassiterite nugget over already-leaded greenware, two nuggets | Same seal, no poisoning — a lead glaze opacified with tin, same as it was historically |
+| Salt | A handful thrown into a lit small brick or updraft kiln | Seals the entire load at once — needs a kiln hot enough to fire stoneware |
+
+Lead poisoning is fully configurable, decays daily whether you're online or not, and can be turned off
+server-side (`LeadPoisoningEnabled`) — see [Configuration](#configuration).
+
+---
+
 ## Planned
 
 These are directions, not promises. Each will be its own coherent addition when the time is right.
 
-- **Pottery** — hand-formed pottery with drying and firing stages; quality influenced by clay source and technique
-- **Intermediate kilns** — the gap between a pit fire and a beehive kiln is large; filling it with updraft and clamp kilns
 - **Mudwork** — wattle and daub, cob, adobe; building with what's underfoot
 
 ---
@@ -178,6 +231,40 @@ Apply changes without restarting: `/rudimentsreload` (requires `controlserver` p
 | `ReedSpreadMaxDensity` | `6` | Local density cap |
 | `ReedSpreadMaxRadius` | `16` | Hard outward cap in blocks. `0` = unlimited |
 | `ReedSpreadDensityRadius` | `2` | Radius checked for the density cap |
+
+### Ware tiers, kilns and glaze
+
+| Setting | Default | Effect |
+|---|---|---|
+| `EarthenwareBreakChance` | `0.015` | Per-use shatter chance for earthenware. `0` disables wear breakage for it |
+| `StonewareBreakChance` | `0.005` | Per-use shatter chance for stoneware |
+| `PorcelainBreakChance` | `0` | Per-use shatter chance for porcelain. `0` means it only breaks from drops/throws, never ordinary use |
+| `BreakageIncludesPlacedContainers` | `false` | If `true`, opening a placed container counts as a "use" for wear breakage too |
+| `ThrownClayBreakChance` | `1.0` | Chance a deliberately dropped fired clay item shatters on landing. `0` disables it (the hard-landing trigger below still applies) |
+| `ThrownClayBreakWholeStack` | `true` | Break the whole dropped stack (Ctrl+Q) rather than one item (Q) |
+| `ThrownBreakOnDeathDrop` | `false` | Whether pottery scattered on death also shatters |
+| `ClayImpactBreakSpeed` | `0.4` | Downward landing speed above which any fired clay shatters, however it got there. `0` disables the hard-landing trigger |
+| `EarthenwareEmptyHours` | `12` | In-game hours for a full unsealed earthenware vessel to seep dry. `0` disables seepage |
+| `KilnMinFuelTemperature` | `1200` | Minimum burn temperature (paired with burn duration > 30) a fuel needs to fire stoneware instead of earthenware in a small brick or updraft kiln |
+| `SmallBrickKilnBurnHours` | `10` | In-game hours a small brick kiln takes to finish a firing |
+| `SmallBrickKilnFuelPerFiring` | `4` | Fuel a small brick kiln needs per firing — also the hard cap on its fuel slot |
+| `UpdraftKilnBurnHours` | `12` | In-game hours an updraft kiln takes to finish a firing |
+| `UpdraftKilnFuelPerFiring` | `8` | Fuel an updraft kiln needs per firing — also the hard cap on its fuel slot |
+| `UpdraftKilnPorcelainFailChance` | `0.30` | Per-item chance porcelain comes out of an updraft kiln as shards instead of whole, on a hot-enough firing |
+| `SealedWareRequiredForWateringCan` | `true` | Whether an unsealed earthenware watering can refuses to fill |
+| `PorcelainClayPerQuartz` | `2` | Blue clay converted per crushed quartz on the pulverizer route to porcelain clay. Requires restart |
+| `PorcelainClayPerFlint` | `1` | Blue clay converted per powdered flint + bonemeal on the bone-china route. Requires restart |
+
+### Lead poisoning
+
+| Setting | Default | Effect |
+|---|---|---|
+| `LeadPoisoningEnabled` | `true` | Whether lead-glazed vessels poison whoever eats or drinks from them. Server-authoritative — a client can't silently disable the warnings while still being poisoned |
+| `LeadPerServing` | `1.0` | Burden gained per helping consumed from a lead-glazed vessel |
+| `LeadDecayPerDay` | `5.0` | Burden shed per in-game day, online or off — the only cure is time away from leaded ware |
+| `LeadOnsetBurden` | `15.0` | Burden below which nothing happens at all — occasional use off leaded ware is free |
+| `LeadBurdenPerHealthPoint` | `12.0` | Burden above the onset threshold per point of max health lost |
+| `LeadMaxHealthPenalty` | `5.0` | Most max health lead poisoning can ever take, out of 15 |
 
 ### Other
 

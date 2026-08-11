@@ -200,20 +200,23 @@ namespace Rudiments
         // recipes and therefore need a restart.
 
         /// <summary>Per-use shatter chance for untiered fired clay — the body a pit kiln gives you.
-        /// Applies when a vessel is actually used: drunk from, filled, emptied, poured. At the
-        /// default a bowl survives a median of ~693 uses. Set to 0 to disable wear breakage for
-        /// earthenware. Default: 0.001.</summary>
-        public double EarthenwareBreakChance { get; set; } = 0.001;
+        /// Applies when a vessel is actually used: drunk from, filled, emptied, poured. Earthenware
+        /// is deliberately the most fragile of the three: it is the most lightly fired and the most
+        /// porous, so it wears out fastest in the hand. A bowl survives a median of ~46 uses. Set to
+        /// 0 to disable wear breakage for earthenware. Default: 0.015.</summary>
+        public double EarthenwareBreakChance { get; set; } = 0.015;
 
-        /// <summary>Per-use shatter chance for stoneware — vitrified, sealed, and a little more
-        /// brittle for it. Median ~138 uses. Default: 0.005.</summary>
+        /// <summary>Per-use shatter chance for stoneware — vitrified and sealed, and sturdier under
+        /// ordinary handling than porous earthenware for it. Median ~138 uses. Default: 0.005.</summary>
         public double StonewareBreakChance { get; set; } = 0.005;
 
-        /// <summary>Per-use shatter chance for porcelain, deliberately the highest of the three.
-        /// Porcelain's flexural strength is genuinely higher than earthenware's, but it is
-        /// thin-walled and brittle: it shatters where thick porous ware chips. Median ~46 uses.
-        /// Default: 0.015.</summary>
-        public double PorcelainBreakChance { get; set; } = 0.015;
+        /// <summary>Per-use shatter chance for porcelain. Zero by default: porcelain is fully
+        /// vitrified and dense enough that ordinary use does not wear it out at all, only careless
+        /// handling does — a dropped or thrown piece still shatters same as any fired clay, via
+        /// <see cref="ThrownClayBreakChance"/> / <see cref="ClayImpactBreakSpeed"/> below, which do
+        /// not distinguish by tier. Set above 0 to give porcelain a wear chance too.
+        /// Default: 0.</summary>
+        public double PorcelainBreakChance { get; set; } = 0;
 
         /// <summary>Widen "use" to include opening a placed container, so a stoneware storage vessel
         /// can fail when you reach into it. Off by default — carrying and opening are free, only
@@ -258,16 +261,22 @@ namespace Rudiments
         /// Default: 1. Requires restart.</summary>
         public int PorcelainClayPerFlint { get; set; } = 1;
 
-        /// <summary>Minimum burn temperature a fuel must reach to be accepted by a Rudiments kiln,
-        /// paired with a burn duration above 30. This is the bloomery's own gate, verbatim: it
-        /// admits charcoal (1300/40), coke (1340/40), bituminous coal (1200/84) and anthracite
-        /// (1200/196), and refuses lignite (1100), peat (900) and every wood (≤800). Cold fuel is
-        /// refused at insertion rather than accepted and disappointing. Default: 1200.</summary>
+        /// <summary>Minimum burn temperature a fuel must reach to fire ware to stoneware in a
+        /// Rudiments kiln, paired with a burn duration above 30. This is the bloomery's own gate,
+        /// verbatim: it clears charcoal (1300/40), coke (1340/40), bituminous coal (1200/84) and
+        /// anthracite (1200/196). Fuel below this threshold — lignite, peat, every wood — is not
+        /// refused any more: a kiln lights on it just fine, only cooler, and turns out earthenware
+        /// instead of stoneware. Default: 1200.</summary>
         public int KilnMinFuelTemperature { get; set; } = 1200;
 
         /// <summary>In-game hours a small brick kiln takes to finish a firing. The bloomery's own
         /// figure. Default: 10.</summary>
         public float SmallBrickKilnBurnHours { get; set; } = 10f;
+
+        /// <summary>Fuel items a small brick kiln needs for one firing. Also the hard cap on its
+        /// fuel slot — it holds exactly one firing's worth, never a spare stack, and the whole slot
+        /// is spent when it lights. Default: 4.</summary>
+        public int SmallBrickKilnFuelPerFiring { get; set; } = 4;
 
         /// <summary>Whether an unsealed earthenware watering can refuses to fill. Sealed means
         /// stoneware, porcelain, or any glaze. Set to false to restore vanilla behaviour, where a
@@ -277,6 +286,10 @@ namespace Rudiments
         /// <summary>In-game hours an updraft kiln takes to finish a firing. Longer than the small
         /// brick kiln, for double the capacity. Default: 12.</summary>
         public float UpdraftKilnBurnHours { get; set; } = 12f;
+
+        /// <summary>Fuel items an updraft kiln needs for one firing, and the hard cap on its fuel
+        /// slot — double the small kiln's, matching its double ware capacity. Default: 8.</summary>
+        public int UpdraftKilnFuelPerFiring { get; set; } = 8;
 
         /// <summary>Per-item chance that porcelain comes out of an updraft kiln as shards. An updraft
         /// kiln is hottest at the firemouths and cools toward the crown, and that unevenness is why
