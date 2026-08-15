@@ -186,7 +186,7 @@
   "rudiments:item-handbooktitle-finefibers": "Fine Fibres",
   "rudiments:item-handbooktext-finefibers": "The best-quality bast fibre, produced only by careful retting at the right stage. Twist four of them together into <a href=\"handbook://item-rudiments:finecord\">fine cord</a>, which imparts a durability bonus when used in bow or tool crafting.",
   "rudiments:item-handbooktitle-finecord": "Fine Cord",
-  "rudiments:item-handbooktext-finecord": "A precisely-twisted cord of fine bast fibres — uniform, strong, and resistant to repeated stress. Replaces flaxtwine in bow recipes for a significant durability bonus (+50/100/150 by tier). Also used in linen gambeson head and leg armor crafting for +200 durability.",
+  "rudiments:item-handbooktext-finecord": "A precisely-twisted cord of fine bast fibres — uniform, strong, and resistant to repeated stress. Replaces flaxtwine in bow recipes for a significant durability bonus (+50/100/150/240 by tier). Also used in linen gambeson head and leg armor crafting for +200 durability.",
   "rudiments:item-handbooktitle-nettlerhizome": "Nettle Rhizome",
   "rudiments:item-handbooktext-nettlerhizome": "A root crown dug from mature stinging nettle (stage 8 or 9). Hold a <hk>shovel</hk> and right-click the plant to carefully extract it — the plant is destroyed. Right-click fertile soil with the rhizome to establish a new patch anywhere without needing farmland. Wild nettle also spreads naturally by rhizome over time.",
   "rudiments:item-handbooktitle-nettlefiber": "Nettle Fibre",

@@ -52,5 +52,25 @@
       "quantity": 1,
       "attributes": { "durabilityBonus": 150 }
     }
+  },
+  {
+    "code": "finecord-bow-recurve",
+    "ingredientPattern": "MFT,BLT,MFT",
+    "requiresTrait": "bowyer",
+    "ingredients": {
+      "B": { "type": "item", "code": "game:bowstave-recurve-dry" },
+      "T": { "type": "item", "code": "rudiments:finecord" },
+      "L": { "type": "item", "code": "game:leather-normal-plain" },
+      "F": { "type": "item", "code": "game:bone" },
+      "M": { "type": "item", "code": "game:bushmeat-raw" }
+    },
+    "width": 3,
+    "height": 3,
+    "output": {
+      "type": "item",
+      "code": "game:bow-recurve",
+      "quantity": 1,
+      "attributes": { "durabilityBonus": 240 }
+    }
   }
 ]
