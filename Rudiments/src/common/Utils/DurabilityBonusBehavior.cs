@@ -14,7 +14,9 @@ namespace Rudiments.Utils
 
         public override int GetMaxDurability(ItemStack itemstack, int durability, ref EnumHandling bhHandling)
         {
-            int bonus = itemstack?.Attributes?.GetInt("durabilityBonus", 0) ?? 0;
+            // GetInt only matches IntAttribute, but Newtonsoft loads JSON integers as long — recipe
+            // output attributes land here as LongAttribute, so GetInt silently returns the default.
+            int bonus = itemstack?.Attributes?.GetAsInt("durabilityBonus", 0) ?? 0;
             if (bonus > 0)
             {
                 bhHandling = EnumHandling.Handled;
