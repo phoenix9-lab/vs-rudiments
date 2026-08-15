@@ -1,6 +1,6 @@
 [
   {
-    "ingredientPattern": "BBB,B_B,BBB",
+    "ingredientPattern": "BBB,BBB,BBB",
     "ingredients": {
       "B": {
         "type": "item",
