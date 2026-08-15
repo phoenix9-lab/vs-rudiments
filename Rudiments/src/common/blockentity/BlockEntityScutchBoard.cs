@@ -79,7 +79,13 @@ namespace Rudiments.SRC.Common.BlockEntities
             interactSound = new AssetLocation("game", "sounds/block/planks");
         }
 
-        private int Capacity => Math.Max(1, Block?.Attributes?["scutchCapacity"]?.AsInt(4) ?? 4);
+        /// <summary>Nettle's coarse, tangled stems don't care how fine the notch is cut, so a batch
+        /// isn't bottlenecked by board tier — the whole stack can go on at once. Flax still respects
+        /// the board's craftsmanship cap.</summary>
+        private int CapacityFor(ItemStack stack) =>
+            IsNettle(stack) ? stack.Collectible.MaxStackSize : Math.Max(1, Block?.Attributes?["scutchCapacity"]?.AsInt(4) ?? 4);
+
+        private int Capacity => CapacityFor(BundleSlot?.Itemstack);
 
         /// <summary>Per-stroke share of the remaining boon this board knocks free. Craftsmanship in the
         /// notch scales it (a better-cut notch holds the bundle steadier); nettle divides it down.</summary>
@@ -152,7 +158,8 @@ namespace Rudiments.SRC.Common.BlockEntities
                 }
             }
 
-            int room = Capacity - (slot.Empty ? 0 : slot.Itemstack.StackSize);
+            int capacity = CapacityFor(slot.Empty ? held : slot.Itemstack);
+            int room = capacity - (slot.Empty ? 0 : slot.Itemstack.StackSize);
             if (room <= 0)
             {
                 Refuse(byPlayer, "full", "rudiments:scutchboard-full");

@@ -22,7 +22,7 @@
     "top": { "base": "rudiments:block/tool/scutchboard/top" }
   },
   "maxstacksize": 1,
-  "durability": 150,
+  "durability": 450,
   "materialDensity": 400,
   "combustibleProps": {
     "burnTemperature": 800,
