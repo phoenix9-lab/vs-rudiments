@@ -26,6 +26,36 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.22.3] — 2026-08-19 — Handbook rewrite: plainer pages, and pottery wear stated the right way round
+
+### Fixed
+- **The handling page had the ware tiers backwards.** It listed earthenware at 0.1%, stoneware at
+  0.5% and porcelain at 1.5% per-use shatter, and told players porcelain was the most fragile of the
+  three. The defaults are the other way round — earthenware 1.5% (~46 uses), stoneware 0.5% (~138),
+  porcelain 0, no wear from ordinary use at all. Corrected on the handling page, on the ware page's
+  closing line, and in the glaze page's "what a glaze does not do" paragraph, which called
+  lead-glazed earthenware the toughest tier to handle.
+- **The kilns page still said cold-fired porcelain came out earthenware.** It comes out as shards —
+  `BlockEntityUpdraftKiln.FireSlot` only grants the survival roll on a hot firing and otherwise falls
+  through to the base class. The porcelain page already said so; the two now agree.
+
+### Changed
+- **All nine pottery handbook pages rewritten to plain language.** Ware, handling, water, porcelain,
+  kilns, glaze, lead poisoning, and the two extra sections (fire clay, salt glazing). Cut the
+  chemistry and the history throughout — sodium-alumino-silicate vapour, alumina and silica
+  percentages, firing temperatures in °C, Rhenish and Staffordshire potters, Spode's bone-china
+  formula, 9th-century Baghdad and Delft, saggars and bottle ovens — and cut the word "gate" and its
+  variants from the lang file entirely. What is left is what a player needs to use the thing and what
+  it does to them. Total handbook text roughly halved, from ~19,400 to ~11,700 characters.
+- **Two mechanics stated that were not before.** Wear applies only to using a vessel — carrying one,
+  or opening a container you have placed, is free (`BreakageIncludesPlacedContainers` is off by
+  default). And drop breakage does not vary by tier, which is worth saying now that wear does.
+
+### Notes
+- Text only: no code, config or asset changes, so no behaviour changes with this version.
+- The fibre and nettle handbook entries were left alone — already step-by-step and free of both the
+  history and the "gate" language.
+
 ## [0.21.0] — 2026-08-10 — Fuel decides the ware, not just the gate
 
 The two custom kilns treated fuel as a binary pass/fail switch and a spare stack rather than a real
