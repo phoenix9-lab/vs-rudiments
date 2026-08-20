@@ -26,6 +26,22 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.23.0] — 2026-08-20 — Porcelain clayforming texture fix, and a Clayworks wet-stage compat patch
+
+### Fixed
+- **Porcelain showed the atlas placeholder ("?") for the entire clayforming stage.** The clay-forming
+  voxel view reads its texture from the `clayform` workbench block's own `textures` dict (keyed by the
+  work item's short code), not from the item's own texture definitions — vanilla only ever registers
+  `clayworkitem-blue/fire/red` there. The icon, the finished raw item and the fired item all resolved
+  fine through unrelated texture paths, so only the in-progress forming view was affected.
+
+### Added
+- **Clayworks compatibility: porcelain now gets the same wet-then-dry greenware stage as every other
+  colour.** Clayworks redirects vanilla clayforming recipes through a `*-wet` block that must sit ~8
+  hours before drying into raw ware, but porcelain ships its own clayforming recipes rather than
+  reusing the vanilla ones, so it always skipped straight to raw. It now goes through an equivalent
+  `rudiments:*-porcelain-wet` stage — only when Clayworks is installed; without it, nothing changes.
+
 ## [0.22.3] — 2026-08-19 — Handbook rewrite: plainer pages, and pottery wear stated the right way round
 
 ### Fixed

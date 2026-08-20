@@ -1,0 +1,66 @@
+{
+  "code": "flowerpot-porcelain-wet",
+  "class": "Block",
+  "behaviors": [
+    { "name": "GroundStorable", "properties": { "layout": "Quadrants", "collisionBox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.4375, "z2": 1 } } },
+    { "name": "Unplaceable" },
+    { "name": "RightClickPickup" }
+  ],
+  "shape": { "base": "game:block/clay/flowerpot/empty" },
+  "textures": {
+    "all": {
+      "base": "rudiments:block/clay/porcelainclay",
+      "blendedOverlays": [ { "base": "rudiments:block/clay/porcelainclay", "blendMode": "Multiply" } ]
+    }
+  },
+  "attributes": {
+    "sitHeight": 0.75,
+    "onTongTransform": { "translation": { "x": -1.4, "y": -1.12, "z": -1.11 }, "rotation": { "x": -83, "y": -16, "z": -4 }, "scale": 0.57 },
+    "handbook": { "exclude": true },
+    "onMetalTongTransform": { "translation": { "x": -1.8, "y": -0.75, "z": -0.91 }, "rotation": { "x": -97, "y": -14, "z": 92 }, "origin": { "x": 0.5, "y": 0.2, "z": 0.5 }, "scale": 0.57 },
+    "shelvable": true,
+    "onshelfTransform": { "origin": { "x": 0.5, "y": 0, "z": 0.5 }, "scale": 0.85 },
+    "beehivekiln": {
+      "0": { "type": "block", "code": "game:clayshattered-normal" },
+      "1": { "type": "block", "code": "game:clayshattered-normal" },
+      "2": { "type": "block", "code": "game:clayshattered-normal" },
+      "3": { "type": "block", "code": "game:clayshattered-normal" }
+    }
+  },
+  "transitionableProps": [
+    {
+      "type": "Dry",
+      "freshHours": { "avg": 0 },
+      "transitionHours": { "avg": 8 },
+      "transitionedStack": { "type": "block", "code": "game:flowerpot-porcelain-raw" },
+      "transitionRatio": 1
+    }
+  ],
+  "doNotRenderAtLod2": true,
+  "blockmaterial": "Ceramic",
+  "replaceable": 900,
+  "resistance": 1.5,
+  "lightAbsorption": 1,
+  "maxStackSize": 8,
+  "sidesolid": { "all": false },
+  "sideopaque": { "all": false },
+  "emitsideao": { "all": false },
+  "sounds": {
+    "walk": "game:walk/stone",
+    "break": "game:block/ceramicplace",
+    "hit": "game:block/ceramichit",
+    "place": "game:block/ceramicplace"
+  },
+  "combustibleProps": {
+    "meltingPoint": 600,
+    "meltingDuration": 30,
+    "smeltedRatio": 1,
+    "smeltingType": "fire",
+    "smeltedStack": { "type": "block", "code": "game:clayshattered-normal" },
+    "requiresContainer": false
+  },
+  "collisionbox": { "x1": 0.3125, "y1": 0, "z1": 0.3125, "x2": 0.6875, "y2": 0.4375, "z2": 0.6875 },
+  "selectionbox": { "x1": 0.3125, "y1": 0, "z1": 0.3125, "x2": 0.6875, "y2": 0.4375, "z2": 0.6875 },
+  "tpHandTransform": { "translation": { "x": -1.25, "y": -0.56, "z": -1.16 }, "rotation": { "x": -111, "y": 65, "z": -95 }, "origin": { "x": 0.5, "y": 0.2, "z": 0.5 }, "scale": 0.45 },
+  "guiTransform": { "origin": { "x": 0.5, "y": 0.3, "z": 0.5 }, "scale": 1.5 }
+}

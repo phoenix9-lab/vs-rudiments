@@ -1,0 +1,64 @@
+{
+  "code": "clayplanter-porcelain-wet",
+  "class": "Block",
+  "behaviors": [
+    { "name": "GroundStorable" },
+    { "name": "Unplaceable" },
+    { "name": "RightClickPickup" }
+  ],
+  "shape": { "base": "game:block/clay/planter/raw" },
+  "textures": {
+    "all": {
+      "base": "rudiments:block/clay/porcelainclay",
+      "blendedOverlays": [ { "base": "rudiments:block/clay/porcelainclay", "blendMode": "Multiply" } ]
+    }
+  },
+  "attributes": {
+    "tempGlowMode": 1,
+    "onTongTransform": { "translation": { "x": -1.8, "y": -1.25, "z": -0.52 }, "rotation": { "x": 9, "y": 7, "z": 68 }, "scale": 0.6 },
+    "handbook": { "exclude": true },
+    "onMetalTongTransform": { "translation": { "x": -1.44, "y": -1.28, "z": -0.72 }, "rotation": { "x": -4, "y": 7, "z": 68 }, "scale": 0.6 },
+    "beehivekiln": {
+      "0": { "type": "block", "code": "game:clayshattered-normal" },
+      "1": { "type": "block", "code": "game:clayshattered-normal" },
+      "2": { "type": "block", "code": "game:clayshattered-normal" },
+      "3": { "type": "block", "code": "game:clayshattered-normal" }
+    }
+  },
+  "transitionableProps": [
+    {
+      "type": "Dry",
+      "freshHours": { "avg": 0 },
+      "transitionHours": { "avg": 8 },
+      "transitionedStack": { "type": "block", "code": "game:clayplanter-porcelain-raw" },
+      "transitionRatio": 1
+    }
+  ],
+  "heldTpIdleAnimation": "holdunderarm",
+  "blockmaterial": "Ceramic",
+  "replaceable": 900,
+  "resistance": 1.5,
+  "lightAbsorption": 1,
+  "maxStackSize": 8,
+  "sidesolid": { "all": false },
+  "sideopaque": { "all": false },
+  "emitsideao": { "all": false },
+  "sounds": {
+    "walk": "game:walk/stone",
+    "break": "game:block/ceramicplace",
+    "hit": "game:block/ceramichit",
+    "place": "game:block/ceramicplace"
+  },
+  "combustibleProps": {
+    "meltingPoint": 600,
+    "meltingDuration": 30,
+    "smeltedRatio": 1,
+    "smeltingType": "fire",
+    "smeltedStack": { "type": "block", "code": "game:clayshattered-normal" },
+    "requiresContainer": false
+  },
+  "collisionbox": { "x1": 0.125, "y1": 0, "z1": 0.125, "x2": 0.875, "y2": 0.5625, "z2": 0.875 },
+  "selectionbox": { "x1": 0.125, "y1": 0, "z1": 0.125, "x2": 0.875, "y2": 0.5625, "z2": 0.875 },
+  "guiTransform": { "origin": { "x": 0.5, "y": 0.4, "z": 0.5 }, "scale": 1.42 },
+  "tpHandTransform": { "translation": { "x": -1.1, "y": -0.5, "z": -1 }, "rotation": { "x": 0, "y": -86, "z": -84 }, "scale": 0.47 }
+}

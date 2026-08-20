@@ -70,5 +70,16 @@
       "fire",
       "red"
     ]
+  },
+  {
+    "comment": "The clayform workbench renders the in-progress voxel model by looking up its OWN block-level `textures` dict (not the clayworkitem itemtype's) using the work item's short code as the key \u2014 see ClayFormRenderer.RegenMesh's api.BlockTextureAtlas.GetPosition(clayform block, \"clayworkitem-porcelain\"). Vanilla only ever registers clayworkitem-blue/fire/red there, so without this entry every porcelain piece being clayformed showed the atlas placeholder ('?') for the whole forming stage, even though the icon, the finished raw item and the fired item all resolve fine through unrelated texture paths.",
+    "file": "game:blocktypes/clay/clayform",
+    "op": "addmerge",
+    "path": "/textures",
+    "value": {
+      "clayworkitem-porcelain": {
+        "base": "rudiments:block/clay/porcelainclay"
+      }
+    }
   }
 ]

@@ -1,0 +1,71 @@
+{
+  "code": "wateringcan-porcelain-wet",
+  "behaviors": [
+    { "name": "GroundStorable", "properties": { "layout": "SingleCenter" } },
+    { "name": "Unplaceable" },
+    { "name": "Lockable" },
+    { "name": "UnstableFalling" },
+    { "name": "RightClickPickup" }
+  ],
+  "shape": { "base": "game:block/clay/watering-can" },
+  "textures": {
+    "wateringcanup": {
+      "base": "rudiments:block/clay/porcelainclay",
+      "blendedOverlays": [ { "base": "rudiments:block/clay/porcelainclay", "blendMode": "Multiply" } ]
+    },
+    "wateringcanrose": {
+      "base": "rudiments:block/clay/porcelainclay",
+      "overlays": [ "game:block/clay/overlay/wateringcan" ],
+      "blendedOverlays": [ { "base": "rudiments:block/clay/porcelainclay", "blendMode": "Multiply" } ]
+    },
+    "watering-can": {
+      "base": "rudiments:block/clay/porcelainclay",
+      "blendedOverlays": [ { "base": "rudiments:block/clay/porcelainclay", "blendMode": "Multiply" } ]
+    }
+  },
+  "attributes": {
+    "reinforcable": true,
+    "onTongTransform": { "translation": { "x": -1.38, "y": -1.14, "z": -0.5 }, "rotation": { "x": -131, "y": 71, "z": -14 }, "scale": 0.8 },
+    "handbook": { "exclude": true },
+    "onMetalTongTransform": { "translation": { "x": -1.18, "y": -1.04, "z": -0.56 }, "rotation": { "x": -131, "y": 71, "z": -14 }, "scale": 0.8 },
+    "beehivekiln": {
+      "0": { "type": "block", "code": "game:clayshattered-normal" },
+      "1": { "type": "block", "code": "game:clayshattered-normal" },
+      "2": { "type": "block", "code": "game:clayshattered-normal" },
+      "3": { "type": "block", "code": "game:clayshattered-normal" }
+    }
+  },
+  "transitionableProps": [
+    {
+      "type": "Dry",
+      "freshHours": { "avg": 0 },
+      "transitionHours": { "avg": 8 },
+      "transitionedStack": { "type": "block", "code": "game:wateringcan-porcelain-raw" },
+      "transitionRatio": 1
+    }
+  ],
+  "heldTpUseAnimation": "water",
+  "heldRightReadyAnimation": "helditemreadyslant",
+  "combustibleProps": {
+    "meltingPoint": 600,
+    "meltingDuration": 30,
+    "smeltedRatio": 1,
+    "smeltingType": "fire",
+    "smeltedStack": { "type": "block", "code": "game:clayshattered-normal" },
+    "requiresContainer": false
+  },
+  "blockmaterial": "Ceramic",
+  "replaceable": 1200,
+  "resistance": 1.5,
+  "maxStackSize": 1,
+  "liquidSelectable": 1,
+  "lightAbsorption": 0,
+  "sounds": { "walk": "game:walk/stone" },
+  "collisionbox": { "x1": 0.25, "y1": 0, "z1": 0.25, "x2": 0.75, "y2": 0.75, "z2": 0.75 },
+  "selectionbox": { "x1": 0.25, "y1": 0, "z1": 0.25, "x2": 0.75, "y2": 0.75, "z2": 0.75 },
+  "sideopaque": { "all": false },
+  "sidesolid": { "all": false },
+  "guiTransform": { "origin": { "x": 0.5, "y": 0.35, "z": 0.5 }, "scale": 1.87 },
+  "tpHandTransform": { "translation": { "x": -0.97, "y": -0.71, "z": -0.71 }, "rotation": { "x": 0, "y": 180, "z": 9 }, "origin": { "x": 0.5, "y": 0.3, "z": 0.5 }, "scale": 0.65 },
+  "groundTransform": { "origin": { "x": 0.5, "y": 0, "z": 0.5 }, "scale": 2.5 }
+}

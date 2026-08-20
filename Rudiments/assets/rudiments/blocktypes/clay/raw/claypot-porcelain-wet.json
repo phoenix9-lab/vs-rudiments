@@ -1,0 +1,61 @@
+{
+  "code": "claypot-porcelain-wet",
+  "behaviors": [
+    { "name": "GroundStorable", "properties": { "layout": "Quadrants", "collisionBox": { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.125, "z2": 1 } } },
+    { "name": "Unplaceable" },
+    { "name": "RightClickPickup" }
+  ],
+  "heldTpIdleAnimation": "holdbothhands",
+  "heldTpUseAnimation": "twohandplaceblock",
+  "shape": { "base": "game:block/clay/pot-opened-empty" },
+  "textures": {
+    "all": {
+      "base": "rudiments:block/clay/porcelainclay",
+      "blendedOverlays": [ { "base": "rudiments:block/clay/porcelainclay", "blendMode": "Multiply" } ]
+    }
+  },
+  "attributes": {
+    "tempGlowMode": 1,
+    "shelvable": true,
+    "handbook": { "exclude": true },
+    "onTongTransform": { "translation": { "x": -0.63, "y": -0.95, "z": -0.77 }, "rotation": { "x": 2, "y": -2, "z": 6 } },
+    "onMetalTongTransform": { "translation": { "x": -1.02, "y": -0.61, "z": -0.51 }, "rotation": { "x": -6, "y": 0, "z": 76 }, "origin": { "x": 0.5, "y": 0.3, "z": 0.5 }, "scale": 0.9 },
+    "beehivekiln": {
+      "0": { "type": "block", "code": "game:clayshattered-normal" },
+      "1": { "type": "block", "code": "game:clayshattered-normal" },
+      "2": { "type": "block", "code": "game:clayshattered-normal" },
+      "3": { "type": "block", "code": "game:clayshattered-normal" }
+    }
+  },
+  "transitionableProps": [
+    {
+      "type": "Dry",
+      "freshHours": { "avg": 0 },
+      "transitionHours": { "avg": 8 },
+      "transitionedStack": { "type": "block", "code": "game:claypot-porcelain-raw" },
+      "transitionRatio": 1
+    }
+  ],
+  "combustibleProps": {
+    "meltingPoint": 600,
+    "meltingDuration": 30,
+    "smeltedRatio": 1,
+    "smeltingType": "fire",
+    "requiresContainer": false,
+    "smeltedStack": { "type": "block", "code": "game:clayshattered-normal" }
+  },
+  "doNotRenderAtLod2": true,
+  "blockmaterial": "Ceramic",
+  "replaceable": 400,
+  "resistance": 1.5,
+  "maxStackSize": 8,
+  "lightAbsorption": 0,
+  "sounds": { "walk": "game:walk/stone" },
+  "sideopaque": { "all": false },
+  "sidesolid": { "all": false },
+  "collisionbox": { "x1": 0.28, "y1": 0, "z1": 0.28, "x2": 0.72, "y2": 0.35, "z2": 0.72 },
+  "selectionbox": { "x1": 0.28, "y1": 0, "z1": 0.28, "x2": 0.72, "y2": 0.35, "z2": 0.72 },
+  "guiTransform": { "origin": { "x": 0.5, "y": 0.2, "z": 0.5 }, "scale": 2 },
+  "groundTransform": { "scale": 3 },
+  "tpHandTransform": { "translation": { "x": -0.7, "y": 0.06, "z": -0.47 }, "rotation": { "x": -52, "y": 20, "z": -110 }, "origin": { "x": 0.5, "y": 0, "z": 0.5 }, "scale": 0.76 }
+}

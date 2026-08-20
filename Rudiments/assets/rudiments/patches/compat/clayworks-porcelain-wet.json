@@ -1,0 +1,157 @@
+[
+  {
+    "comment": "Clayworks adds a wet-then-dry greenware stage in front of vanilla clayforming: its own patches/recipes/clayform/*.json redirect every vanilla clayforming recipe's output to a clayworks:*-wet block that must sit for ~8 hours (Transitionable, type Dry) before it dries into the normal game:*-raw item and re-enters the vanilla firing pipeline. That redirect only touches the vanilla recipe files, so porcelain — which ships its own recipes/clayforming/porcelain-*.json rather than reusing the vanilla ones (see porcelain-clay.json) — was never caught by it and always skipped straight from clayforming to raw ware. These entries give porcelain the same wet stage, redirecting each porcelain clayforming recipe to the matching rudiments:*-porcelain-wet block defined in blocktypes/clay/raw/. Those blocks are handbook-excluded by default since they are unreachable without Clayworks; the entries below un-hide and group them once Clayworks is actually present.",
+    "file": "rudiments:recipes/clayforming/porcelain-bowl",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:bowl-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:recipes/clayforming/porcelain-fourbowls",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:bowl-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:recipes/clayforming/porcelain-crock",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:crock-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:recipes/clayforming/porcelain-fourcrock",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:crock-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:recipes/clayforming/porcelain-jug",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:jug-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:recipes/clayforming/porcelain-claypot",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:claypot-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:recipes/clayforming/porcelain-fourclaypots",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:claypot-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:recipes/clayforming/porcelain-storagevessel",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:storagevessel-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:recipes/clayforming/porcelain-clayplanter",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:clayplanter-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:recipes/clayforming/porcelain-flowerpot",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:flowerpot-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:recipes/clayforming/porcelain-fourflowerpot",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:flowerpot-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:recipes/clayforming/porcelain-oillamp-genie",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:oillamp-genie-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:recipes/clayforming/porcelain-wateringcan",
+    "op": "replace",
+    "path": "/output/code",
+    "value": "rudiments:wateringcan-porcelain-wet",
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:blocktypes/clay/raw/bowl-porcelain-wet",
+    "op": "replace",
+    "path": "/attributes/handbook",
+    "value": { "groupBy": [ "bowl-porcelain-*" ] },
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:blocktypes/clay/raw/crock-porcelain-wet",
+    "op": "replace",
+    "path": "/attributes/handbook",
+    "value": { "groupBy": [ "crock-porcelain-*" ] },
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:blocktypes/clay/raw/jug-porcelain-wet",
+    "op": "replace",
+    "path": "/attributes/handbook",
+    "value": { "groupBy": [ "jug-porcelain-*" ] },
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:blocktypes/clay/raw/claypot-porcelain-wet",
+    "op": "replace",
+    "path": "/attributes/handbook",
+    "value": { "groupBy": [ "claypot-porcelain-*" ] },
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:blocktypes/clay/raw/storagevessel-porcelain-wet",
+    "op": "replace",
+    "path": "/attributes/handbook",
+    "value": { "groupBy": [ "storagevessel-porcelain-*" ] },
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:blocktypes/clay/raw/clayplanter-porcelain-wet",
+    "op": "replace",
+    "path": "/attributes/handbook",
+    "value": { "groupBy": [ "clayplanter-porcelain-*" ] },
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:blocktypes/clay/raw/flowerpot-porcelain-wet",
+    "op": "replace",
+    "path": "/attributes/handbook",
+    "value": { "groupBy": [ "flowerpot-porcelain-*" ] },
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:blocktypes/clay/raw/oillamp-genie-porcelain-wet",
+    "op": "replace",
+    "path": "/attributes/handbook",
+    "value": { "groupBy": [ "oillamp-genie-porcelain-*" ] },
+    "dependsOn": [ { "modid": "clayworks" } ]
+  },
+  {
+    "file": "rudiments:blocktypes/clay/raw/wateringcan-porcelain-wet",
+    "op": "replace",
+    "path": "/attributes/handbook",
+    "value": { "groupBy": [ "wateringcan-porcelain-*" ] },
+    "dependsOn": [ { "modid": "clayworks" } ]
+  }
+]
