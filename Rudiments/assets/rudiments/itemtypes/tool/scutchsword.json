@@ -15,8 +15,8 @@
       "scale": 1.1
     },
     "groundStorageTransform": {
-      "translation": { "x": 0, "y": 0, "z": 0 },
-      "rotation": { "x": 0, "y": 0, "z": 0 },
+      "translation": { "x": 0, "y": 0, "z": 0.3 },
+      "rotation": { "x": 15, "y": 0, "z": 0 },
       "origin": { "x": 0.5, "y": 0, "z": 0.5 },
       "scale": 1
     }

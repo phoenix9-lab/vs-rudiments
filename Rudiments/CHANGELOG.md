@@ -26,6 +26,29 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [0.24.1] — 2026-08-21 — Scutching sword's leaned pose fixed
+
+### Fixed
+- **The scutching sword's ground-storage pose, added in 0.24.0, didn't work.** It first stood bolt
+  upright at the tile center instead of leaning, and an attempt to fix that by reusing the vanilla
+  spear's `groundStorageTransform` made it disappear entirely — the spear's shape is a small composite
+  fragment on a shared armature with a different axis convention than our sword's plain vertical
+  shape, so its rotation values didn't carry over. Replaced with a transform built for this shape's
+  own axes: it now actually leans.
+
+## [0.24.0] — 2026-08-21 — Leanable scutching sword, and kiln brick capacity matched to vanilla
+
+### Added
+- **The scutching sword can now be placed leaning against a wall**, like other tools — right-click to
+  set it down, sneak-right-click to pick it back up.
+
+### Fixed
+- **Both kilns capped raw brick loads at far below vanilla.** Ware capacity treated every item as a
+  flat 1-piece cost, so a small kiln held at most 4 bricks and an updraft kiln 8 — regardless of what
+  the item's own ground-storage stacking allowed. Capacity is now read off each item's real
+  `GroundStorable` layout, the same way vanilla's pit kiln does, so a full 24-brick pile fits a small
+  kiln and 48 fits an updraft kiln.
+
 ## [0.23.0] — 2026-08-20 — Porcelain clayforming texture fix, and a Clayworks wet-stage compat patch
 
 ### Fixed
