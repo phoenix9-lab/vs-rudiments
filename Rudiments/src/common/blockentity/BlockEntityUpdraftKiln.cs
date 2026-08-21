@@ -27,8 +27,9 @@ namespace Rudiments.SRC.Common.BlockEntities
         protected override string LangPrefix => "rudiments:updraftkiln";
         protected override int WareSlots => 8;
 
-        /// <summary>Two ground-storage tiles: two large pieces, eight small ones, or an honest mix.</summary>
-        protected override int WareCapacityUnits => 8;
+        /// <summary>Two ground-storage tiles: two large pieces, eight small ones, two full
+        /// pit-kiln-sized brick piles, or an honest mix.</summary>
+        protected override float WareTiles => 2f;
 
         protected override float BurnHours => RudimentsModSystem.Config.UpdraftKilnBurnHours;
 

@@ -16,8 +16,9 @@ namespace Rudiments.SRC.Common.BlockEntities
         protected override string LangPrefix => "rudiments:smallbrickkiln";
         protected override int WareSlots => 4;
 
-        /// <summary>One tile: four small pieces, or one large one. Half the updraft kiln.</summary>
-        protected override int WareCapacityUnits => 4;
+        /// <summary>One ground-storage tile: four small pieces, one large one, or one full
+        /// pit-kiln-sized brick pile. Half the updraft kiln.</summary>
+        protected override float WareTiles => 1f;
 
         protected override float BurnHours => RudimentsModSystem.Config.SmallBrickKilnBurnHours;
 

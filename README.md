@@ -6,7 +6,7 @@
 
 Rudiments adds realistic, multi-step production chains for the materials and tools that defined life before iron — worked one process at a time, with each step mattering. Inspired by [Primitive Technology](https://www.youtube.com/channel/UCAL3JXZSzSm8AlZyD3nQdBA) and [RHSWorks](https://www.rhsworks.org).
 
-Pre-release — work in progress. New systems are added incrementally; existing ones are tested and balanced before the next is opened.
+Feature-stable as of 1.0 — fibre production and pottery/kilns are both complete, tested chains. New systems are still added incrementally, each balanced against what's already there before the next is opened.
 
 ---
 

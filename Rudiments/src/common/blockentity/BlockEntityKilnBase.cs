@@ -24,10 +24,12 @@ namespace Rudiments.SRC.Common.BlockEntities
     /// the output is read off the input block's own combustible properties rather than a hardcoded
     /// ware code. That is why one code path serves every domain.
     ///
-    /// Capacity is measured in <b>quarter-tile units</b> rather than slots, which is vanilla's own
-    /// ground-storage layout model: a <c>SingleCenter</c> item — a storage vessel, a big crock — is
-    /// one whole tile and costs 4, everything else costs 1. A kiln with 8 units therefore holds two
-    /// large pieces or eight small ones, or any honest mix, with no capacity table anywhere.
+    /// Capacity is measured in <b>ground-storage tiles</b> rather than slots — vanilla's own layout
+    /// model, read straight off each ware item's <c>GroundStorable</c> behavior: a <c>SingleCenter</c>
+    /// vessel is a whole tile by itself, <c>Quadrants</c> fits 4 to a tile, and <c>Stacking</c> fits
+    /// whatever that item declares as its <c>stackingCapacity</c> — 24 for <c>game:rawbrick</c>, same
+    /// as a vanilla pit kiln. A kiln with 2 tiles therefore holds two large pieces, eight small ones,
+    /// two full pit-kiln-sized brick piles, or any honest mix, with no capacity table of our own.
     ///
     /// <b>Lighting is the bloomery's too</b>: hold a torch or firestarter, sneak, and hold right-click.
     /// The block implements <c>IIgnitable</c> and <see cref="CanLight"/> is the silent test the
@@ -60,8 +62,9 @@ namespace Rudiments.SRC.Common.BlockEntities
         protected abstract string LangPrefix { get; }
         /// <summary>Number of ware slots. The fuel slot always follows them.</summary>
         protected abstract int WareSlots { get; }
-        /// <summary>Ware capacity in quarter-tile units. 4 = one large piece, 8 = two.</summary>
-        protected abstract int WareCapacityUnits { get; }
+        /// <summary>Ware capacity in ground-storage tiles. 1 = one tile's worth (one pit-kiln-sized
+        /// brick pile), 2 = two.</summary>
+        protected abstract float WareTiles { get; }
         protected abstract float BurnHours { get; }
         /// <summary>Fuel items needed for one firing — also the hard cap on the fuel slot, so a
         /// kiln never holds more than one firing's worth. The whole slot is spent at ignition.</summary>
@@ -131,22 +134,47 @@ namespace Rudiments.SRC.Common.BlockEntities
         }
 
         /// <summary>
-        /// What one piece of this ware costs in quarter-tile units. Read straight off the item's own
-        /// ground-storage layout, so a mod's big vessel is large here for the same reason it is
-        /// large on the floor.
+        /// How many of this ware make up one whole ground-storage tile. Read straight off the item's
+        /// own <c>GroundStorable</c> layout — the same property vanilla's own ground storage and pit
+        /// kiln read — so a mod's big vessel is large here for the same reason it is large on the
+        /// floor, and a <c>Stacking</c> pile (raw bricks) gets its own declared
+        /// <c>stackingCapacity</c> rather than a guess. Items without the behavior default to
+        /// <c>Quadrants</c> density (4), same as before.
         /// </summary>
-        public static int UnitCost(ItemStack stack)
+        public static float TileCapacity(ItemStack stack)
         {
             var props = stack?.Collectible?.GetBehavior<CollectibleBehaviorGroundStorable>()?.StorageProps;
-            return props != null && props.Layout == EnumGroundStorageLayout.SingleCenter ? 4 : 1;
+            if (props == null) return 4;
+
+            return props.Layout switch
+            {
+                EnumGroundStorageLayout.SingleCenter => 1,
+                EnumGroundStorageLayout.Halves => 2,
+                EnumGroundStorageLayout.WallHalves => 2,
+                EnumGroundStorageLayout.Messy12 => 12,
+                EnumGroundStorageLayout.Stacking => Math.Max(1, props.StackingCapacity),
+                _ => 4, // Quadrants and anything unrecognised
+            };
         }
 
-        public int UsedUnits()
+        /// <summary>Ware loaded, in tiles — the number gated against <see cref="WareTiles"/>.</summary>
+        public float UsedTiles()
+        {
+            float used = 0;
+            for (int i = 0; i < WareSlots; i++)
+            {
+                if (!inventory[i].Empty) used += inventory[i].StackSize / TileCapacity(inventory[i].Itemstack);
+            }
+            return used;
+        }
+
+        /// <summary>Ware loaded, in individual pieces — what the player actually put in, for display.</summary>
+        public int WarePieces()
         {
             int used = 0;
             for (int i = 0; i < WareSlots; i++)
             {
-                if (!inventory[i].Empty) used += UnitCost(inventory[i].Itemstack) * inventory[i].StackSize;
+                if (!inventory[i].Empty) used += inventory[i].StackSize;
             }
             return used;
         }
@@ -192,8 +220,10 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         private bool TryInsertWare(IPlayer byPlayer, ItemSlot heldSlot)
         {
-            int cost = UnitCost(heldSlot.Itemstack);
-            int room = (WareCapacityUnits - UsedUnits()) / cost;
+            float capacity = TileCapacity(heldSlot.Itemstack);
+            // Epsilon guards against float error stranding the last piece of a pile (e.g. 24/24
+            // landing a hair under WareTiles) just short of a whole-number room count.
+            int room = (int)Math.Floor((WareTiles - UsedTiles()) * capacity + 0.0001f);
             if (room <= 0)
             {
                 Refuse(byPlayer, "full", LangPrefix + "-full");
@@ -263,7 +293,7 @@ namespace Rudiments.SRC.Common.BlockEntities
 
             if (burning) { langKey = LangPrefix + "-burning"; return false; }
             if (FuelSlot.Empty || !(IsHotFuel(FuelSlot.Itemstack) || IsColdFuel(FuelSlot.Itemstack))) { langKey = LangPrefix + "-nofuel"; return false; }
-            if (UsedUnits() == 0) { langKey = LangPrefix + "-noware"; return false; }
+            if (WarePieces() == 0) { langKey = LangPrefix + "-noware"; return false; }
 
             string chimney = ChimneyCode;
             if (chimney != null && Api.World.BlockAccessor.GetBlock(Pos.UpCopy())?.Code?.Path.Contains(chimney) != true)
@@ -453,14 +483,15 @@ namespace Rudiments.SRC.Common.BlockEntities
                 return;
             }
 
-            int used = UsedUnits();
+            int used = WarePieces();
             if (used == 0 && FuelSlot.Empty && SaltSlot.Empty)
             {
                 dsc.AppendLine(Lang.Get(LangPrefix + "-empty"));
                 return;
             }
 
-            dsc.AppendLine(Lang.Get(LangPrefix + "-loaded", used, WareCapacityUnits));
+            int pctFull = (int)Math.Round(UsedTiles() / WareTiles * 100);
+            dsc.AppendLine(Lang.Get(LangPrefix + "-loaded", used, pctFull));
             dsc.AppendLine(FuelSlot.Empty
                 ? Lang.Get(LangPrefix + "-nofuel-info")
                 : Lang.Get(LangPrefix + "-fuel", FuelSlot.Itemstack.GetName(), FuelSlot.StackSize));
