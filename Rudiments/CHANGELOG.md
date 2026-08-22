@@ -26,6 +26,17 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.0.1] — 2026-08-22 — Fixed a fruit-press crash on pressing flax grain
+
+### Fixed
+- **Pressing flax grain in the vanilla fruit press crashed the game** with a `NullReferenceException`
+  in `BlockEntityFruitPress.InteractMashContainer`. Every vanilla juicing chain (apple, olive) presses
+  down into a mash item that itself carries `juiceableProperties` — the fruit press unconditionally
+  reads `PressedDryRatio` off whatever lands in the mash slot. `rudiments:linseedcake` had none, so
+  that lookup returned null the moment the first grain went in. Fixed by giving `linseedcake` an
+  empty `juiceableProperties: {}` — `PressedDryRatio` defaults to `1.0`, and it stays correctly
+  non-juiceable (no `litresPerItem`, so a further press attempt on the cake itself is still refused).
+
 ## [2.0.0] — 2026-08-22 — Custom oil press retired; fruit press now takes flax grain
 
 ### Fixed
