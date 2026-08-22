@@ -355,5 +355,7 @@
   "rudiments:updraftkiln-fuelfull": "That's enough fuel for one firing already.",
   "rudiments:updraftkiln-nofuel": "Load fuel first — wood works, charcoal or coal fires it hotter.",
   "rudiments:updraftkiln-noware": "There is nothing in it to fire.",
-  "rudiments:updraftkiln-nochimney": "No draft. An updraft kiln needs a chimney directly above it."
+  "rudiments:updraftkiln-nochimney": "No draft. An updraft kiln needs a chimney directly above it.",
+  "rudiments:crucible-failed-blockinfo": "Cracked open — needs a hammer and chisel to work loose whatever {0} survived inside.",
+  "rudiments:blockhelp-crucible-crack": "Crack open (hammer in offhand, chisel active)"
 }

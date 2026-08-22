@@ -1,0 +1,9 @@
+[
+  {
+    "comment": "BreakageIncludesSmeltingFailure (off by default): gives a crucible the same partial-metal-recovery risk an ingot mold already has when it shatters, rolled the moment its smelt finishes.",
+    "file": "game:blocktypes/wood/firepit",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [{ "name": "rudiments:SmeltingFailure" }]
+  }
+]

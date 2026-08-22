@@ -108,6 +108,10 @@ namespace Rudiments
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockWareStorageVessel", typeof(BlockWareStorageVessel));
             api.RegisterBlockEntityBehaviorClass($"{Mod.Info.ModID}:GroundStorageWear", typeof(BlockEntityBehaviorGroundStorageWear));
             api.RegisterBlockEntityBehaviorClass($"{Mod.Info.ModID}:FirepitWear", typeof(BlockEntityBehaviorFirepitWear));
+            api.RegisterBlockEntityBehaviorClass($"{Mod.Info.ModID}:SmeltingFailure", typeof(BlockEntityBehaviorSmeltingFailure));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockCrucibleFailed", typeof(BlockCrucibleFailed));
+            api.RegisterCollectibleBehaviorClass($"{Mod.Info.ModID}:CrucibleCrack", typeof(CollectibleBehaviorCrucibleCrack));
+            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockIngotMoldGated", typeof(BlockIngotMoldGated));
 
             // One router class serves both kilns — the updraft kiln's chimney requirement is an
             // ignition condition, and those live on the block entity.
