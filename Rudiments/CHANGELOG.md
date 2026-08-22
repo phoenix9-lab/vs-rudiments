@@ -26,6 +26,24 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [1.0.0] — 2026-08-22 — Linseed oil now uses the vanilla item
+
+### Changed
+- **`rudiments:linseedoil` is gone; the seed oil press now dispenses vanilla `game:oilportion-flax`
+  instead.** There was no reason to keep a separate item duplicating vanilla's flax oil texture and
+  liquid-portion mechanics. The press's yield per stroke is rescaled from ~2 to ~10 units (oilportion
+  is 100 units/litre) to land in the same ballpark as vanilla's own linseed cooking recipe (3 flax
+  flour + water → 10 units).
+
+### Removed
+- `rudiments:linseedoil` and its handbook entry. It was a solid item (edible, combustible as lamp
+  fuel); `game:oilportion-flax` is a liquid portion instead, so it is not directly edible or
+  burnable as an item — it works through vanilla's cooking and oil-lamp mechanics.
+
+> **Migration note:** any `rudiments:linseedoil` stacks in existing saves (inventories, chests, ground
+> items) become unknown/missing items — this is why the bump is MAJOR. `rudiments:linseedcake` is
+> unaffected.
+
 ## [0.24.1] — 2026-08-21 — Scutching sword's leaned pose fixed
 
 ### Fixed

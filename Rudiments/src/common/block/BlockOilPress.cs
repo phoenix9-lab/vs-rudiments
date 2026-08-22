@@ -57,9 +57,10 @@ namespace Rudiments.SRC.Common.Blocks
                 slot.TakeOut(consume);
                 slot.MarkDirty();
 
-                // Oil scales with how many seeds we managed to crush this stroke.
-                int oilAmount = Math.Max(1, consume * 2 / Math.Max(1, seedsPerPress));
-                GiveOrDrop(world, byPlayer, blockSel, new AssetLocation("rudiments:linseedoil"), oilAmount);
+                // Oil scales with how many seeds we managed to crush this stroke. oilportion units are
+                // 1/100th of a litre; matched to vanilla's linseed cooking recipe (3 flax flour -> 10 units).
+                int oilAmount = Math.Max(1, consume * 10 / Math.Max(1, seedsPerPress));
+                GiveOrDrop(world, byPlayer, blockSel, new AssetLocation("game:oilportion-flax"), oilAmount);
 
                 if (world.Rand.NextDouble() < cakeChance)
                 {

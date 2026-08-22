@@ -115,8 +115,6 @@
   "rudiments:itemdesc-nettlefiber": "Strong bast fibre - three make a length of twine",
   "rudiments:item-nettleleaves": "Nettle leaves",
   "rudiments:itemdesc-nettleleaves": "Young nettle leaves. Edible raw but the residual sting causes minor damage — cook them first to remove it completely.",
-  "rudiments:item-linseedoil": "Linseed oil",
-  "rudiments:itemdesc-linseedoil": "Pressed from flax seeds. Edible, and burns as lamp fuel",
   "rudiments:item-linseedcake": "Linseed cake",
   "rudiments:itemdesc-linseedcake": "Pressed seed residue - kindling or animal fodder",
 
@@ -191,8 +189,6 @@
   "rudiments:item-handbooktext-nettlerhizome": "A root crown dug from mature stinging nettle (stage 8 or 9). Hold a <hk>shovel</hk> and right-click the plant to carefully extract it — the plant is destroyed. Right-click fertile soil with the rhizome to establish a new patch anywhere without needing farmland. Wild nettle also spreads naturally by rhizome over time.",
   "rudiments:item-handbooktitle-nettlefiber": "Nettle Fibre",
   "rudiments:item-handbooktext-nettlefiber": "A strong plant bast fibre. Three nettle fibres spin into a length of <a href=\"handbook://item-game:flaxtwine\">twine</a> - nettle is stronger than flax, so it needs fewer.",
-  "rudiments:item-handbooktitle-linseedoil": "Linseed Oil",
-  "rudiments:item-handbooktext-linseedoil": "Pressed from flax seeds on a <a href=\"handbook://block-rudiments:oilpress\">seed oil press</a>. A nourishing edible oil that also burns as lamp fuel.",
   "rudiments:item-handbooktitle-linseedcake": "Linseed Cake",
   "rudiments:item-handbooktext-linseedcake": "The pressed residue left after extracting linseed oil. Useful as kindling or animal fodder.",
 
