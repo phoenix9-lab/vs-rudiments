@@ -26,6 +26,21 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [1.1.0] — 2026-08-22 — Flax seeds are now pressable in the vanilla fruit press
+
+### Added
+- **Flax seeds can now be pressed into `game:oilportion-flax` in the vanilla fruit press**, via a
+  `juiceablePropertiesByType` patch on `game:itemtypes/resource/seeds` — the same generic mechanism
+  vanilla uses for apples and olives. No custom block or C# interaction involved; the pressed
+  byproduct is `rudiments:linseedcake`, same as the dedicated oil press produces.
+- New config: `LinseedOilLitresPerSeed` (default `0.03`) — litres of oil extracted per seed,
+  applied by editing the loaded item's `juiceableProperties` attribute in `AssetsFinalize` (same
+  pattern as `BarrelRettingLitresPerBundle`). The pressed-cake byproduct has no chance/quantity
+  field to tune — the fruit press always produces it.
+
+The dedicated `rudiments:oilpress` block is unchanged and still works; it's expected to be retired
+once the fruit press route is confirmed working in practice (see README's Equipment table).
+
 ## [1.0.0] — 2026-08-22 — Linseed oil now uses the vanilla item
 
 ### Changed

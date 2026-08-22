@@ -243,6 +243,7 @@ namespace Rudiments
             // same assets, so apply the config overrides on both sides to keep them in sync.
             ApplyBarrelRettingRatio(api);
             ApplyPorcelainClayRatios(api);
+            ApplyLinseedOilYield(api);
 
             // Itemtypes are server-authoritative and synced to clients, so attribute edits here
             // reach both sides.
@@ -367,6 +368,25 @@ namespace Rudiments
             {
                 api.Logger.Notification("[{0}] Porcelain clay: {1} blue clay per crushed quartz, {2} per powdered flint + bonemeal ({3} recipe(s) adjusted).", Mod.Info.Name, perQuartz, perFlint, changed);
             }
+        }
+
+        /// <summary>
+        /// Overwrites the litresPerItem the vanilla fruit press extracts per flax seed, so server
+        /// owners can tune oil yield without hand-editing
+        /// assets/rudiments/patches/linseedoil-fruitpress.json. The pressed byproduct
+        /// (rudiments:linseedcake) is left alone — the fruit press produces it deterministically,
+        /// with no chance/quantity field of its own to tune.
+        /// </summary>
+        private void ApplyLinseedOilYield(ICoreAPI api)
+        {
+            float litresPerSeed = System.Math.Max(0.001f, Config.LinseedOilLitresPerSeed);
+
+            Item flaxSeeds = api.World.GetItem(new AssetLocation("game:seeds-flax"));
+            if (flaxSeeds?.Attributes?.Token is not JObject attrs) return;
+            if (attrs["juiceableProperties"] is not JObject props) return;
+
+            props["litresPerItem"] = litresPerSeed;
+            api.Logger.Notification("[{0}] Linseed oil: {1} litre(s) of oilportion-flax per seed pressed.", Mod.Info.Name, litresPerSeed);
         }
     }
 }

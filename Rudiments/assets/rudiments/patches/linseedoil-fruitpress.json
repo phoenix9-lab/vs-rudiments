@@ -1,0 +1,15 @@
+[
+  {
+    "comment": "Flax seeds become juiceable in the vanilla fruit press, the same generic mechanism apples and olives use (see game:itemtypes/resource/pressedmash's olive entry). juiceablePropertiesByType resolves per-variant into a plain juiceableProperties on the flax item, same as shapebytype -> shape. litresPerItem below is a placeholder -- RudimentsModSystem overwrites it at runtime from Rudiments.LinseedOilLitresPerSeed in AssetsFinalize, same pattern as the barrel retting ratio.",
+    "file": "game:itemtypes/resource/seeds",
+    "op": "add",
+    "path": "/attributes/juiceablePropertiesByType",
+    "value": {
+      "*-flax": {
+        "litresPerItem": 0.03,
+        "liquidStack": { "type": "item", "code": "game:oilportion-flax", "stacksize": 1 },
+        "pressedStack": { "type": "item", "code": "rudiments:linseedcake", "stacksize": 1 }
+      }
+    }
+  }
+]
