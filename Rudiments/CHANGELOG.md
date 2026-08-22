@@ -26,6 +26,21 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.0.6] — 2026-08-22 — Shrunk the linseed cake inventory icon
+
+### Changed
+- **`linseedcake`'s inventory icon rendered too large** compared to vanilla's `pressedmash-*` items.
+  Vanilla gets its smaller "cake" look from a dedicated 3D puck shape + a compensating
+  `guiTransform.scale` (2.3), not from texture transparency — its `fill-olive.png` mash texture is
+  also 100% opaque, same as our fix in 2.0.5. Since `linseedcake` has no custom shape (a flat default
+  icon), the equivalent lever is `guiTransform.scale`, dropped from `1.0` to `0.5`. This only affects
+  inventory-icon rendering, not the fruit press's own mesh, so the 2.0.5 mash-pile fix is unaffected.
+
+> **Note:** the 2.0.5 config default bump doesn't reach existing installs. Mod configs are seeded
+> from the code default once, then read from disk — if your `VintagestoryData/ModConfig/rudiments.json`
+> already existed before 2.0.5, its `LinseedOilLitresPerGrain` is still `0.03` and needs a manual
+> edit to `0.078`.
+
 ## [2.0.5] — 2026-08-22 — Fixed the invisible mash pile; halved the flax needed to fill the press
 
 ### Fixed
