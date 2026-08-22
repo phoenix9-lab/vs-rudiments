@@ -180,6 +180,12 @@ Apply changes without restarting: `/rudimentsreload` (requires `controlserver` p
 | `FlaxBloomHarvest` | `true` | Staged flax harvest: nothing before bloom, fine-capable seed-free bundles at stage 8, seeds/grain plus standard-capped bundles at stage 9. `false` restores the pre-0.11 table (bundles from stage 3, seeds at every stage, all bundles ret coarse-to-fine). Nettle stays capped at standard either way. Restart required. |
 | `SeedsOnlyWhenMature` | `true` | Vanilla crops only return seeds once fully grown — immature breaks, damaged crops, and animal-eaten crops return nothing. `false` restores vanilla behavior. Restart required. |
 
+### Retting
+
+| Setting | Default | Effect |
+|---|---|---|
+| `BarrelRettingLitresPerBundle` | `1.0` | Litres of water/limewater a barrel retting bath needs per bundle — a 50 L barrel fits 50/this many bundles (e.g. `4.0` → 12 bundles). Restart required. |
+
 ### Scutching
 
 | Setting | Default | Effect |
