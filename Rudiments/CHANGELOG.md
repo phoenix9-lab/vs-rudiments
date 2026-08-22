@@ -26,6 +26,20 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.0.4] — 2026-08-22 — Fixed the fruit press failing to report/produce linseed oil
+
+### Fixed
+- **Looking at a loaded fruit press logged a `NullReferenceException` every frame** in
+  `BlockEntityFruitPress.GetBlockInfo`, and the same missing field would have broken actual squeezing
+  too (`OnGameTick` reads it via the identical `getJuiceableProps(mashStack).LiquidStack` call to know
+  what liquid to add to the bucket). Root cause: the fruit press swaps the mash slot's item to the
+  pressed byproduct (`rudiments:linseedcake`) immediately on insertion — vanilla fruits/olives rely on
+  this working because their own `pressedStack` points back at themselves, so the mash slot's item
+  keeps its full `juiceableProperties` including `liquidStack` throughout. `linseedcake` is a genuinely
+  different byproduct item, so its own `juiceableProperties` needed a `liquidStack` (pointing at
+  `game:oilportion-flax`) too, not just `pressedStack`. Found by running the mod live and checking
+  `client-main.log`, not by the load-test (which doesn't hover/squeeze in-world).
+
 ## [2.0.3] — 2026-08-22 — Fixed a second fruit-press crash on linseed cake
 
 ### Fixed

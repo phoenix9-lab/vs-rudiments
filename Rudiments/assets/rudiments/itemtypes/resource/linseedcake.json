@@ -18,6 +18,7 @@
   },
   "attributes": {
     "juiceableProperties": {
+      "liquidStack": { "type": "item", "code": "game:oilportion-flax", "stacksize": 1 },
       "pressedStack": { "type": "item", "code": "rudiments:linseedcake", "stacksize": 1 }
     },
     "handbook": {
