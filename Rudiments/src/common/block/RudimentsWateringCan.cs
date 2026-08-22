@@ -1,4 +1,5 @@
 using System.Text;
+using Rudiments.SRC.Common.Items;
 using Rudiments.Utils;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
@@ -35,6 +36,22 @@ namespace Rudiments.SRC.Common.Blocks
             }
 
             base.OnHeldInteractStart(itemslot, byEntity, blockSel, entitySel, firstEvent, ref handHandling);
+        }
+
+        /// <summary>
+        /// <c>BlockWateringCan.OnHeldInteractStop</c> overrides without calling base, and base is
+        /// what forwards to <c>CollectibleBehaviors</c> — so <see cref="CollectibleBehaviorFragile"/>
+        /// has never once rolled from watering a plant. Same bug as <c>BlockWareMeal</c>, same fix:
+        /// call the vanilla override for the pouring-sound cleanup, then roll directly.
+        /// </summary>
+        public override void OnHeldInteractStop(float secondsUsed, ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel)
+        {
+            base.OnHeldInteractStop(secondsUsed, slot, byEntity, blockSel, entitySel);
+
+            IWorldAccessor world = byEntity?.World;
+            if (world == null || world.Side != EnumAppSide.Server) return;
+
+            CollectibleBehaviorFragile.TryShatterInHand(world, slot, byEntity);
         }
 
         /// <summary>

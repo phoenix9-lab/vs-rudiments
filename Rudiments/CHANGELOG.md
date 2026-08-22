@@ -26,6 +26,15 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.0.2] — 2026-08-22 — Watering can never triggered pottery wear
+
+### Fixed
+- **Watering crops from a fired-clay can never rolled a wear-breakage chance.** Vanilla's
+  `BlockWateringCan.OnHeldInteractStop` overrides without calling `base`, and `base` is what forwards
+  to `CollectibleBehaviors` — so `CollectibleBehaviorFragile` never got a chance to shatter the can.
+  Same bug as `BlockWareMeal`'s eating path, same fix: call the vanilla override for its pouring-sound
+  cleanup, then roll `TryShatterInHand` directly.
+
 ## [2.0.1] — 2026-08-22 — Fixed a fruit-press crash on pressing flax grain
 
 ### Fixed
