@@ -238,6 +238,20 @@ namespace Rudiments
         /// working a vessel wears it. Default: false.</summary>
         public bool BreakageIncludesPlacedContainers { get; set; } = false;
 
+        /// <summary>Widen "use" to include setting a vessel down into ground storage (shelf or bare
+        /// ground). Off by default — shelving is free. When on, the same per-tier chance above rolls
+        /// the moment a fragile vessel lands in a ground-storage slot, single item or not; realistic
+        /// handling risk, not just active use. Default: false.</summary>
+        public bool BreakageIncludesGroundStorage { get; set; } = false;
+
+        /// <summary>Widen "use" to include a firepit cook finishing on a fragile clay cooking vessel
+        /// (pot, crock, dirtypot) — the heat-then-cool cycle stresses the body same as it would a
+        /// kiln firing gone wrong. Off by default. Fireclay (crucibles, ingot/tool molds) never rolls
+        /// this regardless of setting — they never become a cooked container, only a smelted one, so
+        /// there is nothing to gate. A failure loses whatever was cooking along with the vessel.
+        /// Default: false.</summary>
+        public bool BreakageIncludesFirepitCooking { get; set; } = false;
+
         /// <summary>Chance that a deliberately dropped fired clay item shatters on landing. Set to 0
         /// to disable drop breakage entirely (the hard-landing trigger below still applies).
         /// Default: 1.0.</summary>

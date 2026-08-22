@@ -1,0 +1,9 @@
+[
+  {
+    "comment": "BreakageIncludesGroundStorage (off by default): lets a fragile vessel fail the moment it lands in ground storage — a shelf or the bare ground — not just while actively in use. One behavior on vanilla's own groundstorage block entity covers every vessel with rudiments:Fragile, no per-item patching.",
+    "file": "game:blocktypes/groundstorage",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [{ "name": "rudiments:GroundStorageWear" }]
+  }
+]

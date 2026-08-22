@@ -1,0 +1,9 @@
+[
+  {
+    "comment": "BreakageIncludesFirepitCooking (off by default): approximates the heat-then-cool cycle as a wear event on a fragile cooking vessel (pot, crock, dirtypot) the moment its cook finishes. Fireclay (crucible, ingot/tool molds) never rolls this: they carry no rudiments:Fragile behavior and never become a BlockCookedContainer, so the behavior's own gates already exclude them.",
+    "file": "game:blocktypes/wood/firepit",
+    "op": "addmerge",
+    "path": "/entityBehaviors",
+    "value": [{ "name": "rudiments:FirepitWear" }]
+  }
+]
