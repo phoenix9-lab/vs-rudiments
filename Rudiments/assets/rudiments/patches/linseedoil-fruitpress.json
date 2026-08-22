@@ -6,7 +6,7 @@
     "path": "/attributes/juiceablePropertiesByType",
     "value": {
       "*-flax": {
-        "litresPerItem": 0.03,
+        "litresPerItem": 0.078,
         "liquidStack": { "type": "item", "code": "game:oilportion-flax", "stacksize": 1 },
         "pressedStack": { "type": "item", "code": "rudiments:linseedcake", "stacksize": 1 }
       }

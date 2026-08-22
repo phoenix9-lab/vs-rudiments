@@ -279,7 +279,7 @@ Apply changes without restarting: `/rudimentsreload` (requires `controlserver` p
 | `StookMaxBundles` | `64` | Maximum bundles a single ground stook can hold |
 | `RippleGrainYieldMultiplier` | `1.0` | Global multiplier on grain yields from rippling; `0` disables grain drops |
 | `RippleSeedYieldMultiplier` | `1.0` | Global multiplier on seed yields from rippling; `0` disables seed drops |
-| `LinseedOilLitresPerGrain` | `0.03` | Litres of vanilla `oilportion-flax` extracted per flax grain pressed in the vanilla fruit press. Restart required |
+| `LinseedOilLitresPerGrain` | `0.078` | Litres of vanilla `oilportion-flax` extracted per flax grain pressed in the vanilla fruit press; ~2 stacks of flax fills the press's fixed 10-litre capacity. Restart required |
 
 ---
 

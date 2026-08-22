@@ -56,10 +56,12 @@ namespace Rudiments
 
         /// <summary>Litres of game:oilportion-flax extracted per flax grain pressed in the vanilla
         /// fruit press. Applied by editing the loaded item's juiceablePropertiesByType attribute in
-        /// AssetsFinalize (linseedoil-fruitpress.json ships with 0.03). The pressed byproduct
+        /// AssetsFinalize (linseedoil-fruitpress.json ships with 0.078). The pressed byproduct
         /// (rudiments:linseedcake) is produced deterministically per the vanilla fruit press's own
-        /// rules — there is no chance/quantity field to tune here. Default: 0.03. Requires restart.</summary>
-        public float LinseedOilLitresPerGrain { get; set; } = 0.03f;
+        /// rules — there is no chance/quantity field to tune here. The press's capacity is a fixed
+        /// vanilla 10 litres, so 0.078 fills it in ~2 stacks (128 grain) of flax. Default: 0.078.
+        /// Requires restart.</summary>
+        public float LinseedOilLitresPerGrain { get; set; } = 0.078f;
 
         // ── Scutching ────────────────────────────────────────────────────────────────
         // The scutch board is an interactive minigame: load broken bundles, strike them with a

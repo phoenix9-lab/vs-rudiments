@@ -26,6 +26,23 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.0.5] — 2026-08-22 — Fixed the invisible mash pile; halved the flax needed to fill the press
+
+### Fixed
+- **Pressed flax grain rendered as an invisible mash pile in the fruit press** (juice still flowed
+  correctly). The mash-pile mesh textures itself directly off whatever item sits in the mash slot —
+  there's no separate "mash" texture, vanilla or otherwise. Comparing against vanilla's own juiceable
+  items (`game:fruit-olive` is an 8x8, 100%-opaque sprite) showed why: anything used as a
+  `pressedStack` needs to be a full-bleed, fully opaque swatch, because that sprite gets tiled across
+  the pile mesh. `linseedcake.png` was a 32x32 disc icon on a transparent background, only 49% opaque
+  — mostly transparent once tiled. Regenerated it as a full-bleed speckled swatch (deterministic,
+  `scripts/gen_linseedcake_texture.py`), keeping the same brown palette as the original icon.
+
+### Changed
+- **`LinseedOilLitresPerGrain` default raised from `0.03` to `0.078`** — filling the fruit press's
+  fixed 10-litre capacity took 5-6 stacks of flax grain, which felt like too much for what's supposed
+  to be a moderately-costly-but-not-punishing process. 0.078 fills it in ~2 stacks (128 grain).
+
 ## [2.0.4] — 2026-08-22 — Fixed the fruit press failing to report/produce linseed oil
 
 ### Fixed
