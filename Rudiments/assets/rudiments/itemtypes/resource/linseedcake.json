@@ -17,7 +17,9 @@
     ]
   },
   "attributes": {
-    "juiceableProperties": {},
+    "juiceableProperties": {
+      "pressedStack": { "type": "item", "code": "rudiments:linseedcake", "stacksize": 1 }
+    },
     "handbook": {
       "extraSections": [
         {

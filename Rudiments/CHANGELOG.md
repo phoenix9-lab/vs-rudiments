@@ -26,6 +26,18 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.0.3] — 2026-08-22 — Fixed a second fruit-press crash on linseed cake
+
+### Fixed
+- **Interacting with a linseed cake sitting in (or held from) the fruit press's mash slot could still
+  crash the game** with a `NullReferenceException` in `FruitpressContentsRenderer.reloadMeshes`. The
+  2.0.1 fix gave `rudiments:linseedcake` an empty `juiceableProperties: {}` to stop a different crash,
+  but the renderer's mesh reload unconditionally reads `PressedStack.ResolvedItemstack` off whatever
+  item is in play — including the cake once it's already pressed — to pick its texture, and an empty
+  `juiceableProperties` has no `pressedStack` to resolve. Fixed by pointing `linseedcake`'s
+  `pressedStack` at itself; it still carries no `litresPerItem`, so pressing the cake again is still
+  correctly refused.
+
 ## [2.0.2] — 2026-08-22 — Watering can never triggered pottery wear
 
 ### Fixed
