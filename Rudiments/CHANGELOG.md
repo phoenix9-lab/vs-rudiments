@@ -26,6 +26,24 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.0.0] — 2026-08-22 — Custom oil press retired; fruit press now takes flax grain
+
+### Fixed
+- **The fruit press juicing patch targeted the wrong item.** `game:seeds-flax` is the plantable
+  seed packet, not the harvested milling grain — pressing it for oil would have let players convert
+  their planting stock into oil, and never touched `game:grain-flax` (the item rippling actually
+  yields for this purpose). The patch and its config (`LinseedOilLitresPerGrain`, was
+  `LinseedOilLitresPerSeed`) now target `game:grain-flax`.
+
+### Removed
+- **`rudiments:oilpress` and its class, recipe, and shape are gone.** The vanilla fruit press
+  (fixed in 1.1.0 to actually accept the right item) fully replaces it — no reason to keep a
+  redundant custom block once the vanilla route works.
+
+> **Migration note:** any `rudiments:oilpress` blocks or items in existing saves (placed presses,
+> held/stored press items) become unknown — this is why the bump is MAJOR. Any `rudiments:linseedcake`
+> or oil already produced is unaffected; only the press block itself is gone.
+
 ## [1.1.0] — 2026-08-22 — Flax seeds are now pressable in the vanilla fruit press
 
 ### Added

@@ -73,8 +73,7 @@ Fine fibre twisted into **fine cord** gives a significant durability bonus on bo
 | Scutching sword | The wooden swingle you beat the board with. Deliberately dulled so it scrapes rather than cuts |
 | Hatchel | Final combing; primitive / simple / advanced tiers |
 | Mechanical scutch mill | Axle-driven; automates breaking and scutching, at the cost of shredding a share of each batch into tow |
-| Oil press | Presses mature flax seeds into linseed oil (vanilla `oilportion-flax`) |
-| Vanilla fruit press | Also presses flax seeds into linseed oil — a `juiceableProperties` patch, no custom block. Slated to replace the dedicated oil press above once confirmed working in practice |
+| Vanilla fruit press | Presses flax grain into linseed oil (vanilla `oilportion-flax`) and seed cake (`rudiments:linseedcake`) — a `juiceableProperties` patch, no custom block |
 
 ---
 
@@ -274,7 +273,7 @@ Apply changes without restarting: `/rudimentsreload` (requires `controlserver` p
 | `StookMaxBundles` | `64` | Maximum bundles a single ground stook can hold |
 | `RippleGrainYieldMultiplier` | `1.0` | Global multiplier on grain yields from rippling; `0` disables grain drops |
 | `RippleSeedYieldMultiplier` | `1.0` | Global multiplier on seed yields from rippling; `0` disables seed drops |
-| `LinseedOilLitresPerSeed` | `0.03` | Litres of vanilla `oilportion-flax` extracted per flax seed pressed in the vanilla fruit press. Restart required |
+| `LinseedOilLitresPerGrain` | `0.03` | Litres of vanilla `oilportion-flax` extracted per flax grain pressed in the vanilla fruit press. Restart required |
 
 ---
 

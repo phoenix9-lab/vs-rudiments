@@ -92,7 +92,6 @@ namespace Rudiments
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityRettingVat", typeof(BlockEntityRettingVat));
             api.RegisterBlockEntityBehaviorClass($"{Mod.Info.ModID}:RettingBath", typeof(BlockEntityBehaviorRettingBath));
             api.RegisterBlockBehaviorClass($"{Mod.Info.ModID}:RettingBathInfo", typeof(BlockBehaviorRettingBathInfo));
-            api.RegisterBlockClass($"{Mod.Info.ModID}:BlockOilPress", typeof(BlockOilPress));
             api.RegisterBlockClass($"{Mod.Info.ModID}:BlockMechScutcher", typeof(BlockMechScutcher));
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityMechScutcher", typeof(BlockEntityMechScutcher));
 
@@ -371,7 +370,7 @@ namespace Rudiments
         }
 
         /// <summary>
-        /// Overwrites the litresPerItem the vanilla fruit press extracts per flax seed, so server
+        /// Overwrites the litresPerItem the vanilla fruit press extracts per flax grain, so server
         /// owners can tune oil yield without hand-editing
         /// assets/rudiments/patches/linseedoil-fruitpress.json. The pressed byproduct
         /// (rudiments:linseedcake) is left alone — the fruit press produces it deterministically,
@@ -379,14 +378,14 @@ namespace Rudiments
         /// </summary>
         private void ApplyLinseedOilYield(ICoreAPI api)
         {
-            float litresPerSeed = System.Math.Max(0.001f, Config.LinseedOilLitresPerSeed);
+            float litresPerGrain = System.Math.Max(0.001f, Config.LinseedOilLitresPerGrain);
 
-            Item flaxSeeds = api.World.GetItem(new AssetLocation("game:seeds-flax"));
-            if (flaxSeeds?.Attributes?.Token is not JObject attrs) return;
+            Item flaxGrain = api.World.GetItem(new AssetLocation("game:grain-flax"));
+            if (flaxGrain?.Attributes?.Token is not JObject attrs) return;
             if (attrs["juiceableProperties"] is not JObject props) return;
 
-            props["litresPerItem"] = litresPerSeed;
-            api.Logger.Notification("[{0}] Linseed oil: {1} litre(s) of oilportion-flax per seed pressed.", Mod.Info.Name, litresPerSeed);
+            props["litresPerItem"] = litresPerGrain;
+            api.Logger.Notification("[{0}] Linseed oil: {1} litre(s) of oilportion-flax per grain pressed.", Mod.Info.Name, litresPerGrain);
         }
     }
 }

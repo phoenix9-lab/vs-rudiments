@@ -1,7 +1,7 @@
 [
   {
-    "comment": "Flax seeds become juiceable in the vanilla fruit press, the same generic mechanism apples and olives use (see game:itemtypes/resource/pressedmash's olive entry). juiceablePropertiesByType resolves per-variant into a plain juiceableProperties on the flax item, same as shapebytype -> shape. litresPerItem below is a placeholder -- RudimentsModSystem overwrites it at runtime from Rudiments.LinseedOilLitresPerSeed in AssetsFinalize, same pattern as the barrel retting ratio.",
-    "file": "game:itemtypes/resource/seeds",
+    "comment": "Flax grain (not the plantable seed packet) becomes juiceable in the vanilla fruit press, the same generic mechanism apples and olives use (see game:itemtypes/resource/pressedmash's olive entry). juiceablePropertiesByType resolves per-variant into a plain juiceableProperties on the flax item, same as shapebytype -> shape. litresPerItem below is a placeholder -- RudimentsModSystem overwrites it at runtime from Rudiments.LinseedOilLitresPerGrain in AssetsFinalize, same pattern as the barrel retting ratio.",
+    "file": "game:itemtypes/food/grain",
     "op": "add",
     "path": "/attributes/juiceablePropertiesByType",
     "value": {

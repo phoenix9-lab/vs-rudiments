@@ -49,16 +49,17 @@ namespace Rudiments
         public float RippleSeedYieldMultiplier { get; set; } = 1.0f;
 
         // ── Linseed oil (fruit press) ───────────────────────────────────────────────
-        // Flax seeds are pressed in the vanilla fruit press via a juiceablePropertiesByType
-        // patch (assets/rudiments/patches/linseedoil-fruitpress.json), the same generic
-        // mechanism apples and olives use — no custom block involved.
+        // Flax grain (game:grain-flax) is pressed in the vanilla fruit press via a
+        // juiceablePropertiesByType patch (assets/rudiments/patches/linseedoil-fruitpress.json),
+        // the same generic mechanism apples and olives use — no custom block involved. This is
+        // the milling grain from rippling, not the plantable game:seeds-flax packet.
 
-        /// <summary>Litres of game:oilportion-flax extracted per flax seed pressed in the vanilla
+        /// <summary>Litres of game:oilportion-flax extracted per flax grain pressed in the vanilla
         /// fruit press. Applied by editing the loaded item's juiceablePropertiesByType attribute in
         /// AssetsFinalize (linseedoil-fruitpress.json ships with 0.03). The pressed byproduct
         /// (rudiments:linseedcake) is produced deterministically per the vanilla fruit press's own
         /// rules — there is no chance/quantity field to tune here. Default: 0.03. Requires restart.</summary>
-        public float LinseedOilLitresPerSeed { get; set; } = 0.03f;
+        public float LinseedOilLitresPerGrain { get; set; } = 0.03f;
 
         // ── Scutching ────────────────────────────────────────────────────────────────
         // The scutch board is an interactive minigame: load broken bundles, strike them with a
