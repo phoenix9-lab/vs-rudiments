@@ -18,20 +18,60 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
       - name: Read version
         id: ver
         run: |
-          VERSION=$(python3 -c "import json; print(json.load(open('Rudiments/modinfo.json'))['version'])")
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          python3 - <<'PY' >> $GITHUB_OUTPUT
+          import json
+          m = json.load(open('Rudiments/modinfo.json'))
+          print('version=' + m['version'])
+          print('game=' + m['dependencies']['game'])
+          PY
+
+      # The mod compiles against the game's assemblies, which are not redistributable
+      # and so cannot live in this repo. The headless server package is a public
+      # download and carries every assembly Rudiments.csproj references except the
+      # client-only Vintagestory.dll, which the mod does not use.
+      - name: Cache game assemblies
+        id: vscache
+        uses: actions/cache@v4
+        with:
+          path: vsserver
+          key: vsserver-${{ steps.ver.outputs.game }}
+
+      - name: Download game assemblies
+        if: steps.vscache.outputs.cache-hit != 'true'
+        run: |
+          G="${{ steps.ver.outputs.game }}"
+          case "$G" in
+            *-rc*|*-pre*) CHANNEL=unstable ;;
+            *)            CHANNEL=stable   ;;
+          esac
+          mkdir -p vsserver
+          curl -sSfL -o vs_server.tar.gz \
+            "https://cdn.vintagestory.at/gamefiles/$CHANNEL/vs_server_linux-x64_${G}.tar.gz"
+          tar -xzf vs_server.tar.gz -C vsserver \
+            VintagestoryAPI.dll VintagestoryLib.dll \
+            Mods/VSSurvivalMod.dll Mods/VSEssentials.dll \
+            Lib/cairo-sharp.dll Lib/Newtonsoft.Json.dll
+
+      - name: Build Rudiments.dll
+        env:
+          VINTAGE_STORY: ${{ github.workspace }}/vsserver
+        run: dotnet build Rudiments/Rudiments.csproj -c Release --nologo -v minimal
 
       - name: Package rudiments
         run: |
           V="${{ steps.ver.outputs.version }}"
           mkdir -p dist staging/rudiments
-          cp Rudiments/modinfo.json    staging/rudiments/
-          cp Rudiments/modicon.png     staging/rudiments/
-          cp Rudiments/Rudiments.dll   staging/rudiments/
-          cp -r Rudiments/assets       staging/rudiments/
+          cp Rudiments/modinfo.json           staging/rudiments/
+          cp Rudiments/modicon.png            staging/rudiments/
+          cp Rudiments/bin/Release/Rudiments.dll staging/rudiments/
+          cp -r Rudiments/assets              staging/rudiments/
           cd staging/rudiments && zip -r "../../dist/rudiments_${V}.zip" .
 
       - name: Upload artifacts
