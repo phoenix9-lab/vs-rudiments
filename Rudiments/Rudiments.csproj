@@ -27,7 +27,8 @@
       <HintPath>$(VINTAGE_STORY)/Mods/VSEssentials.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="Vintagestory">
+    <!-- Client-only assembly, unused by the mod and absent from the headless server package. -->
+    <Reference Include="Vintagestory" Condition="Exists('$(VINTAGE_STORY)/Vintagestory.dll')">
       <HintPath>$(VINTAGE_STORY)/Vintagestory.dll</HintPath>
       <Private>false</Private>
     </Reference>

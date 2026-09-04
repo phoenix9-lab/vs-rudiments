@@ -30,11 +30,10 @@ if echo "$STAGED" | grep -q '^Rudiments/'; then
   fi
   echo "[pre-commit] Version: $V_MAIN ✓"
 
-  echo "[pre-commit] Building Rudiments.dll..."
+  # Compile check only — the shipped DLL is built by CI from this source, not
+  # committed, so there is no artifact to stage here.
+  echo "[pre-commit] Building (compile check)..."
   dotnet build Rudiments/Rudiments.csproj -c Release --nologo -v minimal
-
-  cp Rudiments/bin/Release/Rudiments.dll Rudiments/Rudiments.dll
-  git add -f Rudiments/Rudiments.dll
 else
   echo "[pre-commit] No Rudiments/ files staged — skipping version check and build."
 fi
