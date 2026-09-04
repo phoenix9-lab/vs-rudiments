@@ -26,7 +26,24 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
-## [2.1.0] — 2026-08-22 — Optional wear on shelving and firepit cooking
+## [2.1.1] — 2026-09-04 — Documentation catch-up
+
+### Changed
+- **The README now documents the clayware work that actually shipped in 2.1.0.** A new *What counts
+  as handling a vessel* table collects the three opt-in wear moments
+  (`BreakageIncludesPlacedContainers`, `BreakageIncludesGroundStorage`,
+  `BreakageIncludesFirepitCooking`) and records that fireclay is exempt from all of them; a new
+  *Crucibles and molds* section covers the smelting-failure roll, the cracked crucible, the
+  hammer + chisel recovery and the optional ingot-mold tightening. Both new config groups are in the
+  settings tables.
+- **The 2.1.0 entry below was incomplete and is corrected in place.** It documented only the shelving
+  and firepit wear switches, though the 2.1.0 build also carried the crucible smelting failure, the
+  ingot-mold recovery gate and the hewn scutching sword. Its date moves from 2026-08-22 (when the
+  wear work was written) to 2026-09-04 (when `v2.1.0` was tagged).
+
+---
+
+## [2.1.0] — 2026-09-04 — Optional wear extensions, crucible smelting failure, and a pre-anvil scutching sword
 
 ### Added
 - **`BreakageIncludesGroundStorage`** (default `false`): a fragile vessel can now fail the moment it
@@ -44,6 +61,59 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
   `rudiments:Fragile` and never becomes a cooked container, only a smelted one.
 
 Both default off — shelving and cooking stay free unless a server owner opts in.
+
+- **`BreakageIncludesSmeltingFailure`** (default `false`): a crucible's smelt can now fail the moment
+  it finishes, giving crucibles the same partial-metal-recovery risk an ingot mold already carries
+  when it shatters. Both payouts read the metal's own vanilla `shatteredStack` attribute (see
+  `BEIngotMold.GetStateAwareContentsSided`), so every metal and alloy a mold already handles works
+  here with no per-metal patching. A mold reaches that state via a thermal-shock roll followed by a
+  separate "break the placed block open" step that pays out; a crucible is `Unplaceable` per
+  `crucible.json` and never a placed block, so there is no such interim state to reuse. A new
+  `crucible-*-failed` block variant supplies the crucible's own version of it: on a failed roll the
+  `rudiments:SmeltingFailure` behavior swaps the smelted crucible for an inert `BlockCrucibleFailed`
+  carrying the pending `output`/`units` across, using the same "mutate the slot this behavior already
+  owns" technique as `rudiments:FirepitWear`.
+- **Cracking a failed crucible open takes a hammer in the offhand and a chisel active** — the same
+  combo `BlockIngotMold.OnBlockBroken` already requires to chisel a hardened pour loose. There is no
+  vanilla "chisel a portable item" hook to reuse (molds get their equivalent by being placed blocks),
+  so `CollectibleBehaviorCrucibleCrack` rides `IContainedInteractable`, the one extension point
+  ground storage exposes for this shape of interaction — the same interface
+  `CollectibleBehaviorGroundStoredProcessable` uses for "right-click a ground-stored item with a tool
+  to process it". Scoped to ground storage deliberately: two hands cannot hold a hammer, a chisel and
+  the crucible being worked all at once. Pays out the recovered bits plus the usual ceramic shards,
+  and damages both tools.
+- **`SmeltingFailureChance`** (default `0.05`) and **`SmeltingFailureYield`** (default `0.2`): the
+  flat per-smelt failure chance and the share of the metal recovered. Neither is tiered by ware tier
+  — fireclay sits outside the earthenware/stoneware/porcelain ladder — and the `0.2` yield is the
+  crucible's analogue of an ingot mold's own `fillLevel/5` shattered payout.
+- **`MoldRecoveryRequiresTool`** (default `false`): closes the same gap on ingot molds themselves.
+  Vanilla hands back a shattered mold's metal bits from a bare-handed break, even though it demands
+  hammer + chisel to work a hardened pour loose; on, a `BlockIngotMoldGated` subclass requires the
+  combo in the shattered case too. Overriding `GetDrops` alone is sufficient — `OnBlockBroken`'s
+  bare-hand branch first tries `GetStateAwareMoldSided(shattered: true)`, which reads a
+  `shatteredDrops` attribute undefined on every vanilla ingotmold blocktype, so that call always
+  returns empty and falls through to `base.OnBlockBroken`, which spawns whatever `GetDrops` returns.
+  Scoped to ingot molds; tool molds are unaffected.
+
+All four smelting settings default off — smelting behaves exactly as vanilla until a server owner
+opts in.
+
+- **`rudiments:hewnscutchsword`** — a second scutching sword split from firewood with any knife,
+  knapped included. The existing sword needs planks, which need a saw, which needs an anvil, so the
+  flax chain stalled at step 6 until the player had smithed. Same `ItemScutchSword` class, same board
+  behaviour and the same grid silhouette as the sawn recipe; the only difference is durability, 150
+  against the sawn sword's 450.
+
+### Changed
+- **The scutch board's held-tool hint matches on the item class** rather than the literal
+  `scutchsword` path, so it lists both swords.
+- **`Rudiments.dll` is no longer committed to the repository.** CI now reads `dependencies.game` from
+  `modinfo.json`, downloads the matching public headless server package, extracts the referenced
+  assemblies (cached on the game version) and builds the shipped DLL from source. A tracked binary
+  made every branch outliving a merge conflict on an artifact no merge can resolve. The server
+  package carries every referenced assembly except client-only `Vintagestory.dll`, whose reference is
+  now conditional on the file existing, since the mod does not use it. The pre-commit hook still
+  builds as a compile check but no longer stages the artifact.
 
 ---
 

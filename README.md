@@ -126,6 +126,21 @@ fire it in and — for the two custom kilns — the fuel you fire it with.
 - **The watering-can gate.** An unsealed earthenware can refuses to fill from a water source — glaze
   it or move up the ladder.
 
+### What counts as handling a vessel
+
+By default only active use rolls the wear chance — drinking, filling, emptying, pouring. Three
+switches widen that, and all three default off. None adds a chance of its own; each just lets the
+same per-tier number roll at one more moment:
+
+| Setting | Adds the roll when |
+|---|---|
+| `BreakageIncludesPlacedContainers` | You open a container you've set down |
+| `BreakageIncludesGroundStorage` | A vessel lands in ground storage — a shelf or the bare ground |
+| `BreakageIncludesFirepitCooking` | A cooking vessel's meal finishes, standing in for the heat-then-cool cycle. A failure takes the meal down with the pot |
+
+Fireclay — crucibles, ingot and tool molds — sits outside the earthenware/stoneware/porcelain ladder
+and never rolls any of these. It has its own risk instead; see [Crucibles and molds](#crucibles-and-molds).
+
 ### The kiln ladder
 
 `Pit kiln` (free, earthenware only) → `Small brick kiln` / `Updraft kiln` → `Beehive kiln` (vanilla, downdraft, even heat)
@@ -156,6 +171,29 @@ item and no second firing: it fires alongside the piece in any kiln, the pit kil
 
 Lead poisoning is fully configurable, decays daily whether you're online or not, and can be turned off
 server-side (`LeadPoisoningEnabled`) — see [Configuration](#configuration).
+
+### Crucibles and molds
+
+Fireclay is its own family: no ware tier, no seepage, no wear from handling. What it has instead is
+risk at the fire, and vanilla only applies that to half of it. Shatter an ingot mold and you get a
+fraction of the pour back as bits; a crucible, by contrast, has never had a bad day in its life. Two
+opt-in settings even that up. **Both default off** — leave them alone and smelting behaves exactly as
+vanilla does.
+
+- **A smelt can fail** (`BreakageIncludesSmeltingFailure`). The roll happens the moment the smelt
+  finishes — 5% by default (`SmeltingFailureChance`), flat, since fireclay isn't on the ware ladder.
+  The metal isn't gone: the crucible becomes an inert **cracked crucible** still carrying it, sitting
+  in the firepit where the good one would have been. Take it out and it tells you what's stuck inside.
+- **Getting it back takes tools.** A cracked crucible can't be poured or refilled — it has to be
+  broken open. Set it down in ground storage or on a shelf, hold a **hammer in your off hand** and a
+  **chisel** in your active hand, and right-click. It yields `SmeltingFailureYield` (20% by default)
+  of the metal as bits, plus the usual ceramic shards, and costs both tools a little durability. The
+  recovery reads the same vanilla data an ingot mold's does, so every metal and alloy the game
+  already knows about works with no per-metal setup.
+- **Molds can be held to the same standard** (`MoldRecoveryRequiresTool`). Vanilla lets you recover a
+  shattered mold's bits by breaking it bare-handed, even though it demands a hammer and chisel to
+  work a *hardened* pour loose. Turn this on and the shattered case wants the same combo. Scoped to
+  ingot molds — tool molds are untouched.
 
 ---
 
@@ -246,6 +284,8 @@ Apply changes without restarting: `/rudimentsreload` (requires `controlserver` p
 | `StonewareBreakChance` | `0.005` | Per-use shatter chance for stoneware |
 | `PorcelainBreakChance` | `0` | Per-use shatter chance for porcelain. `0` means it only breaks from drops/throws, never ordinary use |
 | `BreakageIncludesPlacedContainers` | `false` | If `true`, opening a placed container counts as a "use" for wear breakage too |
+| `BreakageIncludesGroundStorage` | `false` | If `true`, the per-tier wear chance also rolls the moment a vessel is set down in ground storage — a shelf or the bare ground |
+| `BreakageIncludesFirepitCooking` | `false` | If `true`, a fragile cooking vessel (pot, crock, dirtypot) rolls when its firepit cook finishes, standing in for the heat-then-cool cycle. A failure loses the meal too. Fireclay never rolls this |
 | `ThrownClayBreakChance` | `1.0` | Chance a deliberately dropped fired clay item shatters on landing. `0` disables it (the hard-landing trigger below still applies) |
 | `ThrownClayBreakWholeStack` | `true` | Break the whole dropped stack (Ctrl+Q) rather than one item (Q) |
 | `ThrownBreakOnDeathDrop` | `false` | Whether pottery scattered on death also shatters |
@@ -260,6 +300,17 @@ Apply changes without restarting: `/rudimentsreload` (requires `controlserver` p
 | `SealedWareRequiredForWateringCan` | `true` | Whether an unsealed earthenware watering can refuses to fill |
 | `PorcelainClayPerQuartz` | `2` | Blue clay converted per crushed quartz on the pulverizer route to porcelain clay. Requires restart |
 | `PorcelainClayPerFlint` | `1` | Blue clay converted per powdered flint + bonemeal on the bone-china route. Requires restart |
+
+### Crucible and mold failure
+
+All off by default — smelting behaves exactly like vanilla until you turn one on.
+
+| Setting | Default | Effect |
+|---|---|---|
+| `BreakageIncludesSmeltingFailure` | `false` | Whether a crucible's smelt can fail on completion, cracking the crucible into an inert item that still holds the metal |
+| `SmeltingFailureChance` | `0.05` | Flat per-smelt chance of that failure. Not tiered — fireclay sits outside the earthenware/stoneware/porcelain ladder |
+| `SmeltingFailureYield` | `0.2` | Share of a cracked crucible's metal recovered as bits when it is cracked open with hammer + chisel — the crucible's analogue of an ingot mold's 20% shatter payout |
+| `MoldRecoveryRequiresTool` | `false` | Whether recovering a *shattered ingot mold's* bits also requires hammer + chisel, instead of vanilla's free bare-handed break. Ingot molds only; tool molds unaffected |
 
 ### Lead poisoning
 
