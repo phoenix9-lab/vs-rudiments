@@ -65,7 +65,7 @@ namespace Rudiments.SRC.Common.Blocks
                 {
                     if (item?.Code == null || item.Code.Domain != "rudiments") continue;
                     if (item.Variant?["type"] == "broken") brokenStacks.Add(new ItemStack(item));
-                    if (item.Code.Path == "scutchsword") swordStacks.Add(new ItemStack(item));
+                    if (item is Items.ItemScutchSword) swordStacks.Add(new ItemStack(item));
                 }
 
                 return new WorldInteraction[]

@@ -1,5 +1,6 @@
 [
   {
+    "comment": "Sawn blade. Needs planks, so this route waits on a saw — and therefore an anvil.",
     "ingredientPattern": "_P_,_P_,KS_",
     "ingredients": {
       "P": { "type": "item", "code": "game:plank-*", "quantity": 1 },
@@ -8,5 +9,16 @@
     },
     "width": 3, "height": 3,
     "output": { "type": "item", "code": "scutchsword", "quantity": 1 }
+  },
+  {
+    "comment": "Stone-age route: a blade split out of a billet and dressed with a knapped knife. Firewood only needs an axe, so nothing here is anvil-gated — it just wears out three times as fast.",
+    "ingredientPattern": "_F_,_F_,KS_",
+    "ingredients": {
+      "F": { "type": "item", "code": "game:firewood", "quantity": 1 },
+      "S": { "type": "item", "code": "game:stick", "quantity": 1 },
+      "K": { "type": "item", "code": "game:knife-generic-*", "isTool": true }
+    },
+    "width": 3, "height": 3,
+    "output": { "type": "item", "code": "hewnscutchsword", "quantity": 1 }
   }
 ]
