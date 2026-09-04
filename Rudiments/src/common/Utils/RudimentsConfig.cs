@@ -238,6 +238,48 @@ namespace Rudiments
         /// working a vessel wears it. Default: false.</summary>
         public bool BreakageIncludesPlacedContainers { get; set; } = false;
 
+        /// <summary>Widen "use" to include setting a vessel down into ground storage (shelf or bare
+        /// ground). Off by default — shelving is free. When on, the same per-tier chance above rolls
+        /// the moment a fragile vessel lands in a ground-storage slot, single item or not; realistic
+        /// handling risk, not just active use. Default: false.</summary>
+        public bool BreakageIncludesGroundStorage { get; set; } = false;
+
+        /// <summary>Widen "use" to include a firepit cook finishing on a fragile clay cooking vessel
+        /// (pot, crock, dirtypot) — the heat-then-cool cycle stresses the body same as it would a
+        /// kiln firing gone wrong. Off by default. Fireclay (crucibles, ingot/tool molds) never rolls
+        /// this regardless of setting — they never become a cooked container, only a smelted one, so
+        /// there is nothing to gate. A failure loses whatever was cooking along with the vessel.
+        /// Default: false.</summary>
+        public bool BreakageIncludesFirepitCooking { get; set; } = false;
+
+        /// <summary>Whether a crucible's smelt can fail the moment it finishes, matching the same
+        /// partial metal recovery an ingot mold already gets when it shatters (see
+        /// <c>BEIngotMold.GetStateAwareContentsSided</c>, keyed off the same vanilla
+        /// <c>shatteredStack</c> item attribute every ingot carries). A crucible is always an item —
+        /// never a placed block, per crucible.json — so there is no interim "shattered, waiting to be
+        /// broken open" state to defer the payout to: a failure immediately consumes the crucible and
+        /// pays out the recovery on the spot. Off by default. Default: false.</summary>
+        public bool BreakageIncludesSmeltingFailure { get; set; } = false;
+
+        /// <summary>Flat per-smelt chance of <see cref="BreakageIncludesSmeltingFailure"/> triggering.
+        /// Not tiered by ware tier like earthenware/stoneware/porcelain above — crucibles are
+        /// fireclay, outside that ladder. Default: 0.05.</summary>
+        public double SmeltingFailureChance { get; set; } = 0.05;
+
+        /// <summary>Flat share of a failed crucible's metal content recovered as bits —
+        /// the crucible's analogue of an ingot mold's own fillLevel/5 (20%) shattered-metal payout.
+        /// Paid out only once the resulting failed crucible is cracked open; see
+        /// <c>CollectibleBehaviorCrucibleCrack</c>. Default: 0.2.</summary>
+        public double SmeltingFailureYield { get; set; } = 0.2;
+
+        /// <summary>Whether recovering a shattered ingot mold's metal bits requires the same
+        /// hammer-offhand + chisel-active combo vanilla already requires to chisel a hardened,
+        /// non-shattered pour loose. Off by default: bare-handed breaking recovers the bits for free,
+        /// matching unmodified vanilla behaviour. On closes that gap, matching the hammer+chisel
+        /// requirement <see cref="BreakageIncludesSmeltingFailure"/> gives crucibles. Scoped to ingot
+        /// molds; tool molds are unaffected. Default: false.</summary>
+        public bool MoldRecoveryRequiresTool { get; set; } = false;
+
         /// <summary>Chance that a deliberately dropped fired clay item shatters on landing. Set to 0
         /// to disable drop breakage entirely (the hard-landing trigger below still applies).
         /// Default: 1.0.</summary>

@@ -26,6 +26,27 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.1.0] — 2026-08-22 — Optional wear on shelving and firepit cooking
+
+### Added
+- **`BreakageIncludesGroundStorage`** (default `false`): a fragile vessel can now fail the moment it
+  is set down in ground storage (shelf or bare ground), not only while actively in use. There is no
+  held-interact hook for this — `CollectibleBehaviorGroundStorable` moves the item out of hand and
+  ends the interaction before `CollectibleBehaviorFragile` ever sees the slot — so a new
+  `rudiments:GroundStorageWear` block-entity behavior watches vanilla's own `groundstorage` block
+  entity instead, and rolls the same per-tier chance the instant a fragile vessel lands there.
+- **`BreakageIncludesFirepitCooking`** (default `false`): approximates the heat-then-cool cycle of
+  firepit cooking as a wear event on a fragile cooking vessel (pot, crock, dirtypot). Rolls when the
+  cook finishes (raw → cooked transition), not on physical retrieval — taking the pot back out is a
+  GUI inventory drag with no safe interception point, and chasing the stack to an arbitrary
+  destination slot would risk duplication/loss bugs. A failure loses the meal along with the vessel.
+  Fireclay (crucible, ingot/tool molds) is exempt with no special-casing needed: it never carries
+  `rudiments:Fragile` and never becomes a cooked container, only a smelted one.
+
+Both default off — shelving and cooking stay free unless a server owner opts in.
+
+---
+
 ## [2.0.6] — 2026-08-22 — Shrunk the linseed cake inventory icon
 
 ### Changed

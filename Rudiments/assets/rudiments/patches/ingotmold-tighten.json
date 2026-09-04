@@ -1,0 +1,9 @@
+[
+  {
+    "comment": "MoldRecoveryRequiresTool (off by default): swaps in a BlockIngotMold subclass that can gate the shattered-mold metal-bits payout behind hammer+chisel when the config flag is on. With the flag off (default) this subclass behaves identically to vanilla BlockIngotMold.",
+    "file": "game:blocktypes/clay/fired/ingotmold",
+    "op": "add",
+    "path": "/class",
+    "value": "rudiments:BlockIngotMoldGated"
+  }
+]

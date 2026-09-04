@@ -1,0 +1,28 @@
+[
+  {
+    "comment": "Phase 2 of BreakageIncludesSmeltingFailure: adds the 'failed' crucible type a failed smelt is turned into (see BlockEntityBehaviorSmeltingFailure), inert until cracked open with a hammer+chisel (CollectibleBehaviorCrucibleCrack). Reuses the fired crucible's own shape/textures — there is no separate cracked-open model.",
+    "file": "game:blocktypes/clay/fired/crucible",
+    "op": "add",
+    "path": "/variantgroups/1/states/-",
+    "value": "failed"
+  },
+  {
+    "file": "game:blocktypes/clay/fired/crucible",
+    "op": "addmerge",
+    "path": "/classByType",
+    "value": { "crucible-*-failed": "rudiments:BlockCrucibleFailed" }
+  },
+  {
+    "file": "game:blocktypes/clay/fired/crucible",
+    "op": "addmerge",
+    "path": "/maxStackSizeByType",
+    "value": { "*-failed": 1 }
+  },
+  {
+    "comment": "Gated internally on the item actually being a BlockCrucibleFailed, so attaching it to every crucible variant (not just -failed) is harmless.",
+    "file": "game:blocktypes/clay/fired/crucible",
+    "op": "add",
+    "path": "/behaviors/-",
+    "value": { "name": "rudiments:CrucibleCrack" }
+  }
+]
