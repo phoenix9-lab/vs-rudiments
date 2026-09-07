@@ -17,11 +17,16 @@ namespace Rudiments.SRC.Common.Entities
     ///     drop path and by nothing else except a player inventory dump)
     ///   • <b>hard landing</b> — it hit the ground fast enough, however it got there
     ///
-    /// And the exemption that matters: <b>death drops</b>. They carry <c>ByPlayerUid</c> too, so
-    /// without an explicit test, dying with pottery in your bags would smash all of it. Two
-    /// independent tests catch them — the <c>minsecondsToDespawn</c> marker that only
-    /// <c>InventoryBasePlayer</c> writes, and <see cref="RudimentsDeathTracker"/>'s recent-death
-    /// window.
+    /// And the exemptions that matter:
+    ///   • <b>death drops</b> — they carry <c>ByPlayerUid</c> too, so without an explicit test,
+    ///     dying with pottery in your bags would smash all of it. Two independent tests catch
+    ///     them — the <c>minsecondsToDespawn</c> marker that only <c>InventoryBasePlayer</c>
+    ///     writes, and <see cref="RudimentsDeathTracker"/>'s recent-death window.
+    ///   • <b>landing in water</b> — a jug thrown into a river to rinse it out (or dunked to wash
+    ///     rot off) settles on the bed still <c>FeetInLiquid</c>, and that is exactly what makes it
+    ///     water rather than a hard floor. By the time <c>OnFallToGround</c> fires the physics
+    ///     behavior has already updated <c>FeetInLiquid</c> for this tick, so the check is accurate
+    ///     at the moment of landing, not one tick stale.
     /// </summary>
     public class EntityBehaviorClayFragile : EntityBehavior
     {
@@ -50,6 +55,7 @@ namespace Rudiments.SRC.Common.Entities
             RudimentsConfig cfg = RudimentsModSystem.Config;
 
             if (!cfg.ThrownBreakOnDeathDrop && IsDeathDrop(itemEntity)) return;
+            if (itemEntity.FeetInLiquid) return;
 
             bool deliberate = itemEntity.ByPlayerUid != null;
             bool hardLanding = cfg.ClayImpactBreakSpeed > 0 && Math.Abs(withYMotion) >= cfg.ClayImpactBreakSpeed;
