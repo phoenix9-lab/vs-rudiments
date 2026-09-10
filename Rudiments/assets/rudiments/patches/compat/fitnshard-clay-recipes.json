@@ -1,0 +1,39 @@
+[
+  {
+    "comment": "Same bug as game:recipes/grid/rawbrick (see porcelain-clay.json): fitnshard binds clay-* to an unnamed `type` and emits rawbrick-{type}, so porcelain clay resolves to a rawbrick-porcelain that does not exist. fitnshard ships four rawbrick recipes (one per grid arrangement), all needing the same restriction.",
+    "file": "fitnshard:recipes/grid/cheaper-bricks.json",
+    "op": "add",
+    "path": "/0/ingredients/D/allowedVariants",
+    "value": ["blue", "fire", "red"],
+    "dependsOn": [{ "modid": "fitnshard" }]
+  },
+  {
+    "file": "fitnshard:recipes/grid/cheaper-bricks.json",
+    "op": "add",
+    "path": "/1/ingredients/D/allowedVariants",
+    "value": ["blue", "fire", "red"],
+    "dependsOn": [{ "modid": "fitnshard" }]
+  },
+  {
+    "file": "fitnshard:recipes/grid/cheaper-bricks.json",
+    "op": "add",
+    "path": "/2/ingredients/D/allowedVariants",
+    "value": ["blue", "fire", "red"],
+    "dependsOn": [{ "modid": "fitnshard" }]
+  },
+  {
+    "file": "fitnshard:recipes/grid/cheaper-bricks.json",
+    "op": "add",
+    "path": "/3/ingredients/D/allowedVariants",
+    "value": ["blue", "fire", "red"],
+    "dependsOn": [{ "modid": "fitnshard" }]
+  },
+  {
+    "comment": "Same bug again: lithodipyra binds clay-* to `type` and emits fitnshard:lithodipyra-{type}-raw, which fitnshard only defines for its own colour set — porcelain isn't one of them, so the recipe fails to resolve with porcelain clay present.",
+    "file": "fitnshard:recipes/grid/lithodipyra.json",
+    "op": "add",
+    "path": "/0/ingredients/C/allowedVariants",
+    "value": ["blue", "fire", "red"],
+    "dependsOn": [{ "modid": "fitnshard" }]
+  }
+]
