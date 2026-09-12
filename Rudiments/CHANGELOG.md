@@ -26,6 +26,18 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.1.5] — 2026-09-12 — Shattered ware drops fitnshard's own shard, not vanilla's
+
+### Changed
+- **Supersedes 2.1.4's approach.** Routing vanilla `game:clayshattered-*` through a `crushingProps`
+  patch into `fitnshard:fragments` meant pulverizing an already-shattered pile into another shard —
+  a step that made no sense once you think about what "crushing" is supposed to do. `ClayWare.ShardsFor`
+  (the C# code behind every drop-shatter, porcelain included but not porcelain-specific) now checks
+  `world.Api.ModLoader.IsModEnabled("fitnshard")` and, when present, drops `fitnshard:fragments`
+  directly instead of spawning vanilla's dead-end shard at all — one grind straight to grog, not a
+  crush-then-grind. The 2.1.4 `crushingProps` compat patch on `clayshattered` is removed as no longer
+  needed.
+
 ## [2.1.4] — 2026-09-12 — Shattered ware can now feed fitnshard's grog economy
 
 ### Fixed
