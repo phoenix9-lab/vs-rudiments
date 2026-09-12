@@ -35,5 +35,22 @@
     "path": "/0/ingredients/C/allowedVariants",
     "value": ["blue", "fire", "red"],
     "dependsOn": [{ "modid": "fitnshard" }]
+  },
+  {
+    "comment": "Rudiments' own drop-shatter (ClayWare.cs, all breakable ware, not just porcelain) drops vanilla game:clayshattered-*, which is a dead end in vanilla — no crushingProps or grindingProps. Give it the same crushingProps -> fitnshard:fragments tier as fitnshard's own potsherd, so shattered ware can still be crushed then ground into grog instead of being wasted.",
+    "file": "game:blocktypes/clay/clayshattered",
+    "op": "add",
+    "path": "/crushingPropsByType",
+    "value": {
+      "*-normal": {
+        "crushedStack": { "type": "item", "code": "fitnshard:fragments", "stacksize": 1 },
+        "hardnessTier": 0
+      },
+      "*-singlecenter": {
+        "crushedStack": { "type": "item", "code": "fitnshard:fragments", "stacksize": 1 },
+        "hardnessTier": 0
+      }
+    },
+    "dependsOn": [{ "modid": "fitnshard" }]
   }
 ]

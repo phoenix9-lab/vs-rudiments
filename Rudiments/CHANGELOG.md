@@ -26,6 +26,19 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.1.4] — 2026-09-12 — Shattered ware can now feed fitnshard's grog economy
+
+### Fixed
+- **`game:clayshattered-*` (the shard pile any breakable ware leaves when it drops and shatters —
+  porcelain included, but not porcelain-specific) was a dead end under Fittin' & Shardin': no
+  `crushingProps`, no `grindingProps`, and a different item entirely from fitnshard's own
+  `potsherd`/`fragments`.** Added a `dependsOn: fitnshard` patch giving both `clayshattered` variants
+  `crushingProps` into `fitnshard:fragments`, matching the tier fitnshard's own `breakable-ceramics.json`
+  already uses for `pot`/`shingle`. From there fitnshard's existing `fragments` → `grog` grinding step
+  needed no change.
+
+---
+
 ## [2.1.1] — 2026-09-04 — Documentation catch-up
 
 ### Changed
