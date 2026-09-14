@@ -26,6 +26,23 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.1.6] — 2026-09-14 — Broken ware drops potsherd, not fragments; stray shards get a grog fallback
+
+### Changed
+- **`ClayWare.ShardsFor` now drops `fitnshard:potsherd` instead of `fitnshard:fragments` when
+  fitnshard is present.** A vessel that shatters from being dropped has naturally broken into
+  sherds, not been deliberately crushed — potsherd is fitnshard's own term for exactly that, and
+  it already carries a `crushingProps` → fragments → (grind) → grog chain, matching
+  what fitnshard's own hammer-smashing recipes produce from a whole vessel.
+
+### Added
+- **A fallback path for stray vanilla `game:clayshattered-*`.** `ClayWare.ShardsFor` is Rudiments'
+  own code and only covers what Rudiments itself breaks; vanilla can still produce clayshattered
+  through channels Rudiments doesn't control (e.g. `BEToolMold.ShatterMold`). Rather than leave
+  those stranded again, `fitnshard-clay-recipes.json` gives both clayshattered variants
+  `grindingPropsByType` straight to `fitnshard:grog` — skipping the crush step entirely, since
+  this is a safety net rather than the intended economy.
+
 ## [2.1.5] — 2026-09-12 — Shattered ware drops fitnshard's own shard, not vanilla's
 
 ### Changed
