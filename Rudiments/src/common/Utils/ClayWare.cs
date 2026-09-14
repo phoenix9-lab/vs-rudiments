@@ -28,13 +28,13 @@ namespace Rudiments.Utils
         private const string ShardSingle = "game:clayshattered-singlecenter";
 
         /// <summary>
-        /// Fittin' &amp; Shardin' has its own already-broken-pottery tier (fragments) that grinds
-        /// straight into grog. Vanilla's clayshattered has no grindingProps at all, so when fitnshard
-        /// is present we drop its fragments directly instead — one grind, not a "crush this already-
-        /// broken shard into a coarser one" step that makes no sense.
+        /// Fittin' &amp; Shardin' has its own potsherd tier — the naturally-broken-piece item its
+        /// own hammer-smashing recipes produce from a whole vessel — which already crushes down into
+        /// fragments and grinds on from there into grog. Vanilla's clayshattered has no crushingProps
+        /// or grindingProps at all, so when fitnshard is present we drop its potsherd directly instead.
         /// </summary>
         private const string FitnshardModId = "fitnshard";
-        private const string FitnshardFragments = "fitnshard:fragments";
+        private const string FitnshardPotsherd = "fitnshard:potsherd";
 
         /// <summary>Item attribute a blocktype sets to opt out of drop breakage entirely.</summary>
         public static bool IsUnbreakableOnDrop(ItemStack stack)
@@ -66,17 +66,17 @@ namespace Rudiments.Utils
         /// <summary>
         /// The shard that matches how this item sat on the ground — a big single-centre item leaves
         /// the single-centre shard pile, everything else leaves the quadrant pile. With fitnshard
-        /// present, both collapse to its single fragments pile instead, so the shard economy stays
+        /// present, both collapse to its single potsherd pile instead, so the shard economy stays
         /// one mod's items rather than mixing in a dead-end vanilla one.
         /// </summary>
         public static ItemStack ShardsFor(IWorldAccessor world, ItemStack stack, int quantity)
         {
             if (world.Api.ModLoader.IsModEnabled(FitnshardModId))
             {
-                Item fragments = world.GetItem(new AssetLocation(FitnshardFragments));
-                if (fragments != null)
+                Item potsherd = world.GetItem(new AssetLocation(FitnshardPotsherd));
+                if (potsherd != null)
                 {
-                    return new ItemStack(fragments, GameMath.Clamp(quantity, 1, fragments.MaxStackSize));
+                    return new ItemStack(potsherd, GameMath.Clamp(quantity, 1, potsherd.MaxStackSize));
                 }
             }
 

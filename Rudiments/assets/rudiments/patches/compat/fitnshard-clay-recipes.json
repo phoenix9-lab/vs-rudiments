@@ -35,5 +35,16 @@
     "path": "/0/ingredients/C/allowedVariants",
     "value": ["blue", "fire", "red"],
     "dependsOn": [{ "modid": "fitnshard" }]
+  },
+  {
+    "comment": "Fallback, not the primary path: ClayWare.ShardsFor drops fitnshard:potsherd directly for any ware it breaks itself, but vanilla game:clayshattered-* can still turn up from sources Rudiments doesn't control (e.g. vanilla's own BEToolMold.ShatterMold, or another mod's breakage). Rather than leave those stranded, grind them straight to grog -- skipping the crush step fitnshard's own potsherd/fragments tiers use, since this is just a safety net, not the intended economy.",
+    "file": "game:blocktypes/clay/clayshattered",
+    "op": "add",
+    "path": "/grindingPropsByType",
+    "value": {
+      "*-normal": { "groundStack": { "type": "item", "code": "fitnshard:grog", "quantity": 1 } },
+      "*-singlecenter": { "groundStack": { "type": "item", "code": "fitnshard:grog", "quantity": 1 } }
+    },
+    "dependsOn": [{ "modid": "fitnshard" }]
   }
 ]
