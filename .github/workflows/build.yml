@@ -57,7 +57,7 @@ jobs:
           tar -xzf vs_server.tar.gz -C vsserver \
             VintagestoryAPI.dll VintagestoryLib.dll \
             Mods/VSSurvivalMod.dll Mods/VSEssentials.dll \
-            Lib/cairo-sharp.dll Lib/Newtonsoft.Json.dll
+            Lib/cairo-sharp.dll Lib/Newtonsoft.Json.dll Lib/0Harmony.dll
 
       - name: Build Rudiments.dll
         env:
