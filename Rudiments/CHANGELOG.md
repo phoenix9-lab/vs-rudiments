@@ -26,6 +26,27 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.1.7] — 2026-10-04 — Drop spindle rolag ratio; Biomes compat for wild nettle
+
+### Fixed
+- **The Immersive Fibercraft drop spindle consumed 4 rolags per twine instead of 2.** Its
+  `ItemDropSpindle.ProcessSpin` takes the full `spinningProps.inputQuantity` on *every* spin, and
+  a twine takes `spinsPerCompletion` (2) spins, while the spinning wheel takes it once per twine.
+  Lowering `inputQuantity` would only move the bug to the wheel, so a new `DropSpindleRatioFix`
+  (Harmony transpiler, server side, only when `spinningwheel` is loaded) rewrites the amount passed
+  to the spindle's `TakeOut` so the spins split `inputQuantity` between them (2 → 1+1, 4 → 2+2).
+  Scoped to Rudiments items — rolags, nettle fibre (2 → 1 twine) and fine fibre (4 → 1 fine cord)
+  all had the same double charge. Immersive Fibercraft's own fibres are left at its ratio. If a
+  future IF version changes `ProcessSpin`, the fix logs a warning and stands down.
+  Adds a `0Harmony` reference (`Lib/0Harmony.dll`, shipped with the game, also extracted in CI).
+
+### Added
+- **Biomes compat for wild stinging nettle.** Biomes only generates block patches whose blocks match
+  one of its realm configs, so with Biomes installed Rudiments' wild nettle never spawned.
+  `config/biomes/blockconfig/rudiments.json` (picked up by Biomes from every mod's assets, inert
+  without it) places `crop-nettle-*` in the four Palearctic and two Nearctic realms. Rudiments'
+  other plants are vanilla and already covered by Biomes. Takes effect in newly generated worlds.
+
 ## [2.1.6] — 2026-09-14 — Broken ware drops potsherd, not fragments; stray shards get a grog fallback
 
 ### Changed

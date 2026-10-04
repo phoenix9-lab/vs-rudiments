@@ -1,0 +1,15 @@
+{
+  "BlockPatches": {
+    "crop-nettle-*": {
+      "biorealm": [
+        "atlantic palearctic",
+        "central palearctic",
+        "eastern palearctic",
+        "pacific palearctic",
+        "pacific nearctic",
+        "atlantic nearctic"
+      ],
+      "bioriver": "both"
+    }
+  }
+}
