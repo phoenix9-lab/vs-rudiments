@@ -26,6 +26,17 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.1.8] — 2026-10-19 — Hand cards card continuously while right mouse is held
+
+### Changed
+- **Hand cards no longer need a fresh click per rolag.** `ItemHandCards.OnHeldInteractStart`
+  returned early unless `firstEvent` was set, so once a 2s carding action finished the engine's
+  repeat calls (`firstEvent = false`, sent while right mouse stays down) were ignored and the
+  player had to release and click again. The gate is gone: holding right mouse now cards rolag
+  after rolag until the button is released or the off hand runs out of fibers. The "need fibers"
+  error only fires on a fresh click, so running dry mid-hold just stops quietly. Per-rolag time
+  (2s) and durability cost (1) are unchanged.
+
 ## [2.1.7] — 2026-10-04 — Drop spindle rolag ratio; Biomes compat for wild nettle
 
 ### Fixed
