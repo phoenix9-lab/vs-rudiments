@@ -85,12 +85,13 @@ namespace Rudiments.SRC.Common.Items
 
         public override void OnHeldInteractStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, bool firstEvent, ref EnumHandHandling handling)
         {
-            if (!firstEvent) return;
-
+            // Not gated on firstEvent: while right mouse stays down the engine re-calls this with
+            // firstEvent=false after each finished rolag, so holding the button cards continuously.
             ItemSlot offSlot = byEntity.LeftHandItemSlot;
             if (offSlot == null || offSlot.Empty || ResolveRolag(offSlot.Itemstack.Item) == null)
             {
-                (api as ICoreClientAPI)?.TriggerIngameError(this, "nofibers", Lang.Get("rudiments:handcards-need-fibers"));
+                // Only nag on a fresh click — a held click running out of fibers just stops.
+                if (firstEvent) (api as ICoreClientAPI)?.TriggerIngameError(this, "nofibers", Lang.Get("rudiments:handcards-need-fibers"));
                 return;
             }
 
