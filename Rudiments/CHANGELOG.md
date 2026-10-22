@@ -26,6 +26,18 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.2.1] — 2026-10-22 — Lighter scutch mill load; stalls shown
+
+### Fixed
+- **The mill stalled on ordinary windmills while claiming to work.** Its mechanical resistance was
+  0.3, three times the vanilla quern's 0.1. A wooden windmill's network settles at roughly wind
+  speed minus 0.8 × load even with all five sails, so in most winds the mill barely turned or
+  stopped. The engine never reports a stopped network as exactly zero, so the block info kept
+  saying "Powered and scutching". Resistance is now 0.025, a quarter of the quern's: a wooden
+  frame with beating arms, not a millstone. The block info says when the mill is stalled and
+  otherwise shows the seconds per bundle at the current speed (5s at network speed 1.0; a
+  windmill tops out at 0.6).
+
 ## [2.2.0] — 2026-10-22 — Scutch mill faces the player, takes side axles and hopper feed
 
 ### Changed

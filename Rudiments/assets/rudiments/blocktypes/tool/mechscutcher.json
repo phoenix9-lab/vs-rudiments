@@ -6,7 +6,7 @@
     { "name": "UnstableFalling" }
   ],
   "entityBehaviors": [
-    { "name": "MPConsumer", "properties": { "mechPartShape": null, "resistance": 0.3 } }
+    { "name": "MPConsumer", "properties": { "mechPartShape": null, "resistance": 0.025 } }
   ],
   "variantgroups": [
     { "code": "side", "loadFromProperties": "abstract/horizontalorientation" }
