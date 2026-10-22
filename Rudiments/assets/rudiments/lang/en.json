@@ -41,7 +41,8 @@
   "rudiments:incontainer-item-rettingbathportion": "retting bath water",
 
   "rudiments:scutcher-nopower": "No mechanical power — run an axle into either post, or from above or below",
-  "rudiments:scutcher-running": "Powered and scutching",
+  "rudiments:scutcher-stalled": "Stalled — the drive can't overcome the load on this network. More sails, more wind or fewer machines will get it turning.",
+  "rudiments:scutcher-running": "Turning — about {0}s per bundle at this speed",
   "rudiments:scutcher-input": "Input: {0}x {1}",
   "rudiments:scutcher-output": "Output (scutched bundles — hatchel to finish): {0}x {1}",
   "rudiments:scutcher-wronginput": "The mill only takes dried or broken bundles.",

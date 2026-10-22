@@ -155,6 +155,10 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         private float Speed => (mpc?.Network != null) ? mpc.TrueSpeed : 0f;
 
+        // A network whose drive can't beat its load never reads zero — the engine holds it at a 1e-6
+        // creep — so anything this slow is reported as stalled rather than "powered".
+        private const float StallSpeed = 0.001f;
+
         private void OnMillTick(float dt)
         {
             if (Api.Side != EnumAppSide.Server) return;
@@ -250,8 +254,10 @@ namespace Rudiments.SRC.Common.BlockEntities
         // Deliberately skips BlockEntityContainer's food-perish lines, which mean nothing here.
         public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
         {
-            if (Speed <= 0f) dsc.AppendLine(Lang.Get("rudiments:scutcher-nopower"));
-            else dsc.AppendLine(Lang.Get("rudiments:scutcher-running"));
+            float speed = Speed;
+            if (mpc?.Network == null) dsc.AppendLine(Lang.Get("rudiments:scutcher-nopower"));
+            else if (speed < StallSpeed) dsc.AppendLine(Lang.Get("rudiments:scutcher-stalled"));
+            else dsc.AppendLine(Lang.Get("rudiments:scutcher-running", (int)System.Math.Ceiling(ProcessSecondsRequired / speed)));
 
             if (!InputSlot.Empty)
             {
