@@ -2,8 +2,8 @@
   {
     "ingredientPattern": "IBI,PHP,P_P",
     "ingredients": {
-      "I": { "type": "item", "code": "game:metalnailsandstrips-iron", "quantity": 1 },
-      "B": { "type": "item", "code": "game:rod-iron", "quantity": 1 },
+      "I": { "type": "item", "code": "game:metalnailsandstrips-*", "allowedVariants": ["iron", "meteoriciron", "steel"], "quantity": 1 },
+      "B": { "type": "item", "code": "game:rod-*", "allowedVariants": ["iron", "meteoriciron", "steel"], "quantity": 1 },
       "P": { "type": "item", "code": "game:plank-*", "quantity": 1 },
       "H": { "type": "item", "code": "game:hammer-*", "isTool": true }
     },

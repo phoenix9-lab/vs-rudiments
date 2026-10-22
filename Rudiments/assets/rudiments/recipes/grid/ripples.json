@@ -46,7 +46,8 @@
 	},
 	"N": {
 		"type": "item",
-		"code": "game:metalnailsandstrips-copper",
+		"code": "game:metalnailsandstrips-*",
+		"allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze"],
 		"quantity": 1
 	},
 	"H": {
@@ -83,7 +84,8 @@
 	},
 	"N": {
 		"type": "item",
-		"code": "game:metalnailsandstrips-iron",
+		"code": "game:metalnailsandstrips-*",
+		"allowedVariants": ["iron", "meteoriciron", "steel"],
 		"quantity": 1
 	},
 	"H": {

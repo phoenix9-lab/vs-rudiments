@@ -16,7 +16,7 @@
     "ingredientPattern": "P_P,NLN,H_A",
     "ingredients": {
       "P": { "type": "item",  "code": "game:plank-*",                  "quantity": 1 },
-      "N": { "type": "item",  "code": "game:metalnailsandstrips-copper","quantity": 1 },
+      "N": { "type": "item",  "code": "game:metalnailsandstrips-*", "allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze"], "quantity": 1 },
       "H": { "type": "item",  "code": "game:hammer-*",                  "isTool": true },
       "L": { "type": "block", "code": "game:log-*",
              "allowedVariants": ["placed-birch-ud","placed-oak-ud","placed-maple-ud","placed-pine-ud","placed-acacia-ud","placed-kapok-ud","placed-redwood-ud","placed-larch-ud","placed-baldcypress-ud","placed-walnut-ud","placed-purpleheart-ud","placed-ebony-ud"] },
@@ -29,7 +29,7 @@
     "ingredientPattern": "P_P,NLN,H_A",
     "ingredients": {
       "P": { "type": "item",  "code": "game:plank-*",                "quantity": 1 },
-      "N": { "type": "item",  "code": "game:metalnailsandstrips-iron","quantity": 1 },
+      "N": { "type": "item",  "code": "game:metalnailsandstrips-*", "allowedVariants": ["iron", "meteoriciron", "steel"], "quantity": 1 },
       "H": { "type": "item",  "code": "game:hammer-*",                "isTool": true },
       "L": { "type": "block", "code": "game:log-*",
              "allowedVariants": ["placed-birch-ud","placed-oak-ud","placed-maple-ud","placed-pine-ud","placed-acacia-ud","placed-kapok-ud","placed-redwood-ud","placed-larch-ud","placed-baldcypress-ud","placed-walnut-ud","placed-purpleheart-ud","placed-ebony-ud"] },
