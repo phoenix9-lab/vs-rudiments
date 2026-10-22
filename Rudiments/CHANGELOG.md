@@ -26,6 +26,16 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.1.9] — 2026-10-22 — Any same-tier metal for tool nails and rods
+
+### Fixed
+- **Simple and advanced fibre tools only took copper or iron.** The simple ripple, break, hatchel
+  and scutchboard required `metalnailsandstrips-copper` (and the break `rod-copper`); the advanced
+  versions and the mechanical scutcher required the iron variants, so bronze or steel nails and
+  rods couldn't be used. The ingredients are now wildcards limited by `allowedVariants`: the simple
+  tier takes copper, tin bronze, bismuth bronze or black bronze, and the advanced tier takes iron,
+  meteoric iron or steel. Hand cards already accepted any metal and are unchanged.
+
 ## [2.1.8] — 2026-10-19 — Hand cards card continuously while right mouse is held
 
 ### Changed
