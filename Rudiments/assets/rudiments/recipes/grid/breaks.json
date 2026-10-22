@@ -56,12 +56,14 @@
 	  },
 	  "N": {
 		"type": "item",
-		"code": "game:metalnailsandstrips-copper",
+		"code": "game:metalnailsandstrips-*",
+		"allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze"],
 		"quantity": 1
 	  },
 	  "B": {
 		"type": "item",
-		"code": "game:rod-copper",
+		"code": "game:rod-*",
+		"allowedVariants": ["copper", "tinbronze", "bismuthbronze", "blackbronze"],
 		"quantity": 1
 	  },
 	  "K": {
@@ -108,12 +110,14 @@
 	  },
 	  "N": {
 		"type": "item",
-		"code": "game:metalnailsandstrips-iron",
+		"code": "game:metalnailsandstrips-*",
+		"allowedVariants": ["iron", "meteoriciron", "steel"],
 		"quantity": 1
 	  },
 	  "B": {
 		"type": "item",
-		"code": "game:rod-iron",
+		"code": "game:rod-*",
+		"allowedVariants": ["iron", "meteoriciron", "steel"],
 		"quantity": 1
 	  },
 	  "K": {
