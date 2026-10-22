@@ -72,7 +72,7 @@ Fine fibre twisted into **fine cord** gives bows a significant durability bonus.
 | Scutch board | Interactive scutching. Load bundles and beat them with a scutching sword, turning them halfway through. Split-log / planed / joiner's tiers scale capacity and boon cleared per stroke |
 | Scutching sword | The wooden swingle you beat the board with. Deliberately dulled so it scrapes instead of cutting |
 | Hatchel | Final combing; primitive / simple / advanced tiers |
-| Mechanical scutch mill | Axle-driven. Automates breaking and scutching, but shreds a share of each batch into tow |
+| Mechanical scutch mill | Axle-driven through either post, or from above or below. It faces you when placed. Takes dried or broken bundles by hand or from a hopper. Automates breaking and scutching, but shreds a share of each batch into tow |
 | Vanilla fruit press | Presses flax grain into linseed oil (vanilla `oilportion-flax`) and seed cake (`rudiments:linseedcake`). It's a `juiceableProperties` patch; there's no custom block |
 
 ---

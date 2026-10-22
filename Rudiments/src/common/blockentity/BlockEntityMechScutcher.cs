@@ -1,26 +1,34 @@
+using Rudiments.SRC.Common.Items;
 using Rudiments.Utils;
 using System.Text;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
-using Vintagestory.API.MathTools;
+using Vintagestory.API.Server;
+using Vintagestory.GameContent;
 using Vintagestory.GameContent.Mechanics;
 
 namespace Rudiments.SRC.Common.BlockEntities
 {
     /// <summary>
-    /// Block entity for the mechanical scutcher. Holds an input slot (dried bundles) and an output slot
-    /// (fibre). While the mechanical-power network is turning it, it consumes one dried bundle every
-    /// few seconds and ejects the resulting fibre, scaled by the bundle's carried fibre quality.
+    /// Block entity for the mechanical scutcher. Holds an input slot (dried or broken bundles) and an
+    /// output slot (scutched bundles). While the mechanical-power network is turning it, it consumes
+    /// one bundle every few seconds and ejects the resulting scutched bundle, carrying the input's
+    /// fibre quality. Hoppers and chutes can push bundles into the input and draw from the output, so
+    /// a mill can run unattended between a feed hopper and a collecting chest.
     /// </summary>
-    public class BlockEntityMechScutcher : BlockEntity
+    public class BlockEntityMechScutcher : BlockEntityContainer
     {
         protected InventoryGeneric inventory;
         protected BEBehaviorMPConsumer mpc;
 
+        public override InventoryBase Inventory => inventory;
+        public override string InventoryClassName => "mechscutcher";
+
         public ItemSlot InputSlot => inventory[0];
         public ItemSlot OutputSlot => inventory[1];
+        public bool IsEmpty => inventory.Empty;
 
         // Time in seconds per bundle at network speed 1.0
         private const float ProcessSecondsRequired = 5f;
@@ -28,14 +36,27 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         private AssetLocation interactSound;
 
+        public BlockEntityMechScutcher()
+        {
+            inventory = new InventoryGeneric(2, null, null);
+            inventory.OnGetAutoPushIntoSlot = (face, fromSlot) => IsMillable(Api?.World, fromSlot?.Itemstack) ? InputSlot : null;
+            inventory.OnGetAutoPullFromSlot = face => OutputSlot;
+            inventory.SlotModified += OnSlotModified;
+        }
+
+        // Hoppers and chutes only mark their own block entity dirty, so sync the mill's load to
+        // clients whenever a slot changes underneath it.
+        private void OnSlotModified(int slotId)
+        {
+            if (Api?.Side == EnumAppSide.Server) MarkDirty();
+        }
+
         public override void Initialize(ICoreAPI api)
         {
-            if (inventory == null) inventory = new InventoryGeneric(2, "mechscutcher-" + Pos, api);
             base.Initialize(api);
-            inventory.LateInitialize("mechscutcher-" + Pos, api);
 
             interactSound = new AssetLocation("game", "sounds/block/planks");
-            RegisterGameTickListener(OnTick, 100);
+            RegisterGameTickListener(OnMillTick, 100);
         }
 
         public override void CreateBehaviors(Block block, IWorldAccessor worldForResolve)
@@ -44,10 +65,27 @@ namespace Rudiments.SRC.Common.BlockEntities
             mpc = GetBehavior<BEBehaviorMPConsumer>();
         }
 
-        private static bool IsDried(ItemStack stack) =>
-            stack?.Collectible?.Code != null && stack.Collectible.Code.Path.EndsWith("-dried");
+        /// <summary>Any flax or nettle bundle, whatever its stage — the ones the mill answers to,
+        /// if only to say it can't take them.</summary>
+        public static bool IsFibreBundle(ItemStack stack) => stack?.Collectible is ItemFieldRettableBundle;
 
-        public bool OnInteract(IPlayer player)
+        /// <summary>The scutched form of a dried or broken bundle; null for anything else. The mill
+        /// breaks as it scutches, so a bundle that skipped the break goes through all the same.</summary>
+        private static AssetLocation ScutchedCodeOf(ItemStack stack)
+        {
+            if (!IsFibreBundle(stack)) return null;
+            string type = stack.Collectible.Variant?["type"];
+            if (type != "dried" && type != "broken") return null;
+            return stack.Collectible.CodeWithVariant("type", "scutched");
+        }
+
+        public static bool IsMillable(IWorldAccessor world, ItemStack stack)
+        {
+            AssetLocation scutchedCode = ScutchedCodeOf(stack);
+            return scutchedCode != null && world?.GetItem(scutchedCode) != null;
+        }
+
+        public void OnInteract(IPlayer player)
         {
             var heldSlot = player.InventoryManager.ActiveHotbarSlot;
             var heldItem = heldSlot?.Itemstack;
@@ -60,7 +98,7 @@ namespace Rudiments.SRC.Common.BlockEntities
                     OutputSlot.Itemstack = null;
                     OutputSlot.MarkDirty();
                     MarkDirty(true);
-                    return true;
+                    return;
                 }
                 if (!InputSlot.Empty && player.InventoryManager.TryGiveItemstack(InputSlot.Itemstack.Clone()))
                 {
@@ -68,12 +106,15 @@ namespace Rudiments.SRC.Common.BlockEntities
                     processProgress = 0;
                     InputSlot.MarkDirty();
                     MarkDirty(true);
-                    return true;
                 }
-                return false;
+                return;
             }
 
-            if (!IsDried(heldItem)) return false;
+            if (!IsMillable(Api.World, heldItem))
+            {
+                Refuse(player, "scutcher-wronginput", "rudiments:scutcher-wronginput");
+                return;
+            }
 
             if (InputSlot.Empty)
             {
@@ -84,26 +125,41 @@ namespace Rudiments.SRC.Common.BlockEntities
                      && FiberQuality.Get(InputSlot.Itemstack) == FiberQuality.Get(heldItem))
             {
                 int transferable = System.Math.Min(heldItem.StackSize, InputSlot.Itemstack.Collectible.MaxStackSize - InputSlot.Itemstack.StackSize);
-                if (transferable <= 0) return true;
+                if (transferable <= 0)
+                {
+                    Refuse(player, "scutcher-full", "rudiments:scutcher-full");
+                    return;
+                }
                 InputSlot.Itemstack.StackSize += transferable;
                 heldSlot.TakeOut(transferable);
             }
-            else return false;
+            else
+            {
+                Refuse(player, "scutcher-mismatch", "rudiments:scutcher-mismatch");
+                return;
+            }
 
             heldSlot.MarkDirty();
             InputSlot.MarkDirty();
             MarkDirty(true);
             Api.World.PlaySoundAt(interactSound, player, null, false, 8f, 0.7f);
-            return true;
+        }
+
+        /// <summary>Loading is validated server-side, so refusals have to be pushed back to the
+        /// player's client rather than raised locally.</summary>
+        private void Refuse(IPlayer byPlayer, string code, string langKey)
+        {
+            if (byPlayer is IServerPlayer splr) splr.SendIngameError(code, Lang.Get(langKey));
+            else (Api as ICoreClientAPI)?.TriggerIngameError(this, code, Lang.Get(langKey));
         }
 
         private float Speed => (mpc?.Network != null) ? mpc.TrueSpeed : 0f;
 
-        private void OnTick(float dt)
+        private void OnMillTick(float dt)
         {
             if (Api.Side != EnumAppSide.Server) return;
             float speed = Speed;
-            if (speed <= 0f || InputSlot.Empty || !IsDried(InputSlot.Itemstack)) return;
+            if (speed <= 0f || !IsMillable(Api.World, InputSlot.Itemstack)) return;
 
             processProgress += dt * speed;
             if (processProgress < ProcessSecondsRequired) return;
@@ -115,14 +171,12 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         private void ProcessOne()
         {
-            ItemStack dried = InputSlot.Itemstack;
-            int quality = FiberQuality.Get(dried);
+            ItemStack input = InputSlot.Itemstack;
+            int quality = FiberQuality.Get(input);
 
             // The scutch mill combines breaking and scutching — outputs scutched bundles ready
             // for the hatchel. The player still hatchels by hand to extract the final fibre.
-            AssetLocation scutchedCode = dried.Collectible.Code.CopyWithPath(
-                dried.Collectible.Code.Path.Replace("-dried", "-scutched"));
-
+            AssetLocation scutchedCode = ScutchedCodeOf(input);
             Item scutchedItem = Api.World.GetItem(scutchedCode);
             if (scutchedItem == null) return;
 
@@ -141,7 +195,7 @@ namespace Rudiments.SRC.Common.BlockEntities
             InputSlot.MarkDirty();
 
             ItemStack outStack = new ItemStack(scutchedItem, 1);
-            FiberQuality.Carry(dried, outStack);
+            FiberQuality.Carry(input, outStack);
 
             if (OutputSlot.Empty)
             {
@@ -184,18 +238,8 @@ namespace Rudiments.SRC.Common.BlockEntities
         {
             base.OnTesselation(mesher, tesselator);
 
-            if (ownMesh == null)
-            {
-                ICoreClientAPI capi = Api as ICoreClientAPI;
-                if (capi == null) return true;
-
-                string shapePath = "rudiments:shapes/block/tool/mechscutcher/mechscutcher";
-                Shape shape = capi.Assets.TryGet(shapePath + ".json")?.ToObject<Shape>();
-                if (shape == null) return true;
-
-                ITexPositionSource tex = tesselator.GetTextureSource(Block);
-                capi.Tesselator.TesselateShape(shapePath, shape, out ownMesh, tex, new Vec3f(0, 0, 0));
-            }
+            // Tesselating the block (not the bare shape file) picks up the side variant's rotateY.
+            if (ownMesh == null) tesselator.TesselateBlock(Block, out ownMesh);
 
             if (ownMesh != null)
                 mesher.AddMeshData(ownMesh);
@@ -203,6 +247,7 @@ namespace Rudiments.SRC.Common.BlockEntities
             return true;
         }
 
+        // Deliberately skips BlockEntityContainer's food-perish lines, which mean nothing here.
         public override void GetBlockInfo(IPlayer forPlayer, StringBuilder dsc)
         {
             if (Speed <= 0f) dsc.AppendLine(Lang.Get("rudiments:scutcher-nopower"));
@@ -221,34 +266,18 @@ namespace Rudiments.SRC.Common.BlockEntities
                 dsc.AppendLine(Lang.Get("rudiments:scutcher-towwaste", (int)System.Math.Round(towShare * 100f)));
         }
 
+        // The inventory itself rides on BlockEntityContainer's "inventory" tree, the same key this
+        // block entity wrote before it became a container, so mills in existing saves keep their load.
         public override void FromTreeAttributes(ITreeAttribute tree, IWorldAccessor worldForResolving)
         {
-            if (inventory == null) inventory = new InventoryGeneric(2, "mechscutcher-" + Pos, Api);
-            ITreeAttribute invTree = tree.GetTreeAttribute("inventory");
-            if (invTree != null) inventory.FromTreeAttributes(invTree);
-            processProgress = tree.GetFloat("processProgress");
             base.FromTreeAttributes(tree, worldForResolving);
+            processProgress = tree.GetFloat("processProgress");
         }
 
         public override void ToTreeAttributes(ITreeAttribute tree)
         {
             base.ToTreeAttributes(tree);
-            TreeAttribute invTree = new TreeAttribute();
-            inventory.ToTreeAttributes(invTree);
-            tree["inventory"] = invTree;
             tree.SetFloat("processProgress", processProgress);
-        }
-
-        public override void OnBlockBroken(IPlayer byPlayer = null)
-        {
-            if (Api.Side == EnumAppSide.Server && inventory != null)
-            {
-                foreach (var slot in inventory)
-                {
-                    if (!slot.Empty) Api.World.SpawnItemEntity(slot.Itemstack, Pos.ToVec3d().Add(0.5, 0.5, 0.5));
-                }
-            }
-            base.OnBlockBroken(byPlayer);
         }
     }
 }
