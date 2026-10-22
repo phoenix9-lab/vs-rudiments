@@ -26,6 +26,33 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.2.0] — 2026-10-22 — Scutch mill faces the player, takes side axles and hopper feed
+
+### Changed
+- **The mechanical scutch mill now faces the player when placed and takes its axle through either
+  post.** Before, it was fixed to one orientation and only connected from above or below. Like the
+  vanilla brake, it now turns to line up with an axle that is already beside the spot. The block is
+  now `mechscutcher-{north,east,south,west}`. Top and bottom are still connectors, so mills driven
+  from above or below keep working. Only the front and back faces have no connector.
+- **Hoppers and chutes can feed the mill.** `BlockEntityMechScutcher` is now a
+  `BlockEntityContainer`. Dried or broken bundles pushed in go into the input slot, and a hopper or
+  chute can pull scutched bundles from the output. The inventory is still saved under the same
+  `inventory` key, so loaded mills keep their contents.
+
+### Fixed
+- **The mill silently refused broken bundles.** It accepted only `*-dried` bundles, and clicking
+  with anything else did nothing and showed no message. Broken bundles go through it now too. A
+  wrong-stage bundle, a mismatched batch or a full mill now shows an in-game error. The block's
+  interaction help lists what it accepts.
+- **You couldn't place an axle against the mill without sneaking.** The mill claimed every
+  right-click on the client, even ones it ignored. It now claims only clicks it can act on: a fibre
+  bundle in hand, or an empty hand with something in the mill.
+
+> **Migration note:** `config/remaps.json` remaps existing `rudiments:mechscutcher` blocks and
+> items to `rudiments:mechscutcher-north` the first time a world loads on 2.2.0. A server with
+> `DisableAutoRemap` set needs `/fixmapping applyall` instead. Remapped mills face north, and any
+> vertical drive keeps turning them. To use a side axle, break the mill and place it again.
+
 ## [2.1.10] — 2026-10-22 — Feature-complete; documentation catch-up
 
 ### Changed

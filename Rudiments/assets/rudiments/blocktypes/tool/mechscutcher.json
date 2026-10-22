@@ -8,16 +8,24 @@
   "entityBehaviors": [
     { "name": "MPConsumer", "properties": { "mechPartShape": null, "resistance": 0.3 } }
   ],
+  "variantgroups": [
+    { "code": "side", "loadFromProperties": "abstract/horizontalorientation" }
+  ],
   "attributes": {
     "flaxFibreAvg": 4,
     "nettleFibreAvg": 3,
-    "handbook": { "groupBy": [ "mechscutcher" ] }
+    "handbook": { "groupBy": [ "mechscutcher-*" ] }
   },
   "creativeinventory": {
-    "general": [ "*" ],
-    "mechanics": [ "*" ]
+    "general": [ "*-north" ],
+    "mechanics": [ "*-north" ]
   },
-  "shape": { "base": "block/tool/mechscutcher/mechscutcher" },
+  "shapeByType": {
+    "*-north": { "base": "block/tool/mechscutcher/mechscutcher", "rotateY": 0 },
+    "*-east":  { "base": "block/tool/mechscutcher/mechscutcher", "rotateY": 270 },
+    "*-south": { "base": "block/tool/mechscutcher/mechscutcher", "rotateY": 180 },
+    "*-west":  { "base": "block/tool/mechscutcher/mechscutcher", "rotateY": 90 }
+  },
   "textures": {
     "wood": { "base": "game:block/wood/debarked/aged" },
     "metal": { "base": "game:block/metal/ingot/iron" }
@@ -32,9 +40,26 @@
   "sideopaque": { "all": false },
   "sideao": { "all": false },
   "emitsideao": { "all": false },
-  "collisionSelectionBoxes": [
-    { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875 },
-    { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 }
+  "collisionSelectionBoxesByType": {
+    "*-north": [
+      { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875 },
+      { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 }
+    ],
+    "*-south": [
+      { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875 },
+      { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 }
+    ],
+    "*-east": [
+      { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875, "rotateY": 90 },
+      { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 }
+    ],
+    "*-west": [
+      { "x1": 0.1875, "y1": 0.6875, "z1": 0.3125, "x2": 0.8125, "y2": 1, "z2": 0.6875, "rotateY": 90 },
+      { "x1": 0, "y1": 0, "z1": 0, "x2": 1, "y2": 0.6875, "z2": 1 }
+    ]
+  },
+  "drops": [
+    { "type": "block", "code": "mechscutcher-north" }
   ],
   "sounds": {
     "place": "game:block/planks",

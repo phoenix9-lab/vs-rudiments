@@ -9,6 +9,6 @@
     },
     "width": 3,
     "height": 3,
-    "output": { "type": "block", "code": "mechscutcher", "quantity": 1 }
+    "output": { "type": "block", "code": "mechscutcher-north", "quantity": 1 }
   }
 ]
