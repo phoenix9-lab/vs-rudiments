@@ -15,16 +15,27 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ## Release checklist (run on every version bump)
 
-1. Decide the bump (table above) and set `version` in `modinfo.json`.
+1. Decide the bump (table above) and set `version` in `modinfo.json`. Every merge to `main` that touches `Rudiments/` publishes a GitHub release named after this version, so merging without a bump overwrites the previous release's zip.
 2. Add a dated section to this file (newest on top) under Added / Changed / Removed / Fixed.
-3. Build: `~/.dotnet/dotnet build -c Release` — must be **0 errors**.
-4. Package `rudiments_X.Y.Z.zip` with `modinfo.json`, `modicon.png`, `Rudiments.dll`, and `assets/` at the zip root (use Python `zipfile`; `zip` is not installed).
-5. Headless load-test the new zip (see workspace build-env memory): Windows `VintagestoryServer.exe` via WSL, port 42000, confirm `Dedicated Server now running` with 0 mod errors/warnings.
+3. Build: `dotnet build Rudiments/Rudiments.csproj -c Release` with `VINTAGE_STORY` set to the game install (Flatpak: `~/.local/share/flatpak/app/at.vintagestory.VintageStory/x86_64/stable/active/files/extra/vintagestory`) — must be **0 errors**. The pre-commit hook runs the version check from step 1 and this build on every commit that touches `Rudiments/`; enable it once per clone with `git config core.hooksPath .githooks`.
+4. Headless load-test: from `Rudiments/`, `zip -r <dir>/Mods/rudiments_X.Y.Z.zip modinfo.json modicon.png assets && zip -j <dir>/Mods/rudiments_X.Y.Z.zip bin/Release/Rudiments.dll`, with `<dir>` a scratch data path under `~/.var/app/at.vintagestory.VintageStory/cache/` (the Flatpak sandbox can see it). Then `flatpak run --command=bash at.vintagestory.VintageStory -c "cd /app/extra/vintagestory && dotnet VintagestoryServer.dll --dataPath <dir> --port 42099"` and confirm `Dedicated Server now running` with 0 mod errors/warnings.
+5. Merge to `main`. CI builds the DLL, packages `rudiments_X.Y.Z.zip` and publishes the `vX.Y.Z` GitHub release; upload that zip to the mod page.
 6. Leave the `modinfo.json` game dependency at `"1.22.0-rc.9"` unless raising the baseline (see note).
 
 > **Game-dependency note:** `"game": "1.22.0-rc.9"` is intentional. A bare `"1.22.0"` fails semver pre-release comparison against RC builds; the `-rc.9` form still satisfies 1.22.x stable (load-verified on 1.22.3).
 
 ---
+
+## [2.1.10] — 2026-10-22 — Feature-complete; documentation catch-up
+
+### Changed
+- **Rudiments is feature-complete.** No new systems are planned; further releases are bug fixes
+  only. The mod description no longer says "Pre-release — work in progress", and the README's
+  *Planned* section (Mudwork) is gone.
+- **The mod description now lists Biomes** among the optional integrations, as of 2.1.7.
+- **The README now documents the Fittin' & Shardin' integration** shipped in 2.1.4–2.1.6.
+- **The release checklist above is updated** for the Fedora toolchain, the Flatpak headless load
+  test and CI-built releases, and the pre-commit hook builds against the Flatpak game install.
 
 ## [2.1.9] — 2026-10-22 — Any same-tier metal for tool nails and rods
 

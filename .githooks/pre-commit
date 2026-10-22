@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export PATH="/home/dwhite/.dotnet:$PATH"
-export VINTAGE_STORY="/mnt/c/Users/danie/AppData/Roaming/Vintagestory"
+# Game install the csproj compiles against (Flatpak); set VINTAGE_STORY to override.
+export VINTAGE_STORY="${VINTAGE_STORY:-$HOME/.local/share/flatpak/app/at.vintagestory.VintageStory/x86_64/stable/active/files/extra/vintagestory}"
 
 STAGED=$(git diff --cached --name-only --diff-filter=ACM)
 
