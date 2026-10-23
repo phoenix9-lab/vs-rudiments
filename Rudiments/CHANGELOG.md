@@ -26,6 +26,14 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.2.2] — 2026-10-22 — Tow twists into String Sense cord
+
+### Fixed
+- **With String Sense, tow could only become rope.** Coarse fibres (tow) had a single recipe, six
+  of them into rope, so they never reached String Sense's cord tier the way hay, reeds or vines do.
+  Three tow in a vertical line now twist into flax cord, the same recipe shape String Sense uses for
+  its strands. The direct tow-to-rope recipe is unchanged.
+
 ## [2.2.1] — 2026-10-22 — Lighter scutch mill load; stalls shown
 
 ### Fixed

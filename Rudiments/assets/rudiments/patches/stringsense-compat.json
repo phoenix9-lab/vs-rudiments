@@ -42,5 +42,19 @@
     },
     "file": "stringsense:recipes/grid/cord.json",
     "dependsOn": [ { "modid": "stringsense" } ]
+  },
+  {
+    "comment": "Tow (coarse fibres from the hatchel or over-scutching) twists into String Sense's cord tier like any other strand, so it isn't a rope-only dead end there. Rope straight from tow (rudiments:recipes/grid/coarsefibers-rope.json) is untouched.",
+    "op": "add",
+    "path": "/-",
+    "value": {
+      "ingredientPattern": "F,F,F",
+      "ingredients": { "F": { "type": "item", "code": "rudiments:coarsefibers" } },
+      "width": 1,
+      "height": 3,
+      "output": { "type": "item", "code": "stringsense:cord-flax" }
+    },
+    "file": "stringsense:recipes/grid/cord.json",
+    "dependsOn": [ { "modid": "stringsense" } ]
   }
 ]
