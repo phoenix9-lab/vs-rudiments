@@ -19,16 +19,22 @@ if [ "$BAD_JSON" -ne 0 ]; then exit 1; fi
 
 # ── 2. Version bump + build — only when Rudiments/ files are staged ───────────
 if echo "$STAGED" | grep -q '^Rudiments/'; then
-  V_MAIN=$(python3 -c "import json; print(json.load(open('Rudiments/modinfo.json'))['version'])")
-  if git rev-parse --verify HEAD >/dev/null 2>&1; then
-    V_HEAD=$(git show HEAD:Rudiments/modinfo.json 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin)['version'])" 2>/dev/null || echo "0.0.0")
-    if [ "$V_MAIN" = "$V_HEAD" ]; then
-      echo "[pre-commit] ERROR: version not bumped — still $V_MAIN (same as HEAD)"
+  V_STAGED=$(python3 -c "import json; print(json.load(open('Rudiments/modinfo.json'))['version'])")
+  # Compare against main, not HEAD: every commit on a release branch shares one
+  # version, which only has to differ from what main last released.
+  BASE=""
+  for ref in origin/main main; do
+    if git rev-parse --verify --quiet "$ref" >/dev/null; then BASE=$ref; break; fi
+  done
+  if [ -n "$BASE" ]; then
+    V_BASE=$(git show "$BASE":Rudiments/modinfo.json 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin)['version'])" 2>/dev/null || echo "0.0.0")
+    if [ "$V_STAGED" = "$V_BASE" ]; then
+      echo "[pre-commit] ERROR: version not bumped — still $V_STAGED (same as $BASE)"
       echo "[pre-commit] Bump version in Rudiments/modinfo.json"
       exit 1
     fi
   fi
-  echo "[pre-commit] Version: $V_MAIN ✓"
+  echo "[pre-commit] Version: $V_STAGED ✓"
 
   # Compile check only — the shipped DLL is built by CI from this source, not
   # committed, so there is no artifact to stage here.
