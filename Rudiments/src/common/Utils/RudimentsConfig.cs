@@ -48,6 +48,31 @@ namespace Rudiments
         /// entirely. Default: 1.0.</summary>
         public float RippleSeedYieldMultiplier { get; set; } = 1.0f;
 
+        // ── Hatcheling ───────────────────────────────────────────────────────────────
+        // Fibre per bundle is rolled once per hatchel pass from a normal distribution with the
+        // average and variance (standard deviation) below, then scaled by fibre quality (coarse
+        // ×0.8, fine ×1.35). A roll of zero or less combs the pass out as tow: one coarse fibre
+        // per bundle. Read live, so /rudimentsreload retunes it without a restart. Before 2.2.3
+        // the hatchel averaged 5 / 6 / 8 per bundle with variance 2 / 1 / 1.
+
+        /// <summary>Average fibres per bundle on a primitive hatchel. Default: 1.</summary>
+        public float HatchelPrimitiveFibreAvg { get; set; } = 1f;
+
+        /// <summary>Variance (standard deviation) of fibres per bundle on a primitive hatchel. Default: 2.</summary>
+        public float HatchelPrimitiveFibreVar { get; set; } = 2f;
+
+        /// <summary>Average fibres per bundle on a simple hatchel. Default: 2.</summary>
+        public float HatchelSimpleFibreAvg { get; set; } = 2f;
+
+        /// <summary>Variance (standard deviation) of fibres per bundle on a simple hatchel. Default: 1.</summary>
+        public float HatchelSimpleFibreVar { get; set; } = 1f;
+
+        /// <summary>Average fibres per bundle on an advanced hatchel. Default: 3.</summary>
+        public float HatchelAdvancedFibreAvg { get; set; } = 3f;
+
+        /// <summary>Variance (standard deviation) of fibres per bundle on an advanced hatchel. Default: 1.</summary>
+        public float HatchelAdvancedFibreVar { get; set; } = 1f;
+
         // ── Linseed oil (fruit press) ───────────────────────────────────────────────
         // Flax grain (game:grain-flax) is pressed in the vanilla fruit press via a
         // juiceablePropertiesByType patch (assets/rudiments/patches/linseedoil-fruitpress.json),

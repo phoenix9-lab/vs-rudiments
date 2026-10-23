@@ -171,7 +171,7 @@
   "rudiments:item-handbooktitle-flaxbundle-broken": "Extracting Flax Fibres",
   "rudiments:item-handbooktext-flaxbundle-broken": "Step 6 of 7: Scutch the broken flax. Right-click a <a href=\"handbook://block-rudiments:scutchboard-primitive-east\">scutch board</a> to load it, then hold <hk>leftmouse</hk> with a <a href=\"handbook://item-rudiments:scutchsword\">scutching sword</a> to beat the boon off.<br><br>Only the end facing you is worked. When the strike sharpens in pitch and pale fluff replaces the brown shives, that end is done — <hk>sneak</hk> + <hk>rightmouse</hk> to turn the bundle and do the other half. Keep beating a clean end and the blade starts cutting the long line into short tow, which comes off as coarse fibres instead.<br><br>Right-click empty-handed to collect. Cleanliness sets the grade, but never above what retting granted; how much you over-beat sets how much of the batch survives as line.",
   "rudiments:item-handbooktitle-flaxbundle-scutched": "Extracting Flax Fibres",
-  "rudiments:item-handbooktext-flaxbundle-scutched": "Step 7 of 7: Extract flax fibres from the scutched flax by holding <hk>rightmouse</hk> on a <a href=\"handbook://block-rudiments:hatchel-primitive-east\">hatchel</a>. Higher fibre quality yields more fibre.",
+  "rudiments:item-handbooktext-flaxbundle-scutched": "Step 7 of 7: Extract flax fibres from the scutched flax by holding <hk>rightmouse</hk> on a <a href=\"handbook://block-rudiments:hatchel-primitive-east\">hatchel</a>. Higher fibre quality yields more fibre; a poor pass combs out as tow (coarse fibres) instead.",
 
   "rudiments:item-handbooktitle-nettlebundle-unprocessed": "Working Stinging Nettle",
   "rudiments:item-handbooktext-nettlebundle-unprocessed": "Step 1 of 6: Wear gloves — bare-handed handling stings! Right-click bare ground to place in a stook and cure the fresh stems (arid weather, ~1 day). Nettle skips rippling.",
@@ -184,7 +184,7 @@
   "rudiments:item-handbooktitle-nettlebundle-broken": "Working Stinging Nettle",
   "rudiments:item-handbooktext-nettlebundle-broken": "Step 5 of 6: Scutch the broken nettle. Load it onto a <a href=\"handbook://block-rudiments:scutchboard-primitive-east\">scutch board</a>, beat it with a <a href=\"handbook://item-rudiments:scutchsword\">scutching sword</a> (hold <hk>leftmouse</hk>), and <hk>sneak</hk> + <hk>rightmouse</hk> to turn it once the near end runs clean. Nettle holds far more boon than flax and needs roughly half again as many strokes per end. Collect empty-handed, then hatchel for fibres.",
   "rudiments:item-handbooktitle-nettlebundle-scutched": "Working Stinging Nettle",
-  "rudiments:item-handbooktext-nettlebundle-scutched": "Step 6 of 6: Hatchel the scutched nettle to extract nettle fibres.",
+  "rudiments:item-handbooktext-nettlebundle-scutched": "Step 6 of 6: Hatchel the scutched nettle to extract nettle fibres. A poor pass combs out as tow (coarse fibres) instead.",
   "rudiments:item-handbooktitle-nettleleaves": "Nettle Leaves",
   "rudiments:item-handbooktext-nettleleaves": "Harvested from young nettle plants (stages 3–6). Raw leaves cause minor damage when eaten — the stinging compounds survive into the picked leaf. Cooking them in a pot removes this completely; nettle soup is a worthwhile early-game food. <strong>Handling:</strong> use the slow careful harvest (hold <hk>rightmouse</hk>) to pick without being stung, or wear gloves and break normally.",
   "rudiments:item-handbooktitle-coarsefibers": "Coarse Fibres",

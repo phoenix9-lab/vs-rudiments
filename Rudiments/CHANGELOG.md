@@ -26,6 +26,21 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.2.3] — 2026-10-22 — Leaner hatchel yields, now configurable
+
+### Changed
+- **The hatchel gave far too much fibre.** A bundle averaged 5 / 6 / 8 fibres on the primitive /
+  simple / advanced hatchel. It now averages 1 / 2 / 3, with the same variance (2 / 1 / 1), and
+  fibre quality still scales the roll (coarse ×0.8, fine ×1.35).
+- **A bad hatchel pass now gives tow.** Before, every bundle gave at least one fibre. Now a roll
+  of zero or less combs the pass out as tow: one coarse fibre per bundle. With the primitive
+  hatchel's wide variance, about 40% of its passes come out as tow (about 7% on simple, 1% on
+  advanced).
+- **Hatchel yields are now in the mod config.** `HatchelPrimitiveFibreAvg` / `HatchelPrimitiveFibreVar`
+  and the matching `Simple` and `Advanced` settings in `rudiments.json` replace the `flaxDropAvg` /
+  `flaxDropVar` attributes in `hatchel.json`. They are read live, so `/rudimentsreload` applies
+  them. Set them to 5 / 6 / 8 to get the old yields back.
+
 ## [2.2.2] — 2026-10-22 — Tow twists into String Sense cord
 
 ### Fixed
