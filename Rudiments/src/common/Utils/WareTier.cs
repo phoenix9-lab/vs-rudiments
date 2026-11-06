@@ -59,7 +59,8 @@ namespace Rudiments.Utils
 
         public static EnumWareTier Get(ItemStack stack)
         {
-            if (stack == null) return EnumWareTier.Earthenware;
+            // With ware tiers off every vessel is earthenware, whatever it carries.
+            if (stack == null || !RudimentsModules.WareTiers) return EnumWareTier.Earthenware;
             if (IsPorcelain(stack.Collectible)) return EnumWareTier.Porcelain;
             if (stack.Attributes?.GetString(AttrKey) == StonewareValue) return EnumWareTier.Stoneware;
             return EnumWareTier.Earthenware;
@@ -129,7 +130,7 @@ namespace Rudiments.Utils
         /// </summary>
         public static double BreakChance(EnumWareTier tier, RudimentsConfig cfg)
         {
-            if (cfg == null) return 0;
+            if (cfg == null || !RudimentsModules.ClayBreakage) return 0;
             switch (tier)
             {
                 case EnumWareTier.Stoneware: return Math.Max(0, cfg.StonewareBreakChance);

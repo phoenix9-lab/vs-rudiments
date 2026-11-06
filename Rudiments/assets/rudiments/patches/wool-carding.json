@@ -15,6 +15,7 @@
     "dependsOn": [ { "modid": "wool" } ]
   },
   {
+    "condition": { "when": "Rudiments.WoolCarding", "isValue": "true" },
     "op": "replace",
     "path": "/0/enabled",
     "value": true,
@@ -22,6 +23,7 @@
     "dependsOn": [ { "modid": "wool" } ]
   },
   {
+    "condition": { "when": "Rudiments.WoolCarding", "isValue": "true" },
     "comment": "Insert carding into the wool chain: twine is now spun from rolags instead of raw washed fibers. Entry 0 = generic color wildcard, 1 = angora white, 2 = redbrown->brown, 3 = lightbrown+black->brown.",
     "op": "replace",
     "path": "/0/ingredients/T/code",
@@ -30,6 +32,7 @@
     "dependsOn": [ { "modid": "wool" } ]
   },
   {
+    "condition": { "when": "Rudiments.WoolCarding", "isValue": "true" },
     "op": "replace",
     "path": "/1/ingredients/T/code",
     "value": "rudiments:rolag-angora-white",
@@ -37,6 +40,7 @@
     "dependsOn": [ { "modid": "wool" } ]
   },
   {
+    "condition": { "when": "Rudiments.WoolCarding", "isValue": "true" },
     "op": "replace",
     "path": "/2/ingredients/T/code",
     "value": "rudiments:rolag-generic-redbrown",
@@ -44,6 +48,7 @@
     "dependsOn": [ { "modid": "wool" } ]
   },
   {
+    "condition": { "when": "Rudiments.WoolCarding", "isValue": "true" },
     "op": "replace",
     "path": "/3/ingredients/T/code",
     "value": "rudiments:rolag-generic-lightbrown",
@@ -51,6 +56,7 @@
     "dependsOn": [ { "modid": "wool" } ]
   },
   {
+    "condition": { "when": "Rudiments.WoolCarding", "isValue": "true" },
     "op": "replace",
     "path": "/3/ingredients/B/code",
     "value": "rudiments:rolag-generic-black",

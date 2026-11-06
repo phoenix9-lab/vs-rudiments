@@ -189,7 +189,8 @@
     }
   },
   {
-    "comment": "Swap in the rudiments dead-crop class. Applied unconditionally; the class itself honors the SeedsOnlyWhenMature config at runtime, falling back to vanilla's guaranteed-seed behavior when disabled.",
+    "condition": { "when": "Rudiments.SeedsOnlyWhenMature", "isValue": "true" },
+    "comment": "Swap in the rudiments dead-crop class, which returns seeds only from mature crops. Only applied while SeedsOnlyWhenMature is on; vanilla's guaranteed-seed class applies otherwise.",
     "file": "game:blocktypes/plant/crop/dead",
     "op": "replace",
     "path": "/class",

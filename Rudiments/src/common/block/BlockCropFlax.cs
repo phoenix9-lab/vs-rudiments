@@ -21,7 +21,7 @@ namespace Rudiments.SRC.Common.Blocks
         {
             ItemStack[] drops = base.GetDrops(world, pos, byPlayer, dropQuantityMultiplier);
             if (drops == null) return null;
-            if (!RudimentsModSystem.Config.FlaxBloomHarvest) return drops;
+            if (RudimentsModules.FlaxHarvest != "bloom") return drops;
 
             // Second-to-last stage = in bloom (peak fiber); last stage = fully mature.
             int potential;

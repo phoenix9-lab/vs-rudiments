@@ -17,6 +17,12 @@ while IFS= read -r f; do
 done < <(echo "$STAGED" | grep '\.json$' || true)
 if [ "$BAD_JSON" -ne 0 ]; then exit 1; fi
 
+# ── 1b. Every patch entry must carry the condition its module switch needs ───
+if echo "$STAGED" | grep -q '^Rudiments/assets/rudiments/patches/\|^tools/patch-modules.py'; then
+  echo "[pre-commit] Checking patch module conditions..."
+  python3 tools/patch-modules.py --check || { echo "[pre-commit] Run: python3 tools/patch-modules.py --fix (and add new files to its MAP)"; exit 1; }
+fi
+
 # ── 2. Version bump + build — only when Rudiments/ files are staged ───────────
 if echo "$STAGED" | grep -q '^Rudiments/'; then
   V_STAGED=$(python3 -c "import json; print(json.load(open('Rudiments/modinfo.json'))['version'])")

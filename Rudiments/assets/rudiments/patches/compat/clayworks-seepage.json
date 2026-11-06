@@ -1,0 +1,19 @@
+[
+  {
+    "condition": { "when": "Rudiments.ClaySeepage", "isValue": "true" },
+    "comment": "Seepage on Clayworks' bowl and jug, the two Clayworks vessels with liquidContainerProps. Split from clayworks-behaviors.json so ClaySeepageEnabled can switch it off without touching fragility.",
+    "file": "clayworks:blocktypes/clay/bowl.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Seepage" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  },
+  {
+    "condition": { "when": "Rudiments.ClaySeepage", "isValue": "true" },
+    "file": "clayworks:blocktypes/clay/jug.json",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:Seepage" }],
+    "dependsOn": [{ "modid": "clayworks" }]
+  }
+]

@@ -24,7 +24,7 @@ namespace Rudiments.SRC.Common.Blocks
         {
             handling = EnumHandling.PassThrough;
 
-            if (RudimentsModSystem.Config.NettleHeavyFeederEnabled)
+            if (RudimentsModules.Nettle && RudimentsModSystem.Config.NettleHeavyFeederEnabled)
             {
                 // farmland.Pos is the farmland tile; pass it directly — DepleteNeighborNitrogen
                 // scans the four horizontal neighbours of that position.

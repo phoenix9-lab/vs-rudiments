@@ -1,5 +1,6 @@
 [
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "comment": "The beehive kiln is the vitrification rung: whatever comes out of it is stoneware. Each beehivekiln entry is a JsonItemStack, and JsonItemStack.Resolve applies an embedded `attributes` object onto the resolved stack's NBT, so stamping the tier is pure JSON \u2014 no code touches the beehive at all. Every existing entry is left exactly as it is: this is addmerge onto the entry, never a replace, so all four vanilla colours at all four door counts survive unchanged. That regression is verification step 10. Porcelain is absent from this file by design \u2014 it is a real variant, not an attribute, and its own beehivekiln map belongs to porcelain-ware-raw.json.",
     "file": "game:blocktypes/clay/raw/bowl",
     "op": "addmerge",
@@ -9,6 +10,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/bowl",
     "op": "addmerge",
     "path": "/attributesByType/bowl-red-raw/beehivekiln/1/attributes",
@@ -17,6 +19,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/bowl",
     "op": "addmerge",
     "path": "/attributesByType/bowl-red-raw/beehivekiln/2/attributes",
@@ -25,6 +28,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/bowl",
     "op": "addmerge",
     "path": "/attributesByType/bowl-red-raw/beehivekiln/3/attributes",
@@ -33,6 +37,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/bowl",
     "op": "addmerge",
     "path": "/attributesByType/bowl-blue-raw/beehivekiln/0/attributes",
@@ -41,6 +46,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/bowl",
     "op": "addmerge",
     "path": "/attributesByType/bowl-blue-raw/beehivekiln/1/attributes",
@@ -49,6 +55,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/bowl",
     "op": "addmerge",
     "path": "/attributesByType/bowl-blue-raw/beehivekiln/2/attributes",
@@ -57,6 +64,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/bowl",
     "op": "addmerge",
     "path": "/attributesByType/bowl-blue-raw/beehivekiln/3/attributes",
@@ -65,6 +73,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/bowl",
     "op": "addmerge",
     "path": "/attributesByType/bowl-fire-raw/beehivekiln/0/attributes",
@@ -73,6 +82,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/bowl",
     "op": "addmerge",
     "path": "/attributesByType/bowl-fire-raw/beehivekiln/1/attributes",
@@ -81,6 +91,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/bowl",
     "op": "addmerge",
     "path": "/attributesByType/bowl-fire-raw/beehivekiln/2/attributes",
@@ -89,6 +100,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/bowl",
     "op": "addmerge",
     "path": "/attributesByType/bowl-fire-raw/beehivekiln/3/attributes",
@@ -97,6 +109,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crock",
     "op": "addmerge",
     "path": "/attributesByType/crock-red-raw/beehivekiln/0/attributes",
@@ -105,6 +118,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crock",
     "op": "addmerge",
     "path": "/attributesByType/crock-red-raw/beehivekiln/1/attributes",
@@ -113,6 +127,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crock",
     "op": "addmerge",
     "path": "/attributesByType/crock-red-raw/beehivekiln/2/attributes",
@@ -121,6 +136,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crock",
     "op": "addmerge",
     "path": "/attributesByType/crock-red-raw/beehivekiln/3/attributes",
@@ -129,6 +145,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crock",
     "op": "addmerge",
     "path": "/attributesByType/crock-blue-raw/beehivekiln/0/attributes",
@@ -137,6 +154,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crock",
     "op": "addmerge",
     "path": "/attributesByType/crock-blue-raw/beehivekiln/1/attributes",
@@ -145,6 +163,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crock",
     "op": "addmerge",
     "path": "/attributesByType/crock-blue-raw/beehivekiln/2/attributes",
@@ -153,6 +172,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crock",
     "op": "addmerge",
     "path": "/attributesByType/crock-blue-raw/beehivekiln/3/attributes",
@@ -161,6 +181,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crock",
     "op": "addmerge",
     "path": "/attributesByType/crock-fire-raw/beehivekiln/0/attributes",
@@ -169,6 +190,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crock",
     "op": "addmerge",
     "path": "/attributesByType/crock-fire-raw/beehivekiln/1/attributes",
@@ -177,6 +199,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crock",
     "op": "addmerge",
     "path": "/attributesByType/crock-fire-raw/beehivekiln/2/attributes",
@@ -185,6 +208,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crock",
     "op": "addmerge",
     "path": "/attributesByType/crock-fire-raw/beehivekiln/3/attributes",
@@ -193,6 +217,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crucible",
     "op": "addmerge",
     "path": "/attributesByType/crucible-red-raw/beehivekiln/0/attributes",
@@ -201,6 +226,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crucible",
     "op": "addmerge",
     "path": "/attributesByType/crucible-red-raw/beehivekiln/1/attributes",
@@ -209,6 +235,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crucible",
     "op": "addmerge",
     "path": "/attributesByType/crucible-red-raw/beehivekiln/2/attributes",
@@ -217,6 +244,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crucible",
     "op": "addmerge",
     "path": "/attributesByType/crucible-red-raw/beehivekiln/3/attributes",
@@ -225,6 +253,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crucible",
     "op": "addmerge",
     "path": "/attributesByType/crucible-blue-raw/beehivekiln/0/attributes",
@@ -233,6 +262,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crucible",
     "op": "addmerge",
     "path": "/attributesByType/crucible-blue-raw/beehivekiln/1/attributes",
@@ -241,6 +271,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crucible",
     "op": "addmerge",
     "path": "/attributesByType/crucible-blue-raw/beehivekiln/2/attributes",
@@ -249,6 +280,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crucible",
     "op": "addmerge",
     "path": "/attributesByType/crucible-blue-raw/beehivekiln/3/attributes",
@@ -257,6 +289,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crucible",
     "op": "addmerge",
     "path": "/attributesByType/crucible-fire-raw/beehivekiln/0/attributes",
@@ -265,6 +298,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crucible",
     "op": "addmerge",
     "path": "/attributesByType/crucible-fire-raw/beehivekiln/1/attributes",
@@ -273,6 +307,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crucible",
     "op": "addmerge",
     "path": "/attributesByType/crucible-fire-raw/beehivekiln/2/attributes",
@@ -281,6 +316,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/crucible",
     "op": "addmerge",
     "path": "/attributesByType/crucible-fire-raw/beehivekiln/3/attributes",
@@ -289,6 +325,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/flowerpot",
     "op": "addmerge",
     "path": "/attributesByType/flowerpot-red-raw/beehivekiln/0/attributes",
@@ -297,6 +334,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/flowerpot",
     "op": "addmerge",
     "path": "/attributesByType/flowerpot-red-raw/beehivekiln/1/attributes",
@@ -305,6 +343,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/flowerpot",
     "op": "addmerge",
     "path": "/attributesByType/flowerpot-red-raw/beehivekiln/2/attributes",
@@ -313,6 +352,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/flowerpot",
     "op": "addmerge",
     "path": "/attributesByType/flowerpot-red-raw/beehivekiln/3/attributes",
@@ -321,6 +361,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/flowerpot",
     "op": "addmerge",
     "path": "/attributesByType/flowerpot-blue-raw/beehivekiln/0/attributes",
@@ -329,6 +370,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/flowerpot",
     "op": "addmerge",
     "path": "/attributesByType/flowerpot-blue-raw/beehivekiln/1/attributes",
@@ -337,6 +379,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/flowerpot",
     "op": "addmerge",
     "path": "/attributesByType/flowerpot-blue-raw/beehivekiln/2/attributes",
@@ -345,6 +388,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/flowerpot",
     "op": "addmerge",
     "path": "/attributesByType/flowerpot-blue-raw/beehivekiln/3/attributes",
@@ -353,6 +397,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/flowerpot",
     "op": "addmerge",
     "path": "/attributesByType/flowerpot-fire-raw/beehivekiln/0/attributes",
@@ -361,6 +406,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/flowerpot",
     "op": "addmerge",
     "path": "/attributesByType/flowerpot-fire-raw/beehivekiln/1/attributes",
@@ -369,6 +415,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/flowerpot",
     "op": "addmerge",
     "path": "/attributesByType/flowerpot-fire-raw/beehivekiln/2/attributes",
@@ -377,6 +424,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/flowerpot",
     "op": "addmerge",
     "path": "/attributesByType/flowerpot-fire-raw/beehivekiln/3/attributes",
@@ -385,6 +433,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/ingotmold",
     "op": "addmerge",
     "path": "/attributesByType/ingotmold-red-raw/beehivekiln/0/attributes",
@@ -393,6 +442,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/ingotmold",
     "op": "addmerge",
     "path": "/attributesByType/ingotmold-red-raw/beehivekiln/1/attributes",
@@ -401,6 +451,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/ingotmold",
     "op": "addmerge",
     "path": "/attributesByType/ingotmold-red-raw/beehivekiln/2/attributes",
@@ -409,6 +460,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/ingotmold",
     "op": "addmerge",
     "path": "/attributesByType/ingotmold-red-raw/beehivekiln/3/attributes",
@@ -417,6 +469,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/ingotmold",
     "op": "addmerge",
     "path": "/attributesByType/ingotmold-blue-raw/beehivekiln/0/attributes",
@@ -425,6 +478,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/ingotmold",
     "op": "addmerge",
     "path": "/attributesByType/ingotmold-blue-raw/beehivekiln/1/attributes",
@@ -433,6 +487,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/ingotmold",
     "op": "addmerge",
     "path": "/attributesByType/ingotmold-blue-raw/beehivekiln/2/attributes",
@@ -441,6 +496,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/ingotmold",
     "op": "addmerge",
     "path": "/attributesByType/ingotmold-blue-raw/beehivekiln/3/attributes",
@@ -449,6 +505,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/ingotmold",
     "op": "addmerge",
     "path": "/attributesByType/ingotmold-fire-raw/beehivekiln/0/attributes",
@@ -457,6 +514,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/ingotmold",
     "op": "addmerge",
     "path": "/attributesByType/ingotmold-fire-raw/beehivekiln/1/attributes",
@@ -465,6 +523,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/ingotmold",
     "op": "addmerge",
     "path": "/attributesByType/ingotmold-fire-raw/beehivekiln/2/attributes",
@@ -473,6 +532,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/ingotmold",
     "op": "addmerge",
     "path": "/attributesByType/ingotmold-fire-raw/beehivekiln/3/attributes",
@@ -481,6 +541,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/jug",
     "op": "addmerge",
     "path": "/attributesByType/jug-red-raw/beehivekiln/0/attributes",
@@ -489,6 +550,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/jug",
     "op": "addmerge",
     "path": "/attributesByType/jug-red-raw/beehivekiln/1/attributes",
@@ -497,6 +559,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/jug",
     "op": "addmerge",
     "path": "/attributesByType/jug-red-raw/beehivekiln/2/attributes",
@@ -505,6 +568,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/jug",
     "op": "addmerge",
     "path": "/attributesByType/jug-red-raw/beehivekiln/3/attributes",
@@ -513,6 +577,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/jug",
     "op": "addmerge",
     "path": "/attributesByType/jug-blue-raw/beehivekiln/0/attributes",
@@ -521,6 +586,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/jug",
     "op": "addmerge",
     "path": "/attributesByType/jug-blue-raw/beehivekiln/1/attributes",
@@ -529,6 +595,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/jug",
     "op": "addmerge",
     "path": "/attributesByType/jug-blue-raw/beehivekiln/2/attributes",
@@ -537,6 +604,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/jug",
     "op": "addmerge",
     "path": "/attributesByType/jug-blue-raw/beehivekiln/3/attributes",
@@ -545,6 +613,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/jug",
     "op": "addmerge",
     "path": "/attributesByType/jug-fire-raw/beehivekiln/0/attributes",
@@ -553,6 +622,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/jug",
     "op": "addmerge",
     "path": "/attributesByType/jug-fire-raw/beehivekiln/1/attributes",
@@ -561,6 +631,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/jug",
     "op": "addmerge",
     "path": "/attributesByType/jug-fire-raw/beehivekiln/2/attributes",
@@ -569,6 +640,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/jug",
     "op": "addmerge",
     "path": "/attributesByType/jug-fire-raw/beehivekiln/3/attributes",
@@ -577,6 +649,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/oillamp",
     "op": "addmerge",
     "path": "/attributesByType/oillamp-genie-red-raw/beehivekiln/0/attributes",
@@ -585,6 +658,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/oillamp",
     "op": "addmerge",
     "path": "/attributesByType/oillamp-genie-red-raw/beehivekiln/1/attributes",
@@ -593,6 +667,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/oillamp",
     "op": "addmerge",
     "path": "/attributesByType/oillamp-genie-red-raw/beehivekiln/2/attributes",
@@ -601,6 +676,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/oillamp",
     "op": "addmerge",
     "path": "/attributesByType/oillamp-genie-red-raw/beehivekiln/3/attributes",
@@ -609,6 +685,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/oillamp",
     "op": "addmerge",
     "path": "/attributesByType/oillamp-genie-blue-raw/beehivekiln/0/attributes",
@@ -617,6 +694,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/oillamp",
     "op": "addmerge",
     "path": "/attributesByType/oillamp-genie-blue-raw/beehivekiln/1/attributes",
@@ -625,6 +703,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/oillamp",
     "op": "addmerge",
     "path": "/attributesByType/oillamp-genie-blue-raw/beehivekiln/2/attributes",
@@ -633,6 +712,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/oillamp",
     "op": "addmerge",
     "path": "/attributesByType/oillamp-genie-blue-raw/beehivekiln/3/attributes",
@@ -641,6 +721,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/oillamp",
     "op": "addmerge",
     "path": "/attributesByType/oillamp-genie-fire-raw/beehivekiln/0/attributes",
@@ -649,6 +730,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/oillamp",
     "op": "addmerge",
     "path": "/attributesByType/oillamp-genie-fire-raw/beehivekiln/1/attributes",
@@ -657,6 +739,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/oillamp",
     "op": "addmerge",
     "path": "/attributesByType/oillamp-genie-fire-raw/beehivekiln/2/attributes",
@@ -665,6 +748,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/oillamp",
     "op": "addmerge",
     "path": "/attributesByType/oillamp-genie-fire-raw/beehivekiln/3/attributes",
@@ -673,6 +757,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/planter",
     "op": "addmerge",
     "path": "/attributesByType/clayplanter-red-raw/beehivekiln/0/attributes",
@@ -681,6 +766,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/planter",
     "op": "addmerge",
     "path": "/attributesByType/clayplanter-red-raw/beehivekiln/1/attributes",
@@ -689,6 +775,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/planter",
     "op": "addmerge",
     "path": "/attributesByType/clayplanter-red-raw/beehivekiln/2/attributes",
@@ -697,6 +784,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/planter",
     "op": "addmerge",
     "path": "/attributesByType/clayplanter-red-raw/beehivekiln/3/attributes",
@@ -705,6 +793,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/planter",
     "op": "addmerge",
     "path": "/attributesByType/clayplanter-blue-raw/beehivekiln/0/attributes",
@@ -713,6 +802,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/planter",
     "op": "addmerge",
     "path": "/attributesByType/clayplanter-blue-raw/beehivekiln/1/attributes",
@@ -721,6 +811,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/planter",
     "op": "addmerge",
     "path": "/attributesByType/clayplanter-blue-raw/beehivekiln/2/attributes",
@@ -729,6 +820,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/planter",
     "op": "addmerge",
     "path": "/attributesByType/clayplanter-blue-raw/beehivekiln/3/attributes",
@@ -737,6 +829,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/planter",
     "op": "addmerge",
     "path": "/attributesByType/clayplanter-fire-raw/beehivekiln/0/attributes",
@@ -745,6 +838,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/planter",
     "op": "addmerge",
     "path": "/attributesByType/clayplanter-fire-raw/beehivekiln/1/attributes",
@@ -753,6 +847,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/planter",
     "op": "addmerge",
     "path": "/attributesByType/clayplanter-fire-raw/beehivekiln/2/attributes",
@@ -761,6 +856,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/planter",
     "op": "addmerge",
     "path": "/attributesByType/clayplanter-fire-raw/beehivekiln/3/attributes",
@@ -769,6 +865,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/pot",
     "op": "addmerge",
     "path": "/attributesByType/claypot-red-raw/beehivekiln/0/attributes",
@@ -777,6 +874,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/pot",
     "op": "addmerge",
     "path": "/attributesByType/claypot-red-raw/beehivekiln/1/attributes",
@@ -785,6 +883,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/pot",
     "op": "addmerge",
     "path": "/attributesByType/claypot-red-raw/beehivekiln/2/attributes",
@@ -793,6 +892,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/pot",
     "op": "addmerge",
     "path": "/attributesByType/claypot-red-raw/beehivekiln/3/attributes",
@@ -801,6 +901,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/pot",
     "op": "addmerge",
     "path": "/attributesByType/claypot-blue-raw/beehivekiln/0/attributes",
@@ -809,6 +910,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/pot",
     "op": "addmerge",
     "path": "/attributesByType/claypot-blue-raw/beehivekiln/1/attributes",
@@ -817,6 +919,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/pot",
     "op": "addmerge",
     "path": "/attributesByType/claypot-blue-raw/beehivekiln/2/attributes",
@@ -825,6 +928,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/pot",
     "op": "addmerge",
     "path": "/attributesByType/claypot-blue-raw/beehivekiln/3/attributes",
@@ -833,6 +937,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/pot",
     "op": "addmerge",
     "path": "/attributesByType/claypot-fire-raw/beehivekiln/0/attributes",
@@ -841,6 +946,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/pot",
     "op": "addmerge",
     "path": "/attributesByType/claypot-fire-raw/beehivekiln/1/attributes",
@@ -849,6 +955,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/pot",
     "op": "addmerge",
     "path": "/attributesByType/claypot-fire-raw/beehivekiln/2/attributes",
@@ -857,6 +964,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/pot",
     "op": "addmerge",
     "path": "/attributesByType/claypot-fire-raw/beehivekiln/3/attributes",
@@ -865,6 +973,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/storagevessel",
     "op": "addmerge",
     "path": "/attributesByType/storagevessel-red-raw/beehivekiln/0/attributes",
@@ -873,6 +982,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/storagevessel",
     "op": "addmerge",
     "path": "/attributesByType/storagevessel-red-raw/beehivekiln/1/attributes",
@@ -881,6 +991,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/storagevessel",
     "op": "addmerge",
     "path": "/attributesByType/storagevessel-red-raw/beehivekiln/2/attributes",
@@ -889,6 +1000,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/storagevessel",
     "op": "addmerge",
     "path": "/attributesByType/storagevessel-red-raw/beehivekiln/3/attributes",
@@ -897,6 +1009,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/storagevessel",
     "op": "addmerge",
     "path": "/attributesByType/storagevessel-blue-raw/beehivekiln/0/attributes",
@@ -905,6 +1018,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/storagevessel",
     "op": "addmerge",
     "path": "/attributesByType/storagevessel-blue-raw/beehivekiln/1/attributes",
@@ -913,6 +1027,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/storagevessel",
     "op": "addmerge",
     "path": "/attributesByType/storagevessel-blue-raw/beehivekiln/2/attributes",
@@ -921,6 +1036,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/storagevessel",
     "op": "addmerge",
     "path": "/attributesByType/storagevessel-blue-raw/beehivekiln/3/attributes",
@@ -929,6 +1045,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/storagevessel",
     "op": "addmerge",
     "path": "/attributesByType/storagevessel-fire-raw/beehivekiln/0/attributes",
@@ -937,6 +1054,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/storagevessel",
     "op": "addmerge",
     "path": "/attributesByType/storagevessel-fire-raw/beehivekiln/1/attributes",
@@ -945,6 +1063,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/storagevessel",
     "op": "addmerge",
     "path": "/attributesByType/storagevessel-fire-raw/beehivekiln/2/attributes",
@@ -953,6 +1072,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/storagevessel",
     "op": "addmerge",
     "path": "/attributesByType/storagevessel-fire-raw/beehivekiln/3/attributes",
@@ -961,6 +1081,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/toolmold",
     "op": "addmerge",
     "path": "/attributesByType/toolmold-red-raw-*/beehivekiln/0/attributes",
@@ -969,6 +1090,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/toolmold",
     "op": "addmerge",
     "path": "/attributesByType/toolmold-red-raw-*/beehivekiln/1/attributes",
@@ -977,6 +1099,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/toolmold",
     "op": "addmerge",
     "path": "/attributesByType/toolmold-red-raw-*/beehivekiln/2/attributes",
@@ -985,6 +1108,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/toolmold",
     "op": "addmerge",
     "path": "/attributesByType/toolmold-red-raw-*/beehivekiln/3/attributes",
@@ -993,6 +1117,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/toolmold",
     "op": "addmerge",
     "path": "/attributesByType/toolmold-blue-raw-*/beehivekiln/0/attributes",
@@ -1001,6 +1126,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/toolmold",
     "op": "addmerge",
     "path": "/attributesByType/toolmold-blue-raw-*/beehivekiln/1/attributes",
@@ -1009,6 +1135,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/toolmold",
     "op": "addmerge",
     "path": "/attributesByType/toolmold-blue-raw-*/beehivekiln/2/attributes",
@@ -1017,6 +1144,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/toolmold",
     "op": "addmerge",
     "path": "/attributesByType/toolmold-blue-raw-*/beehivekiln/3/attributes",
@@ -1025,6 +1153,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/toolmold",
     "op": "addmerge",
     "path": "/attributesByType/toolmold-fire-raw-*/beehivekiln/0/attributes",
@@ -1033,6 +1162,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/toolmold",
     "op": "addmerge",
     "path": "/attributesByType/toolmold-fire-raw-*/beehivekiln/1/attributes",
@@ -1041,6 +1171,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/toolmold",
     "op": "addmerge",
     "path": "/attributesByType/toolmold-fire-raw-*/beehivekiln/2/attributes",
@@ -1049,6 +1180,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/toolmold",
     "op": "addmerge",
     "path": "/attributesByType/toolmold-fire-raw-*/beehivekiln/3/attributes",
@@ -1057,6 +1189,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/wateringcan",
     "op": "addmerge",
     "path": "/attributesByType/wateringcan-red-raw/beehivekiln/0/attributes",
@@ -1065,6 +1198,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/wateringcan",
     "op": "addmerge",
     "path": "/attributesByType/wateringcan-red-raw/beehivekiln/1/attributes",
@@ -1073,6 +1207,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/wateringcan",
     "op": "addmerge",
     "path": "/attributesByType/wateringcan-red-raw/beehivekiln/2/attributes",
@@ -1081,6 +1216,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/wateringcan",
     "op": "addmerge",
     "path": "/attributesByType/wateringcan-red-raw/beehivekiln/3/attributes",
@@ -1089,6 +1225,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/wateringcan",
     "op": "addmerge",
     "path": "/attributesByType/wateringcan-blue-raw/beehivekiln/0/attributes",
@@ -1097,6 +1234,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/wateringcan",
     "op": "addmerge",
     "path": "/attributesByType/wateringcan-blue-raw/beehivekiln/1/attributes",
@@ -1105,6 +1243,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/wateringcan",
     "op": "addmerge",
     "path": "/attributesByType/wateringcan-blue-raw/beehivekiln/2/attributes",
@@ -1113,6 +1252,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/wateringcan",
     "op": "addmerge",
     "path": "/attributesByType/wateringcan-blue-raw/beehivekiln/3/attributes",
@@ -1121,6 +1261,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/wateringcan",
     "op": "addmerge",
     "path": "/attributesByType/wateringcan-fire-raw/beehivekiln/0/attributes",
@@ -1129,6 +1270,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/wateringcan",
     "op": "addmerge",
     "path": "/attributesByType/wateringcan-fire-raw/beehivekiln/1/attributes",
@@ -1137,6 +1279,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/wateringcan",
     "op": "addmerge",
     "path": "/attributesByType/wateringcan-fire-raw/beehivekiln/2/attributes",
@@ -1145,6 +1288,7 @@
     }
   },
   {
+    "condition": { "when": "Rudiments.WareTiers", "isValue": "true" },
     "file": "game:blocktypes/clay/raw/wateringcan",
     "op": "addmerge",
     "path": "/attributesByType/wateringcan-fire-raw/beehivekiln/3/attributes",

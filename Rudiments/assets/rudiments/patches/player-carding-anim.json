@@ -1,5 +1,6 @@
 [
 	{
+		"condition": { "when": "Rudiments.WoolCarding", "isValue": "true" },
 		"comment": "Two-hands carding animation for the hand cards (phase 2 of the carding visuals): both hands together at chest height. The right arm stays pinned — the item is attached to the right hand, so any right-arm motion would drag the whole card pair (including the lower card + fleece web that must sit still). The stroke itself is baked into the item's shape alternates; the LEFT arm tracks the upper card's alternate path (1.6 strokes/s = 19 frames) so it reads as gripping the moving upper handle. Same registration pattern as Immersive Fibercraft's holdbothhandsspindle. Gated on the wool mod like all carding content.",
 		"op": "add",
 		"path": "/client/animations/-",
@@ -29,6 +30,7 @@
 		]
 	},
 	{
+		"condition": { "when": "Rudiments.WoolCarding", "isValue": "true" },
 		"op": "add",
 		"path": "/client/animations/-",
 		"value": {
@@ -57,6 +59,7 @@
 		]
 	},
 	{
+		"condition": { "when": "Rudiments.WoolCarding", "isValue": "true" },
 		"op": "add",
 		"path": "/animations/-",
 		"value": {
@@ -279,6 +282,7 @@
 		]
 	},
 	{
+		"condition": { "when": "Rudiments.WoolCarding", "isValue": "true" },
 		"op": "add",
 		"path": "/animations/-",
 		"value": {

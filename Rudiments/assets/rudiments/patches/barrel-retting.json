@@ -1,5 +1,6 @@
 [
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "comment": "Attach the Rudiments retting-bath entity behavior to the vanilla barrel — holds state, ticks, and runs the RettingProcess.",
     "file": "game:blocktypes/wood/barrel",
     "op": "addmerge",
@@ -7,6 +8,7 @@
     "value": [ { "name": "rudiments:RettingBath" } ]
   },
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "comment": "Attach the companion block behavior — BlockLiquidContainerBase only queries block behaviors for GetPlacedBlockInfo, so this is what actually surfaces the retting progress text in the HUD.",
     "file": "game:blocktypes/wood/barrel",
     "op": "addmerge",

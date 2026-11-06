@@ -26,6 +26,43 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.3.0] — 2026-10-31 — Module switches
+
+### Added
+- **Feature groups can be switched off in `rudiments.json`.** New switches `FibreEnabled`,
+  `NettleEnabled`, `WoolCardingEnabled`, `WareTiersEnabled`, `ClayBreakageEnabled`,
+  `ClaySeepageEnabled`, `KilnsEnabled`, `PorcelainEnabled` and `GlazesEnabled`, joining the existing
+  `ReedSpreadEnabled`, `SeedsOnlyWhenMature` and `LeadPoisoningEnabled`. All default to on, so a
+  server that changes nothing behaves exactly as on 2.2.3. They apply at server start. Clients
+  follow the server's choice.
+  - A group that is off hides its own blocks and items (no creative tab, no handbook page), removes
+    its recipes and, for wild nettle, its world generation. Nothing is deleted from the registry, so
+    existing worlds keep loading and switching a group back on restores everything.
+  - Changes to vanilla and other mods' content are conditioned on the switches, so "clay breakage
+    only" leaves flax, nettle, crops and every other pottery behaviour untouched.
+  - A switch whose requirement is off counts as off, with a warning in the log: Nettle needs Fibre;
+    Kilns and Porcelain need WareTiers.
+- `/rudimentsmodules` shows the effective switches. `/rudimentsmodules audit` lists anything of a
+  switched-off group that is still live. `/rudimentsreload` says when a change needs a restart.
+- The handbook drops the guide pages of switched-off groups, hides paragraphs that describe them,
+  unwraps links to hidden pages, and drops item handbook text that only points to a dropped page.
+- `tools/patch-modules.py` keeps every patch entry conditioned on the right switch; it runs in the
+  pre-commit hook and in CI. `tools/loadtest.py` boots the headless server under a preset.
+
+### Changed
+- Flax harvest is now chosen by the world-config key `Rudiments.FlaxHarvest` (`bloom`, `legacy` or
+  `off`) instead of `Rudiments.FlaxBloomHarvest`. The setting itself is unchanged.
+- Clayworks' fragility and seepage patches are now separate entries, so seepage can be switched off
+  alone.
+- With `GlazesEnabled` off, lead poisoning is off too, whatever `LeadPoisoningEnabled` says.
+- `ReedSpreadEnabled` now applies at server start, like the module switches, and `/rudimentsreload`
+  says so. Reeds keep their spread block entity while it is off (it starts no timer), so reeds that
+  generate meanwhile still spread once it is back on.
+
+> **Existing worlds:** switch groups off only if they were never used, or accept that placed blocks
+> and stacks of a switched-off group stay in the world, inert or still working, but can no longer be
+> crafted. A barrel in the middle of retting becomes an ordinary barrel.
+
 ## [2.2.3] — 2026-10-22 — Leaner hatchel yields, now configurable
 
 ### Changed

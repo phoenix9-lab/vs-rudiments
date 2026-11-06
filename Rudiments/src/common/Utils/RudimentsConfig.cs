@@ -2,6 +2,52 @@ namespace Rudiments
 {
     public class RudimentsConfig
     {
+        // ── Modules ──────────────────────────────────────────────────────────────────
+        // Each switch turns a whole feature group on or off. The server copies the effective
+        // state into the world config at start (see RudimentsModules), so patches and clients
+        // follow the server's choice. All need a server restart. A group that is off hides its
+        // own blocks and items and removes its recipes; anything already in a save stays put.
+        // A switch whose requirement is off counts as off, and the log says so.
+        // Existing switches that belong to the same family: SeedsOnlyWhenMature,
+        // ReedSpreadEnabled and LeadPoisoningEnabled.
+
+        /// <summary>Flax chain and the tools nettle shares with it: stook, ripple, retting, drying
+        /// rack, break, scutch board and sword, hatchel, scutch mill, fine cord, fibre quality,
+        /// linseed oil, and the String Sense / Immersive Fibercraft / Toolsmith fibre compat.
+        /// Default: true.</summary>
+        public bool FibreEnabled { get; set; } = true;
+
+        /// <summary>Nettle crop, wild nettle, rhizomes, spread, heavy feeding, nettle leaves, fibre
+        /// and twine. Requires <see cref="FibreEnabled"/>. Default: true.</summary>
+        public bool NettleEnabled { get; set; } = true;
+
+        /// <summary>Hand cards, rolags and the carding step. Only does anything with Wool &amp; More
+        /// installed. Default: true.</summary>
+        public bool WoolCardingEnabled { get; set; } = true;
+
+        /// <summary>Ware tiers: stoneware from the beehive kiln, the tier line in tooltips, tier and
+        /// glaze kept on placed vessels. Off means all pottery is earthenware. Default: true.</summary>
+        public bool WareTiersEnabled { get; set; } = true;
+
+        /// <summary>Pottery shatters: wear, drops and throws, hard landings, crucible failure, the
+        /// ingot-mold tool gate. Default: true.</summary>
+        public bool ClayBreakageEnabled { get; set; } = true;
+
+        /// <summary>Unsealed earthenware leaks, and the watering-can seal gate. Default: true.</summary>
+        public bool ClaySeepageEnabled { get; set; } = true;
+
+        /// <summary>Small brick kiln, updraft kiln and chimney. Requires
+        /// <see cref="WareTiersEnabled"/>. Default: true.</summary>
+        public bool KilnsEnabled { get; set; } = true;
+
+        /// <summary>Porcelain clay, ware and recipes. Requires <see cref="WareTiersEnabled"/>.
+        /// Default: true.</summary>
+        public bool PorcelainEnabled { get; set; } = true;
+
+        /// <summary>Lead, tin and salt glaze, and the lead burden behaviour. Salt glaze also needs
+        /// <see cref="KilnsEnabled"/>. Default: true.</summary>
+        public bool GlazesEnabled { get; set; } = true;
+
         // ── Harvest realism ──────────────────────────────────────────────────────────
         // These two flags are copied into the world config at server start so the JSON
         // patches can condition on them — changes need a server restart to fully apply.

@@ -1,5 +1,6 @@
 [
   {
+    "condition": { "when": "Rudiments.Nettle", "isValue": "true" },
     "comment": "Add nettleleaves to vanilla soup (vegetable-base slot)",
     "file": "game:recipes/cooking/soup",
     "op": "addmerge",
@@ -7,6 +8,7 @@
     "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable base 1/*", "textureMapping": ["vegetable", "group10"] }]
   },
   {
+    "condition": { "when": "Rudiments.Nettle", "isValue": "true" },
     "comment": "Add nettleleaves to vanilla soup (vegetable-extra slot)",
     "file": "game:recipes/cooking/soup",
     "op": "addmerge",
@@ -14,6 +16,7 @@
     "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable base 2/*", "textureMapping": ["vegetable", "group10"] }]
   },
   {
+    "condition": { "when": "Rudiments.Nettle", "isValue": "true" },
     "comment": "Add nettleleaves to vanilla soup (vegetable-extra2 slot)",
     "file": "game:recipes/cooking/soup",
     "op": "addmerge",
@@ -21,6 +24,7 @@
     "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable base 3/*", "textureMapping": ["vegetable", "group10"] }]
   },
   {
+    "condition": { "when": "Rudiments.Nettle", "isValue": "true" },
     "comment": "Add nettleleaves to vanilla vegetablestew (vegetable-base slot)",
     "file": "game:recipes/cooking/vegetablestew",
     "op": "addmerge",
@@ -28,6 +32,7 @@
     "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable 1/*", "textureMapping": ["vegetable", "group10"] }]
   },
   {
+    "condition": { "when": "Rudiments.Nettle", "isValue": "true" },
     "comment": "Add nettleleaves to vanilla vegetablestew (vegetable-base2 slot)",
     "file": "game:recipes/cooking/vegetablestew",
     "op": "addmerge",
@@ -35,6 +40,7 @@
     "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable 2/*", "textureMapping": ["vegetable", "group10"] }]
   },
   {
+    "condition": { "when": "Rudiments.Nettle", "isValue": "true" },
     "comment": "Add nettleleaves to vanilla vegetablestew (vegetable-base3 slot)",
     "file": "game:recipes/cooking/vegetablestew",
     "op": "addmerge",
@@ -42,6 +48,7 @@
     "value": [{ "type": "item", "code": "rudiments:nettleleaves", "shapeElement": "bowl/vegetable 3/*", "textureMapping": ["vegetable", "group10"] }]
   },
   {
+    "condition": { "when": "Rudiments.Nettle", "isValue": "true" },
     "comment": "Add nettleleaves to vanilla vegetablestew (vegetable-base4 slot)",
     "file": "game:recipes/cooking/vegetablestew",
     "op": "addmerge",

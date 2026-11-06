@@ -1,3 +1,4 @@
+using Rudiments.Utils;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 
@@ -54,6 +55,7 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         private void OnGameTick(float dt)
         {
+            if (!RudimentsModules.Nettle) return;
             if (Api.World.Calendar.TotalHours < convertAtTotalHours) return;
 
             string toCode = Block?.Attributes?["convertTo"].AsString(null);

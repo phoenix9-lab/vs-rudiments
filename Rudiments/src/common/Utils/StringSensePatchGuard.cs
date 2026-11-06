@@ -26,7 +26,7 @@ namespace Rudiments.Utils
         public override void AssetsLoaded(ICoreAPI api)
         {
             base.AssetsLoaded(api);
-            if (!api.ModLoader.IsModEnabled("stringsense")) return;
+            if (!RudimentsModules.Fibre || !api.ModLoader.IsModEnabled("stringsense")) return;
 
             IAsset asset = api.Assets.TryGet(new AssetLocation("stringsense", "patches/cropdrops.json"));
             if (asset == null) return;

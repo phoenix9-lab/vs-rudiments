@@ -39,7 +39,7 @@ namespace Rudiments
         {
             get
             {
-                bool local = Config.LeadPoisoningEnabled;
+                bool local = Config.LeadPoisoningEnabled && RudimentsModules.Glazes;
                 ITreeAttribute worldConfig = coreApi?.World?.Config;
                 return worldConfig == null ? local : worldConfig.GetBool(LeadPoisoningWorldKey, local);
             }
@@ -61,14 +61,25 @@ namespace Rudiments
                 GlobalConstants.IgnoredStackAttributes = GlobalConstants.IgnoredStackAttributes.Append(LeadGlaze.MarkKey);
             }
 
-            // Mirror the feature flags into the world config so JSON patches can condition on
-            // them (patches are server-side; the JsonPatch loader runs after every StartPre).
+            // Resolve the module switches, then mirror them into the world config so JSON patches
+            // can condition on them (patches run on both sides; the JsonPatch loader runs after
+            // every StartPre). The server decides; a client adopts what the server published.
+            foreach (string warning in RudimentsModules.Resolve(Config))
+            {
+                api.Logger.Warning("[{0}] {1}", Mod.Info.Name, warning);
+            }
+            RudimentsModules.RememberStartup(Config);
+
             if (api.Side == EnumAppSide.Server)
             {
-                api.World.Config.SetBool("Rudiments.FlaxBloomHarvest", Config.FlaxBloomHarvest);
-                api.World.Config.SetBool("Rudiments.SeedsOnlyWhenMature", Config.SeedsOnlyWhenMature);
-                api.World.Config.SetBool(LeadPoisoningWorldKey, Config.LeadPoisoningEnabled);
+                RudimentsModules.Publish(api.World.Config, Config);
             }
+            else
+            {
+                RudimentsModules.Adopt(api.World?.Config);
+            }
+
+            api.Logger.Notification("[{0}] Modules: {1}", Mod.Info.Name, RudimentsModules.Describe());
         }
 
         public override void Start(ICoreAPI api)
@@ -158,7 +169,7 @@ namespace Rudiments
             // Death drops carry the same ByPlayerUid marker as a deliberately thrown item, so drop
             // breakage needs to know who died recently or dying with pottery in your bags would
             // smash all of it.
-            RudimentsDeathTracker.Register(api);
+            if (RudimentsModules.ClayBreakage) RudimentsDeathTracker.Register(api);
 
             // Re-read ModConfig/rudiments.json into the live Config object so edits (manual or via
             // AutoConfigLib) take effect without a restart. All mod code reads RudimentsModSystem.Config
@@ -173,12 +184,27 @@ namespace Rudiments
 
                     // Re-mirror, or turning lead poisoning off would leave every client still warning
                     // about it until the next restart.
-                    api.World.Config.SetBool(LeadPoisoningWorldKey, Config.LeadPoisoningEnabled);
+                    api.World.Config.SetBool(LeadPoisoningWorldKey, Config.LeadPoisoningEnabled && RudimentsModules.Glazes);
 
-                    return TextCommandResult.Success("Rudiments config reloaded.");
+                    return TextCommandResult.Success(RudimentsModules.NeedsRestart(Config)
+                        ? "Rudiments config reloaded. A module switch or harvest setting changed; it only applies after a server restart."
+                        : "Rudiments config reloaded.");
                 });
 
-            RegisterLeadCommand(api);
+            if (RudimentsModules.Glazes) RegisterLeadCommand(api);
+            RegisterModulesCommand(api);
+        }
+
+        private void RegisterModulesCommand(ICoreServerAPI api)
+        {
+            api.ChatCommands.Create("rudimentsmodules")
+                .WithDescription("Show which Rudiments feature groups are on")
+                .RequiresPrivilege(Privilege.controlserver)
+                .HandleWith(_ => TextCommandResult.Success(RudimentsModules.Describe()))
+                .BeginSubCommand("audit")
+                    .WithDescription("List content and hooks of switched-off groups that are still live")
+                    .HandleWith(_ => TextCommandResult.Success(ModuleAudit.Run(api)))
+                .EndSubCommand();
         }
 
         /// <summary>
@@ -238,6 +264,7 @@ namespace Rudiments
         public override void StartClientSide(ICoreClientAPI api)
         {
             base.StartClientSide(api);
+            HandbookModules.Register(api);
         }
 
         public override void AssetsFinalize(ICoreAPI api)
@@ -246,14 +273,17 @@ namespace Rudiments
 
             // Barrel and grid recipes are parsed independently on both client and server from the
             // same assets, so apply the config overrides on both sides to keep them in sync.
-            ApplyBarrelRettingRatio(api);
-            ApplyPorcelainClayRatios(api);
-            ApplyLinseedOilYield(api);
+            if (RudimentsModules.Fibre)
+            {
+                ApplyBarrelRettingRatio(api);
+                ApplyLinseedOilYield(api);
+            }
+            if (RudimentsModules.Porcelain) ApplyPorcelainClayRatios(api);
 
             // Itemtypes are server-authoritative and synced to clients, so attribute edits here
             // reach both sides.
             if (api.Side != EnumAppSide.Server) return;
-            if (!api.ModLoader.IsModEnabled("wool")) return;
+            if (!RudimentsModules.WoolCarding || !api.ModLoader.IsModEnabled("wool")) return;
 
             bool spinningwheelLoaded = api.ModLoader.IsModEnabled("spinningwheel");
             int strippedCount = 0, spinnableCount = 0;

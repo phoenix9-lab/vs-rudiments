@@ -1,5 +1,6 @@
 [
   {
+    "condition": { "when": "Rudiments.Nettle", "isValue": "true" },
     "comment": "Add spinningProps to nettlefiber for Immersive Fibercraft spinning wheel. No-op if spinningwheel mod is absent.",
     "op": "add",
     "path": "/attributes/spinningProps",
@@ -14,6 +15,7 @@
     "dependsOn": [ { "modid": "spinningwheel" } ]
   },
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "comment": "Add spinningProps to finefibers — spins into fine cord (4 fibers → 1 cord, same ratio as the grid recipe). No-op if spinningwheel mod is absent.",
     "op": "add",
     "path": "/attributes/spinningProps",

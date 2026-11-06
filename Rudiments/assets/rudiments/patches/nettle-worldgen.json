@@ -1,0 +1,10 @@
+[
+  {
+    "condition": { "when": "Rudiments.Nettle", "isValue": "false" },
+    "comment": "With NettleEnabled off there is no wild nettle: zero the patch's chance rather than remove it, so the file stays a valid one-entry list.",
+    "file": "rudiments:worldgen/blockpatches/nettle.json",
+    "op": "replace",
+    "path": "/0/chance",
+    "value": 0
+  }
+]
