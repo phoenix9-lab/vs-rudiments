@@ -55,6 +55,11 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
   the point where it counts as clean, e.g. "Near end: 68% clean (clean at 75%)". That is the exact
   value the strike pitch, particles and flip prompt are keyed to, so the board can be read without
   hearing the audio change. The percentage reaches the threshold on the same stroke the cue fires.
+- **The board's info text uses the server's numbers.** The capacity in `{count}/{capacity}`, the
+  per-end threshold and the flip prompt come from the server's `rudiments.json`, sent with the board.
+  Before, each player's own config was used, so on a dedicated server with different settings a
+  client could see the wrong capacity or a flip prompt out of step with the strike. After
+  `/rudimentsreload` the info text picks up the change on the board's next stroke or load.
 - **Cleaning throws off tow.** `ScutchBaselineTowPerBundle` (default 0.5) adds
   `bundles × cleanliness × 0.5` coarse fibres (rounded randomly) on collecting, on top of the line.
   It costs no line bundles. Over-scutch damage still turns whole bundles into tow at
