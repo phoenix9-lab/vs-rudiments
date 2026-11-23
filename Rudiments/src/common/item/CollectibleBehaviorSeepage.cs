@@ -49,7 +49,7 @@ namespace Rudiments.SRC.Common.Items
         public static float DrainPerHour(BlockLiquidContainerBase container)
         {
             float emptyHours = RudimentsModSystem.Config.EarthenwareEmptyHours;
-            if (container == null || emptyHours <= 0) return 0;
+            if (container == null || emptyHours <= 0 || !RudimentsModules.ClaySeepage) return 0;
             return container.CapacityLitres / emptyHours;
         }
 
@@ -61,6 +61,7 @@ namespace Rudiments.SRC.Common.Items
         public static void Settle(IWorldAccessor world, ItemStack stack)
         {
             if (world == null || world.Side != EnumAppSide.Server) return;
+            if (!RudimentsModules.ClaySeepage) return;
             if (stack?.Attributes == null) return;
             if (stack.Collectible is not BlockLiquidContainerBase container) return;
 
@@ -107,7 +108,7 @@ namespace Rudiments.SRC.Common.Items
             if (stack?.Collectible is not BlockLiquidContainerBase container) return 0;
 
             float litres = container.GetCurrentLitres(stack);
-            if (WareTier.IsSealed(stack) || litres <= 0) return litres;
+            if (!RudimentsModules.ClaySeepage || WareTier.IsSealed(stack) || litres <= 0) return litres;
             if (stack.Attributes?.HasAttribute(WareTier.SeepCheckAttrKey) != true) return litres;
 
             float anchorLitres = stack.Attributes.GetFloat(SeepLitresAttrKey, 0);
@@ -139,6 +140,7 @@ namespace Rudiments.SRC.Common.Items
         public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
         {
             base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
+            if (!RudimentsModules.ClaySeepage) return;
 
             ItemStack stack = inSlot?.Itemstack;
             if (stack?.Collectible is not BlockLiquidContainerBase container) return;

@@ -69,10 +69,10 @@ namespace Rudiments.SRC.Common.Items
             if (stack == null) return;
 
             EnumWareTier tier = WareTier.Get(stack);
-            dsc.AppendLine(Lang.Get("rudiments:ware-label", WareTier.Name(tier)));
+            if (RudimentsModules.WareTiers) dsc.AppendLine(Lang.Get("rudiments:ware-label", WareTier.Name(tier)));
 
             string glaze = WareTier.GetGlaze(stack);
-            if (glaze != null) dsc.AppendLine(Lang.Get("rudiments:glaze-label", WareTier.GlazeName(glaze)));
+            if (glaze != null && RudimentsModules.Glazes) dsc.AppendLine(Lang.Get("rudiments:glaze-label", WareTier.GlazeName(glaze)));
 
             // Right under the line that says it is sealed, because that is the line the player read
             // when they decided to glaze it. A leaded flowerpot never gets this — nothing eats out of
@@ -86,7 +86,7 @@ namespace Rudiments.SRC.Common.Items
             double chance = WareTier.BreakChance(tier, RudimentsModSystem.Config);
             if (chance > 0) dsc.AppendLine(Lang.Get("rudiments:ware-breakchance", chance * 100));
 
-            if (RudimentsModSystem.Config.ThrownClayBreakChance > 0) dsc.AppendLine(Lang.Get("rudiments:ware-dropwarning"));
+            if (RudimentsModules.ClayBreakage && RudimentsModSystem.Config.ThrownClayBreakChance > 0) dsc.AppendLine(Lang.Get("rudiments:ware-dropwarning"));
         }
     }
 }

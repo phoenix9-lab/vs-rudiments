@@ -54,13 +54,15 @@ namespace Rudiments.SRC.Common.Blocks
             CollectibleBehaviorFragile.TryShatterInHand(world, slot, byEntity);
         }
 
+        private static bool SealGateOn => RudimentsModules.ClaySeepage && RudimentsModSystem.Config.SealedWareRequiredForWateringCan;
+
         /// <summary>
         /// True when this is an attempt to fill an unsealed can from a water source. Emptying a can
         /// onto crops is never blocked — only getting water into a porous one is.
         /// </summary>
         private bool RefusesToFill(ItemSlot itemslot, EntityAgent byEntity, BlockSelection blockSel)
         {
-            if (!RudimentsModSystem.Config.SealedWareRequiredForWateringCan) return false;
+            if (!SealGateOn) return false;
             if (blockSel == null) return false;
 
             ItemStack stack = itemslot?.Itemstack;
@@ -81,7 +83,7 @@ namespace Rudiments.SRC.Common.Blocks
         {
             base.GetHeldItemInfo(inSlot, dsc, world, withDebugInfo);
 
-            if (!RudimentsModSystem.Config.SealedWareRequiredForWateringCan) return;
+            if (!SealGateOn) return;
 
             dsc.AppendLine(WareTier.IsSealed(inSlot?.Itemstack)
                 ? Lang.Get("rudiments:wateringcan-sealed-ok")

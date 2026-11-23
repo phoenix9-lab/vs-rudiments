@@ -6,6 +6,7 @@ on:
     tags: [ 'v*' ]
     paths:
       - 'Rudiments/**'
+      - 'tools/**'
       - '.github/workflows/build.yml'
   workflow_dispatch:
 
@@ -58,6 +59,9 @@ jobs:
             VintagestoryAPI.dll VintagestoryLib.dll \
             Mods/VSSurvivalMod.dll Mods/VSEssentials.dll \
             Lib/cairo-sharp.dll Lib/Newtonsoft.Json.dll Lib/0Harmony.dll
+
+      - name: Check patch module conditions
+        run: python3 tools/patch-modules.py --check
 
       - name: Build Rudiments.dll
         env:

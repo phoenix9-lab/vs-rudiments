@@ -9,8 +9,6 @@ namespace Rudiments.SRC.Common.Blocks
     {
         private float defaultDuration = 0.5f;
         private int defaultAmount = 1;
-        private float defaultFlaxDropAvg = 5;
-        private float defaultFlaxDropVar = 2;
 
         static SimpleParticleProperties flaxTowParticle = new();
 
@@ -20,8 +18,6 @@ namespace Rudiments.SRC.Common.Blocks
 
             defaultDuration = Attributes?["hatchelDuration"]?.AsFloat(0.5f) ?? 0.5f;
             defaultAmount = Attributes?["hatchelAmount"]?.AsInt(1) ?? 1;
-            defaultFlaxDropAvg = Attributes?["flaxDropAvg"]?.AsFloat(5f) ?? 5f;
-            defaultFlaxDropVar = Attributes?["flaxDropVar"]?.AsFloat(2f) ?? 2f;
 
             flaxTowParticle = new SimpleParticleProperties(1, 3, ColorUtil.ToRgba(255, 170, 162, 108), new Vec3d(), new Vec3d(), new Vec3f(0f, 0f, 0f), new Vec3f(0f, 0.0f, 0f), 0.3f, 0.1f, 0.8f, 1f, EnumParticleModel.Cube);
             flaxTowParticle.WithTerrainCollision = true;
@@ -88,10 +84,27 @@ namespace Rudiments.SRC.Common.Blocks
                     slot.TakeOut(finalAmount);
                     slot.MarkDirty();
 
-                    float randomDropValue = (float)MathUtility.NextGaussian(api.World.Rand, defaultFlaxDropAvg, defaultFlaxDropVar) * qualityMul;
+                    // Per-tier fibre yield comes from the mod config, read live so /rudimentsreload applies it.
+                    var config = RudimentsModSystem.Config;
+                    float dropAvg, dropVar;
+                    switch (Variant["type"])
+                    {
+                        case "advanced": dropAvg = config.HatchelAdvancedFibreAvg; dropVar = config.HatchelAdvancedFibreVar; break;
+                        case "simple": dropAvg = config.HatchelSimpleFibreAvg; dropVar = config.HatchelSimpleFibreVar; break;
+                        default: dropAvg = config.HatchelPrimitiveFibreAvg; dropVar = config.HatchelPrimitiveFibreVar; break;
+                    }
+
+                    float randomDropValue = (float)MathUtility.NextGaussian(api.World.Rand, dropAvg, dropVar) * qualityMul;
 
                     int dropAmount = GameMath.RoundRandom(world.Rand, randomDropValue)*finalAmount;
-                    if (dropAmount < finalAmount) dropAmount = finalAmount;
+
+                    // A roll of zero or less combs the whole pass out as tow: one coarse fibre per bundle.
+                    if (dropAmount <= 0)
+                    {
+                        fibreCode = new AssetLocation("rudiments:coarsefibers");
+                        quality = FiberQuality.Coarse;
+                        dropAmount = finalAmount;
+                    }
 
                     Item flaxFiber = world.GetItem(fibreCode);
                     if (flaxFiber != null)

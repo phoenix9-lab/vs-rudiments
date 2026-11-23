@@ -1,3 +1,4 @@
+using Rudiments.Utils;
 using Vintagestory.API.Common;
 using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
@@ -9,14 +10,14 @@ namespace Rudiments.SRC.Common.Blocks
     /// vanilla "dead crops always drop seeds" hack in BlockEntityDeadCrop.GetDrops. Drops are
     /// whatever the stored crop stage would drop, run through the usual farmland damage
     /// multipliers — so a crop eaten by an animal or killed before maturity returns nothing.
-    /// Honors the SeedsOnlyWhenMature config flag at runtime: when disabled, falls through to
-    /// the vanilla behavior (guaranteed seed return).
+    /// The patch is only applied while SeedsOnlyWhenMature is on. The check below uses the value
+    /// fixed at startup, never the live config, so a /rudimentsreload cannot half-apply a change.
     /// </summary>
     public class BlockDeadCropRudiments : BlockDeadCrop
     {
         public override ItemStack[] GetDrops(IWorldAccessor world, BlockPos pos, IPlayer byPlayer, float dropQuantityMultiplier = 1)
         {
-            if (!RudimentsModSystem.Config.SeedsOnlyWhenMature)
+            if (!RudimentsModules.SeedsOnlyWhenMature)
             {
                 return base.GetDrops(world, pos, byPlayer, dropQuantityMultiplier);
             }

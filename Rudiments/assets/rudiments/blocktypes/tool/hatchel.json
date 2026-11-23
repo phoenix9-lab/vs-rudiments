@@ -18,21 +18,15 @@
   "attributesByType": {
     "hatchel-primitive-*": { 
       "hatchelDuration": 0.5,
-      "hatchelAmount": 1,
-      "flaxDropAvg": 5,
-      "flaxDropVar": 2
+      "hatchelAmount": 1
     },
     "hatchel-simple-*": { 
       "hatchelDuration": 0.5,
-      "hatchelAmount": 2,
-      "flaxDropAvg": 6,
-      "flaxDropVar": 1
+      "hatchelAmount": 2
     },
     "hatchel-advanced-*": { 
       "hatchelDuration": 0.5,
-      "hatchelAmount": 4,
-      "flaxDropAvg": 8,
-      "flaxDropVar": 1
+      "hatchelAmount": 4
     },
     "hatchel-*": {
       "handbook": {

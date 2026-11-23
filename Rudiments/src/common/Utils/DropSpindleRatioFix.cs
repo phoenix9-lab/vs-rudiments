@@ -29,6 +29,7 @@ namespace Rudiments.Utils
         public override void Start(ICoreAPI api)
         {
             base.Start(api);
+            if (!RudimentsModules.Fibre && !RudimentsModules.WoolCarding) return;
             if (!api.ModLoader.IsModEnabled("spinningwheel")) return;
 
             MethodInfo processSpin = AccessTools.Method("SpinningWheel.Items.ItemDropSpindle:ProcessSpin");

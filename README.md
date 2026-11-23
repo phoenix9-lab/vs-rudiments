@@ -6,7 +6,7 @@
 
 Rudiments adds realistic multi-step production chains for the materials and tools people relied on before iron. You work through them one process at a time, and every step counts. Inspired by [Primitive Technology](https://www.youtube.com/channel/UCAL3JXZSzSm8AlZyD3nQdBA) and [RHSWorks](https://rhsworks.org).
 
-Feature-stable as of 2.1.10. Fibre production and pottery/kilns are both complete, tested chains, and no new systems are planned. From here on, releases are minor bug fixes only.
+Feature-stable as of 2.1.10. Fibre production and pottery/kilns are both complete, tested chains, and no new systems are planned. 2.3.0 adds module switches, so each feature group can be turned off on its own.
 
 ---
 
@@ -168,7 +168,44 @@ Fireclay is its own family. It has no ware tier, and it doesn't seep or wear fro
 
 All settings live in `VintagestoryData/ModConfig/rudiments.json`, which is created on first launch. If [AutoConfigLib](https://mods.vintagestory.at) is installed you can edit them in-game instead of touching the file.
 
-Apply changes without restarting by running `/rudimentsreload` (requires the `controlserver` privilege). The exception is the two harvest-realism flags below. They gate JSON patches, so they need a **server restart** to fully apply.
+Apply changes without restarting by running `/rudimentsreload` (requires the `controlserver` privilege). The exceptions are the module switches and the two harvest-realism flags. They gate JSON patches, so they need a **server restart** to fully apply.
+
+### Modules
+
+Every feature group can be switched off. All default to `true`. A group that is off hides its own blocks and items, removes its recipes, and stops changing vanilla and other mods' content. Clients follow the server's choice. `/rudimentsmodules` shows what is on, and `/rudimentsmodules audit` lists anything of a switched-off group that is still live.
+
+| Setting | Covers | Needs |
+|---|---|---|
+| `FibreEnabled` | The flax chain and its tools, fine cord, fibre quality, linseed oil, and the String Sense / Immersive Fibercraft / Toolsmith fibre compat | |
+| `NettleEnabled` | Nettle crop, wild nettle, rhizomes, spread, nettle leaves, fibre and twine | Fibre |
+| `WoolCardingEnabled` | Hand cards and rolags (only matters with Wool & More) | |
+| `ReedSpreadEnabled` | Reed and papyrus spread | |
+| `SeedsOnlyWhenMature` | Seed returns on every vanilla crop | |
+| `WareTiersEnabled` | Stoneware from the beehive kiln, the tier line in tooltips. Off means all pottery is earthenware | |
+| `ClayBreakageEnabled` | Wear, drop and hard-landing breakage, crucible failure, the ingot-mold tool gate | |
+| `ClaySeepageEnabled` | Earthenware leaks, and the watering-can seal gate | |
+| `KilnsEnabled` | Small brick kiln, updraft kiln, chimney | Ware tiers |
+| `PorcelainEnabled` | Porcelain clay, ware and recipes | Ware tiers |
+| `GlazesEnabled` | Lead, tin and salt glaze, lead poisoning (also needs `LeadPoisoningEnabled`). Salt glaze also needs Kilns | |
+
+A switch whose requirement is off counts as off, and the log says so.
+
+**Clay breakage only:** set everything above to `false` except `ClayBreakageEnabled`. All pottery then breaks at `EarthenwareBreakChance`, from use, drops and hard landings, and nothing else changes.
+
+**Breakage, seepage and tiers:** the same, plus `ClaySeepageEnabled` and `WareTiersEnabled`. Without kilns or glazes the only way to seal a vessel is the vanilla beehive kiln, so early-game liquids always seep. Turn `KilnsEnabled` (earlier stoneware) or `GlazesEnabled` (an early seal) back on if that is too harsh.
+
+Choose the switches when you create a world. Turning a group off later is safe, but what is already placed stays:
+
+| Group switched off | What happens to existing things |
+|---|---|
+| Fibre, Nettle, Kilns, Wool carding | Placed blocks and stacks stay and keep working. They can no longer be crafted or found, and they leave the creative inventory and handbook. Wild nettle stops spreading. A barrel mid-retting becomes an ordinary barrel |
+| Reed spread | Reeds stop spreading, and start again when it is switched back on |
+| Ware tiers | Stoneware keeps its attribute but acts as earthenware. Switching back restores it |
+| Glazes | Glaze stays on fired ware. Glazed greenware fired while this is off comes out unglazed. Lead burden stays on record but costs nothing |
+| Porcelain | Porcelain items and blocks stay, hidden. No new ones can be made |
+| Clay breakage, seepage | The behaviour stops. Nothing is lost |
+
+Switching a group back on restores everything. One exception: with all four of `WareTiersEnabled`, `ClayBreakageEnabled`, `ClaySeepageEnabled` and `GlazesEnabled` off, pottery that is broken, picked up from a placed block or served into can lose its stoneware or glaze mark for good. Pottery made after a switch is back on gets it again. Vanilla clay types keep a hidden porcelain variant, and the crucible a hidden `failed` variant, even with every clay switch off.
 
 ### Harvest realism
 
@@ -290,6 +327,28 @@ All off by default. Smelting behaves exactly like vanilla until you turn one on.
 | `RippleGrainYieldMultiplier` | `1.0` | Global multiplier on grain yields from rippling; `0` disables grain drops |
 | `RippleSeedYieldMultiplier` | `1.0` | Global multiplier on seed yields from rippling; `0` disables seed drops |
 | `LinseedOilLitresPerGrain` | `0.078` | Litres of vanilla `oilportion-flax` extracted per flax grain pressed in the vanilla fruit press; ~2 stacks of flax fills the press's fixed 10-litre capacity. Restart required |
+
+### Fine textiles
+
+Fine cord, and the linen, cloth, clothing, sewing kits, bandages, poultices and fishing poles made from it, are the normal vanilla items with a "fine" quality mark, not new items. Every vanilla recipe, the dye barrel and traders keep working with them, and mixing plain cloth into a recipe gives a plain result.
+
+| Setting | Default | Effect |
+|---|---|---|
+| `FineCordRepairStrength` | `0.3` | Condition restored by one fine cord |
+| `FineClothRepairStrength` | `0.7` | Condition restored by fine linen or fine cloth |
+| `FineSewingKitRepairStrength` | `0.95` | Condition restored by a fine sewing kit |
+| `FineSewingKitUses` | `1.3` | Repairs per fine sewing kit |
+| `SewingKitUses` | `1.0` | Repairs per plain sewing kit |
+| `FineClothingWarmthMultiplier` | `1.2` | Max warmth of fine clothing |
+| `FineClothingWearMultiplier` | `0.7` | Condition loss of fine clothing, from wear and rips |
+| `FineArmorDurabilityBonus` | `0.25` | Extra durability on armour made from fine fabric, as a fraction of base |
+| `FineHealingMultiplier` | `1.5` | Healing from fine bandages and poultices |
+| `FineTradeMultiplier` | `2.0` | Trader payout for fine goods |
+| `FineLineStrengthMultiplier` | `1.25` | Stretch before a fine fishing line snaps |
+| `FineLineBiteDelayMultiplier` | `0.8` | Wait before a bite on a fine line |
+| `FineLineCatchWindowBonusSec` | `0.0` | Extra seconds to reel in |
+
+These apply at server start, so a restart is needed, and they do nothing when `FibreEnabled` is `false`.
 
 ---
 

@@ -1,0 +1,45 @@
+[
+  {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
+    "comment": "Fine linen: carries fineness into cloth, bandages and poultices, and refuses to be laid as decor (decor keeps no attributes).",
+    "file": "game:blocktypes/cloth/linen",
+    "op": "add",
+    "path": "/behaviors/0",
+    "value": { "name": "rudiments:FineLinen" }
+  },
+  {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
+    "file": "game:itemtypes/resource/cloth",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:FineTextile", "properties": { "role": "fabric" } }]
+  },
+  {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
+    "file": "game:itemtypes/resource/sewingkit",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:FineTextile", "properties": { "role": "tool" } }]
+  },
+  {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
+    "file": "game:itemtypes/bandage",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:FineTextile", "properties": { "role": "product" } }]
+  },
+  {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
+    "file": "game:itemtypes/utility/poultice",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:FineTextile", "properties": { "role": "product" } }]
+  },
+  {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
+    "file": "game:itemtypes/tool/fishingpole",
+    "op": "addmerge",
+    "path": "/behaviors",
+    "value": [{ "name": "rudiments:FineTextile", "properties": { "role": "product" } }]
+  }
+]

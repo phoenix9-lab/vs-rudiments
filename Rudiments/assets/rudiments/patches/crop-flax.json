@@ -1,5 +1,6 @@
 [
   {
+	"condition": { "when": "Rudiments.Fibre", "isValue": "true" },
 	"file": "game:blocktypes/plant/crop/flax",
 	"op": "replace",
 	"path": "/class",
@@ -22,7 +23,7 @@
 	  "*": []
 	},
 	"side": "server",
-	"condition": { "when": "Rudiments.FlaxBloomHarvest", "isValue": "true" }
+	"condition": { "when": "Rudiments.FlaxHarvest", "isValue": "bloom" }
   },
   {
 	"comment": "FlaxBloomHarvest disabled: the pre-0.11 table — early harvest for fiber, late for seeds and grain. Bundles carry no potential stamp and ret over the full coarse-to-fine range.",
@@ -70,9 +71,10 @@
 	  ]
 	},
 	"side": "server",
-	"condition": { "when": "Rudiments.FlaxBloomHarvest", "isValue": "false" }
+	"condition": { "when": "Rudiments.FlaxHarvest", "isValue": "legacy" }
   },
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "file": "game:blocktypes/plant/crop/flax",
     "op": "addmerge",
     "path": "/cropProps",

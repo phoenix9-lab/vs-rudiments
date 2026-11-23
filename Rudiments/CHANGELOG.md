@@ -26,6 +26,79 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.3.0] — 2026-11-06 — Module switches and fine textiles
+
+### Added
+- **Feature groups can be switched off in `rudiments.json`.** New switches `FibreEnabled`,
+  `NettleEnabled`, `WoolCardingEnabled`, `WareTiersEnabled`, `ClayBreakageEnabled`,
+  `ClaySeepageEnabled`, `KilnsEnabled`, `PorcelainEnabled` and `GlazesEnabled`, joining the existing
+  `ReedSpreadEnabled`, `SeedsOnlyWhenMature` and `LeadPoisoningEnabled`. All default to on, so a
+  server that changes nothing behaves exactly as on 2.2.3. They apply at server start. Clients
+  follow the server's choice.
+  - A group that is off hides its own blocks and items (no creative tab, no handbook page), removes
+    its recipes and, for wild nettle, its world generation. Nothing is deleted from the registry, so
+    existing worlds keep loading and switching a group back on restores everything.
+  - Changes to vanilla and other mods' content are conditioned on the switches, so "clay breakage
+    only" leaves flax, nettle, crops and every other pottery behaviour untouched.
+  - A switch whose requirement is off counts as off, with a warning in the log: Nettle needs Fibre;
+    Kilns and Porcelain need WareTiers.
+- `/rudimentsmodules` shows the effective switches. `/rudimentsmodules audit` lists anything of a
+  switched-off group that is still live. `/rudimentsreload` says when a change needs a restart.
+- The handbook drops the guide pages of switched-off groups, hides paragraphs that describe them,
+  unwraps links to hidden pages, and drops item handbook text that only points to a dropped page.
+- `tools/patch-modules.py` keeps every patch entry conditioned on the right switch; it runs in the
+  pre-commit hook and in CI. `tools/loadtest.py` boots the headless server under a preset.
+- **Fine textiles.** Fine cord, and the linen, cloth, clothing, sewing kits, bandages, poultices and
+  fishing poles made from it, carry a "fine" quality mark. The mark is on the vanilla items, not new
+  items, so every vanilla recipe, the dye barrel and traders keep working with them.
+- **Mending and sewing kits.** Fine cord mends by 0.3 (`FineCordRepairStrength`), fine linen and
+  fine cloth by 0.7 (`FineClothRepairStrength`), and a fine sewing kit by 0.95
+  (`FineSewingKitRepairStrength`). A fine sewing kit lasts 1.3 repairs (`FineSewingKitUses`). Plain
+  kits use `SewingKitUses`, which defaults to 1.0 and matches vanilla.
+- **Fine linen, cloth and clothing.** Fine clothing is warmer (`FineClothingWarmthMultiplier`, ×1.2),
+  wears at ×0.7 the rate (`FineClothingWearMultiplier`) and, as armour, gets +25% durability
+  (`FineArmorDurabilityBonus`). The mark carries through dyeing. Fine linen can't be laid as decor.
+- **Fine bandages and poultices.** They heal ×1.5 (`FineHealingMultiplier`). An alcohol-soaked fine
+  bandage stays fine when it dries back into a clean one.
+- **Traders pay ×2 for fine goods** (`FineTradeMultiplier`). The total in the trade dialog includes
+  the higher price.
+- **Fine fishing line.** A fine fishing pole's line takes 25% more strain before snapping
+  (`FineLineStrengthMultiplier`), and bites come 20% sooner (`FineLineBiteDelayMultiplier`).
+- **`/rudimentsfine`** (`controlserver` privilege). `info` prints the active fine-textile settings and
+  whether the held stack is fine. `mark` marks the held stack fine.
+- All fine-textile features belong to the Fibre group. They are off with `FibreEnabled` set to `false`.
+
+### Changed
+- Flax harvest is now chosen by the world-config key `Rudiments.FlaxHarvest` (`bloom`, `legacy` or
+  `off`) instead of `Rudiments.FlaxBloomHarvest`. The setting itself is unchanged.
+- **Fine cord's description and handbook text now list all its uses.** They named only bows and
+  tools before.
+- Clayworks' fragility and seepage patches are now separate entries, so seepage can be switched off
+  alone.
+- With `GlazesEnabled` off, lead poisoning is off too, whatever `LeadPoisoningEnabled` says.
+- `ReedSpreadEnabled` now applies at server start, like the module switches, and `/rudimentsreload`
+  says so. Reeds keep their spread block entity while it is off (it starts no timer), so reeds that
+  generate meanwhile still spread once it is back on.
+
+> **Existing worlds:** switch groups off only if they were never used, or accept that placed blocks
+> and stacks of a switched-off group stay in the world, inert or still working, but can no longer be
+> crafted. A barrel in the middle of retting becomes an ordinary barrel.
+
+## [2.2.3] — 2026-10-22 — Leaner hatchel yields, now configurable
+
+### Changed
+- **The hatchel gave far too much fibre.** A bundle averaged 5 / 6 / 8 fibres on the primitive /
+  simple / advanced hatchel. It now averages 1 / 2 / 3, with the same variance (2 / 1 / 1), and
+  fibre quality still scales the roll (coarse ×0.8, fine ×1.35).
+- **A bad hatchel pass now gives tow.** Before, every bundle gave at least one fibre. Now a roll
+  of zero or less combs the pass out as tow: one coarse fibre per bundle. With the primitive
+  hatchel's wide variance, about 40% of its passes come out as tow (about 7% on simple, 1% on
+  advanced).
+- **Hatchel yields are now in the mod config.** `HatchelPrimitiveFibreAvg` / `HatchelPrimitiveFibreVar`
+  and the matching `Simple` and `Advanced` settings in `rudiments.json` replace the `flaxDropAvg` /
+  `flaxDropVar` attributes in `hatchel.json`. They are read live, so `/rudimentsreload` applies
+  them. Set them to 5 / 6 / 8 to get the old yields back.
+
 ## [2.2.2] — 2026-10-22 — Tow twists into String Sense cord
 
 ### Fixed

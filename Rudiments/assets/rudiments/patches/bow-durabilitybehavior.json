@@ -1,5 +1,6 @@
 [
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "file": "game:itemtypes/tool/bow",
     "op": "addmerge",
     "path": "/behaviors",

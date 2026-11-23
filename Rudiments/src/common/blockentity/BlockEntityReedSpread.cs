@@ -1,3 +1,4 @@
+using Rudiments.Utils;
 using Rudiments.SRC.Common.Blocks;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
@@ -29,6 +30,10 @@ namespace Rudiments.SRC.Common.BlockEntities
 
             if (lastSpreadHours < 0) lastSpreadHours = api.World.Calendar.TotalHours;
             if (originX == int.MinValue) { originX = Pos.X; originZ = Pos.Z; }
+
+            // The BE is attached even with reed spread off (so the switch can be turned back on);
+            // the switch is fixed at startup, so an idle reed needs no timer at all.
+            if (!RudimentsModules.ReedSpread) return;
             listenerId = RegisterGameTickListener(OnGameTick, 5000);
         }
 
@@ -42,8 +47,6 @@ namespace Rudiments.SRC.Common.BlockEntities
         private void OnGameTick(float dt)
         {
             var cfg = RudimentsModSystem.Config;
-            if (!cfg.ReedSpreadEnabled) return;
-
             double now = Api.World.Calendar.TotalHours;
             if (now - lastSpreadHours < cfg.ReedSpreadIntervalDays * Api.World.Calendar.HoursPerDay) return;
             lastSpreadHours = now;

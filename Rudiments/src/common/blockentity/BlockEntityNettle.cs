@@ -55,6 +55,7 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         private void OnGameTick(float dt)
         {
+            if (!RudimentsModules.Nettle) return;
             var cfg = RudimentsModSystem.Config;
             double now = Api.World.Calendar.TotalHours;
             double hpd = Api.World.Calendar.HoursPerDay;

@@ -1,5 +1,6 @@
 [
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "comment": "FiberQuality behavior on vanilla flax fibers — quality tooltip on all fiber types",
     "file": "game:itemtypes/resource/flaxfibers",
     "op": "addmerge",
@@ -7,6 +8,7 @@
     "value": [{ "name": "rudiments:FiberQuality" }]
   },
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "comment": "DurabilityBonus behavior on linen armor — fine cord recipes grant durability upgrades",
     "file": "game:itemtypes/wearable/seraph/armor",
     "op": "addmerge",
@@ -14,6 +16,7 @@
     "value": [{ "name": "rudiments:DurabilityBonus" }]
   },
   {
+    "condition": { "when": "Rudiments.ReedSpread", "isValue": "true" },
     "comment": "All reedpapyrus variants (coopersreed, papyrus, tule, brownsedge) spread via rhizome. The behavior auto-detects water vs soil from each variant's 'habitat' key and spreads as the same block variant.",
     "file": "game:blocktypes/plant/reedpapyrus",
     "op": "addmerge",
@@ -21,7 +24,7 @@
     "value": [{ "name": "rudiments:RhizomeSpread", "properties": { "configGroup": "reed", "densityMatch": ["reedpapyrus"] } }]
   },
   {
-    "comment": "Calendar-driven spread block entity on normal (non-harvested) reeds so spreading responds to in-game time. Harvested variants keep their vanilla Transient regrow BE.",
+    "comment": "Calendar-driven spread block entity on normal (non-harvested) reeds so spreading responds to in-game time. Harvested variants keep their vanilla Transient regrow BE. Always attached, even with ReedSpread off: VS never adds a block entity to a block that already exists, so reeds generated while the switch is off could otherwise never spread after it is turned back on. With the switch off the BE starts no timer.",
     "file": "game:blocktypes/plant/reedpapyrus",
     "op": "addmerge",
     "path": "/entityClassByType",

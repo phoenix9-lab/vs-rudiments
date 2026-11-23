@@ -1,5 +1,6 @@
 [
   {
+    "condition": { "when": "Rudiments.ClayBreakage", "isValue": "true" },
     "comment": "One behavior on the item entity type covers every clay item in the game, including other mods', with no per-item patching. Server only — the shatter is server-authoritative and the client has no business rolling it.",
     "file": "game:entities/item",
     "op": "addmerge",

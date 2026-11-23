@@ -2,6 +2,52 @@ namespace Rudiments
 {
     public class RudimentsConfig
     {
+        // ── Modules ──────────────────────────────────────────────────────────────────
+        // Each switch turns a whole feature group on or off. The server copies the effective
+        // state into the world config at start (see RudimentsModules), so patches and clients
+        // follow the server's choice. All need a server restart. A group that is off hides its
+        // own blocks and items and removes its recipes; anything already in a save stays put.
+        // A switch whose requirement is off counts as off, and the log says so.
+        // Existing switches that belong to the same family: SeedsOnlyWhenMature,
+        // ReedSpreadEnabled and LeadPoisoningEnabled.
+
+        /// <summary>Flax chain and the tools nettle shares with it: stook, ripple, retting, drying
+        /// rack, break, scutch board and sword, hatchel, scutch mill, fine cord, fibre quality,
+        /// linseed oil, and the String Sense / Immersive Fibercraft / Toolsmith fibre compat.
+        /// Default: true.</summary>
+        public bool FibreEnabled { get; set; } = true;
+
+        /// <summary>Nettle crop, wild nettle, rhizomes, spread, heavy feeding, nettle leaves, fibre
+        /// and twine. Requires <see cref="FibreEnabled"/>. Default: true.</summary>
+        public bool NettleEnabled { get; set; } = true;
+
+        /// <summary>Hand cards, rolags and the carding step. Only does anything with Wool &amp; More
+        /// installed. Default: true.</summary>
+        public bool WoolCardingEnabled { get; set; } = true;
+
+        /// <summary>Ware tiers: stoneware from the beehive kiln, the tier line in tooltips, tier and
+        /// glaze kept on placed vessels. Off means all pottery is earthenware. Default: true.</summary>
+        public bool WareTiersEnabled { get; set; } = true;
+
+        /// <summary>Pottery shatters: wear, drops and throws, hard landings, crucible failure, the
+        /// ingot-mold tool gate. Default: true.</summary>
+        public bool ClayBreakageEnabled { get; set; } = true;
+
+        /// <summary>Unsealed earthenware leaks, and the watering-can seal gate. Default: true.</summary>
+        public bool ClaySeepageEnabled { get; set; } = true;
+
+        /// <summary>Small brick kiln, updraft kiln and chimney. Requires
+        /// <see cref="WareTiersEnabled"/>. Default: true.</summary>
+        public bool KilnsEnabled { get; set; } = true;
+
+        /// <summary>Porcelain clay, ware and recipes. Requires <see cref="WareTiersEnabled"/>.
+        /// Default: true.</summary>
+        public bool PorcelainEnabled { get; set; } = true;
+
+        /// <summary>Lead, tin and salt glaze, and the lead burden behaviour. Salt glaze also needs
+        /// <see cref="KilnsEnabled"/>. Default: true.</summary>
+        public bool GlazesEnabled { get; set; } = true;
+
         // ── Harvest realism ──────────────────────────────────────────────────────────
         // These two flags are copied into the world config at server start so the JSON
         // patches can condition on them — changes need a server restart to fully apply.
@@ -48,6 +94,31 @@ namespace Rudiments
         /// entirely. Default: 1.0.</summary>
         public float RippleSeedYieldMultiplier { get; set; } = 1.0f;
 
+        // ── Hatcheling ───────────────────────────────────────────────────────────────
+        // Fibre per bundle is rolled once per hatchel pass from a normal distribution with the
+        // average and variance (standard deviation) below, then scaled by fibre quality (coarse
+        // ×0.8, fine ×1.35). A roll of zero or less combs the pass out as tow: one coarse fibre
+        // per bundle. Read live, so /rudimentsreload retunes it without a restart. Before 2.2.3
+        // the hatchel averaged 5 / 6 / 8 per bundle with variance 2 / 1 / 1.
+
+        /// <summary>Average fibres per bundle on a primitive hatchel. Default: 1.</summary>
+        public float HatchelPrimitiveFibreAvg { get; set; } = 1f;
+
+        /// <summary>Variance (standard deviation) of fibres per bundle on a primitive hatchel. Default: 2.</summary>
+        public float HatchelPrimitiveFibreVar { get; set; } = 2f;
+
+        /// <summary>Average fibres per bundle on a simple hatchel. Default: 2.</summary>
+        public float HatchelSimpleFibreAvg { get; set; } = 2f;
+
+        /// <summary>Variance (standard deviation) of fibres per bundle on a simple hatchel. Default: 1.</summary>
+        public float HatchelSimpleFibreVar { get; set; } = 1f;
+
+        /// <summary>Average fibres per bundle on an advanced hatchel. Default: 3.</summary>
+        public float HatchelAdvancedFibreAvg { get; set; } = 3f;
+
+        /// <summary>Variance (standard deviation) of fibres per bundle on an advanced hatchel. Default: 1.</summary>
+        public float HatchelAdvancedFibreVar { get; set; } = 1f;
+
         // ── Linseed oil (fruit press) ───────────────────────────────────────────────
         // Flax grain (game:grain-flax) is pressed in the vanilla fruit press via a
         // juiceablePropertiesByType patch (assets/rudiments/patches/linseedoil-fruitpress.json),
@@ -62,6 +133,56 @@ namespace Rudiments
         /// vanilla 10 litres, so 0.078 fills it in ~2 stacks (128 grain) of flax. Default: 0.078.
         /// Requires restart.</summary>
         public float LinseedOilLitresPerGrain { get; set; } = 0.078f;
+
+        // ── Fine textiles ────────────────────────────────────────────────────────────
+        // Fine cord, and linen, cloth, clothing, sewing kits, bandages, poultices and fishing
+        // poles made from it. "Fine" is a mark on the ordinary vanilla item, not a new item, so
+        // every vanilla recipe, the dye barrel and traders keep working on it. Part of the Fibre
+        // group. Read at server start and published to clients, so changes need a restart. A
+        // multiplier of 1 (or a bonus of 0) turns that effect off.
+
+        /// <summary>Clothing condition restored by one fine cord. Vanilla flax twine: 0.1. Default: 0.3.</summary>
+        public float FineCordRepairStrength { get; set; } = 0.3f;
+
+        /// <summary>Clothing condition restored by one fine linen or fine cloth. Vanilla linen and
+        /// cloth: 0.5. Default: 0.7.</summary>
+        public float FineClothRepairStrength { get; set; } = 0.7f;
+
+        /// <summary>Clothing condition restored by a fine sewing kit. Vanilla kit: 0.75. Default: 0.95.</summary>
+        public float FineSewingKitRepairStrength { get; set; } = 0.95f;
+
+        /// <summary>Repairs one fine sewing kit lasts. Fractions carry over: at 1.3 a kit survives
+        /// its first repair and every third or fourth kit lasts an extra one. Default: 1.3.</summary>
+        public float FineSewingKitUses { get; set; } = 1.3f;
+
+        /// <summary>Repairs one plain sewing kit lasts. Default: 1.0 (vanilla: used up on every repair).</summary>
+        public float SewingKitUses { get; set; } = 1.0f;
+
+        /// <summary>Max warmth of clothing made from fine cloth. Default: 1.2.</summary>
+        public float FineClothingWarmthMultiplier { get; set; } = 1.2f;
+
+        /// <summary>Condition lost by fine clothing, from wear and from rips, relative to plain.
+        /// Default: 0.7 (lasts about 43% longer).</summary>
+        public float FineClothingWearMultiplier { get; set; } = 0.7f;
+
+        /// <summary>Extra durability on armour (gambesons) made from fine linen or cloth, as a
+        /// fraction of its base durability. Default: 0.25.</summary>
+        public float FineArmorDurabilityBonus { get; set; } = 0.25f;
+
+        /// <summary>Healing from fine bandages and fine linen poultices. Default: 1.5.</summary>
+        public float FineHealingMultiplier { get; set; } = 1.5f;
+
+        /// <summary>What traders pay for fine goods, relative to plain. Default: 2.0.</summary>
+        public float FineTradeMultiplier { get; set; } = 2.0f;
+
+        /// <summary>Strain a fine fishing line takes before it snaps. Default: 1.25.</summary>
+        public float FineLineStrengthMultiplier { get; set; } = 1.25f;
+
+        /// <summary>Wait before a fish bites a fine line. Default: 0.8.</summary>
+        public float FineLineBiteDelayMultiplier { get; set; } = 0.8f;
+
+        /// <summary>Extra seconds to reel in a bite on a fine line (vanilla window: 0.7 s). Default: 0.</summary>
+        public float FineLineCatchWindowBonusSec { get; set; } = 0f;
 
         // ── Scutching ────────────────────────────────────────────────────────────────
         // The scutch board is an interactive minigame: load broken bundles, strike them with a

@@ -1,5 +1,6 @@
 [
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "comment": "String Sense ships an AgeOfFlax compat that hands its crude flax-cord tier over to the bundle chain, but it is keyed to modid 'ageofflax' and never fires for Rudiments (the renamed successor). Mirror it here: with Rudiments, vanilla flax drops bundles instead of strands, so String Sense's flax strands are unobtainable — disable the item (which also drops every recipe referencing it, including its strand-retting shortcuts, regardless of String Sense's ConfigLib toggles) and bridge rippled bundles into its cord tier instead.",
     "op": "add",
     "path": "/enabled",
@@ -8,6 +9,7 @@
     "dependsOn": [ { "modid": "stringsense" } ]
   },
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "comment": "Strands -> flax cord grid entry; disabled for log hygiene (it would be dropped anyway once the item is gone).",
     "op": "add",
     "path": "/6/enabled",
@@ -16,6 +18,7 @@
     "dependsOn": [ { "modid": "stringsense" } ]
   },
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "op": "replace",
     "path": "/enabled",
     "value": false,
@@ -23,6 +26,7 @@
     "dependsOn": [ { "modid": "stringsense" } ]
   },
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "op": "replace",
     "path": "/0/enabled",
     "value": false,
@@ -30,6 +34,7 @@
     "dependsOn": [ { "modid": "stringsense" } ]
   },
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "comment": "The bridge: crude flax cord twists straight from rippled (unretted) bundles — same recipe String Sense gives AgeOfFlax. The full ret/dry/break/scutch/hatchel chain remains the only route to proper twine.",
     "op": "add",
     "path": "/-",
@@ -44,6 +49,7 @@
     "dependsOn": [ { "modid": "stringsense" } ]
   },
   {
+    "condition": { "when": "Rudiments.Fibre", "isValue": "true" },
     "comment": "Tow (coarse fibres from the hatchel or over-scutching) twists into String Sense's cord tier like any other strand, so it isn't a rope-only dead end there. Mixed cord, not flax, because tow comes from nettle as well as flax. Rope straight from tow (rudiments:recipes/grid/coarsefibers-rope.json) is untouched.",
     "op": "add",
     "path": "/-",

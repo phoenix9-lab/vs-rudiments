@@ -1,3 +1,4 @@
+using Rudiments.Utils;
 using System;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
@@ -69,7 +70,7 @@ namespace Rudiments.SRC.Common.Blocks
 
             if (isNettle)
             {
-                if (!cfg.NettleSpreadEnabled) return null;
+                if (!cfg.NettleSpreadEnabled || !RudimentsModules.Nettle) return null;
                 plainChance    = cfg.NettleSpreadChance;
                 tilledChance   = cfg.NettleTilledSpreadChance;
                 maxDensity     = cfg.NettleSpreadMaxDensity;
@@ -77,7 +78,7 @@ namespace Rudiments.SRC.Common.Blocks
             }
             else if (isReed)
             {
-                if (!cfg.ReedSpreadEnabled) return null;
+                if (!cfg.ReedSpreadEnabled || !RudimentsModules.ReedSpread) return null;
                 plainChance    = cfg.ReedSpreadChance;
                 tilledChance   = cfg.ReedSpreadChance; // no tilled bonus for reeds
                 maxDensity     = cfg.ReedSpreadMaxDensity;
