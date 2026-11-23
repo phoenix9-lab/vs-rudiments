@@ -47,6 +47,20 @@ namespace Rudiments.Utils
                 stack.Attributes.SetInt(AttrKey, GameMath_Clamp(quality, Coarse, Fine));
         }
 
+        /// <summary>A stack of tow (rudiments:coarsefibers, always Coarse), as thrown off by the scutch
+        /// board and the scutch mill. Null when <paramref name="fibres"/> is not positive or the item
+        /// is missing.</summary>
+        public static ItemStack TowStack(IWorldAccessor world, int fibres)
+        {
+            if (fibres <= 0) return null;
+            Item tow = world?.GetItem(new AssetLocation("rudiments", "coarsefibers"));
+            if (tow == null) return null;
+
+            ItemStack towStack = new ItemStack(tow, fibres);
+            Set(towStack, Coarse);
+            return towStack;
+        }
+
         /// <summary>Copy quality from a source stack onto a freshly produced stack.</summary>
         public static void Carry(ItemStack from, ItemStack to)
         {

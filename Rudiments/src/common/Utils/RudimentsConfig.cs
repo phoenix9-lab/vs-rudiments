@@ -188,7 +188,8 @@ namespace Rudiments
         // The scutch board is an interactive minigame: load broken bundles, strike them with a
         // scutching sword, flip halfway. Every value here is read live, so /rudimentsreload is
         // enough to retune the whole thing without a rebuild. Per-tier capacity and
-        // boon-per-stroke live in blocktypes/tool/scutchboard.json.
+        // boon-per-stroke live in blocktypes/tool/scutchboard.json. A changed capacity applies to
+        // the next load; hidden end toughness is rolled when a load starts.
 
         /// <summary>Strokes per second while holding leftmouse with a scutching sword. Kept in sync
         /// with the vanilla "axechop" animation the sword plays: 34 frames at animationSpeed 1.65
@@ -226,7 +227,41 @@ namespace Rudiments
         /// wasted by the mechanical scutch mill. Default: 2.</summary>
         public int ScutchTowFibersPerBundle { get; set; } = 2;
 
+        /// <summary>Coarse fibres (tow) per bundle that come away with the boon as it is cleaned, on
+        /// top of any over-scutch tow. Scales with how clean the batch is when collected:
+        /// <c>bundles × cleanliness × this</c>, rounded randomly. It costs no line, so an honest
+        /// clean always throws off some tow and an under-scutched batch throws off less. Set to 0
+        /// for tow only from over-scutching. Default: 0.5.</summary>
+        public float ScutchBaselineTowPerBundle { get; set; } = 0.5f;
+
+        /// <summary>Multiplier on the scutch board's flax capacity. Per-tier base values
+        /// (<c>scutchCapacity</c>: 2 / 4 / 8) live in blocktypes/tool/scutchboard.json; the effective
+        /// capacity is <c>round(base × this)</c>, at least 1 and at most a full stack (64). Nettle
+        /// always takes a full stack. Default: 1.0.</summary>
+        public float ScutchBoardCapacityMultiplier { get; set; } = 1.0f;
+
+        /// <summary>How much harder a flax batch larger than the board tier's base capacity is to
+        /// clean. Boon cleared per stroke is scaled by <c>(base / loaded) ^ this</c> once the load
+        /// exceeds the base, so 0.5 means four times the bundles take twice the strokes (and twice
+        /// the sword wear). 0 makes batch size free; 1 makes strokes scale with bundles. Only matters
+        /// when <c>ScutchBoardCapacityMultiplier</c> is above 1. Default: 0.5.</summary>
+        public float ScutchLargeBatchEffort { get; set; } = 0.5f;
+
+        /// <summary>Spread of each end's hidden toughness. When a batch is loaded, each end rolls a
+        /// multiplier on boon cleared per stroke from a Gaussian around 1.0 with this standard
+        /// deviation (clamped to 1 ± 2.5×), so the number of strokes an end needs changes from load
+        /// to load. Watch for the flip cue instead of counting. 0 makes every load the same.
+        /// Default: 0.25.</summary>
+        public float ScutchSideVariance { get; set; } = 0.25f;
+
+        /// <summary>Per-stroke wobble on boon cleared: each stroke's share is multiplied by a Gaussian
+        /// around 1.0 with this standard deviation (clamped to 1 ± 2.5×). 0 makes every stroke
+        /// identical. Default: 0.15.</summary>
+        public float ScutchStrokeJitter { get; set; } = 0.15f;
+
         /// <summary>Show numeric percentages for cleanliness and fibre integrity on the scutch board.
+        /// Also shows each end's own cleanliness against <c>ScutchSafeCleanliness</c>, the exact value
+        /// the flip cue fires on, so the board can be worked without hearing the strike change.
         /// When false, the board reports in qualitative words instead, for players who prefer to work
         /// by feel. Default: true.</summary>
         public bool ScutchShowMeters { get; set; } = true;

@@ -26,6 +26,62 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.4.0] — 2026-11-23 — Scutch board rework: batch size, stroke variance, tow yield
+
+### Added
+- **Configurable scutch board batch size.** `ScutchBoardCapacityMultiplier` (default 1.0) scales the
+  board's flax capacity: `max(1, round(scutchCapacity × multiplier))`, capped at a full stack (64).
+  At 1.0 the tiers hold 2 / 4 / 8 as before. The `{count}/{capacity}` info line shows the scaled
+  value. Nettle still takes a full stack. One multiplier rather than per-tier overrides keeps the
+  tiers in proportion and still follows any change to `scutchCapacity` in the block asset.
+- **Large batches take more work.** `ScutchLargeBatchEffort` (default 0.5) scales boon cleared per
+  stroke by `(base ÷ loaded) ^ effort` once a flax load is larger than the tier's base capacity.
+  At 0.5, four times the bundles take about twice the strokes and twice the sword wear, since the
+  sword loses 1 durability per stroke. On an advanced board, 8 / 16 / 32 / 64 bundles need about
+  6–7 / 9–10 / 12–14 / 18–19 strokes per end on the fixed curve. 0 makes batch size free. This setting
+  can't change anything at the default capacity, because a load can never exceed the base. Nettle is
+  exempt, as it always was from capacity.
+- **Stroke counts vary from load to load.** When a batch is loaded, each end rolls a hidden
+  toughness: a multiplier on boon cleared per stroke, Gaussian around 1.0 with standard deviation
+  `ScutchSideVariance` (default 0.25). Every stroke is also multiplied by a Gaussian with standard
+  deviation `ScutchStrokeJitter` (default 0.15). Both rolls are clamped to 1 ± 2.5 standard deviations,
+  and never below 0.2. "Six strokes, flip, six strokes" no longer works, so the strike pitch,
+  the particles and the flip prompt are what tell you an end is clean. Setting both to 0 restores the
+  fixed curve. The bleed onto the held end follows that end's own toughness.
+  - Rolls happen on the server and are saved with the board (`sideFactorNear`, `sideFactorFar`), so a
+    reload or chunk unload never rerolls a batch. Boards saved before 2.4.0 use 1.0 until their next load.
+  - The info text never shows the rolls. The meters show only the resulting cleanliness.
+- **Per-end meters.** With `ScutchShowMeters` on, the board also shows each end's cleanliness against
+  the point where it counts as clean, e.g. "Near end: 68% clean (clean at 75%)". That is the exact
+  value the strike pitch, particles and flip prompt are keyed to, so the board can be read without
+  hearing the audio change. The percentage reaches the threshold on the same stroke the cue fires.
+- **Cleaning throws off tow.** `ScutchBaselineTowPerBundle` (default 0.5) adds
+  `bundles × cleanliness × 0.5` coarse fibres (rounded randomly) on collecting, on top of the line.
+  It costs no line bundles. Over-scutch damage still turns whole bundles into tow at
+  `ScutchTowFibersPerBundle` each, as before.
+
+### Changed
+- **Under-scutching no longer pays.** Before, a batch stopped short of the flip cue gave 100% line
+  and no tow, and the only cost was the grade. Now baseline tow grows with cleanliness, so stopping
+  early gives less tow *and* a lower grade. The yield curve for a simple board with 4 bundles at
+  default settings (mean of 20,000 simulated loads):
+
+  | Stop point | Cleanliness | Grade | Line bundles | Tow fibres (2.3.0 → 2.4.0) |
+  |---|---|---|---|---|
+  | Early, 3 + 3 strokes | 0.41 | Coarse (93%) | 4.00 | 0.00 → 0.82 |
+  | At the cue on both ends | 0.75 | Standard | 3.93 | 0.14 → 1.63 |
+  | 2 strokes past the done cue | 0.78 | Fine (68%) | 3.70 | 0.60 → 2.16 |
+  | 4 strokes past the done cue | 0.81 | Fine (99%) | 3.30 | 1.39 → 3.01 |
+  | 10 strokes past the done cue | 0.85 | Fine | 1.56 | 4.87 → 6.57 |
+
+  Under-scutching loses on grade and tow. The cue is the safe stop. Reaching Fine still costs a
+  little line, as it did before, and beating past that keeps converting line into tow.
+- The scutch board and the mill build tow through one shared helper. The mill's numbers are unchanged.
+- The scutch board's description and the broken-flax handbook page mention the baseline tow and say
+  to go by the strike rather than by counting.
+
+---
+
 ## [2.3.0] — 2026-11-06 — Module switches and fine textiles
 
 ### Added

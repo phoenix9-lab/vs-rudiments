@@ -45,6 +45,18 @@ namespace Rudiments.SRC.Common.BlockEntities
         private bool workingFar;
         private int strokes;
 
+        // Hidden per-end toughness, as a multiplier on boon cleared per stroke. Rolled on the server
+        // when a load starts and persisted, so a reload or chunk unload never rerolls a batch. Never
+        // shown: the flip cue is the only way to tell an end is clean. 1.0 = today's fixed curve,
+        // which is also what saves from before 2.4.0 load with.
+        private float sideFactorNear = 1f;
+        private float sideFactorFar = 1f;
+
+        /// <summary>Gaussian rolls are clamped to mean ± this many standard deviations, and never
+        /// below <see cref="MinRollFactor"/>, so a freak roll can't make an end uncleanable.</summary>
+        private const float RollClampSigmas = 2.5f;
+        private const float MinRollFactor = 0.2f;
+
         private AssetLocation interactSound;
 
         // ── Public surface, consumed by BlockScutchBoard and ItemScutchSword ──────────
@@ -81,29 +93,62 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         /// <summary>Nettle's coarse, tangled stems don't care how fine the notch is cut, so a batch
         /// isn't bottlenecked by board tier — the whole stack can go on at once. Flax still respects
-        /// the board's craftsmanship cap.</summary>
-        private int CapacityFor(ItemStack stack) =>
-            IsNettle(stack) ? stack.Collectible.MaxStackSize : Math.Max(1, Block?.Attributes?["scutchCapacity"]?.AsInt(4) ?? 4);
+        /// the board's craftsmanship cap, scaled by <c>ScutchBoardCapacityMultiplier</c> and never more
+        /// than a full stack.</summary>
+        private int CapacityFor(ItemStack stack)
+        {
+            if (IsNettle(stack)) return stack.Collectible.MaxStackSize;
+
+            float mult = Math.Max(0f, RudimentsModSystem.Config.ScutchBoardCapacityMultiplier);
+            int capacity = Math.Max(1, (int)Math.Round(BaseFlaxCapacity * mult, MidpointRounding.AwayFromZero));
+            int maxStack = stack?.Collectible?.MaxStackSize ?? 0;
+            return maxStack > 0 ? Math.Min(capacity, maxStack) : capacity;
+        }
+
+        /// <summary>The tier's own flax capacity from the block attributes, before the config multiplier.</summary>
+        private int BaseFlaxCapacity => Math.Max(1, Block?.Attributes?["scutchCapacity"]?.AsInt(4) ?? 4);
 
         private int Capacity => CapacityFor(BundleSlot?.Itemstack);
 
         /// <summary>Per-stroke share of the remaining boon this board knocks free. Craftsmanship in the
-        /// notch scales it (a better-cut notch holds the bundle steadier); nettle divides it down.</summary>
+        /// notch scales it (a better-cut notch holds the bundle steadier); nettle divides it down; a
+        /// flax batch beyond the tier's base capacity is spread thinner under the blade. The hidden
+        /// per-end toughness and per-stroke jitter are applied in <see cref="ApplyStroke"/>.</summary>
         private float BoonPerStroke
         {
             get
             {
+                RudimentsConfig cfg = RudimentsModSystem.Config;
+                ItemStack batch = BundleSlot?.Itemstack;
                 float k = (Block?.Attributes?["boonPerStroke"]?.AsFloat(0.16f) ?? 0.16f)
-                        * RudimentsModSystem.Config.ScutchBoonPerStrokeMultiplier;
+                        * cfg.ScutchBoonPerStrokeMultiplier;
 
-                if (IsNettle(BundleSlot?.Itemstack))
+                if (IsNettle(batch))
                 {
-                    float div = Math.Max(0.01f, RudimentsModSystem.Config.ScutchNettleBoonMultiplier);
+                    float div = Math.Max(0.01f, cfg.ScutchNettleBoonMultiplier);
                     k /= div;
+                }
+                else if (batch != null && cfg.ScutchLargeBatchEffort > 0f && batch.StackSize > BaseFlaxCapacity)
+                {
+                    // Only loads above the tier's base capacity pay, so with the default capacity
+                    // multiplier this never fires and the curve is exactly the pre-2.4.0 one.
+                    k *= (float)Math.Pow((double)BaseFlaxCapacity / batch.StackSize, cfg.ScutchLargeBatchEffort);
                 }
 
                 return GameMath.Clamp(k, 0.001f, 0.95f);
             }
+        }
+
+        /// <summary>A Gaussian multiplier around 1.0, clamped to 1 ± <see cref="RollClampSigmas"/>
+        /// standard deviations and at least <see cref="MinRollFactor"/>. Exactly 1 when
+        /// <paramref name="stdDev"/> is 0 (or negative), so a zero setting restores the fixed curve.</summary>
+        private float RollFactor(float stdDev)
+        {
+            if (!(stdDev > 0f) || Api?.World?.Rand == null) return 1f;
+
+            float spread = RollClampSigmas * stdDev;
+            float roll = (float)MathUtility.NextGaussian(Api.World.Rand, 1.0, stdDev);
+            return GameMath.Clamp(roll, Math.Max(MinRollFactor, 1f - spread), 1f + spread);
         }
 
         private static bool IsNettle(ItemStack stack) =>
@@ -218,9 +263,19 @@ namespace Rudiments.SRC.Common.BlockEntities
             // Retting is never overridden — scutching can only lose what retting granted.
             int outQuality = Math.Min(FiberQuality.Get(batch), GradeFor(Cleanliness));
 
+            RudimentsConfig cfg = RudimentsModSystem.Config;
+
+            // Two sources of tow. Over-scutch damage turns whole bundles into tow (and costs line).
+            // Cleaning itself always shakes short fibre out with the boon: extra tow in proportion
+            // to how clean the batch got, which costs no line. So stopping early saves no tow and
+            // still grades lower: a proper clean beats an under-scutched one on every count.
             int lineCount = GameMath.Clamp(
                 GameMath.RoundRandom(Api.World.Rand, loadedCount * Integrity), 0, loadedCount);
-            int towCount = loadedCount - lineCount;
+            int damagedCount = loadedCount - lineCount;
+            int perBundle = Math.Max(0, cfg.ScutchTowFibersPerBundle);
+            float baselinePerBundle = Math.Max(0f, cfg.ScutchBaselineTowPerBundle);
+            int baselineTow = GameMath.RoundRandom(Api.World.Rand, loadedCount * Cleanliness * baselinePerBundle);
+            int towFibres = damagedCount * perBundle + baselineTow;
 
             slot.Itemstack = null;
             slot.MarkDirty();
@@ -237,18 +292,9 @@ namespace Rudiments.SRC.Common.BlockEntities
                     Api.World.SpawnItemEntity(lineStack, dropPos);
             }
 
-            if (towCount > 0)
-            {
-                Item tow = Api.World.GetItem(new AssetLocation("rudiments", "coarsefibers"));
-                int perBundle = Math.Max(0, RudimentsModSystem.Config.ScutchTowFibersPerBundle);
-                if (tow != null && perBundle > 0)
-                {
-                    ItemStack towStack = new ItemStack(tow, towCount * perBundle);
-                    FiberQuality.Set(towStack, FiberQuality.Coarse);
-                    if (!byPlayer.InventoryManager.TryGiveItemstack(towStack))
-                        Api.World.SpawnItemEntity(towStack, dropPos);
-                }
-            }
+            ItemStack towStack = FiberQuality.TowStack(Api.World, towFibres);
+            if (towStack != null && !byPlayer.InventoryManager.TryGiveItemstack(towStack))
+                Api.World.SpawnItemEntity(towStack, dropPos);
 
             Api.World.PlaySoundAt(new AssetLocation("game", "sounds/player/collect"), byPlayer, null, false, 8f);
             return true;
@@ -264,18 +310,24 @@ namespace Rudiments.SRC.Common.BlockEntities
             if (IsEmpty) return false;
 
             RudimentsConfig cfg = RudimentsModSystem.Config;
-            float k = BoonPerStroke;
-            float bleed = k * GameMath.Clamp(cfg.ScutchCrossSideBleed, 0f, 1f);
+
+            // Each end clears at its own hidden rate, and every stroke lands a little differently,
+            // so the right stroke count changes from load to load and end to end. The bleed onto
+            // the held end follows that end's toughness, not the worked one's.
+            float k = BoonPerStroke * RollFactor(cfg.ScutchStrokeJitter);
+            float bleedShare = GameMath.Clamp(cfg.ScutchCrossSideBleed, 0f, 1f);
+            float kWorked = GameMath.Clamp(k * (workingFar ? sideFactorFar : sideFactorNear), 0f, 0.95f);
+            float kHeld = GameMath.Clamp(k * bleedShare * (workingFar ? sideFactorNear : sideFactorFar), 0f, 0.95f);
 
             if (workingFar)
             {
-                boonFar -= k * (boonFar - SideFloor);
-                boonNear -= bleed * (boonNear - SideFloor);
+                boonFar -= kWorked * (boonFar - SideFloor);
+                boonNear -= kHeld * (boonNear - SideFloor);
             }
             else
             {
-                boonNear -= k * (boonNear - SideFloor);
-                boonFar -= bleed * (boonFar - SideFloor);
+                boonNear -= kWorked * (boonNear - SideFloor);
+                boonFar -= kHeld * (boonFar - SideFloor);
             }
 
             boonNear = GameMath.Clamp(boonNear, SideFloor, SideStart);
@@ -310,6 +362,13 @@ namespace Rudiments.SRC.Common.BlockEntities
             integrity = 1f;
             workingFar = false;
             strokes = 0;
+
+            // Loading and collecting only run on the server (BlockScutchBoard returns early on the
+            // client), but guard anyway: a client must never roll its own copy.
+            bool server = Api?.Side == EnumAppSide.Server;
+            float variance = RudimentsModSystem.Config.ScutchSideVariance;
+            sideFactorNear = server ? RollFactor(variance) : 1f;
+            sideFactorFar = server ? RollFactor(variance) : 1f;
         }
 
         // ── Info text ────────────────────────────────────────────────────────────────
@@ -332,6 +391,13 @@ namespace Rudiments.SRC.Common.BlockEntities
             {
                 dsc.AppendLine(Lang.Get("rudiments:scutchboard-cleanliness", (int)Math.Round(Cleanliness * 100f)));
                 dsc.AppendLine(Lang.Get("rudiments:scutchboard-integrity", (int)Math.Round(Integrity * 100f)));
+
+                // Per-end meters: the same values the flip cue is keyed to, so a player who can't
+                // hear the strike change or see the particles reads the exact state. Toughness rolls
+                // only change how fast these move, so nothing hidden is shown.
+                int threshold = (int)Math.Round(RudimentsModSystem.Config.ScutchSafeCleanliness * 100f);
+                dsc.AppendLine(Lang.Get("rudiments:scutchboard-endmeter-near", EndPercent(false, threshold), threshold));
+                dsc.AppendLine(Lang.Get("rudiments:scutchboard-endmeter-far", EndPercent(true, threshold), threshold));
             }
             else
             {
@@ -353,6 +419,16 @@ namespace Rudiments.SRC.Common.BlockEntities
                     ? "rudiments:scutchboard-donewarning"
                     : "rudiments:scutchboard-flipprompt"));
             }
+        }
+
+        /// <summary>An end's cleanliness as a whole percentage that always agrees with the cue: at or
+        /// above <paramref name="threshold"/> exactly when the flip cue fires for that end, below it
+        /// otherwise. Plain rounding could show "75%" a stroke before a 75% cue fires.</summary>
+        private int EndPercent(bool far, int threshold)
+        {
+            int pct = (int)Math.Floor(LocalCleanlinessOf(far) * 100f + 1e-4f);
+            bool clean = LocalCleanlinessOf(far) >= RudimentsModSystem.Config.ScutchSafeCleanliness;
+            return clean ? Math.Max(pct, threshold) : Math.Min(pct, threshold - 1);
         }
 
         /// <summary>Maps a 0..1 meter onto one of the four qualitative words used when
@@ -454,6 +530,9 @@ namespace Rudiments.SRC.Common.BlockEntities
             integrity = tree.GetFloat("integrity", 1f);
             workingFar = tree.GetBool("workingFar");
             strokes = tree.GetInt("strokes");
+            // Saves from before 2.4.0 have no rolls: they keep the fixed curve until the next load.
+            sideFactorNear = tree.GetFloat("sideFactorNear", 1f);
+            sideFactorFar = tree.GetFloat("sideFactorFar", 1f);
 
             // The server pushes new meters every stroke, so this runs often on the client; the mesh
             // cache key covers the only two things that can change what is drawn.
@@ -473,6 +552,8 @@ namespace Rudiments.SRC.Common.BlockEntities
             tree.SetFloat("integrity", integrity);
             tree.SetBool("workingFar", workingFar);
             tree.SetInt("strokes", strokes);
+            tree.SetFloat("sideFactorNear", sideFactorNear);
+            tree.SetFloat("sideFactorFar", sideFactorFar);
         }
 
         public override void OnBlockBroken(IPlayer byPlayer = null)
