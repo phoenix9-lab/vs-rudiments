@@ -225,13 +225,8 @@ namespace Rudiments.SRC.Common.BlockEntities
         /// </summary>
         private void EjectTow()
         {
-            Item tow = Api.World.GetItem(new AssetLocation("rudiments", "coarsefibers"));
-            int perBundle = System.Math.Max(0, RudimentsModSystem.Config.ScutchTowFibersPerBundle);
-            if (tow == null || perBundle <= 0) return;
-
-            ItemStack towStack = new ItemStack(tow, perBundle);
-            FiberQuality.Set(towStack, FiberQuality.Coarse);
-            Api.World.SpawnItemEntity(towStack, Pos.ToVec3d().Add(0.5, 0.9, 0.5));
+            ItemStack towStack = FiberQuality.TowStack(Api.World, RudimentsModSystem.Config.ScutchTowFibersPerBundle);
+            if (towStack != null) Api.World.SpawnItemEntity(towStack, Pos.ToVec3d().Add(0.5, 0.9, 0.5));
         }
 
         // BEBehaviorMPBase.OnTesselation returns true unconditionally, claiming the render

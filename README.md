@@ -48,7 +48,9 @@ Retting isn't the only decision that matters. Scutching is hands-on. Load broken
 
 - **Only the end facing you gets worked.** Sneak + right-click turns the bundle so you can do the other half. Never turn it and there's a cap on how clean the batch can get.
 - **Listen for the change.** While there's boon left, the strike lands dull and throws brown shives. Once that end runs clean, the pitch goes up and it throws pale fibre fluff. That's your cue to turn it. From then on the blade has nothing left to ride on, so it starts cutting the long *line* into short *tow*.
+- **No two loads are the same.** Each end of a bundle is a little tougher or softer than the last, and every stroke lands a little differently. Counting strokes won't work. Watch and listen for the cue instead.
 - **The two mistakes cost you different things.** Under-scutching leaves boon bound in and grades the batch down. Over-scutching keeps the grade but turns more and more of the batch into coarse fibres. Neither one is a timer. Both come out of the same curve.
+- **Cleaning always throws off some tow.** Short fibre comes away with the boon, so a cleaner batch also gives a few coarse fibres on top of its line. Stopping early saves nothing.
 - **Retting is still the ceiling.** Scutching can only lose quality that retting gave you. It can't add any.
 
 What separates the board tiers is the quality of the woodwork. A better-cut notch holds more bundles *and* clears more boon per stroke. Nettle carries far more boon than flax and needs about half again as many strokes per end.
@@ -230,6 +232,11 @@ Switching a group back on restores everything. One exception: with all four of `
 | `ScutchCrossSideBleed` | `0.10` | Share of each stroke's cleaning that bleeds onto the end you are *not* working. At `0` you have to flip the bundle; otherwise flipping just helps |
 | `ScutchNettleBoonMultiplier` | `1.5` | How much more boon nettle carries than flax, as a divisor on boon cleared per stroke |
 | `ScutchTowFibersPerBundle` | `2` | Coarse fibres handed out per bundle lost to over-scutching or wasted by the mill |
+| `ScutchBaselineTowPerBundle` | `0.5` | Extra coarse fibres per bundle that come away with the boon, times the batch's cleanliness, rounded randomly. Costs no line. `0` gives tow only from over-scutching |
+| `ScutchBoardCapacityMultiplier` | `1.0` | Multiplier on the board's flax capacity (2 / 4 / 8 by tier), capped at a full stack of 64. Nettle always takes a full stack |
+| `ScutchLargeBatchEffort` | `0.5` | How much harder a flax load above the tier's base capacity is to clean: boon per stroke × (base ÷ loaded) ^ this. `0.5` means 4× the bundles take 2× the strokes; `0` makes size free |
+| `ScutchSideVariance` | `0.25` | Spread of each end's hidden toughness, rolled per load. `0` makes every load need the same strokes |
+| `ScutchStrokeJitter` | `0.15` | Per-stroke wobble in boon cleared. `0` makes every stroke identical |
 | `ScutchStrokesPerSecond` | `1.456` | Stroke rate. Matched to the sword's swing animation, so if you change one, change the other |
 | `ScutchShowMeters` | `true` | Show numeric cleanliness and fibre-intact percentages. `false` reports in qualitative words instead |
 | `MechScutcherTowShare` | `0.35` | Share of each batch the mechanical mill shreds into tow. Quality is never affected; `0` disables the waste |
