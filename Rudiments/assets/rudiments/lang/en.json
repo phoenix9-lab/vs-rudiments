@@ -69,6 +69,8 @@
   "rudiments:scutchboard-side-far": "Working the far end of the bundle.",
   "rudiments:scutchboard-cleanliness": "Boon cleared: {0}%",
   "rudiments:scutchboard-integrity": "Long fibre intact: {0}%",
+  "rudiments:scutchboard-endmeter-near": "Near end: {0}% clean (clean at {1}%)",
+  "rudiments:scutchboard-endmeter-far": "Far end: {0}% clean (clean at {1}%)",
   "rudiments:scutchboard-cleanliness-vague": "The bundle is {0} clear of boon.",
   "rudiments:scutchboard-integrity-vague": "The long fibre is {0} intact.",
   "rudiments:scutchboard-vague-0": "barely",

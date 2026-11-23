@@ -51,6 +51,10 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
   - Rolls happen on the server and are saved with the board (`sideFactorNear`, `sideFactorFar`), so a
     reload or chunk unload never rerolls a batch. Boards saved before 2.4.0 use 1.0 until their next load.
   - The info text never shows the rolls. The meters show only the resulting cleanliness.
+- **Per-end meters.** With `ScutchShowMeters` on, the board also shows each end's cleanliness against
+  the point where it counts as clean, e.g. "Near end: 68% clean (clean at 75%)". That is the exact
+  value the strike pitch, particles and flip prompt are keyed to, so the board can be read without
+  hearing the audio change. The percentage reaches the threshold on the same stroke the cue fires.
 - **Cleaning throws off tow.** `ScutchBaselineTowPerBundle` (default 0.5) adds
   `bundles × cleanliness × 0.5` coarse fibres (rounded randomly) on collecting, on top of the line.
   It costs no line bundles. Over-scutch damage still turns whole bundles into tow at

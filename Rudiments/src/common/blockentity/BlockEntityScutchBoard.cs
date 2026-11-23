@@ -391,6 +391,13 @@ namespace Rudiments.SRC.Common.BlockEntities
             {
                 dsc.AppendLine(Lang.Get("rudiments:scutchboard-cleanliness", (int)Math.Round(Cleanliness * 100f)));
                 dsc.AppendLine(Lang.Get("rudiments:scutchboard-integrity", (int)Math.Round(Integrity * 100f)));
+
+                // Per-end meters: the same values the flip cue is keyed to, so a player who can't
+                // hear the strike change or see the particles reads the exact state. Toughness rolls
+                // only change how fast these move, so nothing hidden is shown.
+                int threshold = (int)Math.Round(RudimentsModSystem.Config.ScutchSafeCleanliness * 100f);
+                dsc.AppendLine(Lang.Get("rudiments:scutchboard-endmeter-near", EndPercent(false, threshold), threshold));
+                dsc.AppendLine(Lang.Get("rudiments:scutchboard-endmeter-far", EndPercent(true, threshold), threshold));
             }
             else
             {
@@ -412,6 +419,16 @@ namespace Rudiments.SRC.Common.BlockEntities
                     ? "rudiments:scutchboard-donewarning"
                     : "rudiments:scutchboard-flipprompt"));
             }
+        }
+
+        /// <summary>An end's cleanliness as a whole percentage that always agrees with the cue: at or
+        /// above <paramref name="threshold"/> exactly when the flip cue fires for that end, below it
+        /// otherwise. Plain rounding could show "75%" a stroke before a 75% cue fires.</summary>
+        private int EndPercent(bool far, int threshold)
+        {
+            int pct = (int)Math.Floor(LocalCleanlinessOf(far) * 100f + 1e-4f);
+            bool clean = LocalCleanlinessOf(far) >= RudimentsModSystem.Config.ScutchSafeCleanliness;
+            return clean ? Math.Max(pct, threshold) : Math.Min(pct, threshold - 1);
         }
 
         /// <summary>Maps a 0..1 meter onto one of the four qualitative words used when

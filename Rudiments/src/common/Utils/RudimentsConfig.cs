@@ -260,6 +260,8 @@ namespace Rudiments
         public float ScutchStrokeJitter { get; set; } = 0.15f;
 
         /// <summary>Show numeric percentages for cleanliness and fibre integrity on the scutch board.
+        /// Also shows each end's own cleanliness against <c>ScutchSafeCleanliness</c>, the exact value
+        /// the flip cue fires on, so the board can be worked without hearing the strike change.
         /// When false, the board reports in qualitative words instead, for players who prefer to work
         /// by feel. Default: true.</summary>
         public bool ScutchShowMeters { get; set; } = true;

@@ -238,7 +238,7 @@ Switching a group back on restores everything. One exception: with all four of `
 | `ScutchSideVariance` | `0.25` | Spread of each end's hidden toughness, rolled per load. `0` makes every load need the same strokes |
 | `ScutchStrokeJitter` | `0.15` | Per-stroke wobble in boon cleared. `0` makes every stroke identical |
 | `ScutchStrokesPerSecond` | `1.456` | Stroke rate. Matched to the sword's swing animation, so if you change one, change the other |
-| `ScutchShowMeters` | `true` | Show numeric cleanliness and fibre-intact percentages. `false` reports in qualitative words instead |
+| `ScutchShowMeters` | `true` | Show numeric cleanliness and fibre-intact percentages, plus each end's cleanliness against the point where it counts as clean (the same value the strike-pitch cue uses). `false` reports in qualitative words instead |
 | `MechScutcherTowShare` | `0.35` | Share of each batch the mechanical mill shreds into tow. Quality is never affected; `0` disables the waste |
 
 ### Nettle spread and invasiveness
