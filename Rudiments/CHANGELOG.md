@@ -26,6 +26,18 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
+## [2.4.1] — 2026-11-23 — Scutch board shows the server's numbers
+
+### Fixed
+- **The scutch board's info text now uses the server's settings.** The capacity in
+  `{count}/{capacity}`, the per-end "clean at" threshold and the flip prompt were read from each
+  player's own `rudiments.json`. On a dedicated server with different settings, a player could see
+  the wrong capacity, or meters and a flip prompt out of step with the strike sound. The server now
+  sends its values with the board. Single-player was not affected. After `/rudimentsreload` the info
+  text picks up the change on the board's next stroke or load.
+
+---
+
 ## [2.4.0] — 2026-11-23 — Scutch board rework: batch size, stroke variance, tow yield
 
 ### Added
