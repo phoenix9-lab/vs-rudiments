@@ -69,14 +69,17 @@ namespace Rudiments
                 api.Logger.Warning("[{0}] {1}", Mod.Info.Name, warning);
             }
             RudimentsModules.RememberStartup(Config);
+            FineTextileSettings.Load(Config);
 
             if (api.Side == EnumAppSide.Server)
             {
                 RudimentsModules.Publish(api.World.Config, Config);
+                FineTextileSettings.Publish(api.World.Config);
             }
             else
             {
                 RudimentsModules.Adopt(api.World?.Config);
+                FineTextileSettings.Adopt(api.World?.Config);
             }
 
             api.Logger.Notification("[{0}] Modules: {1}", Mod.Info.Name, RudimentsModules.Describe());
@@ -157,6 +160,11 @@ namespace Rudiments
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityNettleConvert", typeof(BlockEntityNettleConvert));
             api.RegisterBlockEntityClass($"{Mod.Info.ModID}:BlockEntityReedSpread", typeof(BlockEntityReedSpread));
 
+            // Fine textiles: vanilla linen, cloth, sewing kits, bandages, poultices and fishing
+            // poles carry a fine mark when made from fine cord (patches/fine-textiles.json).
+            api.RegisterCollectibleBehaviorClass($"{Mod.Info.ModID}:FineTextile", typeof(CollectibleBehaviorFineTextile));
+            api.RegisterBlockBehaviorClass($"{Mod.Info.ModID}:FineLinen", typeof(BlockBehaviorFineLinen));
+
             base.Start(api);
 
             api.Logger.Notification("[{0}] v{1} — flax & nettle fibre chains, quality retting, mechanical scutch mill, linseed oil. Based on AgeOfFlax by OppoOtis.", Mod.Info.Name, Mod.Info.Version);
@@ -187,12 +195,49 @@ namespace Rudiments
                     api.World.Config.SetBool(LeadPoisoningWorldKey, Config.LeadPoisoningEnabled && RudimentsModules.Glazes);
 
                     return TextCommandResult.Success(RudimentsModules.NeedsRestart(Config)
-                        ? "Rudiments config reloaded. A module switch or harvest setting changed; it only applies after a server restart."
+                        ? "Rudiments config reloaded. A module switch, harvest or fine-textile setting changed; it only applies after a server restart."
                         : "Rudiments config reloaded.");
                 });
 
             if (RudimentsModules.Glazes) RegisterLeadCommand(api);
             RegisterModulesCommand(api);
+            if (RudimentsModules.Fibre) RegisterFineCommand(api);
+        }
+
+        /// <summary>
+        /// Test aid for fine textiles: mark the held stack fine without crafting it, and show the
+        /// numbers in force.
+        /// </summary>
+        private void RegisterFineCommand(ICoreServerAPI api)
+        {
+            api.ChatCommands.Create("rudimentsfine")
+                .WithDescription("Fine textiles: show the settings, or mark the held stack fine")
+                .RequiresPrivilege(Privilege.controlserver)
+                .RequiresPlayer()
+                .HandleWith(args => Describe(args.Caller.Player))
+                .BeginSubCommand("info")
+                    .WithDescription("Show the fine-textile settings and whether the held stack is fine")
+                    .HandleWith(args => Describe(args.Caller.Player))
+                .EndSubCommand()
+                .BeginSubCommand("mark")
+                    .WithDescription("Mark the held stack fine")
+                    .HandleWith(args =>
+                    {
+                        ItemSlot slot = args.Caller.Player?.InventoryManager?.ActiveHotbarSlot;
+                        if (slot?.Itemstack == null) return TextCommandResult.Error("Hold something first.");
+                        if (!FineTextile.CanMark(slot.Itemstack)) return TextCommandResult.Error($"{slot.Itemstack.GetName()} can't be fine: hold linen, cloth, clothing, a sewing kit, a bandage, a poultice or a fishing pole.");
+                        FineTextile.SetFine(slot.Itemstack);
+                        slot.MarkDirty();
+                        return TextCommandResult.Success($"Marked {slot.Itemstack.GetName()} fine.");
+                    })
+                .EndSubCommand();
+
+            static TextCommandResult Describe(IPlayer player)
+            {
+                ItemStack held = player?.InventoryManager?.ActiveHotbarSlot?.Itemstack;
+                string what = held == null ? "Nothing held." : $"{held.GetName()}: {(FineTextile.IsFine(held) ? "fine" : "not fine")}.";
+                return TextCommandResult.Success($"{FineTextileSettings.Describe()}\n{what}");
+            }
         }
 
         private void RegisterModulesCommand(ICoreServerAPI api)
@@ -283,6 +328,7 @@ namespace Rudiments
             // Itemtypes are server-authoritative and synced to clients, so attribute edits here
             // reach both sides.
             if (api.Side != EnumAppSide.Server) return;
+            if (RudimentsModules.Fibre) ApplyFineCordRepairStrength(api);
             if (!RudimentsModules.WoolCarding || !api.ModLoader.IsModEnabled("wool")) return;
 
             bool spinningwheelLoaded = api.ModLoader.IsModEnabled("spinningwheel");
@@ -403,6 +449,18 @@ namespace Rudiments
             {
                 api.Logger.Notification("[{0}] Porcelain clay: {1} blue clay per crushed quartz, {2} per powdered flint + bonemeal ({3} recipe(s) adjusted).", Mod.Info.Name, perQuartz, perFlint, changed);
             }
+        }
+
+        /// <summary>
+        /// Lets fine cord mend clothing. Vanilla offers the merge, and does the repair, for any item
+        /// with a type-level <c>clothingRepairStrength</c>; fine cord is always fine, so the
+        /// type-level value is all it needs.
+        /// </summary>
+        private void ApplyFineCordRepairStrength(ICoreAPI api)
+        {
+            Item cord = api.World.GetItem(new AssetLocation("rudiments:finecord"));
+            if (cord?.Attributes?.Token is not JObject attrs) return;
+            attrs["clothingRepairStrength"] = FineTextileSettings.CordRepair;
         }
 
         /// <summary>

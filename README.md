@@ -328,6 +328,28 @@ All off by default. Smelting behaves exactly like vanilla until you turn one on.
 | `RippleSeedYieldMultiplier` | `1.0` | Global multiplier on seed yields from rippling; `0` disables seed drops |
 | `LinseedOilLitresPerGrain` | `0.078` | Litres of vanilla `oilportion-flax` extracted per flax grain pressed in the vanilla fruit press; ~2 stacks of flax fills the press's fixed 10-litre capacity. Restart required |
 
+### Fine textiles
+
+Fine cord, and the linen, cloth, clothing, sewing kits, bandages, poultices and fishing poles made from it, are the normal vanilla items with a "fine" quality mark, not new items. Every vanilla recipe, the dye barrel and traders keep working with them, and mixing plain cloth into a recipe gives a plain result.
+
+| Setting | Default | Effect |
+|---|---|---|
+| `FineCordRepairStrength` | `0.3` | Condition restored by one fine cord |
+| `FineClothRepairStrength` | `0.7` | Condition restored by fine linen or fine cloth |
+| `FineSewingKitRepairStrength` | `0.95` | Condition restored by a fine sewing kit |
+| `FineSewingKitUses` | `1.3` | Repairs per fine sewing kit |
+| `SewingKitUses` | `1.0` | Repairs per plain sewing kit |
+| `FineClothingWarmthMultiplier` | `1.2` | Max warmth of fine clothing |
+| `FineClothingWearMultiplier` | `0.7` | Condition loss of fine clothing, from wear and rips |
+| `FineArmorDurabilityBonus` | `0.25` | Extra durability on armour made from fine fabric, as a fraction of base |
+| `FineHealingMultiplier` | `1.5` | Healing from fine bandages and poultices |
+| `FineTradeMultiplier` | `2.0` | Trader payout for fine goods |
+| `FineLineStrengthMultiplier` | `1.25` | Stretch before a fine fishing line snaps |
+| `FineLineBiteDelayMultiplier` | `0.8` | Wait before a bite on a fine line |
+| `FineLineCatchWindowBonusSec` | `0.0` | Extra seconds to reel in |
+
+These apply at server start, so a restart is needed, and they do nothing when `FibreEnabled` is `false`.
+
 ---
 
 ## Compatibility

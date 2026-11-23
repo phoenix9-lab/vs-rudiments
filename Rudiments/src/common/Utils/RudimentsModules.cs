@@ -119,7 +119,11 @@ namespace Rudiments.Utils
         private static string Fingerprint(RudimentsConfig c) =>
             string.Join(",", c.FibreEnabled, c.NettleEnabled, c.WoolCardingEnabled, c.WareTiersEnabled,
                 c.ClayBreakageEnabled, c.ClaySeepageEnabled, c.KilnsEnabled, c.PorcelainEnabled,
-                c.GlazesEnabled, c.ReedSpreadEnabled, c.SeedsOnlyWhenMature, c.FlaxBloomHarvest);
+                c.GlazesEnabled, c.ReedSpreadEnabled, c.SeedsOnlyWhenMature, c.FlaxBloomHarvest,
+                c.FineCordRepairStrength, c.FineClothRepairStrength, c.FineSewingKitRepairStrength,
+                c.FineSewingKitUses, c.SewingKitUses, c.FineClothingWarmthMultiplier, c.FineClothingWearMultiplier,
+                c.FineArmorDurabilityBonus, c.FineHealingMultiplier, c.FineTradeMultiplier,
+                c.FineLineStrengthMultiplier, c.FineLineBiteDelayMultiplier, c.FineLineCatchWindowBonusSec);
 
         public static void RememberStartup(RudimentsConfig cfg) => startupFingerprint = Fingerprint(cfg);
 

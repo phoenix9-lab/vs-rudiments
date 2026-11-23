@@ -7,6 +7,8 @@ namespace Rudiments.Utils
     /// Reads a "durabilityBonus" integer from the item's stack attributes and adds it to max durability.
     /// Set via recipe output attributes when fine cord is used as the string ingredient.
     /// Patched onto vanilla bows (and any other item that benefits) via JSON patch.
+    /// Armour made from fine linen or cloth also gets <see cref="FineTextile.ArmorBonus"/>, computed
+    /// live from the fine mark rather than stored, so it follows the setting.
     /// </summary>
     public class DurabilityBonusBehavior : CollectibleBehavior
     {
@@ -17,6 +19,7 @@ namespace Rudiments.Utils
             // GetInt only matches IntAttribute, but Newtonsoft loads JSON integers as long — recipe
             // output attributes land here as LongAttribute, so GetInt silently returns the default.
             int bonus = itemstack?.Attributes?.GetAsInt("durabilityBonus", 0) ?? 0;
+            bonus += FineTextile.ArmorBonus(collObj, itemstack, durability);
             if (bonus > 0)
             {
                 bhHandling = EnumHandling.Handled;

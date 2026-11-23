@@ -29,7 +29,7 @@ namespace Rudiments.Utils
                 "BlockCropFlax", "BlockDryingRack", "BlockEntityDryingRack", "BlockFieldRetting", "BlockEntityFieldRetting",
                 "BlockStook", "BlockEntityStook", "BlockRettingVat", "BlockEntityRettingVat", "RettingBath", "RettingBathInfo",
                 "BlockMechScutcher", "BlockEntityMechScutcher", "FiberQuality", "DurabilityBonus",
-                "ItemFieldRettableBundle", "ItemScutchSword");
+                "ItemFieldRettableBundle", "ItemScutchSword", "FineTextile", "FineLinen");
             Add(() => RudimentsModules.Nettle, "BlockCropNettle", "BlockNettleStub", "ItemNettleRhizome", "BlockEntityNettle", "BlockEntityNettleConvert");
             Add(() => RudimentsModules.WoolCarding, "ItemHandCards");
             // BlockEntityReedSpread stays attached with the switch off (it just idles), so only the behaviour counts.

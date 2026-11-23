@@ -19,6 +19,7 @@ MAP = {
     'clayworks-retting.json': 'Fibre',
     'linseedoil-fruitpress.json': 'Fibre',
     'stringsense-compat.json': 'Fibre',
+    'fine-textiles.json': 'Fibre',
     'quality-behaviors.json': {0: 'Fibre', 1: 'Fibre', 2: 'ReedSpread', 3: ALWAYS},
     'crop-flax.json': {0: 'Fibre', 1: 'flax:bloom', 2: 'flax:legacy', 3: 'Fibre'},
     'spinning-compat.json': {0: 'Nettle', 1: 'Fibre'},

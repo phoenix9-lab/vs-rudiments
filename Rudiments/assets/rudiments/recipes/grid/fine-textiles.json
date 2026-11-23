@@ -1,0 +1,100 @@
+[
+  {
+    "code": "fine-linen",
+    "ingredientPattern": "FF,FF",
+    "ingredients": {
+      "F": {
+        "type": "item",
+        "code": "rudiments:finecord"
+      }
+    },
+    "width": 2,
+    "height": 2,
+    "output": {
+      "type": "block",
+      "code": "game:linen-normal-down",
+      "quantity": 1
+    }
+  },
+  {
+    "code": "fine-sewingkit",
+    "ingredientPattern": "FFS,FF_",
+    "requiresTrait": "clothier",
+    "ingredients": {
+      "F": {
+        "type": "item",
+        "code": "rudiments:finecord"
+      },
+      "S": {
+        "type": "item",
+        "code": "game:stick"
+      }
+    },
+    "width": 3,
+    "height": 2,
+    "output": {
+      "type": "item",
+      "code": "game:sewingkit",
+      "quantity": 1
+    }
+  },
+  {
+    "code": "fine-bandage",
+    "ingredientPattern": "F,F",
+    "ingredients": {
+      "F": {
+        "type": "item",
+        "code": "rudiments:finecord"
+      }
+    },
+    "width": 1,
+    "height": 2,
+    "output": {
+      "type": "item",
+      "code": "game:bandage-clean",
+      "quantity": 2
+    }
+  },
+  {
+    "code": "fine-fishingpole-wood",
+    "ingredientPattern": "SSS,FFF",
+    "ingredients": {
+      "S": {
+        "type": "item",
+        "code": "game:stick"
+      },
+      "F": {
+        "type": "item",
+        "code": "rudiments:finecord"
+      }
+    },
+    "width": 3,
+    "height": 2,
+    "output": {
+      "type": "item",
+      "code": "game:fishingpole-simple-wood",
+      "quantity": 1
+    }
+  },
+  {
+    "code": "fine-fishingpole-bamboo",
+    "ingredientPattern": "SSS,FFF",
+    "ingredients": {
+      "S": {
+        "type": "item",
+        "code": "game:bamboostakes"
+      },
+      "F": {
+        "type": "item",
+        "code": "rudiments:finecord"
+      }
+    },
+    "width": 3,
+    "height": 2,
+    "output": {
+      "type": "item",
+      "code": "game:fishingpole-simple-bamboo",
+      "quantity": 1
+    }
+  }
+]

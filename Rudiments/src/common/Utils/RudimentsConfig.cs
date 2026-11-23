@@ -134,6 +134,56 @@ namespace Rudiments
         /// Requires restart.</summary>
         public float LinseedOilLitresPerGrain { get; set; } = 0.078f;
 
+        // ── Fine textiles ────────────────────────────────────────────────────────────
+        // Fine cord, and linen, cloth, clothing, sewing kits, bandages, poultices and fishing
+        // poles made from it. "Fine" is a mark on the ordinary vanilla item, not a new item, so
+        // every vanilla recipe, the dye barrel and traders keep working on it. Part of the Fibre
+        // group. Read at server start and published to clients, so changes need a restart. A
+        // multiplier of 1 (or a bonus of 0) turns that effect off.
+
+        /// <summary>Clothing condition restored by one fine cord. Vanilla flax twine: 0.1. Default: 0.3.</summary>
+        public float FineCordRepairStrength { get; set; } = 0.3f;
+
+        /// <summary>Clothing condition restored by one fine linen or fine cloth. Vanilla linen and
+        /// cloth: 0.5. Default: 0.7.</summary>
+        public float FineClothRepairStrength { get; set; } = 0.7f;
+
+        /// <summary>Clothing condition restored by a fine sewing kit. Vanilla kit: 0.75. Default: 0.95.</summary>
+        public float FineSewingKitRepairStrength { get; set; } = 0.95f;
+
+        /// <summary>Repairs one fine sewing kit lasts. Fractions carry over: at 1.3 a kit survives
+        /// its first repair and every third or fourth kit lasts an extra one. Default: 1.3.</summary>
+        public float FineSewingKitUses { get; set; } = 1.3f;
+
+        /// <summary>Repairs one plain sewing kit lasts. Default: 1.0 (vanilla: used up on every repair).</summary>
+        public float SewingKitUses { get; set; } = 1.0f;
+
+        /// <summary>Max warmth of clothing made from fine cloth. Default: 1.2.</summary>
+        public float FineClothingWarmthMultiplier { get; set; } = 1.2f;
+
+        /// <summary>Condition lost by fine clothing, from wear and from rips, relative to plain.
+        /// Default: 0.7 (lasts about 43% longer).</summary>
+        public float FineClothingWearMultiplier { get; set; } = 0.7f;
+
+        /// <summary>Extra durability on armour (gambesons) made from fine linen or cloth, as a
+        /// fraction of its base durability. Default: 0.25.</summary>
+        public float FineArmorDurabilityBonus { get; set; } = 0.25f;
+
+        /// <summary>Healing from fine bandages and fine linen poultices. Default: 1.5.</summary>
+        public float FineHealingMultiplier { get; set; } = 1.5f;
+
+        /// <summary>What traders pay for fine goods, relative to plain. Default: 2.0.</summary>
+        public float FineTradeMultiplier { get; set; } = 2.0f;
+
+        /// <summary>Strain a fine fishing line takes before it snaps. Default: 1.25.</summary>
+        public float FineLineStrengthMultiplier { get; set; } = 1.25f;
+
+        /// <summary>Wait before a fish bites a fine line. Default: 0.8.</summary>
+        public float FineLineBiteDelayMultiplier { get; set; } = 0.8f;
+
+        /// <summary>Extra seconds to reel in a bite on a fine line (vanilla window: 0.7 s). Default: 0.</summary>
+        public float FineLineCatchWindowBonusSec { get; set; } = 0f;
+
         // ── Scutching ────────────────────────────────────────────────────────────────
         // The scutch board is an interactive minigame: load broken bundles, strike them with a
         // scutching sword, flip halfway. Every value here is read live, so /rudimentsreload is

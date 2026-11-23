@@ -26,7 +26,7 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
 
 ---
 
-## [2.3.0] — 2026-10-31 — Module switches
+## [2.3.0] — 2026-11-06 — Module switches and fine textiles
 
 ### Added
 - **Feature groups can be switched off in `rudiments.json`.** New switches `FibreEnabled`,
@@ -48,10 +48,31 @@ JSON-only tuning of existing `attributes` (e.g. retting timings) is a PATCH. A n
   unwraps links to hidden pages, and drops item handbook text that only points to a dropped page.
 - `tools/patch-modules.py` keeps every patch entry conditioned on the right switch; it runs in the
   pre-commit hook and in CI. `tools/loadtest.py` boots the headless server under a preset.
+- **Fine textiles.** Fine cord, and the linen, cloth, clothing, sewing kits, bandages, poultices and
+  fishing poles made from it, carry a "fine" quality mark. The mark is on the vanilla items, not new
+  items, so every vanilla recipe, the dye barrel and traders keep working with them.
+- **Mending and sewing kits.** Fine cord mends by 0.3 (`FineCordRepairStrength`), fine linen and
+  fine cloth by 0.7 (`FineClothRepairStrength`), and a fine sewing kit by 0.95
+  (`FineSewingKitRepairStrength`). A fine sewing kit lasts 1.3 repairs (`FineSewingKitUses`). Plain
+  kits use `SewingKitUses`, which defaults to 1.0 and matches vanilla.
+- **Fine linen, cloth and clothing.** Fine clothing is warmer (`FineClothingWarmthMultiplier`, ×1.2),
+  wears at ×0.7 the rate (`FineClothingWearMultiplier`) and, as armour, gets +25% durability
+  (`FineArmorDurabilityBonus`). The mark carries through dyeing. Fine linen can't be laid as decor.
+- **Fine bandages and poultices.** They heal ×1.5 (`FineHealingMultiplier`). An alcohol-soaked fine
+  bandage stays fine when it dries back into a clean one.
+- **Traders pay ×2 for fine goods** (`FineTradeMultiplier`). The total in the trade dialog includes
+  the higher price.
+- **Fine fishing line.** A fine fishing pole's line takes 25% more strain before snapping
+  (`FineLineStrengthMultiplier`), and bites come 20% sooner (`FineLineBiteDelayMultiplier`).
+- **`/rudimentsfine`** (`controlserver` privilege). `info` prints the active fine-textile settings and
+  whether the held stack is fine. `mark` marks the held stack fine.
+- All fine-textile features belong to the Fibre group. They are off with `FibreEnabled` set to `false`.
 
 ### Changed
 - Flax harvest is now chosen by the world-config key `Rudiments.FlaxHarvest` (`bloom`, `legacy` or
   `off`) instead of `Rudiments.FlaxBloomHarvest`. The setting itself is unchanged.
+- **Fine cord's description and handbook text now list all its uses.** They named only bows and
+  tools before.
 - Clayworks' fragility and seepage patches are now separate entries, so seepage can be switched off
   alone.
 - With `GlazesEnabled` off, lead poisoning is off too, whatever `LeadPoisoningEnabled` says.
