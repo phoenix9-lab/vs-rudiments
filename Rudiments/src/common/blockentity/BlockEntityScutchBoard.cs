@@ -78,7 +78,22 @@ namespace Rudiments.SRC.Common.BlockEntities
 
         /// <summary>The tell: the worked side is clean, so further strokes shred line into tow. Doubles
         /// as the cue to flip, which is why one signal can teach both lessons.</summary>
-        public bool BladeOnBareFiber => LocalCleanliness >= RudimentsModSystem.Config.ScutchSafeCleanliness;
+        public bool BladeOnBareFiber => LocalCleanliness >= SafeCleanliness;
+
+        // The server's capacity and cue threshold, mirrored to clients in the block entity's synced
+        // tree. Settings are read from the local ModConfig on whichever side asks, so without this a
+        // client whose rudiments.json differs from the server's would show the wrong capacity, and a
+        // flip prompt and per-end meters that disagree with the server's pitch and particle cue.
+        // 0 / -1 = nothing received yet (or a save from before 2.4.0): fall back to the local config.
+        private int syncedCapacity;
+        private float syncedSafeCleanliness = -1f;
+
+        private bool IsClient => Api?.Side == EnumAppSide.Client;
+
+        /// <summary>The worked-end cleanliness the cue fires at: the server's value on a client.</summary>
+        private float SafeCleanliness => IsClient && syncedSafeCleanliness >= 0f
+            ? syncedSafeCleanliness
+            : RudimentsModSystem.Config.ScutchSafeCleanliness;
 
         // ── Lifecycle ────────────────────────────────────────────────────────────────
 
@@ -109,6 +124,9 @@ namespace Rudiments.SRC.Common.BlockEntities
         private int BaseFlaxCapacity => Math.Max(1, Block?.Attributes?["scutchCapacity"]?.AsInt(4) ?? 4);
 
         private int Capacity => CapacityFor(BundleSlot?.Itemstack);
+
+        /// <summary>Capacity for the info text: the server's figure on a client.</summary>
+        private int DisplayCapacity => IsClient && syncedCapacity > 0 ? syncedCapacity : Capacity;
 
         /// <summary>Per-stroke share of the remaining boon this board knocks free. Craftsmanship in the
         /// notch scales it (a better-cut notch holds the bundle steadier); nettle divides it down; a
@@ -382,7 +400,7 @@ namespace Rudiments.SRC.Common.BlockEntities
             }
 
             ItemStack batch = BundleSlot.Itemstack;
-            dsc.AppendLine(Lang.Get("rudiments:scutchboard-loaded", batch.StackSize, batch.GetName(), Capacity));
+            dsc.AppendLine(Lang.Get("rudiments:scutchboard-loaded", batch.StackSize, batch.GetName(), DisplayCapacity));
             dsc.AppendLine(Lang.Get("rudiments:fiberquality-label", FiberQuality.Name(FiberQuality.Get(batch))));
             dsc.AppendLine(Lang.Get(workingFar ? "rudiments:scutchboard-side-far" : "rudiments:scutchboard-side-near"));
 
@@ -395,7 +413,7 @@ namespace Rudiments.SRC.Common.BlockEntities
                 // Per-end meters: the same values the flip cue is keyed to, so a player who can't
                 // hear the strike change or see the particles reads the exact state. Toughness rolls
                 // only change how fast these move, so nothing hidden is shown.
-                int threshold = (int)Math.Round(RudimentsModSystem.Config.ScutchSafeCleanliness * 100f);
+                int threshold = (int)Math.Round(SafeCleanliness * 100f);
                 dsc.AppendLine(Lang.Get("rudiments:scutchboard-endmeter-near", EndPercent(false, threshold), threshold));
                 dsc.AppendLine(Lang.Get("rudiments:scutchboard-endmeter-far", EndPercent(true, threshold), threshold));
             }
@@ -414,7 +432,7 @@ namespace Rudiments.SRC.Common.BlockEntities
             // in-game cue goes quiet exactly when over-scutching starts turning line into tow.
             if (BladeOnBareFiber)
             {
-                bool otherSideDone = LocalCleanlinessOf(!workingFar) >= RudimentsModSystem.Config.ScutchSafeCleanliness;
+                bool otherSideDone = LocalCleanlinessOf(!workingFar) >= SafeCleanliness;
                 dsc.AppendLine(Lang.Get(otherSideDone
                     ? "rudiments:scutchboard-donewarning"
                     : "rudiments:scutchboard-flipprompt"));
@@ -427,7 +445,7 @@ namespace Rudiments.SRC.Common.BlockEntities
         private int EndPercent(bool far, int threshold)
         {
             int pct = (int)Math.Floor(LocalCleanlinessOf(far) * 100f + 1e-4f);
-            bool clean = LocalCleanlinessOf(far) >= RudimentsModSystem.Config.ScutchSafeCleanliness;
+            bool clean = LocalCleanlinessOf(far) >= SafeCleanliness;
             return clean ? Math.Max(pct, threshold) : Math.Min(pct, threshold - 1);
         }
 
@@ -533,6 +551,8 @@ namespace Rudiments.SRC.Common.BlockEntities
             // Saves from before 2.4.0 have no rolls: they keep the fixed curve until the next load.
             sideFactorNear = tree.GetFloat("sideFactorNear", 1f);
             sideFactorFar = tree.GetFloat("sideFactorFar", 1f);
+            syncedCapacity = tree.GetInt("syncedCapacity");
+            syncedSafeCleanliness = tree.GetFloat("syncedSafeCleanliness", -1f);
 
             // The server pushes new meters every stroke, so this runs often on the client; the mesh
             // cache key covers the only two things that can change what is drawn.
@@ -554,6 +574,14 @@ namespace Rudiments.SRC.Common.BlockEntities
             tree.SetInt("strokes", strokes);
             tree.SetFloat("sideFactorNear", sideFactorNear);
             tree.SetFloat("sideFactorFar", sideFactorFar);
+
+            // Only the server's live values are worth sending; the server itself never reads these
+            // back (IsClient is false there), so a stale figure in a save is harmless.
+            if (Api?.Side == EnumAppSide.Server)
+            {
+                tree.SetInt("syncedCapacity", IsEmpty ? 0 : Capacity);
+                tree.SetFloat("syncedSafeCleanliness", RudimentsModSystem.Config.ScutchSafeCleanliness);
+            }
         }
 
         public override void OnBlockBroken(IPlayer byPlayer = null)
